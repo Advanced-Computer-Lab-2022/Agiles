@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
   res.status(200).send("You have everything installed!");
 });
 
-app.use('/api/course/',courseRoutes)
+app.use('/api/course/',courseRoutes )
 
 //listen for requests
 const port = process.env.PORT;
