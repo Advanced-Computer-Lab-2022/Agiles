@@ -24,11 +24,11 @@ const Instructor = require("./models/Instructor");
 const Course = require("./models/Course");
 
 // middleware 
-//app.use(express.json);
-/*app.use((req,res,next)=>{
+app.use(express.json());
+app.use((req,res,next)=>{
   console.log(req.path,req.method)
   next()
-})*/
+})
 //routes
 const adminRoutes = require("./routes/adminRouter");
 const courseRoutes = require("./routes/course");
