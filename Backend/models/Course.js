@@ -39,12 +39,16 @@ const courseSchema = new Schema({
     required : true
 
    },
-   totalHourseOfSubtitle : {
+   totalHoursOfSubtitle : {
     type : Number ,
     required : true
    },
-   exercies : {
+   exercises : {
     type : [String],
+   },
+   rating : {
+      type: Number,
+      default : 0
    }
 }, {timestamps:true});
 

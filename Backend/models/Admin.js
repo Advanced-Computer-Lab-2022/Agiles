@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const adminSchema = new Schema({
-    userName : {
+    username : {
         type : String ,
         required : true,
         index: { unique: true } 

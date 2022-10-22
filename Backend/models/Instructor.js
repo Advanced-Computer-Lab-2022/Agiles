@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const instructorSchema = new Schema({
-    userName: {
+    username: {
       type: String,
       required: true,
     },
@@ -10,7 +10,7 @@ const instructorSchema = new Schema({
       type : String ,
       required : true
     },
-    Email: {
+    email: {
       type: String,
       required: false
     },
@@ -22,19 +22,19 @@ const instructorSchema = new Schema({
       type : String ,
       required : false 
     },
-    Age: {
+    age: {
       type: Number,
       required: false,
     },
-    BornIn: {
+    bornIn: {
       type: String,
       required: false
     },
-    LivesIn: {
+    livesIn: {
       type: String,
       required: false
     },
-    PhoneNumber: {
+    phoneNumber: {
       type: String,
       required: false
     }
