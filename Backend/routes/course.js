@@ -1,7 +1,7 @@
 const express = require("express");
 const courserouter = express.Router();
 var cookieParser = require('cookie-parser');
-const { coursesDetails, coursePrice } = require("../controllers/courseController")
+const { coursesDetails, coursePrice } = require("../controllers/CourseController")
 
 //get all the titles of the courses available including the total hours of the course and course rating
 
