@@ -7,9 +7,14 @@ const courseSchema = new Schema(
       type: String,
       required: true,
     },
-    subject: {
+    subTitles: {
       type: String,
-      required: true,
+      required: false,
+    },
+
+    subject: {
+    type :String , 
+    required : false
     },
     rating: {
       type: Number,
@@ -18,11 +23,11 @@ const courseSchema = new Schema(
     },
     description: {
       type: String,
-      required: true,
-    },
+      required: false,
+    },    
     instructor: {
       type: String,
-      required: true,
+      required: false,
     },
     price: {
       type: Number,
@@ -34,7 +39,7 @@ const courseSchema = new Schema(
     },
     language: {
       type: String,
-      required: true,
+      required: false,
     },
     discount: {
       type: Number,
@@ -42,11 +47,11 @@ const courseSchema = new Schema(
     },
     totalHourseOfCourse: {
       type: Number,
-      required: true,
+      required: false,
     },
     totalHourseOfSubtitle: {
       type: Number,
-      required: true,
+      required: false,
     },
     exercises: {
       type: [String],
