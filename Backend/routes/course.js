@@ -1,6 +1,6 @@
 const express = require('express');
 const courserouter = express.Router();
-const {filterCourses} = require("../controllers/courseController")
+const {filterCourses,courseSearch} = require("../controllers/courseController")
 //GET ALL COURSES
 courserouter.get('/',(req,res)=>{
     res.json({mssg: 'Get all courses'})
@@ -15,5 +15,7 @@ courserouter.post('/:id',(req,res)=>{
 });
 
 courserouter.get('/listCourses/filter',filterCourses )
+
+courserouter.get('/listCourses/search', courseSearch)
 
 module.exports = courserouter;    
