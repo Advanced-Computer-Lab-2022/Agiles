@@ -11,6 +11,11 @@ const courseSchema = new Schema(
       type: String,
       required: true,
     },
+    rating: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
     description: {
       type: String,
       required: true,
