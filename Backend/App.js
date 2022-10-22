@@ -33,6 +33,7 @@ app.use((req,res,next)=>{
 const adminRoutes = require("./routes/adminRouter");
 const courseRoutes = require("./routes/course");
 const globalRoutes = require("./routes/globalRouter");
+const instructorRoutes = require("./routes/instructorRouter");
 app.get("/", (req, res) => {
   res.status(200).send("You have everything installed!");
 });
@@ -40,4 +41,4 @@ app.get("/", (req, res) => {
 app.use('/api/course/',courseRoutes );
 app.use('/api/admin/',adminRoutes );
 app.use('/api/global/',globalRoutes );
-
+app.use('/api/instructor/',instructorRoutes );
