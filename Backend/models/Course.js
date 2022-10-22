@@ -6,15 +6,25 @@ const courseSchema = new Schema(
     title: {
       type: String,
       required: true,
-    },subTitles: {
+    },
+    subTitles: {
       type: String,
       required: false,
     },
+
     subject: {
+    type :String , 
+    required : false
+    },
+    rating: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
+    description: {
       type: String,
       required: false,
-    },
-    
+    },    
     instructor: {
       type: String,
       required: false,

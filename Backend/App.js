@@ -2,6 +2,8 @@ require('dotenv').config()
 //express app
 const express = require("express");
 const port = process.env.PORT;
+
+
 //mongoose database 
 const mongoose = require("mongoose");
 mongoose
@@ -15,18 +17,13 @@ mongoose
   })
   .catch((err) => console.log(err));
 
-
-
-
 //App variables
 const app = express();
-const Instructor = require("./models/Instructor");
-const Course = require("./models/Course");
 
 // middleware 
 app.use(express.json());
-app.use((req,res,next)=>{
-  console.log(req.path,req.method)
+app.use((req, res, next) => {
+  console.log(req.path, req.method)
   next()
 })
 //routes
@@ -42,3 +39,4 @@ app.use('/api/course/',courseRoutes );
 app.use('/api/admin/',adminRoutes );
 app.use('/api/global/',globalRoutes );
 app.use('/api/instructor/',instructorRoutes );
+
