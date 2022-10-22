@@ -11,7 +11,6 @@ const courseSchema = new Schema(
       type: String,
       required: false,
     },
-
     subject: {
     type :String , 
     required : false

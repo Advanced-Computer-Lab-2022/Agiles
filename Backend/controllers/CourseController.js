@@ -13,7 +13,7 @@ const createCourse = async (req , res)=>{
     })
     try {
       const course = await  Course.create(newCourse)
-      res.status(200).json(course )
+      res.status(200).json(course)
     } catch (error) {
         res.status(400).json ({error : error.message})
     }
@@ -45,7 +45,7 @@ const coursePrice = async (req, res) => {
         res.status(500).json({ mssg: "can't find prices of courses" });
     }
 };
-module.exports = { coursePrice, coursesDetails , createCourse};
+module.exports = {createCourse , coursePrice, coursesDetails };
 
 /*
 //select country
