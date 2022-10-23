@@ -1,5 +1,6 @@
 const Instructor = require("../models/Instructor");
 const bcrypt = require("bcrypt");
+const Course = require("../models/Course");
 
 //create Instructor
 const createInstructor = async (req, res) => {
@@ -18,4 +19,18 @@ const createInstructor = async (req, res) => {
   }
 };
 
-module.exports = createInstructor;
+const listAllInstructorCoursesTitles = async (req, res) => {
+  const username = req.query["username"];
+  console.log("username: " + username);
+  try {
+    const courseAttr = await Course.find(
+      { instructor: username },
+      { title: 1 }
+    );
+    res.status(200).send(courseAttr);
+  } catch (err) {
+    res.status(500).json({ mssg: "can't find courses" });
+  }
+};
+
+module.exports = { createInstructor, listAllInstructorCoursesTitles };

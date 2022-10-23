@@ -1,7 +1,7 @@
 const express = require("express");
 const adminrouter = express.Router();
 const createAdmin = require("..//controllers/AdminController");
-const createInstructor = require("..//controllers/InstructorController");
+const { createInstructor } = require("..//controllers/InstructorController");
 const createCorporate = require("..//controllers/CorporateController");
 //add another admin
 adminrouter.post("/addAdmin", createAdmin);

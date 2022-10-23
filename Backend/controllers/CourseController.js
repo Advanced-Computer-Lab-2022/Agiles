@@ -18,7 +18,7 @@ const createCourse = async (req, res) => {
   }
 };
 
-//get all the titles of the courses available including the total hours of the course and course rating
+//get all the details of the courses available including the total hours of the course and course rating
 
 const coursesDetails = async (req, res) => {
   try {
@@ -39,7 +39,10 @@ const coursesDetails = async (req, res) => {
 
 const coursePrice = async (req, res) => {
   try {
-    const coursePrice = await Course.find({}, { title: 1, price: 1, _id: 0 });
+    const coursePrice = await Course.find(
+      {},
+      { title: 1, price: 1, _id: 0 }
+    ).exec();
     res.status(200).send(coursePrice);
   } catch (err) {
     res.status(500).json({ mssg: "can't find prices of courses" });
