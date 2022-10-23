@@ -12,8 +12,8 @@ const courseSchema = new Schema(
       required: false,
     },
     subject: {
-    type :String , 
-    required : false
+      type: String,
+      required: false,
     },
     rating: {
       type: Number,
@@ -23,7 +23,7 @@ const courseSchema = new Schema(
     description: {
       type: String,
       required: false,
-    },    
+    },
     instructor: {
       type: String,
       required: false,
