@@ -6,6 +6,9 @@ import SignUp from "./pages/Signup";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Admin from "./pages/Admin";
+import AddAdmin from "./pages/AddAdmin";
+import AddInstructor from "./pages/AddInstructor";
+import AddCorporate from "./pages/AddCorporate";
 function App() {
   return (
     <div className="App">
@@ -22,6 +25,9 @@ function App() {
             <Route path="/itrainee" element={<SignUp />} />
             <Route path="/ctrainee" element={<SignUp />} />
             <Route path="/guest" element={<SignUp />} />
+            <Route path="/addInstructor" element={<AddInstructor />} />
+            <Route path="/addAdmin" element={<AddAdmin />} />
+            <Route path="/addCorporate" element={<AddCorporate />} />
           </Routes>
         </div>
       </BrowserRouter>
