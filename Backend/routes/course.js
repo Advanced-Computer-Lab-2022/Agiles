@@ -3,7 +3,7 @@ const courserouter = express.Router();
 var cookieParser = require("cookie-parser");
 const {
   coursesDetails,
-  coursePrice,
+  coursePrice,filterCourses,courseSearch
 } = require("../controllers/CourseController");
 
 //get all the titles of the courses available including the total hours of the course and course rating
@@ -25,5 +25,10 @@ courserouter.get("/:id", (req, res) => {
 courserouter.post("/:id", (req, res) => {
   res.json({ mssg: "post a single course" });
 });
+
+courserouter.get('/listCourses/filter',filterCourses )
+
+courserouter.get('/listCourses/search', courseSearch)
+
 
 module.exports = courserouter;
