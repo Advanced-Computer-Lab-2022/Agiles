@@ -3,7 +3,8 @@ const instructorRouter = express.Router();
 
 const { createCourse } = require("../controllers/CourseController");
 const {
-  createInstructor,
+  filterCoursesByInstructor,
+  courseSearchByInstructor,
   listAllInstructorCoursesTitles,
 } = require("../controllers/InstructorController");
 
@@ -11,5 +12,7 @@ const {
 instructorRouter.post("/addCourse", createCourse);
 
 instructorRouter.post("/listCourseTitles", listAllInstructorCoursesTitles);
+instructorRouter.post("/filterCourses", filterCoursesByInstructor);
+instructorRouter.post("/searchCourses", courseSearchByInstructor);
 
 module.exports = instructorRouter;

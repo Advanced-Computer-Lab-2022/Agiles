@@ -33,4 +33,79 @@ const listAllInstructorCoursesTitles = async (req, res) => {
   }
 };
 
-module.exports = { createInstructor, listAllInstructorCoursesTitles };
+const filterCoursesByInstructor = async (req, res) => {
+  const lowerBound = req.query["lowerBound"];
+  const upperBound = req.query["upperBound"];
+  const subjects = req.query["subject"];
+  const username = req.query["username"];
+
+  let courses;
+  if (lowerBound && subjects) {
+    courses = await Course.find({
+      $or: [
+        {
+          $and: [
+            { price: { $gte: lowerBound } },
+            { price: { $lte: upperBound } },
+            { instructor: username },
+          ],
+        },
+        { subject: subjects },
+      ],
+    })
+      .sort({ price: 1 })
+      .exec();
+  } else if (lowerBound) {
+    courses = await Course.find({
+      price: { $gte: lowerBound },
+      price: { $lte: upperBound },
+      instructor: username,
+    })
+      .sort({ price: 1 })
+      .exec();
+  } else if (subjects) {
+    courses = await Course.find({ subject: subjects, instructor: username })
+      .sort({ price: 1 })
+      .exec();
+  }
+
+  if (!courses) {
+    res.status(400).json({ error: "Empty" });
+  } else {
+    res.status(200).json(courses);
+  }
+};
+
+const courseSearchByInstructor = async (req, res) => {
+  const type = req.query["type"];
+  const search = req.query["search"];
+  const username = req.query["username"];
+
+  if (type == "subject") {
+    courses = await Course.find({
+      subject: { $regex: new RegExp(search, "i") },
+      instructor: username,
+    });
+  } else if (type == "title") {
+    courses = await Course.find({
+      title: { $regex: new RegExp(search, "i") },
+      instructor: username,
+    });
+  } else {
+    res.status(400).json({ error: "Wrong Type" });
+    return;
+  }
+
+  if (!courses) {
+    res.status(400).json({ error: "Empty" });
+  } else {
+    res.status(200).json(courses);
+  }
+};
+
+module.exports = {
+  createInstructor,
+  listAllInstructorCoursesTitles,
+  courseSearchByInstructor,
+  filterCoursesByInstructor,
+};

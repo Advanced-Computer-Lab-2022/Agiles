@@ -1,6 +1,5 @@
 const Course = require("../models/Course");
 
-//create Course
 const createCourse = async (req, res) => {
   const { title, subTitles, price, description } = req.body;
   const newCourse = new Course({
@@ -18,13 +17,13 @@ const createCourse = async (req, res) => {
   }
 };
 
-//get all the details of the courses available including the total hours of the course and course rating
+//get all the titles of the courses available including the total hours of the course and course rating
 
 const coursesDetails = async (req, res) => {
   try {
     const courseAttr = await Course.find(
       {},
-      { title: 1, totalHourseOfCourse: 1, rating: 1, _id: 0 }
+      { title: 1, totalHourseOfCourse: 1, rating: 1, _id: 1 }
     );
     res.status(200).send(courseAttr);
   } catch (err) {
@@ -32,6 +31,18 @@ const coursesDetails = async (req, res) => {
   }
 };
 
+const oneCoursesDetails = async (req, res) => {
+  const cid = req.query["id"];
+  try {
+    const courseAttr = await Course.findOne(
+      { _id: cid },
+      { title: 1, totalHourseOfCourse: 1, rating: 1, _id: 1 }
+    );
+    res.status(200).send(courseAttr);
+  } catch (err) {
+    res.status(500).json({ mssg: "can't find courses" });
+  }
+};
 //module.exports = coursesDetails;
 
 //view the price of each course
@@ -48,7 +59,12 @@ const coursePrice = async (req, res) => {
     res.status(500).json({ mssg: "can't find prices of courses" });
   }
 };
-module.exports = { createCourse, coursePrice, coursesDetails };
+module.exports = {
+  createCourse,
+  coursePrice,
+  coursesDetails,
+  oneCoursesDetails,
+};
 
 /*
 //select country
