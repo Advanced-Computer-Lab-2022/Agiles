@@ -1,22 +1,27 @@
 import { CourseCard } from "../components/CourseCard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import CourseStyles from "./Course.module.css";
 const Course = () => {
   const [courses, setCourses] = useState([]);
-  const handleClick = async () => {
-    console.log("run");
-    const res = await fetch("api/course/listCourses/details");
-    setCourses(await res.json());
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("api/course/listCourses/details");
+      let jsondata = await res.json();
+      if (res.ok) {
+        setCourses(jsondata);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="course">
       <h1>Hello to Course page</h1>
-      <CourseCard />
-      <div>
+      <div className={CourseStyles["course-list"]}>
         {courses.map((el) => {
-          return <p>{el.title}</p>;
+          return <CourseCard data={el} />;
         })}
       </div>
-      <button onClick={handleClick}> Click</button>
     </div>
   );
 };
