@@ -4,6 +4,8 @@
   align-items: center;
   width: 100%;
   margin: 0 auto;
+  position:fixed;
+  z-index: 999;
   border-bottom: 1px solid #f2f2f2;
 }
 .navbar h1 {

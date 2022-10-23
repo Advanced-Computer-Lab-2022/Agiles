@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/Signup";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
+import Admin from "./pages/Admin";
 function App() {
   return (
     <div className="App">
@@ -16,7 +17,7 @@ function App() {
             <Route path="/courses" element={<Course />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/admin" element={<SignUp />} />
+            <Route path="/admin" element={<Admin />} />
             <Route path="/instructor" element={<SignUp />} />
             <Route path="/itrainee" element={<SignUp />} />
             <Route path="/ctrainee" element={<SignUp />} />

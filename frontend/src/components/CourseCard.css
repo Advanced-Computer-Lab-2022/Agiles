@@ -1,0 +1,18 @@
+.card{
+   background-color: #fff;
+    width: 21.25em;
+    box-shadow: 0 5px 25px rgba(1 1 1 /15%);
+    border-radius: 10px;
+    padding: 25px;
+    margin-right: 25px;
+    margin-bottom: 10px;
+    transition: 0.7s ease;
+}
+.card:hover{
+  transform: scale(1.1);
+}
+.card h4 {
+  font-size: 20px;
+  color: #f1356d;
+  margin-bottom: 8px;
+}

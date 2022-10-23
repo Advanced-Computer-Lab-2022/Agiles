@@ -16,7 +16,6 @@ const Course = () => {
 
   return (
     <div className="course">
-      <h1>Hello to Course page</h1>
       <div className={CourseStyles["course-list"]}>
         {courses.map((el) => {
           return <CourseCard data={el} />;
