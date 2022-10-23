@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const instructorSchema = new Schema(
   {
+    fullName:{
+      type: String,
+      required: true,
+    },
     username: {
       type: String,
       required: true,
@@ -14,7 +18,11 @@ const instructorSchema = new Schema(
     },
     email: {
       type: String,
-      required: false,
+      required: true,
+    },
+    gender:{
+      type:String,
+      required :false
     },
     country: {
       type: Number,
@@ -23,10 +31,12 @@ const instructorSchema = new Schema(
     courseList: {
       type: Array,
       required: false,
+      default:[]
     },
     money: {
       type: Number,
       required: false,
+      default:0
     },
     rating: {
       type: Number,
@@ -35,6 +45,7 @@ const instructorSchema = new Schema(
     mini_bio: {
       type: String,
       required: false,
+      default:''
     },
   },
   { timestamps: true }
