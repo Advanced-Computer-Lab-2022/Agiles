@@ -6,7 +6,7 @@ const filterCourses = async (req, res) => {
   const subjects = req.query["subject"];
   const ratings = req.query["rating"];
   courses = await Course.find({
-    $or: [
+    $and: [
       {
         $and: [
           { price: { $gte: lowerBound } },

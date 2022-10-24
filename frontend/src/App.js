@@ -11,6 +11,8 @@ import AddInstructor from "./pages/AddInstructor";
 import AddCorporate from "./pages/AddCorporate";
 import IndividualTrainee from "./pages/IndividualTrainee";
 import SelectCountry from "./pages/SelectCountry";
+import CorporateTrainee from "./pages/CorporateTrainee";
+ 
 function App() {
   return (
     <div className="App">
@@ -25,7 +27,7 @@ function App() {
             <Route path="/admin" element={<Admin />} />
             <Route path="/instructor" element={<SignUp />} />
             <Route path="/itrainee" element={<IndividualTrainee />} />
-            <Route path="/ctrainee" element={<SignUp />} />
+            <Route path="/ctrainee" element={<CorporateTrainee />} />
             <Route path="/guest" element={<SignUp />} />
             <Route path="/addInstructor" element={<AddInstructor />} />
             <Route path="/addAdmin" element={<AddAdmin />} />
