@@ -11,6 +11,9 @@ import AddInstructor from "./pages/AddInstructor";
 import AddCorporate from "./pages/AddCorporate";
 import IndividualTrainee from "./pages/IndividualTrainee";
 import SelectCountry from "./pages/SelectCountry";
+import Guest from "./pages/Guest";
+import CoursesPrices from "./pages/CoursesPrices";
+
 function App() {
   return (
     <div className="App">
@@ -26,11 +29,12 @@ function App() {
             <Route path="/instructor" element={<SignUp />} />
             <Route path="/itrainee" element={<IndividualTrainee />} />
             <Route path="/ctrainee" element={<SignUp />} />
-            <Route path="/guest" element={<SignUp />} />
             <Route path="/addInstructor" element={<AddInstructor />} />
             <Route path="/addAdmin" element={<AddAdmin />} />
             <Route path="/addCorporate" element={<AddCorporate />} />
             <Route path="/selectCountry" element={<SelectCountry />} />
+            <Route path="/guest" element={<Guest />} />
+            <Route path="/coursesPrices" element={<CoursesPrices />} />
           </Routes>
         </div>
       </BrowserRouter>
