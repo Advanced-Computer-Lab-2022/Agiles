@@ -9,6 +9,8 @@ import Admin from "./pages/Admin";
 import AddAdmin from "./pages/AddAdmin";
 import AddInstructor from "./pages/AddInstructor";
 import AddCorporate from "./pages/AddCorporate";
+import IndividualTrainee from "./pages/IndividualTrainee";
+import SelectCountry from "./pages/SelectCountry";
 function App() {
   return (
     <div className="App">
@@ -22,12 +24,13 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/instructor" element={<SignUp />} />
-            <Route path="/itrainee" element={<SignUp />} />
+            <Route path="/itrainee" element={<IndividualTrainee />} />
             <Route path="/ctrainee" element={<SignUp />} />
             <Route path="/guest" element={<SignUp />} />
             <Route path="/addInstructor" element={<AddInstructor />} />
             <Route path="/addAdmin" element={<AddAdmin />} />
             <Route path="/addCorporate" element={<AddCorporate />} />
+            <Route path="/selectCountry" element={<SelectCountry />} />
           </Routes>
         </div>
       </BrowserRouter>
