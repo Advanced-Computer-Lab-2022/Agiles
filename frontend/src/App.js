@@ -12,6 +12,7 @@ import AddCorporate from "./pages/AddCorporate";
 import IndividualTrainee from "./pages/IndividualTrainee";
 import SelectCountry from "./pages/SelectCountry";
 import CorporateTrainee from "./pages/CorporateTrainee";
+import SearchCourse from "./pages/SearchCourse";
  
 import Guest from "./pages/Guest";
 import CoursesPrices from "./pages/CoursesPrices";
@@ -25,6 +26,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/courses" element={<Course />} />
+            <Route path="/SearchCourse" element={<SearchCourse />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/admin" element={<Admin />} />

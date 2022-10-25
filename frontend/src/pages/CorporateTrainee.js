@@ -19,7 +19,7 @@ function CorporateTrainee() {
         <button>filter the courses based on a subject and/or rating</button>
       </Link>
       
-      <Link to="/search">
+      <Link to="/SearchCourse">
         <button>
           search for a course based on course title or subject or instructor
         </button>
