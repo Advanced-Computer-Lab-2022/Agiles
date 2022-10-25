@@ -31,8 +31,6 @@ function App() {
             <Route path="/instructor" element={<SignUp />} />
             <Route path="/itrainee" element={<IndividualTrainee />} />
             <Route path="/ctrainee" element={<CorporateTrainee />} />
-            <Route path="/guest" element={<SignUp />} />
-            <Route path="/ctrainee" element={<SignUp />} />
             <Route path="/addInstructor" element={<AddInstructor />} />
             <Route path="/addAdmin" element={<AddAdmin />} />
             <Route path="/addCorporate" element={<AddCorporate />} />
