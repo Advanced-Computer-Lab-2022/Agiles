@@ -13,10 +13,11 @@ import IndividualTrainee from "./pages/IndividualTrainee";
 import SelectCountry from "./pages/SelectCountry";
 import CorporateTrainee from "./pages/CorporateTrainee";
 import SearchCourse from "./pages/SearchCourse";
-import InstructorOwnCourses from "./pages/InstructorOwnCourses"; 
+import InstructorOwnCourses from "./pages/InstructorOwnCourses";
 import CreateCourse from "./pages/CreateCourse";
 import Guest from "./pages/Guest";
 import CoursesPrices from "./pages/CoursesPrices";
+import Instructor from "./pages/Instructor";
 
 function App() {
   return (
@@ -28,12 +29,15 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/createCourse" element={<CreateCourse />} />
-            <Route path="/instructorOwnCourses" element={<InstructorOwnCourses />} />
+            <Route
+              path="/instructorOwnCourses"
+              element={<InstructorOwnCourses />}
+            />
             <Route path="/searchCourse" element={<SearchCourse />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/admin" element={<Admin />} />
-            <Route path="/instructor" element={<SignUp />} />
+            <Route path="/instructor" element={<Instructor />} />
             <Route path="/itrainee" element={<IndividualTrainee />} />
             <Route path="/ctrainee" element={<CorporateTrainee />} />
             <Route path="/addInstructor" element={<AddInstructor />} />
