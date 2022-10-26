@@ -46,6 +46,7 @@ function App() {
             <Route path="/selectCountry" element={<SelectCountry />} />
             <Route path="/guest" element={<Guest />} />
             <Route path="/coursesPrices" element={<CoursesPrices />} />
+            <Route path="/instructorCreateCourse" element={<CreateCourse />} />
           </Routes>
         </div>
       </BrowserRouter>
