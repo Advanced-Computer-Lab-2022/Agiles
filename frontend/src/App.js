@@ -18,6 +18,7 @@ import CreateCourse from "./pages/CreateCourse";
 import Guest from "./pages/Guest";
 import CoursesPrices from "./pages/CoursesPrices";
 import Instructor from "./pages/Instructor";
+import SearchResults from "./pages/SearchResults";
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
             {/* requirement no: 6*/}
             <Route path="/coursesPrices" element={<CoursesPrices />} />{" "}
             {/* requirement no: */}
+            <Route path="/searchResults" element={<SearchResults />} />{" "}
             <Route
               path="/instructorCreateCourse"
               element={<CreateCourse />}

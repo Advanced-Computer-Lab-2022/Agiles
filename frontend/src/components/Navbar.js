@@ -2,40 +2,21 @@ import NavbarStyles from "./Navbar.module.css";
 import React, { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 import axios from "axios"
 
 const Navbar = () => {
   const [searchString, setSearchString] = useState("");
-  const [searchParams, setSearchParams] = useSearchParams();
-  //let search = searchParams.get("search")
+  const navigate = useNavigate();
   const handleChange = (event) => {
     setSearchString(event.target.value);
   };
   const handleSearch = async (event) => {
     event.preventDefault();
-    setSearchParams({ search: searchString });
-    let config = {
-      headers: {
-        header1: "Access-Control-Allow-Origin",
-          query: {
-            search: searchParams
-          }
-        
-      },
-    };
-    try {
-      // console.log(search)
-      const params = new URLSearchParams({
-        search: searchParams
-      })
-      
-      const res = await axios.get(`course/listCourses/search?query=${params}`);
-      console.log(res.data)
-    
-    } catch (e) {
-      console.log(e);
-    
-    }
+    navigate({
+      pathname: '/searchResults',
+      search: `?search=${searchString}`,
+    }); 
   };
   return (
     <nav className={NavbarStyles["navbar"]}>
