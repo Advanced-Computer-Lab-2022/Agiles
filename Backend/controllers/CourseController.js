@@ -60,22 +60,16 @@ const filterCourses = async (req, res) => {
 
 const courseSearch = async (req, res) => {
   const type = req.query["type"];
-  const search = req.query["search"];
+  const search = req.query["query"];
+  console.log(req.query["search"])
 
-  if (type == "subject") {
+  
     courses = await Course.find({
-      subject: { $regex: new RegExp(search, "i") },
+      $or: [{subject: { $regex: new RegExp(search, "i") }},
+      { title: { $regex: new RegExp(search, "i") } },
+      {instructor: { $regex: new RegExp(search, "i") }}]
     });
-  } else if (type == "title") {
-    courses = await Course.find({ title: { $regex: new RegExp(search, "i") } });
-  } else if (type == "instructor") {
-    courses = await Course.find({
-      instructor: { $regex: new RegExp(search, "i") },
-    });
-  } else {
-    res.status(400).json({ error: "Wrong Type" });
-    return;
-  }
+
 
   if (!courses) {
     res.status(400).json({ error: "Empty" });
