@@ -1,11 +1,11 @@
 import { CourseCard } from "../components/CourseCard";
 import { useState, useEffect } from "react";
 import CourseStyles from "./Course.module.css";
-const Course = () => {
+const Courses = () => {
   const [courses, setCourses] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("api/course/listCourses/details");
+      const res = await fetch("/course/listCourses/details");
       let jsondata = await res.json();
       if (res.ok) {
         setCourses(jsondata);
@@ -25,4 +25,4 @@ const Course = () => {
   );
 };
 
-export default Course;
+export default Courses;

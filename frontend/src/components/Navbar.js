@@ -8,17 +8,18 @@ const Navbar = () => {
 
   const handleChange = (event) => {
     setSearchString(event.target.value);
+    console.log(searchString);
   };
   const handleSearch = (event) => {
     event.preventDefault();
     setSearchParams({ query: searchString });
   };
   return (
-    <nav className="navbar">
-      <h1>Agiles</h1>
+    <nav className={NavbarStyles["navbar"]}>
+      <h1 className={NavbarStyles["title"]}><a href="/" className={NavbarStyles["title"]}>Agiles</a></h1>
       <form className={NavbarStyles["search-bar"]}>
         <BsSearch className={NavbarStyles["search-icon"]} />
-        <input
+        <input className={NavbarStyles["inpt"]}
           placeholder="search for anything"
           value={searchString}
           onChange={handleChange}

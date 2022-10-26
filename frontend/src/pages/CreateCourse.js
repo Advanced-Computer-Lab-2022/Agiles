@@ -22,7 +22,7 @@ const CreateCourse = () => {
           },
         };
         try {
-          const res = await axios.post("/api/instructor/createCourse", course, config);
+          const res = await axios.post("/instructor/createCourse", course, config);
           console.log(res.data);
         
         } catch (e) {

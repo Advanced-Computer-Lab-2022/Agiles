@@ -27,14 +27,14 @@ app.use((req, res, next) => {
 });
 //routes
 const adminRoutes = require("./routes/adminRouter");
-const courseRoutes = require("./routes/course");
+const courseRoutes = require("./routes/courseRouter");
 const globalRoutes = require("./routes/globalRouter");
 const instructorRoutes = require("./routes/instructorRouter");
 app.get("/", (req, res) => {
   res.status(200).send("You have everything installed!");
 });
 
-app.use("/api/course/", courseRoutes);
-app.use("/api/admin/", adminRoutes);
-app.use("/api/global/", globalRoutes);
-app.use("/api/instructor/", instructorRoutes);
+app.use("/course/", courseRoutes);
+app.use("/admin/", adminRoutes);
+app.use("/global/", globalRoutes);
+app.use("/instructor/", instructorRoutes);

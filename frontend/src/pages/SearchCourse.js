@@ -18,7 +18,7 @@ function SearchCourse() {
           },
         };
         try {
-          const res = await axios.post("/api/instructor/SearchCourse", course, config);
+          const res = await axios.post("/instructor/searchCourses", course, config);
           console.log(res.data);
         
         } catch (e) {

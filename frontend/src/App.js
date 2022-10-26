@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import Course from "./pages/Course";
+import Courses from "./pages/Courses";
 import Login from "./pages/Login";
 import SignUp from "./pages/Signup";
 import Navbar from "./components/Navbar";
@@ -26,7 +26,7 @@ function App() {
         <div className="pages">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/courses" element={<Course />} />
+            <Route path="/courses" element={<Courses />} />
             <Route path="/createCourse" element={<CreateCourse />} />
             <Route path="/instructorOwnCourses" element={<InstructorOwnCourses />} />
             <Route path="/searchCourse" element={<SearchCourse />} />

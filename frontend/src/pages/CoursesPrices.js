@@ -5,7 +5,7 @@ const CoursesPrices = () => {
   const [courses, setCourses] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("api/course/listCourses/prices");
+      const res = await fetch("/course/listCourses/prices");
       let jsondata = await res.json();
       if (res.ok) {
         setCourses(jsondata);
