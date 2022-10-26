@@ -13,10 +13,11 @@ import IndividualTrainee from "./pages/IndividualTrainee";
 import SelectCountry from "./pages/SelectCountry";
 import CorporateTrainee from "./pages/CorporateTrainee";
 import SearchCourse from "./pages/SearchCourse";
-import InstructorOwnCourses from "./pages/InstructorOwnCourses"; 
+import InstructorOwnCourses from "./pages/InstructorOwnCourses";
 import CreateCourse from "./pages/CreateCourse";
 import Guest from "./pages/Guest";
 import CoursesPrices from "./pages/CoursesPrices";
+import Instructor from "./pages/Instructor";
 
 function App() {
   return (
@@ -25,23 +26,43 @@ function App() {
         <Navbar />
         <div className="pages">
           <Routes>
+            {/* main pages */}
             <Route path="/" element={<Home />} />
-            <Route path="/courses" element={<Courses />} />
-            <Route path="/createCourse" element={<CreateCourse />} />
-            <Route path="/instructorOwnCourses" element={<InstructorOwnCourses />} />
-            <Route path="/searchCourse" element={<SearchCourse />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            {/* user pages */}
             <Route path="/admin" element={<Admin />} />
-            <Route path="/instructor" element={<SignUp />} />
+            <Route path="/instructor" element={<Instructor />} />
             <Route path="/itrainee" element={<IndividualTrainee />} />
             <Route path="/ctrainee" element={<CorporateTrainee />} />
-            <Route path="/addInstructor" element={<AddInstructor />} />
-            <Route path="/addAdmin" element={<AddAdmin />} />
-            <Route path="/addCorporate" element={<AddCorporate />} />
-            <Route path="/selectCountry" element={<SelectCountry />} />
             <Route path="/guest" element={<Guest />} />
-            <Route path="/coursesPrices" element={<CoursesPrices />} />
+            {/* requirement pages */}
+            <Route path="/courses" element={<Courses />} />{" "}
+            {/* requirement no: */}
+            <Route path="/createCourse" element={<CreateCourse />} />{" "}
+            {/* requirement no: */}
+            <Route
+              path="/instructorOwnCourses"
+              element={<InstructorOwnCourses />}
+            />{" "}
+            {/* requirement no: */}
+            <Route path="/searchCourse" element={<SearchCourse />} />{" "}
+            {/* requirement no: */}
+            <Route path="/addInstructor" element={<AddInstructor />} />{" "}
+            {/* requirement no: */}
+            <Route path="/addAdmin" element={<AddAdmin />} />{" "}
+            {/* requirement no: */}
+            <Route path="/addCorporate" element={<AddCorporate />} />{" "}
+            {/* requirement no: */}
+            <Route path="/selectCountry" element={<SelectCountry />} />{" "}
+            {/* requirement no: 6*/}
+            <Route path="/coursesPrices" element={<CoursesPrices />} />{" "}
+            {/* requirement no: */}
+            <Route
+              path="/instructorCreateCourse"
+              element={<CreateCourse />}
+            />{" "}
+            {/* requirement no: */}
           </Routes>
         </div>
       </BrowserRouter>
