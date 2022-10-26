@@ -59,8 +59,7 @@ const filterCourses = async (req, res) => {
 };
 
 const courseSearch = async (req, res) => {
-  const type = req.query["type"];
-  const search = req.query["query"];
+  const search = req.query["search"];
   console.log(req.query["search"])
 
   
