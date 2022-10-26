@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const examSchema = new Schema(
   {
-    course_id: {
+    courseId: {
       type: Number,
       required: true,
     },

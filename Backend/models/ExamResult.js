@@ -3,15 +3,15 @@ const Schema = mongoose.Schema;
 
 const examResultSchema = new Schema(
   {
-    student_id: {
+    studentId: {
       type: Number,
       required: true,
     },
-    course_id: {
+    courseId: {
       type: Number,
       required: true,
     },
-    exam_id: {
+    examId: {
       type: Number,
       required: true,
     },
@@ -19,7 +19,7 @@ const examResultSchema = new Schema(
       type: Number,
       required: true,
     },
-    student_choices: {
+    studentChoices: {
       type: Array,
     },
   },
