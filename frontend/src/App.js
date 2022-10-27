@@ -9,7 +9,7 @@ import Admin from "./pages/Admin/Admin";
 import AddAdmin from "./pages/Admin/AddAdmin";
 import AddInstructor from "./pages/Admin/AddInstructor";
 import AddCorporate from "./pages/Admin/AddCorporate";
-import IndividualTrainee from "./pages/IndividualTrainee";
+import IndividualTrainee from "./pages/IndvidualTrainee/IndividualTrainee";
 import CorporateTrainee from "./pages/CorporateTrainee/CorporateTrainee";
 import InstructorOwnCourses from "./pages/Instructor/InstructorOwnCourses";
 import CreateCourse from "./pages/Course/CreateCourse";
