@@ -1,6 +1,5 @@
 import NavbarStyles from "./Navbar.module.css";
 import React, { useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"

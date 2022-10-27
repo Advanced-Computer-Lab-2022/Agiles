@@ -5,13 +5,6 @@ const Guest = () =>{
 
 return(
 <div className="guestContainer">
-
-
-
-<Link to="/SelectCountry">
-<button className="guestButtons">Select Country</button>
-</Link>
-
 <Link to="/courses">
 <button className="guestButtons">view all courses</button>
 </Link>

@@ -1,6 +1,7 @@
-import { CourseCard } from "../components/CourseCard";
+import { CourseCard } from "../../components/CourseCard";
 import { useState, useEffect } from "react";
 import CourseStyles from "./Course.module.css";
+import SelectCountry from "../../components/SelectCountry";
 const Courses = () => {
   const [courses, setCourses] = useState([]);
   useEffect(() => {
@@ -16,6 +17,9 @@ const Courses = () => {
 
   return (
     <div className="course">
+      <br></br>
+      <SelectCountry/>
+      <br></br>
       <div className={CourseStyles["course-list"]}>
         {courses.map((el) => {
           return <CourseCard data={el} />;

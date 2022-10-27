@@ -1,24 +1,22 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import Courses from "./pages/Courses";
+import Courses from "./pages/Course/Courses";
 import Login from "./pages/Login";
 import SignUp from "./pages/Signup";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import Admin from "./pages/Admin";
-import AddAdmin from "./pages/AddAdmin";
-import AddInstructor from "./pages/AddInstructor";
-import AddCorporate from "./pages/AddCorporate";
+import Admin from "./pages/Admin/Admin";
+import AddAdmin from "./pages/Admin/AddAdmin";
+import AddInstructor from "./pages/Admin/AddInstructor";
+import AddCorporate from "./pages/Admin/AddCorporate";
 import IndividualTrainee from "./pages/IndividualTrainee";
-import SelectCountry from "./pages/SelectCountry";
-import CorporateTrainee from "./pages/CorporateTrainee";
-import SearchCourse from "./pages/SearchCourse";
-import InstructorOwnCourses from "./pages/InstructorOwnCourses";
-import CreateCourse from "./pages/CreateCourse";
-import Guest from "./pages/Guest";
-import CoursesPrices from "./pages/CoursesPrices";
-import Instructor from "./pages/Instructor";
-import SearchResults from "./pages/SearchResults";
+import CorporateTrainee from "./pages/CorporateTrainee/CorporateTrainee";
+import InstructorOwnCourses from "./pages/Instructor/InstructorOwnCourses";
+import CreateCourse from "./pages/Course/CreateCourse";
+import Guest from "./pages/Guest/Guest";
+import CoursesPrices from "./pages/Course/CoursesPrices";
+import Instructor from "./pages/Instructor/Instructor";
+import SearchResults from "./pages/Course/SearchResults";
 
 function App() {
   return (
@@ -47,7 +45,6 @@ function App() {
               element={<InstructorOwnCourses />}
             />{" "}
             {/* requirement no: */}
-            <Route path="/searchCourse" element={<SearchCourse />} />{" "}
             {/* requirement no: */}
             <Route path="/addInstructor" element={<AddInstructor />} />{" "}
             {/* requirement no: */}
@@ -55,7 +52,6 @@ function App() {
             {/* requirement no: */}
             <Route path="/addCorporate" element={<AddCorporate />} />{" "}
             {/* requirement no: */}
-            <Route path="/selectCountry" element={<SelectCountry />} />{" "}
             {/* requirement no: 6*/}
             <Route path="/coursesPrices" element={<CoursesPrices />} />{" "}
             {/* requirement no: */}
