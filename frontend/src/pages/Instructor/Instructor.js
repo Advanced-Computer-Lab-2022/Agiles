@@ -32,7 +32,7 @@ function Instructor() {
         <button>create new course</button>
       </Link>
 
-            {/* <Link to="/courses">
+      {/* <Link to="/courses">
             <button className="guestButtons">view all courses</button>
             </Link>
 

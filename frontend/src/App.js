@@ -61,10 +61,7 @@ function App() {
             <Route path="/coursesPrices" element={<CoursesPrices />} />{" "}
             {/* requirement no: */}
             <Route path="/search" element={<SearchResults />} />{" "}
-            <Route
-              path="/instructorCreateCourse"
-              element={<CreateCourse />}
-            />{" "}
+            <Route path="/instructorCreateCourse" element={<CreateCourse />} />{" "}
             {/* requirement no: */}
           </Routes>
         </div>

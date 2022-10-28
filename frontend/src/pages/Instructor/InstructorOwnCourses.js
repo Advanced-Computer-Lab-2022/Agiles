@@ -1,9 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function InstructorOwnCourses() {
-  return (
-    <div>return my courses</div>
-  )
+  return <div>return my courses</div>;
 }
 
-export default InstructorOwnCourses
+export default InstructorOwnCourses;
