@@ -42,7 +42,14 @@ const filterCoursesByInstructor = async (req, res) => {
   const subjects = req.query["subject"];
   const username = req.query["username"];
 
-  let courses;
+  let courses = [];
+  if (upperBound && !lowerBound) {
+    lowerBound = 0;
+  }
+
+  if (lowerBound && !upperBound) {
+    upperBound = Number.MAX_VALUE;
+  }
   if (lowerBound && subjects) {
     courses = await Course.find({
       $and: [

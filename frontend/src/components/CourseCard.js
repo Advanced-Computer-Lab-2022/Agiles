@@ -7,7 +7,6 @@ export const CourseCard = (props) => {
   const handleClick = () => {
     navigate("/course", { state: { id: courseId } });
   };
-  console.log(props.titleOnly);
   if (props.titleOnly) {
     return (
       <div className="card">
