@@ -1,6 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
 import "./AddInstructor.css";
+import AdminNavbar from "./adminComponents/AdminNavbar";
+import AdminSidebar from "./adminComponents/AdminSidebar";
+import AdminImg from "../../static/Admin.png"
 const AddAdmin = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -22,30 +25,53 @@ const AddAdmin = (props) => {
     }
   };
   return (
-    <div className="contains">
-      <h1 className="title">Add A NEW ADMIN</h1>
-      <form onSubmit={handleSumbit}>
-        <label>
-          username <span className="required">*</span>
-        </label>
-        <input
-          type="text"
-          name="username"
-          placeholder="username.."
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <label>
-          password <span className="required">*</span>
-        </label>
-        <input
-          type="password"
-          name="password"
-          placeholder="password.."
-          onChange={(e) => setPassword(e.target.value)}
-        />
+    <div className="new">
+      <AdminSidebar></AdminSidebar>
+      <div className="newContainer">
+        <AdminNavbar></AdminNavbar>
+        <div className="top">
+          <h1 className="h1Class">ADD New Admin</h1>
+        </div>
+        <div className="bottom">
+          <div className="left">
+            <img className="imgClass"
+              src={AdminImg
+              }
+              alt="adminImg"
+            />
+          </div>
+          <div className="right">
+        <form className = "formClass"onSubmit={handleSumbit}>
+          <div className="formInput">
+          <label className="labelClass">
+            username <span className="required">*</span>
+          </label>
+          <input
+            type="text"
+            name="username"
+            placeholder="username.."
+            className="inputClass"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          </div>
+          <div className="formInput">
+          <label className="labelClass">
+            password <span className="required">*</span>
+          </label>
+          <input
+            type="password"
+            name="password"
+            placeholder="password.."
+            className="inputClass"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          </div>
 
-        <input type="submit" />
-      </form>
+          <button className="buttonClass">Send</button>
+        </form>
+        </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,19 +1,17 @@
-import {Link} from 'react-router-dom'
 import "./Admin.css";
-
+import AdminNavbar from './adminComponents/AdminNavbar';
+import AdminSidebar from './adminComponents/AdminSidebar';
 const Admin = (props) => {
   props.funcNav(false);
   return (
-    <div className="adminContainer">
-      <Link to="/addAdmin">
-        <button className='btn'>Add new Admin</button>
-      </Link>
-         <Link to="/addInstructor">
-        <button className='btn'>Add new Instructor </button>
-      </Link>
-      <Link to="/addCorporate">
-        <button className='btn'>Add new Corporate trainee</button>
-      </Link>
+    <div className="admin">
+      <AdminSidebar/>
+      <div className='adminContainer'>
+        <h1>Admin home page</h1>
+
+      <AdminNavbar/>
+      </div>
+
     </div>
   );
 };
