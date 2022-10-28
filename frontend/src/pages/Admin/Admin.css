@@ -1,0 +1,10 @@
+.adminContainer{
+    display: grid;
+}
+.btn{
+    margin: 0 10px;
+    height: 60px;
+    border-width: 0;
+    border-radius:5px
+
+}

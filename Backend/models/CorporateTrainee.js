@@ -14,15 +14,11 @@ const corporateTraineeSchema = new Schema(
     },
     email: {
       type: String,
-      required: false,
+      required: true,
     },
-    firstName: {
+    fullname: {
       type: String,
-      required: false,
-    },
-    lastName: {
-      type: String,
-      required: false,
+      required: true,
     },
     gender: {
       type: String,
@@ -32,7 +28,6 @@ const corporateTraineeSchema = new Schema(
       type: String,
       required: false,
     },
-
     registered_courses: {
       type: [{ Number, Number }], // courseid , progress
       default: [],

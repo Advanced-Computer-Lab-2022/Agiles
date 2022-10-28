@@ -1,0 +1,1 @@
+export const List = [{title : "add new Admin" ,api :"/api/admin/addAdmin" , message : "Admin" , id: 0} ,{title : "add new Instructor" ,api :"/api/admin/addInstructor" , message : "Instructor" , id: 1},{title : "add new Corporate Trainee" ,api :"/api/admin/addCorporate" , message : "Corporate" , id: 2}   ]

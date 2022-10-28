@@ -16,21 +16,17 @@ const individualTraineeSchema = new Schema(
       type: String,
       required: true,
     },
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
+    Fullname:{
       type: String,
       required: true,
     },
     gender: {
       type: String,
-      required: true,
+      required: false,
     },
     country: {
       type: String,
-      required: true,
+      required: false,
     },
     cardholder_name: {
       type: String,
