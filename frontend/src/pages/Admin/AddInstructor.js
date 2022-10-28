@@ -24,11 +24,7 @@ const AddInstructor = (props) => {
       },
     };
     try {
-      const res = await axios.post(
-        "/admin/addInstructor",
-        instructor,
-        config
-      );
+      const res = await axios.post("/admin/addInstructor", instructor, config);
       console.log(res.data);
     } catch (e) {
       console.log(e);

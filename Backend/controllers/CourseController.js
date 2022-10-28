@@ -14,7 +14,7 @@ const filterCourses = async (req, res) => {
         ],
       },
       { rating: ratings },
-      {subject: { $regex: new RegExp(subjects, "i") }},
+      { subject: { $regex: new RegExp(subjects, "i") } },
     ],
   })
     .sort({ price: 1 })
@@ -46,11 +46,13 @@ const filterCourses = async (req, res) => {
       .sort({ price: 1 })
       .exec();
   } else if (subjects && ratings) {
-    courses = await Course.find({ rating: ratings, subject: { $regex: new RegExp(subjects, "i") } })
+    courses = await Course.find({
+      rating: ratings,
+      subject: { $regex: new RegExp(subjects, "i") },
+    })
       .sort({ price: 1 })
       .exec();
   }
-  
 
   if (!courses) {
     res.status(400).json({ error: "Empty" });
@@ -61,15 +63,15 @@ const filterCourses = async (req, res) => {
 
 const courseSearch = async (req, res) => {
   const search = req.query["search"];
-  console.log(req.query["search"])
+  console.log(req.query["search"]);
 
-  
-    courses = await Course.find({
-      $or: [{subject: { $regex: new RegExp(search, "i") }},
+  courses = await Course.find({
+    $or: [
+      { subject: { $regex: new RegExp(search, "i") } },
       { title: { $regex: new RegExp(search, "i") } },
-      {instructor: { $regex: new RegExp(search, "i") }}]
-    });
-
+      { instructor: { $regex: new RegExp(search, "i") } },
+    ],
+  });
 
   if (!courses) {
     res.status(400).json({ error: "Empty" });
@@ -79,13 +81,36 @@ const courseSearch = async (req, res) => {
 };
 
 const createCourse = async (req, res) => {
-  const { title, subTitles, price, description } = req.body;
+  const {
+    instructor,
+    title,
+    subtitles,
+    price,
+    description,
+    subject,
+    totalHoursOfCourse,
+    totalHoursOfSubtitles,
+    language,
+    discount,
+    rating,
+    exercises,
+  } = req.body;
+  // const { title, subTitles, price, description } = req.body;
   const newCourse = new Course({
     //exercise and promotion ? not required
+
+    instructor: instructor,
     title: title,
-    subTitles: subTitles,
+    subtitles: subtitles,
     price: price,
     description: description,
+    subject: subject,
+    totalHoursOfCourse: totalHoursOfCourse,
+    totalHoursOfSubtitles: totalHoursOfSubtitles,
+    language: language,
+    discount: discount,
+    rating: rating,
+    exercises: exercises,
   });
   try {
     const course = await Course.create(newCourse);
@@ -101,7 +126,7 @@ const coursesDetails = async (req, res) => {
   try {
     const courseAttr = await Course.find(
       {},
-      { title: 1, totalHourseOfCourse: 1,price: 1, rating: 1, _id: 1 }
+      { title: 1, totalHourseOfCourse: 1, price: 1, rating: 1, _id: 1 }
     );
     res.status(200).send(courseAttr);
   } catch (err) {
@@ -138,15 +163,15 @@ const coursePrice = async (req, res) => {
   }
 };
 
-const getCourseById = async(req,res)=>{
-  const id = req.params['id'];
+const getCourseById = async (req, res) => {
+  const id = req.params["id"];
   try {
     const course = await Course.findById(id).exec();
     res.status(200).send(course);
   } catch (err) {
     res.status(500).json({ mssg: "no such Id" });
   }
-}
+};
 module.exports = {
   createCourse,
   coursePrice,
@@ -154,7 +179,7 @@ module.exports = {
   oneCoursesDetails,
   filterCourses,
   courseSearch,
-  getCourseById
+  getCourseById,
 };
 
 /*

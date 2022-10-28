@@ -24,11 +24,7 @@ const AddCorporate = (props) => {
       },
     };
     try {
-      const res = await axios.post(
-        "/admin/addCorporate",
-        corporate,
-        config
-      );
+      const res = await axios.post("/admin/addCorporate", corporate, config);
       console.log(res.data);
     } catch (e) {
       console.log(e);

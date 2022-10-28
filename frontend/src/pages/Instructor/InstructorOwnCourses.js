@@ -5,13 +5,14 @@ import axios from "axios";
 function InstructorOwnCourses() {
   const [courses, SetCourses] = useState([]);
   const [name, setName] = useState("");
+  const [firstLoad, setFirstLoad] = useState(true);
   const handleChange = (event) => {
     setName(event.target.value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    setFirstLoad(false);
     if (name == "") {
       alert("please enter your name");
     }
@@ -32,9 +33,10 @@ function InstructorOwnCourses() {
       </form>
       <div>
         {courses.map((el) => {
-          return <CourseCard data={el} />;
+          return <CourseCard data={el} titleOnly={true} />;
         })}
       </div>
+      <div>{!firstLoad ? `${courses.length} results` : ""}</div>
     </div>
   );
 }

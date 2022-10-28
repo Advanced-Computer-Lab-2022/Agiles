@@ -1,13 +1,20 @@
 import React from "react";
-import "./CourseCard.css"
+import "./CourseCard.css";
 import { useNavigate } from "react-router-dom";
 export const CourseCard = (props) => {
   const navigate = useNavigate();
   const courseId = props.data._id;
-  const handleClick=()=>{
-    navigate('/course',{state :{id:courseId}}); 
+  const handleClick = () => {
+    navigate("/course", { state: { id: courseId } });
+  };
+  console.log(props.titleOnly);
+  if (props.titleOnly) {
+    return (
+      <div className="card">
+        <h4>Title: {props.data.title}</h4>
+      </div>
+    );
   }
-  
   return (
     <div className="card">
       <h4>Title: {props.data.title}</h4>

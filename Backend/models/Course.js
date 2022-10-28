@@ -7,7 +7,7 @@ const courseSchema = new Schema(
       type: String,
       required: true,
     },
-    subTitles: {
+    subtitles: {
       type: String,
       required: false,
     },
@@ -41,11 +41,11 @@ const courseSchema = new Schema(
       type: Number,
       required: false,
     },
-    totalHourseOfCourse: {
+    totalHoursOfCourse: {
       type: Number,
       required: false,
     },
-    totalHourseOfSubtitle: {
+    totalHoursOfSubtitles: {
       type: Number,
       required: false,
     },
