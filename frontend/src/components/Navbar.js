@@ -1,20 +1,19 @@
 import NavbarStyles from "./Navbar.module.css";
 import React, { useState } from "react";
 import { BsSearch } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
-import axios from "axios"
+import { Link ,useNavigate} from "react-router-dom";
 import SelectCountry from "./SelectCountry";
 
 const Navbar = () => {
   const [searchString, setSearchString] = useState("");
-  const navigate = useNavigate();
   const handleChange = (event) => {
     setSearchString(event.target.value);
   };
+  const navigate = useNavigate();
   const handleSearch = async (event) => {
     event.preventDefault();
     navigate({
-      pathname: '/searchResults',
+      pathname: '/search',
       search: `?search=${searchString}`,
     }); 
   };
@@ -36,10 +35,10 @@ const Navbar = () => {
         </button>
       </form>
       <div className="links">
-        <a href="/">Home</a>
-        <a href="/courses">Courses</a>
-        <a href="/login">Log in</a>
-        <a href="/signup">Sign up</a>
+        <Link to="/">Home</Link>
+        <Link to="/courses">Courses</Link>
+        <Link to ="/login">Log in</Link>
+        <Link to="/signup">Sign up</Link>
       </div>
       <SelectCountry></SelectCountry>
       {/* <div>{search}</div> */}
