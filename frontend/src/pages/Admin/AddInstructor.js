@@ -61,6 +61,7 @@ const AddInstructor = (props) => {
           type="text"
           name="fullname"
           placeholder="name.."
+          required
           className="inputClass"
           onChange={(e) => setFullname(e.target.value)}
         />
@@ -73,6 +74,7 @@ const AddInstructor = (props) => {
           type="text"
           name="email"
           placeholder="Email.."
+          required
           className="inputClass"
 
           onChange={(e) => setEmail(e.target.value)}
@@ -86,6 +88,7 @@ const AddInstructor = (props) => {
         <input
           type="text"
           name="username"
+          required
           placeholder="username.."
           className="inputClass"
 
@@ -100,6 +103,7 @@ const AddInstructor = (props) => {
         <input
           type="password"
           name="password"
+          required
           placeholder="password.."
           className="inputClass"
 

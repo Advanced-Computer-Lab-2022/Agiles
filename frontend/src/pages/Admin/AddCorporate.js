@@ -39,7 +39,7 @@ const AddCorporate = (props) => {
       <div className="newContainer">
         <AdminNavbar></AdminNavbar>
         <div className="top">
-          <h1 className="h1Class">ADD NEW CORPORATE</h1>
+          <h1 className="h1Class">ADD NEW CORPORATE Trainee</h1>
         </div>
         <div className="bottom">
           <div className="left">
@@ -54,6 +54,7 @@ const AddCorporate = (props) => {
                 <input
                   type="text"
                   name="fullname"
+                  required
                   placeholder="name.."
                   className="inputClass"
                   onChange={(e) => setFullname(e.target.value)}
@@ -67,6 +68,7 @@ const AddCorporate = (props) => {
                   type="text"
                   name="email"
                   placeholder="Email.."
+                  required
                   className="inputClass"
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -78,6 +80,7 @@ const AddCorporate = (props) => {
                 <input
                   type="text"
                   name="username"
+                  required
                   placeholder="username.."
                   className="inputClass"
                   onChange={(e) => setUsername(e.target.value)}
@@ -90,6 +93,7 @@ const AddCorporate = (props) => {
                 <input
                   type="password"
                   name="password"
+                  required
                   placeholder="password.."
                   className="inputClass"
                   onChange={(e) => setPassword(e.target.value)}
