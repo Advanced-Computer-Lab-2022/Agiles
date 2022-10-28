@@ -16,7 +16,7 @@ function Instructor() {
       <Link>
         {/* not created yet */} <button>view course</button>
       </Link>
-      <Link>
+      <Link to="/instructorOwnCourses">
         {/* not created yet */} <button>view my course titles</button>
       </Link>
       <Link>
