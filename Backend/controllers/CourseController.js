@@ -136,6 +136,16 @@ const coursePrice = async (req, res) => {
     res.status(500).json({ mssg: "can't find prices of courses" });
   }
 };
+
+const getCourseById = async(req,res)=>{
+  const id = req.params['id'];
+  try {
+    const course = await Course.findById(id).exec();
+    res.status(200).send(course);
+  } catch (err) {
+    res.status(500).json({ mssg: "no such Id" });
+  }
+}
 module.exports = {
   createCourse,
   coursePrice,
@@ -143,6 +153,7 @@ module.exports = {
   oneCoursesDetails,
   filterCourses,
   courseSearch,
+  getCourseById
 };
 
 /*
