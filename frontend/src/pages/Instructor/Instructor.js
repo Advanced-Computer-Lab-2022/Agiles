@@ -4,9 +4,6 @@ import { Link } from "react-router-dom";
 function Instructor() {
   return (
     <div>
-      <Link to="/selectCountry">
-        <button>select country</button>
-      </Link>
       <Link to="listCourseTitles">
         {" "}
         {/* page not created yet */}

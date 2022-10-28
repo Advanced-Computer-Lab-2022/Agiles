@@ -8,3 +8,6 @@
   box-sizing: border-box ;
   color: #333;
 }
+button{
+  cursor: pointer;
+}

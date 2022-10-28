@@ -2,6 +2,7 @@ import { CourseCard } from "../../components/CourseCard";
 import { useState, useEffect } from "react";
 import CourseStyles from "./Course.module.css";
 import SelectCountry from "../../components/SelectCountry";
+import { Link } from "react-router-dom";
 const Courses = () => {
   const [courses, setCourses] = useState([]);
   useEffect(() => {
@@ -17,12 +18,9 @@ const Courses = () => {
 
   return (
     <div className="course">
-      <br></br>
-      <SelectCountry/>
-      <br></br>
       <div className={CourseStyles["course-list"]}>
         {courses.map((el) => {
-          return <CourseCard data={el} />;
+          return <Link to ="/oneCourse" className="cardLink"><CourseCard data={el} /></Link>;
         })}
       </div>
     </div>

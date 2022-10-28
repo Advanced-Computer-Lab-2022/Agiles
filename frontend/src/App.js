@@ -17,6 +17,7 @@ import Guest from "./pages/Guest/Guest";
 import CoursesPrices from "./pages/Course/CoursesPrices";
 import Instructor from "./pages/Instructor/Instructor";
 import SearchResults from "./pages/Course/SearchResults";
+import OneCourse from "./pages/Course/OneCourse";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             <Route path="/guest" element={<Guest />} />
             {/* requirement pages */}
             <Route path="/courses" element={<Courses />} />{" "}
+            <Route path="/oneCourse" element={<OneCourse />} />{" "}
             {/* requirement no: */}
             <Route path="/createCourse" element={<CreateCourse />} />{" "}
             {/* requirement no: */}

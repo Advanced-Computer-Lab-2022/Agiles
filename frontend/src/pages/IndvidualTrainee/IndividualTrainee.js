@@ -4,9 +4,6 @@ import IndividualTraineeStyles from "./IndividualTrainee.module.css";
 function IndividualTrainee() {
   return (
     <div className={IndividualTraineeStyles["button-list"]}>
-      <Link to="/selectCountry">
-        <button>select country</button>
-      </Link>
       <Link to="/ViewCourseTitles">
         {" "}
         <button>

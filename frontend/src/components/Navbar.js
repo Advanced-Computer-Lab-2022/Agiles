@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
+import SelectCountry from "./SelectCountry";
 
 const Navbar = () => {
   const [searchString, setSearchString] = useState("");
@@ -40,6 +41,7 @@ const Navbar = () => {
         <a href="/login">Log in</a>
         <a href="/signup">Sign up</a>
       </div>
+      <SelectCountry></SelectCountry>
       {/* <div>{search}</div> */}
     </nav>
   );
