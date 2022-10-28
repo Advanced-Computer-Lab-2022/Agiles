@@ -32,10 +32,7 @@ const courseSchema = new Schema(
       type: Number,
       required: true,
     },
-    description: {
-      type: String,
-      required: true,
-    },
+
     language: {
       type: String,
       required: false,
@@ -55,9 +52,8 @@ const courseSchema = new Schema(
     exercises: {
       type: [String],
     },
-    promotion: {
-      // check requirement 60
-      type: Number,
+    rating_nums: {
+      type: String,
     },
   },
   { timestamps: true }
