@@ -1,18 +1,18 @@
 import {Link} from 'react-router-dom'
 import "./Admin.css";
 
-const Admin = () => {
-
+const Admin = (props) => {
+  props.funcNav(false);
   return (
     <div className="adminContainer">
       <Link to="/addAdmin">
-        <button>Add new Admin</button>
+        <button className='btn'>Add new Admin</button>
       </Link>
          <Link to="/addInstructor">
-        <button>Add new Instructor </button>
+        <button className='btn'>Add new Instructor </button>
       </Link>
       <Link to="/addCorporate">
-        <button>Add new Corporate trainee</button>
+        <button className='btn'>Add new Corporate trainee</button>
       </Link>
     </div>
   );

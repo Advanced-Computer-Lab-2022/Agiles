@@ -2,4 +2,27 @@
     max-width: 600px;
     margin: 40px auto;
     padding: 20px;
+    display: grid;
   }
+  .mainImage{
+      margin-left:70% ;
+      margin-top: 10%;
+      width: 60%;
+      height: auto;
+   
+  }
+  button{
+    background-color: #ff6529;
+    color: white;
+    }
+    .guestContainer{
+        margin-left: 40%;
+        margin-top: 30vh;
+    }
+    .guestButtons{
+        margin: 0 10px;
+        height: 60px;
+        border-width: 0;
+        border-radius: 10%;
+    
+    }

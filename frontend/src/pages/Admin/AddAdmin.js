@@ -1,10 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 import "./AddInstructor.css";
-const AddAdmin = () => {
+const AddAdmin = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  props.funcNav(false);
   const handleSumbit = async (event) => {
     const admin = { username: username, password: password };
     event.preventDefault();

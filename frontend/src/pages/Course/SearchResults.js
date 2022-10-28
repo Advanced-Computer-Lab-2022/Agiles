@@ -1,11 +1,10 @@
 import { useLocation } from "react-router-dom";
-import { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import CourseStyles from "./Course.module.css";
 import { CourseCard } from "../../components/CourseCard";
 import axios from "axios";
 import LoadingScreen from "react-loading-screen";
-import spinner from "../../components/download.gif"
+import spinner from "../../static/download.gif"
 const SearchResults = () => {
   
   const location = useLocation();
@@ -18,7 +17,7 @@ const SearchResults = () => {
     const { data } = await axios.get(
       `/course/listCourses/search?search=${query}`
     );
-    if(data.length == 0){
+    if(data.length === 0){
       setError(true);
     }
     else{

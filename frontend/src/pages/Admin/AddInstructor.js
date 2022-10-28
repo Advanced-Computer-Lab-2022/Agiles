@@ -1,13 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
 import "./AddInstructor.css";
-const AddInstructor = () => {
+const AddInstructor = (props) => {
   const [fullname, setFullname] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
-
+  props.funcNav(false);
   const handleSumbit = async (event) => {
     const instructor = {
       fullname: fullname,
