@@ -12,6 +12,7 @@ export const CourseCard = (props) => {
     return (
       <div className="card">
         <h4>Title: {props.data.title}</h4>
+        <button onClick={handleClick}>View Course</button>
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 function Instructor() {
@@ -31,6 +31,8 @@ function Instructor() {
         {" "}
         <button>create new course</button>
       </Link>
+
+      <div></div>
 
       {/* <Link to="/courses">
             <button className="guestButtons">view all courses</button>

@@ -6,10 +6,26 @@ function InstructorOwnCourses() {
   const [courses, SetCourses] = useState([]);
   const [name, setName] = useState("");
   const [firstLoad, setFirstLoad] = useState(true);
+  const [searchString, setSearchString] = useState("");
+
   const handleChange = (event) => {
     setName(event.target.value);
   };
+  const handleSearchChange = (event) => {
+    setSearchString(event.target.value);
+  };
 
+  const handleSearchSubmit = async (event) => {
+    event.preventDefault();
+    if (name == "") {
+      alert("please enter your name");
+    } else {
+      let data = await axios.get(
+        `/instructor/searchCourses/?search=${searchString}&instructor=${name}`
+      );
+      SetCourses(data.data);
+    }
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
     setFirstLoad(false);
@@ -27,9 +43,19 @@ function InstructorOwnCourses() {
       <form onSubmit={handleSubmit}>
         <label>
           Name:
-          <input type="text" value={name} onChange={handleChange} />
+          <input required type="text" value={name} onChange={handleChange} />
         </label>
         <input type="submit" value="View My Course" />
+      </form>
+      <form onSubmit={handleSearchSubmit}>
+        <input
+          required
+          type="text"
+          value={searchString}
+          placeholder="Search your courses"
+          onChange={handleSearchChange}
+        />
+        <input type="submit" value="Search" />
       </form>
       <div>
         {courses.map((el) => {
