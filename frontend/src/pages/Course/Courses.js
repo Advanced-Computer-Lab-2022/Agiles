@@ -1,6 +1,7 @@
 import { CourseCard } from "../../components/CourseCard";
 import { useState, useEffect } from "react";
 import CourseStyles from "./Course.module.css";
+import Filter from "../../components/Filter"
 const Courses = () => {
   const [courses, setCourses] = useState([]);
   useEffect(() => {
@@ -20,7 +21,9 @@ const Courses = () => {
         {courses.map((el) => {
           return <CourseCard data={el} />;
         })}
+
       </div>
+      <Filter />;
     </div>
   );
 };

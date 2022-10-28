@@ -6,7 +6,7 @@ const filterCourses = async (req, res) => {
   const subjects = req.query["subject"];
   const ratings = req.query["rating"];
   courses = await Course.find({
-    $and: [
+    $or: [
       {
         $and: [
           { price: { $gte: lowerBound } },
@@ -14,7 +14,7 @@ const filterCourses = async (req, res) => {
         ],
       },
       { rating: ratings },
-      { subject: subjects },
+      {subject: { $regex: new RegExp(subjects, "i") }},
     ],
   })
     .sort({ price: 1 })
@@ -25,7 +25,7 @@ const filterCourses = async (req, res) => {
       price: { $gte: lowerBound },
       price: { $lte: upperBound },
       rating: ratings,
-      subject: subjects,
+      subject: { $regex: new RegExp(subjects, "i") },
     })
       .sort({ price: 1 })
       .exec();
@@ -33,7 +33,7 @@ const filterCourses = async (req, res) => {
     courses = await Course.find({
       price: { $gte: lowerBound },
       price: { $lte: upperBound },
-      subject: subjects,
+      subject: { $regex: new RegExp(subjects, "i") },
     })
       .sort({ price: 1 })
       .exec();
@@ -46,10 +46,11 @@ const filterCourses = async (req, res) => {
       .sort({ price: 1 })
       .exec();
   } else if (subjects && ratings) {
-    courses = await Course.find({ rating: ratings, subject: subjects })
+    courses = await Course.find({ rating: ratings, subject: { $regex: new RegExp(subjects, "i") } })
       .sort({ price: 1 })
       .exec();
   }
+  
 
   if (!courses) {
     res.status(400).json({ error: "Empty" });

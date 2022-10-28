@@ -1,0 +1,10 @@
+.filter-button {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 0.8rem;
+    margin: 0 -0.4rem;
+  }
+  
+  .panel{
+    border-top: 1px solid #d1d7dc;
+  }
