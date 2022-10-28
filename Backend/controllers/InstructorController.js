@@ -4,14 +4,14 @@ const Course = require("../models/Course");
 
 //create Instructor
 const createInstructor = async (req, res) => {
-  const { fullname , username, password,email,gender} = req.body;
+  const { fullname, username, password, email, gender } = req.body;
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
   const newInstructor = new Instructor({
-    fullName :fullname,
+    fullName: fullname,
     username: username,
     password: hashedPassword,
-    email : email,
+    email: email,
     gender: gender,
   });
   try {
@@ -45,7 +45,7 @@ const filterCoursesByInstructor = async (req, res) => {
   let courses;
   if (lowerBound && subjects) {
     courses = await Course.find({
-      $or: [
+      $and: [
         {
           $and: [
             { price: { $gte: lowerBound } },
@@ -80,24 +80,19 @@ const filterCoursesByInstructor = async (req, res) => {
 };
 
 const courseSearchByInstructor = async (req, res) => {
-  const type = req.query["type"];
   const search = req.query["search"];
-  const username = req.query["username"];
-
-  if (type == "subject") {
-    courses = await Course.find({
-      subject: { $regex: new RegExp(search, "i") },
-      instructor: username,
-    });
-  } else if (type == "title") {
-    courses = await Course.find({
-      title: { $regex: new RegExp(search, "i") },
-      instructor: username,
-    });
-  } else {
-    res.status(400).json({ error: "Wrong Type" });
-    return;
-  }
+  const instructor = req.query["instructor"];
+  courses = await Course.find({
+    $and: [
+      {
+        $or: [
+          { subject: { $regex: new RegExp(search, "i") } },
+          { title: { $regex: new RegExp(search, "i") } },
+        ],
+      },
+      { instructor: instructor },
+    ],
+  });
 
   if (!courses) {
     res.status(400).json({ error: "Empty" });

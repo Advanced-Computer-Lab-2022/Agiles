@@ -12,7 +12,7 @@ const {
 instructorRouter.post("/addCourse", createCourse);
 
 instructorRouter.get("/listCourseTitles", listAllInstructorCoursesTitles);
-instructorRouter.post("/filterCourses", filterCoursesByInstructor);
-instructorRouter.post("/searchCourses", courseSearchByInstructor);
+instructorRouter.get("/filterCourses", filterCoursesByInstructor);
+instructorRouter.get("/searchCourses", courseSearchByInstructor);
 
 module.exports = instructorRouter;
