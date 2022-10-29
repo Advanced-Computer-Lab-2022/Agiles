@@ -19,8 +19,8 @@ export const CourseCard = (props) => {
     <div className="card">
       <h4>Title: {props.data.title}</h4>
       <div>Total hours of Course: {props.data.totalHourseOfCourse}</div>
-      <div>Rating: {props.data.rating}</div>
-      <div>Price: {props.data.price*(window.sessionStorage.getItem("factor"))} {window.sessionStorage.getItem("currency")}</div>
+      <div>{props.data.rating === 0 ? "unrated" : props.data.rating}</div>
+      {!window.sessionStorage.getItem("factor")?( <div>Price: {(props.data.price)} USD</div>):( <div>Price: {(props.data.price)*(window.sessionStorage.getItem("factor"))} {window.sessionStorage.getItem("currency").toUpperCase()}</div>)}  
       <button onClick={handleClick}>View Course</button>
     </div>
   );

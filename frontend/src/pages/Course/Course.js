@@ -29,15 +29,15 @@ const Course = () => {
           <h2>Title : {course.title}</h2>
           <h3>description : {course.description}</h3>
           <h4>created By : {course.instructor}</h4>
-          <h5>Rating : {course.rating == 0 ? "unrated" : course.rating}</h5>
-          <p>price : {course.price*(window.sessionStorage.getItem("factor"))} {window.sessionStorage.getItem("currency")}</p>
+          <h5>Rating : {course.rating === 0 ? "unrated" : course.rating}</h5>
+          {!window.sessionStorage.getItem("factor")?( <div>Price: {(course.price)} USD</div>):( <div>Price: {(course.price)*(window.sessionStorage.getItem("factor"))} {window.sessionStorage.getItem("currency").toUpperCase()}</div>)}
           <div>subtitles: {course.subtitles}</div>
           <div> subject: {course.subject}</div>
           <div>totalHoursOfCourse: {course.totalHourseOfCourse}</div>
-          <div>totalHoursOfSubtitles: {course.totalHourseOfSubtitles}</div>
+          <div>totalHours OfSubtitles: {course.totalHourseOfSubtitles}</div>
           <div>language: {course.language}</div>
           <div>
-            discount: {course.discount == 0 ? "no discount" : course.discount}
+            discount: {course.discount === 0 ? "no discount" : course.discount}
           </div>
           <div>
             {course.exercises != null
