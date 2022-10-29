@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Filter = () => {
-  const [minPrice, setMinPrice] = useState(-1);
-  const [maxPrice, setMaxPrice] = useState(Number.MAX_SAFE_INTEGER);
+  const [minPrice, setMinPrice] = useState();
+  const [maxPrice, setMaxPrice] = useState();
   const [subject, setSubject] = useState("");
-  const [rating, setRating] = useState(5);
+  const [rating, setRating] = useState();
   let query = "";
   const handleSubmitSubject = async (event) => {
     event.preventDefault();
@@ -43,11 +43,7 @@ const Filter = () => {
       setRating(event.target.value);
       if (query == "") query = query + `rating=${rating}`;
       else query = query + `&rating=${rating}`;
-      navigate({
-        pathname: "/courses/filter",
-        search: query,
-        state: {rating: rating}
-      });
+      
     } else {
       setRating(5);
       query.replace(`?rating=${rating}`, `rating=${5}`);
@@ -56,18 +52,18 @@ const Filter = () => {
     }
   };
   const navigate = useNavigate();
-  const handlePrice = async (event) => {
-    event.preventDefault();
-    if (query == "")
-      query = query + `lowerBound=${minPrice}&upperBound=${maxPrice}`;
-    else query = query + `&lowerBound=${minPrice}&upperBound=${maxPrice}`;
-    let res = await axios.get(`course/listCourses/filter/?` + query);
-    navigate({
-      pathname: "/courses/filter",
-      search: query,
-      state: {lowerBound: minPrice, upperBound: maxPrice}
-    });
-  };
+  // const handlePrice = async (event) => {
+  //   event.preventDefault();
+  //   if (query == "")
+  //     query = query + `lowerBound=${minPrice}&upperBound=${maxPrice}`;
+  //   else query = query + `&lowerBound=${minPrice}&upperBound=${maxPrice}`;
+  //   let res = await axios.get(`course/listCourses/filter/?` + query);
+  //   navigate({
+  //     pathname: "/courses/filter",
+  //     search: query,
+  //     state: {lowerBound: minPrice, upperBound: maxPrice}
+  //   });
+  // };
 
   const handleChangePriceFree = async (event) => {
     if (event.target.checked) {
@@ -76,27 +72,48 @@ const Filter = () => {
     } else {
       setMaxPrice(Number.MAX_SAFE_INTEGER);
     }
-    event.preventDefault();
-    if (query == "")
-      query = query + `lowerBound=${minPrice}&upperBound=${maxPrice}`;
-    else query = query + `&lowerBound=${minPrice}&upperBound=${maxPrice}`;
-    navigate({
-      pathname: "/courses/filter",
-      search: query,
-    });
   };
 
   const handleChangeSubject = (event) => {
     setSubject(event.target.value);
   };
 
+  const handleSubmit = async (event) => {
+    if (subject == "" && minPrice == null && maxPrice == null && rating == null) {
+      alert("please fill in at least one filter cell");
+    }
+    else {
+      let url = "";
+      if (!(minPrice == null)) {
+        url += "lowerBound=" + minPrice + "&";
+      }
+      if (!(maxPrice == null)) {
+        url += "upperBound=" + maxPrice + "&";
+      }
+      if (subject != "") {
+        url += "subject=" + subject + "&";
+      }
+      if ((rating != null)){
+        url += "rating=" + rating + "&";
+      }
+      console.log(url);
+      if(url!= ""){
+      navigate({
+        pathname: "/courses/filter",
+        search: url,
+      });
+    }
+      
+    }
+  }
+
   return (
     <div>
+      <form onSubmit={handleSubmit}>
       <div className="panel">
         <h3>Subject</h3>
         <label> Enter Subject</label>
         <input type="text" value={subject} onChange={handleChangeSubject} />
-        <button onClick={handleSubmitSubject}>GO</button>
       </div>
       <div className="panel">
         <h3>Rating</h3>
@@ -127,8 +144,9 @@ const Filter = () => {
         />
         <label>FREEE</label>
         <input type="checkbox" value={0} onChange={handleChangePriceFree} />
-        <button onClick={handlePrice}>GO</button>
       </div>
+      <button type="submit">Filter</button>
+      </form>
     </div>
   );
 };

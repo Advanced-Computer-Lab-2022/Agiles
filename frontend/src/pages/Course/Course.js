@@ -30,7 +30,7 @@ const Course = () => {
           <h3>description : {course.description}</h3>
           <h4>created By : {course.instructor}</h4>
           <h5>Rating : {course.rating == 0 ? "unrated" : course.rating}</h5>
-          <p>price : {course.price}</p>
+          <p>price : {course.price*(window.sessionStorage.getItem("factor"))} {window.sessionStorage.getItem("currency")}</p>
           <div>subtitles: {course.subtitles}</div>
           <div> subject: {course.subject}</div>
           <div>totalHoursOfCourse: {course.totalHourseOfCourse}</div>
