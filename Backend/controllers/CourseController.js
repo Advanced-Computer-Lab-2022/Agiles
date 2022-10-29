@@ -178,6 +178,7 @@ const coursePrice = async (req, res) => {
   } catch (err) {
     res.status(500).json({ mssg: "can't find prices of courses" });
   }
+ // console.log(window.sessionStorage.getItem("country"));
 };
 
 const getCourseById = async (req, res) => {
