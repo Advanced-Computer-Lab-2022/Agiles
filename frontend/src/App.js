@@ -17,6 +17,7 @@ import CoursesPrices from "./pages/Course/CoursesPrices";
 import Instructor from "./pages/Instructor/Instructor";
 import SearchResults from "./pages/Course/SearchResults";
 import Course from "./pages/Course/Course";
+import FilterResults from "./pages/Course/FilterResults";
 import { useState } from "react";
 function App() {
   const [showNav , setShowNav] = useState(true);
@@ -63,6 +64,7 @@ function App() {
             <Route path="/search" element={<SearchResults />} />{" "}
             <Route path="/instructorCreateCourse" element={<CreateCourse />} />{" "}
             {/* requirement no: */}
+            <Route path="/courses/filter" element = {<FilterResults />} />{" "}
           </Routes>
         </div>
       </BrowserRouter>

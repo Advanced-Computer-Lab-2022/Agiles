@@ -5,20 +5,20 @@ const filterCourses = async (req, res) => {
   const upperBound = req.query["upperBound"];
   const subjects = req.query["subject"];
   const ratings = req.query["rating"];
-  courses = await Course.find({
-    $or: [
-      {
-        $and: [
-          { price: { $gte: lowerBound } },
-          { price: { $lte: upperBound } },
-        ],
-      },
-      { rating: ratings },
-      { subject: { $regex: new RegExp(subjects, "i") } },
-    ],
-  })
-    .sort({ price: 1 })
-    .exec();
+  // let courses = await Course.find({
+  //   $or: [
+  //     {
+  //       $and: [
+  //         { price: { $gte: lowerBound } },
+  //         { price: { $lte: upperBound } },
+  //       ],
+  //     },
+  //     { rating: ratings },
+  //     { subject: { $regex: new RegExp(subjects, "i") } },
+  //   ],
+  // })
+  //   .sort({ price: 1 })
+  //   .exec();
 
   if (subjects && lowerBound && ratings) {
     courses = await Course.find({
@@ -53,6 +53,23 @@ const filterCourses = async (req, res) => {
       .sort({ price: 1 })
       .exec();
   }
+  else if( subjects){
+    courses = await Course.find({
+      subject: { $regex: new RegExp(subjects, "i") }
+    })
+  }
+  else if (ratings){
+    courses = await Course.find({
+      rating: ratings
+    })
+  }
+  else if (lowerBound){
+    courses = await Course.find({
+      price: { $gte: lowerBound },
+      price: { $lte: upperBound }      
+    })
+  }
+  
 
   if (!courses) {
     res.status(400).json({ error: "Empty" });
