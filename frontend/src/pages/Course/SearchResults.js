@@ -11,7 +11,7 @@ const SearchResults = () => {
   const query = new URLSearchParams(location.search).get("search");
   const [error, setError] = useState(false);
   const [courses, setCourses] = useState([]);
-  const [loading, setIsLoading] = useState(false);
+  const [loading, setIsLoading] = useState(true);
   const fetchData = async () => {
     setIsLoading(true);
     const { data } = await axios.get(

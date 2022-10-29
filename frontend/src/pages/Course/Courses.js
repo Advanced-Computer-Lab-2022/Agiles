@@ -6,7 +6,7 @@ import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif"
 const Courses = () => {
   const [courses, setCourses] = useState([]);
-  const [isloading, setIsLoading] = useState(false);
+  const [isloading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -27,8 +27,8 @@ const Courses = () => {
       ) : (
         <>
           <div className={CourseStyles["course-list"]}>
-            {courses.map((el) => {
-              return <CourseCard data={el} />;
+            {courses.map((el,index) => {
+              return <CourseCard data={el} key={index}/>;
             })}
           </div>
           <Filter />;
