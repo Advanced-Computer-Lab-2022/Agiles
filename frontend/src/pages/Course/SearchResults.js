@@ -26,9 +26,9 @@ const SearchResults = () => {
     }
     setIsLoading(false);
   };
-  useEffect(() => {
-    fetchData();
-  }, [query]);
+    useEffect(() => {
+      fetchData();
+    }, [query]);
     
     return (
       <div className="course">
