@@ -4,18 +4,6 @@ import { Link } from "react-router-dom";
 function Instructor() {
   return (
     <div>
-      <Link to="listCourseTitles">
-        {" "}
-        {/* page not created yet */}
-        <button>view course titles ,rating , hours</button>
-      </Link>
-      <Link to="/coursesPrices">
-        {" "}
-        <button>view price of each course</button>
-      </Link>
-      <Link>
-        {/* not created yet */} <button>view course</button>
-      </Link>
       <Link to="/instructorOwnCourses">
         {/* not created yet */} <button>view my course titles</button>
       </Link>

@@ -32,7 +32,7 @@ function InstructorOwnCourses() {
 
     if (name == "") {
       alert("please enter your name");
-    } else if (subject == "" && lowerBound == null && upperBound == null) {
+    } else if (subject === "" && lowerBound === "" && upperBound === "") {
       alert("please fill in at least one filter cell");
     } else {
       let url = "/instructor/filterCourses/?";

@@ -20,16 +20,17 @@ const Navbar = () => {
   return (
     <nav className={NavbarStyles["navbar"]}>
       <h1 className={NavbarStyles["title"]}><a href="/" className={NavbarStyles["title"]}>Agiles</a></h1>
-      <form className={NavbarStyles["search-bar"]}>
+      <form  onSubmit={handleSearch} className={NavbarStyles["search-bar"]}>
         <BsSearch className={NavbarStyles["search-icon"]} />
         <input className={NavbarStyles["inpt"]}
           placeholder="search for anything"
           value={searchString}
+          required
           onChange={handleChange}
         ></input>
         <button
           className={NavbarStyles["search-button"]}
-          onClick={handleSearch}
+         
         >
           search
         </button>

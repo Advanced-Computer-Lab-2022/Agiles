@@ -21,15 +21,15 @@ const CreateCourse = () => {
       price: price,
       description: shortSummary,
       subject: subject,
-      totalHourseOfCourse: courseTotalHours,
-      totalHourseOfSubtitles: subtitleTotalHours,
+      totalHoursOfCourse: courseTotalHours,
+      totalHoursOfSubtitles: subtitleTotalHours,
       language: language,
       discount: 0,
       rating: 0,
       exercises: [],
     };
     event.preventDefault();
-    // event.target.reset();
+    event.target.reset();
     let config = {
       headers: {
         header1: "Access-Control-Allow-Origin",

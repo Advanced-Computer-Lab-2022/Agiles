@@ -33,8 +33,8 @@ const Course = () => {
           <p>price : {course.price}</p>
           <div>subtitles: {course.subtitles}</div>
           <div> subject: {course.subject}</div>
-          <div>totalHourseOfCourse: {course.totalHourseOfCourse}</div>
-          <div>totalHourseOfSubtitles: {course.totalHourseOfSubtitles}</div>
+          <div>totalHoursOfCourse: {course.totalHourseOfCourse}</div>
+          <div>totalHoursOfSubtitles: {course.totalHourseOfSubtitles}</div>
           <div>language: {course.language}</div>
           <div>
             discount: {course.discount == 0 ? "no discount" : course.discount}
