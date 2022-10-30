@@ -11,6 +11,8 @@ const CreateCourse = () => {
   const [shortSummary, setShortSummary] = useState("");
   const [courseTotalHours, setCourseTotalHours] = useState("");
   const [subtitleTotalHours, setSubtitleTotalHours] = useState("");
+  const [free, setFree] = useState("");
+ 
   const [language, setLanguage] = useState("");
 
   const handleSubmit = async (event) => {
@@ -19,6 +21,7 @@ const CreateCourse = () => {
       title: title,
       subtitles: subtitles,
       price: price,
+      free:free,
       description: shortSummary,
       subject: subject,
       totalHoursOfCourse: courseTotalHours,
@@ -79,8 +82,19 @@ const CreateCourse = () => {
             name="price"
             placeholder="price.."
             onChange={(e) => setPrice(e.target.value)}
+        
           />
+
+           <input type="checkbox" 
+            id="freeCheck" 
+            onChange={(e) => setFree(true)}
+            
+            />
+            free
+
+           
         </div>
+       
         <div>
           <label>
             shortSummary <span className="required">*</span>

@@ -31,6 +31,9 @@ const courseSchema = new Schema(
     price: {
       type: Number,
       required: true,
+    },free: {
+      type: Boolean,
+      required: true,
     },
 
     language: {
