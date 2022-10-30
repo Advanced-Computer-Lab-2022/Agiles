@@ -1,16 +1,19 @@
-.course{
+.course {
   display: grid;
 }
-.mainTop{
-    height: 200px;
-    display: grid;
-    background-color: rgb(23, 21, 21);
+.mainTop {
+  margin: 15px;
+  height: 200px;
+  display: grid;
 }
 
-.mainbottom{
-    border: 1px solid black;
+.mainbottom {
+  margin: 15px;
 }
-.h1main{
-    color: rgb(255, 255, 255);
-    size: 100px;
+.h1main {
+  size: 100px;
+}
+
+.star {
+  color: goldenrod;
 }

@@ -3,11 +3,19 @@ import { useState, useEffect } from "react";
 import CourseStyles from "./Course.module.css";
 import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif";
+import { AiFillStar } from "react-icons/ai";
 const Course = () => {
   const [course, setCourse] = useState([]);
   const [isloading, setIsLoading] = useState(false);
   const location = useLocation();
   const courseId = location.state.id;
+  const style = { color: "goldenrod" };
+
+  let x = Array.from(Array(course.rating).keys()).map((el) => {
+    return <AiFillStar style={style}></AiFillStar>;
+  });
+  const stars = <span className={CourseStyles["star"]}> {x}</span>;
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -31,9 +39,11 @@ const Course = () => {
             <div className={CourseStyles["mainTitle"]}>
               <h1 className={CourseStyles["h1main"]}>{course.title}</h1>
             </div>
-            <h3>description : {course.description}</h3>
-            <h4>created By : {course.instructor}</h4>
-            <h5>Rating : {course.rating === 0 ? "unrated" : course.rating}</h5>
+            <h3> subject: {course.subject}</h3>
+
+            <h3>Description : {course.description}</h3>
+            <h4>Instructor : {course.instructor}</h4>
+            <h5>Rating : {course.rating === 0 ? "unrated" : stars}</h5>
             {course.price == 0 ? (
               <div>Price : Free</div>
             ) : (
@@ -52,13 +62,13 @@ const Course = () => {
           </div>
           <div className={CourseStyles["mainbottom"]}>
             <div>subtitles: {course.subtitles}</div>
-            <div> subject: {course.subject}</div>
             <div>totalHoursOfCourse: {course.totalHoursOfCourse}</div>
             <div>totalHours OfSubtitles: {course.totalHoursOfSubtitles}</div>
             <div>language: {course.language}</div>
             <div>
-              discount:{" "}
-              {course.discount === 0 ? "no discount" : course.discount}
+              {course.discount === 0
+                ? "no discount"
+                : `discount: ${course.discount}`}
             </div>
             <div>
               {course.exercises != null
