@@ -3,11 +3,19 @@ import { useState, useEffect } from "react";
 import CourseStyles from "./Course.module.css";
 import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif";
+import { AiFillStar } from "react-icons/ai";
 const Course = () => {
   const [course, setCourse] = useState([]);
   const [isloading, setIsLoading] = useState(false);
   const location = useLocation();
   const courseId = location.state.id;
+  const style = { color: "goldenrod" };
+
+  let x = Array.from(Array(course.rating).keys()).map((el) => {
+    return <AiFillStar style={style}></AiFillStar>;
+  });
+  const stars = <span className={CourseStyles["star"]}> {x}</span>;
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -27,21 +35,22 @@ const Course = () => {
         <LoadingScreen loading={true} logoSrc={spinner} />
       ) : (
         <>
-          <div className={CourseStyles["mainTop"]}>
-            <div className={CourseStyles["mainTitle"]}>
-              <h1 className={CourseStyles["h1main"]}>{course.title}</h1>
-            </div>
-            <h3>description : {course.description}</h3>
-            <h4>created By : {course.instructor}</h4>
-            <h5>Rating : {course.rating === 0 ? "unrated" : course.rating}</h5>
-            {course.price === 0 ? (
-              <div>Price : Free</div>
+          
+          
+              <div className={CourseStyles["mainTop"]}>{course.title}</div>
+            
+            <div className={CourseStyles["item"]}> subject: {course.subject}</div>
+            <div className={CourseStyles["item"]}>Description : {course.description}</div>
+            <div className={CourseStyles["item"]}>Instructor : {course.instructor}</div>
+            <div className={CourseStyles["item"]}>Rating : {course.rating === 0 ? "unrated" : stars}</div>
+            {course.price == 0 ? (
+              <div className={CourseStyles["item"]}>Price : Free</div>
             ) : (
               <>
                 {!window.sessionStorage.getItem("factor") ? (
-                  <div>Price: {course.price} USD</div>
+                  <div className={CourseStyles["item"]}>Price: {course.price} USD</div>
                 ) : (
-                  <div>
+                  <div className={CourseStyles["item"]}>
                     Price:{" "}
                     {course.price * window.sessionStorage.getItem("factor")}{" "}
                     {window.sessionStorage.getItem("currency").toUpperCase()}
@@ -49,23 +58,35 @@ const Course = () => {
                 )}
               </>
             )}
-          </div>
-          <div className={CourseStyles["mainbottom"]}>
-            <div>subtitles: {course.subtitles}</div>
-            <div> subject: {course.subject}</div>
-            <div>totalHoursOfCourse: {course.totalHoursOfCourse}</div>
-            <div>totalHours OfSubtitles: {course.totalHoursOfSubtitles}</div>
-            <div>language: {course.language}</div>
-            <div>
-              discount:{" "}
-              {course.discount === 0 ? "no discount" : course.discount}
+         
+          
+            
+              <div className={CourseStyles["item"]}>subtitles:</div>{" "}
+              {course.subtitles != null
+                ? course.subtitles.map((el) => {
+                    return (
+                      <div>
+                        <span className={CourseStyles["item"]}>subtitle: {el.subtitle}</span>
+                        {"   "}
+                        <span className={CourseStyles["item"]}>time in hrs: {el.time}</span>
+                      </div>
+                    );
+                  })
+                : ""}
+            
+            <div className={CourseStyles["item"]}>totalHoursOfCourse: {course.totalHoursOfCourse}</div>
+            <div className={CourseStyles["item"]}>language: {course.language}</div>
+            <div className={CourseStyles["item"]}>
+              {course.discount === 0
+                ? "no discount"
+                : `discount: ${course.discount}`}
             </div>
-            <div>
+            <div className={CourseStyles["item"]}>
               {course.exercises != null
                 ? `${course.exercises.length} exercises`
                 : ""}
             </div>
-          </div>
+          
         </>
       )}
     </div>

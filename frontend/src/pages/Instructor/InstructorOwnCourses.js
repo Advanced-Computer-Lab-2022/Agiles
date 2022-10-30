@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { CourseCard } from "../../components/CourseCard";
 import axios from "axios";
-
+import InstructorOwnCoursesStyles from "./InstructorOwnCourses.module.css";
 function InstructorOwnCourses() {
   const [courses, SetCourses] = useState([]);
   const [name, setName] = useState("");
   const [firstLoad, setFirstLoad] = useState(true);
   const [searchString, setSearchString] = useState("");
   const [subject, setSubject] = useState("");
-  const [upperBound, setUpperBound] = useState("");
-  const [lowerBound, setLowerBound] = useState("");
+  const [upperBound, setUpperBound] = useState("0");
+  const [lowerBound, setLowerBound] = useState("0");
+  const [free, setFree] = useState(false);
 
   const handleChange = (event) => {
     setName(event.target.value);
@@ -29,18 +30,23 @@ function InstructorOwnCourses() {
   const handleFilterSubmit = async (event) => {
     event.preventDefault();
     setFirstLoad(false);
-
+    let lb = lowerBound;
+    let ub = upperBound;
+    if (free) {
+      lb = "0";
+      ub = "0";
+    }
     if (name == "") {
       alert("please enter your name");
-    } else if (subject === "" && lowerBound === "" && upperBound === "") {
+    } else if (subject == "" && lb == "" && ub == "") {
       alert("please fill in at least one filter cell");
     } else {
       let url = "/instructor/filterCourses/?";
-      if (!(lowerBound == "")) {
-        url += "lowerBound=" + lowerBound + "&";
+      if (!(lb == "")) {
+        url += "lowerBound=" + lb + "&";
       }
-      if (!(upperBound == "")) {
-        url += "upperBound=" + upperBound + "&";
+      if (!(ub == "")) {
+        url += "upperBound=" + ub + "&";
       }
       if (subject != "") {
         url += "subject=" + subject + "&";
@@ -79,48 +85,72 @@ function InstructorOwnCourses() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input required type="text" value={name} onChange={handleChange} />
-        </label>
-        <input type="submit" value="View All Courses" />
-      </form>
-      <div>Search Your Courses</div>
-
-      <form onSubmit={handleSearchSubmit}>
-        <input
-          required
-          type="text"
-          value={searchString}
-          placeholder="Search your courses"
-          onChange={handleSearchChange}
-        />
-        <input type="submit" value="Search" />
-      </form>
-      <div>Filter Your Courses by Subject and/or Price</div>
-      <form onSubmit={handleFilterSubmit}>
-        <input
-          type="text"
-          value={subject}
-          placeholder="subject filter"
-          onChange={handleSubjectChange}
-        />
-        <input
-          type="number"
-          value={lowerBound}
-          placeholder="price lower bound"
-          onChange={handleLowerBoundChange}
-        />
-        <input
-          type="number"
-          value={upperBound}
-          placeholder="price upper bound"
-          onChange={handleUpperBoundChange}
-        />
-        <input type="submit" value="Filter" />
-      </form>
+    <div className={InstructorOwnCoursesStyles["component"]}>
+      <div className={InstructorOwnCoursesStyles["flex"]}>
+        <div>
+          <form onSubmit={handleSubmit}>
+            <div>Name:</div>
+            <input required type="text" value={name} onChange={handleChange} />
+            <input type="submit" value="View All Courses" />
+          </form>
+        </div>
+        <div>
+          <div>Search Your Courses</div>
+          <form onSubmit={handleSearchSubmit}>
+            <input
+              required
+              type="text"
+              value={searchString}
+              placeholder="Search your courses"
+              onChange={handleSearchChange}
+            />
+            <input type="submit" value="Search" />
+          </form>
+        </div>
+        <div>
+          <div>Filter Your Courses by Subject and/or Price</div>
+          <form onSubmit={handleFilterSubmit}>
+            <div>
+              <input
+                type="text"
+                value={subject}
+                placeholder="subject filter"
+                onChange={handleSubjectChange}
+              />
+            </div>
+            <div>
+              <input
+                readOnly={free}
+                type="number"
+                value={lowerBound}
+                placeholder="price lower bound"
+                onChange={handleLowerBoundChange}
+              />
+              <input
+                readOnly={free}
+                type="number"
+                value={upperBound}
+                placeholder="price upper bound"
+                onChange={handleUpperBoundChange}
+              />
+              <label>
+                <input
+                  type="checkbox"
+                  checked={free}
+                  onClick={(event) => {
+                    setFree(event.target.checked);
+                    setLowerBound(0);
+                    setUpperBound(0);
+                  }}
+                  className={InstructorOwnCoursesStyles["checkbox"]}
+                />
+                <span className={InstructorOwnCoursesStyles["span"]}>free</span>
+              </label>
+            </div>
+            <input type="submit" value="Filter" />
+          </form>
+        </div>
+      </div>
       <div>
         {courses.map((el) => {
           return <CourseCard data={el} titleOnly={true} />;

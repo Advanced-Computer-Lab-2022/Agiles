@@ -1,14 +1,16 @@
 import { Link } from "react-router-dom";
-
+import InstructorStyles from "./Instructor.module.css";
 function Instructor() {
   return (
     <div>
       <Link to="/instructorOwnCourses">
-       <button>view my course titles</button>
+        <button className={InstructorStyles["button"]}>My Courses</button>
       </Link>
       <Link to="/instructorCreateCourse">
         {" "}
-        <button>create new course</button>
+        <button className={InstructorStyles["button"]}>
+          create new course
+        </button>
       </Link>
 
       <div></div>

@@ -19,7 +19,6 @@ const filterCourses = async (req, res) => {
   })
     .sort({ price: 1 })
     .exec();
-
   if (subjects && lowerBound && ratings) {
      courses = await Course.find({
       price: { $gte: lowerBound },
@@ -56,18 +55,18 @@ const filterCourses = async (req, res) => {
   else if( subjects){
      courses = await Course.find({
       subject: { $regex: new RegExp(subjects, "i") }
-    })
+    }).exec()
   }
   else if (ratings){
      courses = await Course.find({
       rating: ratings
-    })
+    }).exec()
   }
   else if (lowerBound){
      courses = await Course.find({
       price: { $gte: lowerBound },
       price: { $lte: upperBound }      
-    })
+    }).exec()
   }
   
 
