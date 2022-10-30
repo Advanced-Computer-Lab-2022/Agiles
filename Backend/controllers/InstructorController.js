@@ -55,8 +55,10 @@ const filterCoursesByInstructor = async (req, res) => {
       $and: [
         {
           $and: [
-            { price: { $gte: lowerBound } },
-            { price: { $lte: upperBound } },
+            {$and: [
+              {price: { $gte: lowerBound }},
+              {price: { $lte: upperBound }}
+              ]}  ,
             { instructor: username },
           ],
         },
@@ -67,8 +69,10 @@ const filterCoursesByInstructor = async (req, res) => {
       .exec();
   } else if (lowerBound) {
     courses = await Course.find({
-      price: { $gte: lowerBound },
-      price: { $lte: upperBound },
+      $and: [
+        {price: { $gte: lowerBound }},
+        {price: { $lte: upperBound }}
+        ]  ,
       instructor: username,
     })
       .sort({ price: 1 })
