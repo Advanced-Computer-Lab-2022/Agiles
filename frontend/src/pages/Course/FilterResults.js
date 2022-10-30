@@ -19,8 +19,8 @@ const FilterResults =  () => {
     setIsLoading(true);
     let url = "/course/listCourses/filter" + location.search
     console.log(url)
-  let res = await axios.get("/course/listCourses/filter" + location.search);
-  console.log({res})
+  let {res} = await axios.get("/course/listCourses/filter" + location.search);
+  console.log(res)
   if(!res){
     setError(true);
   }
