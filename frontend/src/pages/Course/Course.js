@@ -61,9 +61,21 @@ const Course = () => {
             )}
           </div>
           <div className={CourseStyles["mainbottom"]}>
-            <div>subtitles: {course.subtitles}</div>
+            <div>
+              <div>subtitles:</div>{" "}
+              {course.subtitles != null
+                ? course.subtitles.map((el) => {
+                    return (
+                      <div>
+                        <span>subtitle: {el.subtitle}</span>
+                        {"   "}
+                        <span>time in hrs: {el.time}</span>
+                      </div>
+                    );
+                  })
+                : ""}
+            </div>
             <div>totalHoursOfCourse: {course.totalHoursOfCourse}</div>
-            <div>totalHours OfSubtitles: {course.totalHoursOfSubtitles}</div>
             <div>language: {course.language}</div>
             <div>
               {course.discount === 0
