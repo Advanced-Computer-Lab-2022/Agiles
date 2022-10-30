@@ -35,23 +35,22 @@ const Course = () => {
         <LoadingScreen loading={true} logoSrc={spinner} />
       ) : (
         <>
-          <div className={CourseStyles["mainTop"]}>
-            <div className={CourseStyles["mainTitle"]}>
-              <h1 className={CourseStyles["h1main"]}>{course.title}</h1>
-            </div>
-            <h3> subject: {course.subject}</h3>
-
-            <h3>Description : {course.description}</h3>
-            <h4>Instructor : {course.instructor}</h4>
-            <h5>Rating : {course.rating === 0 ? "unrated" : stars}</h5>
+          
+          
+              <div className={CourseStyles["mainTop"]}>{course.title}</div>
+            
+            <div className={CourseStyles["item"]}> subject: {course.subject}</div>
+            <div className={CourseStyles["item"]}>Description : {course.description}</div>
+            <div className={CourseStyles["item"]}>Instructor : {course.instructor}</div>
+            <div className={CourseStyles["item"]}>Rating : {course.rating === 0 ? "unrated" : stars}</div>
             {course.price == 0 ? (
-              <div>Price : Free</div>
+              <div className={CourseStyles["item"]}>Price : Free</div>
             ) : (
               <>
                 {!window.sessionStorage.getItem("factor") ? (
-                  <div>Price: {course.price} USD</div>
+                  <div className={CourseStyles["item"]}>Price: {course.price} USD</div>
                 ) : (
-                  <div>
+                  <div className={CourseStyles["item"]}>
                     Price:{" "}
                     {course.price * window.sessionStorage.getItem("factor")}{" "}
                     {window.sessionStorage.getItem("currency").toUpperCase()}
@@ -59,35 +58,35 @@ const Course = () => {
                 )}
               </>
             )}
-          </div>
-          <div className={CourseStyles["mainbottom"]}>
-            <div>
-              <div>subtitles:</div>{" "}
+         
+          
+            
+              <div className={CourseStyles["item"]}>subtitles:</div>{" "}
               {course.subtitles != null
                 ? course.subtitles.map((el) => {
                     return (
                       <div>
-                        <span>subtitle: {el.subtitle}</span>
+                        <span className={CourseStyles["item"]}>subtitle: {el.subtitle}</span>
                         {"   "}
-                        <span>time in hrs: {el.time}</span>
+                        <span className={CourseStyles["item"]}>time in hrs: {el.time}</span>
                       </div>
                     );
                   })
                 : ""}
-            </div>
-            <div>totalHoursOfCourse: {course.totalHoursOfCourse}</div>
-            <div>language: {course.language}</div>
-            <div>
+            
+            <div className={CourseStyles["item"]}>totalHoursOfCourse: {course.totalHoursOfCourse}</div>
+            <div className={CourseStyles["item"]}>language: {course.language}</div>
+            <div className={CourseStyles["item"]}>
               {course.discount === 0
                 ? "no discount"
                 : `discount: ${course.discount}`}
             </div>
-            <div>
+            <div className={CourseStyles["item"]}>
               {course.exercises != null
                 ? `${course.exercises.length} exercises`
                 : ""}
             </div>
-          </div>
+          
         </>
       )}
     </div>
