@@ -6,7 +6,7 @@ import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif"
 const Courses = () => {
   const [courses, setCourses] = useState([]);
-  const [isloading, setIsLoading] = useState(true);
+  const [isloading, setIsLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -31,7 +31,7 @@ const Courses = () => {
               return <CourseCard data={el} key={index}/>;
             })}
           </div>
-          <Filter />;
+          <Filter />
         </>
       )}
     </div>

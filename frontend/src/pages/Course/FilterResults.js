@@ -5,6 +5,7 @@ import { CourseCard } from "../../components/CourseCard";
 import axios from "axios";
 import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif";
+import Filter from "../../components/Filter";
 
 
 const FilterResults =  () => {
@@ -45,13 +46,13 @@ const FilterResults =  () => {
           ) : (
             <>
               {" "}
-              (
+              
               <div className={CourseStyles["course-list"]}>
                 {courses.map((el) => {
                   return <CourseCard data={el} />;
                 })}
               </div>
-              )
+              <Filter />
             </>
           )}
         </>
