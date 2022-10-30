@@ -25,17 +25,18 @@ const Courses = (props) => {
   }, []);
 
   return (
-    <div className="course">
+    <div className={CourseStyles["course"]}>
       {isloading ? (
         <LoadingScreen loading={true} logoSrc={spinner} />
       ) : (
         <>
+        <Filter />
           <div className={CourseStyles["course-list"]}>
             {courses.map((el, index) => {
               return <CourseCard corporate={corporate} data={el} key={index} />;
             })}
           </div>
-          <Filter />
+          
         </>
       )}
     </div>

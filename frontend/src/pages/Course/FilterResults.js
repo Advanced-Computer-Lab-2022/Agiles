@@ -12,7 +12,6 @@ const FilterResults =  () => {
   const location = useLocation();
   console.log(location.search);
   const query = new URLSearchParams(location.search);
-
   const [error, setError] = useState(false);
   const [courses, setCourses] = useState([]);
   const [loading, setIsLoading] = useState(false);
@@ -20,7 +19,7 @@ const FilterResults =  () => {
     setIsLoading(true);
     let url = "/course/listCourses/filter" + location.search
     console.log(url)
-  let {res} = await axios.get("/course/listCourses/filter" + location.search);
+  let res = await axios.get("/course/listCourses/filter" + location.search);
   console.log(res)
   if(!res){
     setError(true);
@@ -36,7 +35,7 @@ const FilterResults =  () => {
   }, [location.search]);
 
   return (
-    <div className="course">
+    <div className={CourseStyles["course"]}>
       {loading ? (
         <LoadingScreen loading={true} logoSrc={spinner} />
       ) : (
@@ -46,13 +45,11 @@ const FilterResults =  () => {
           ) : (
             <>
               {" "}
-              
               <div className={CourseStyles["course-list"]}>
                 {courses.map((el) => {
                   return <CourseCard data={el} />;
                 })}
               </div>
-              <Filter />
             </>
           )}
         </>

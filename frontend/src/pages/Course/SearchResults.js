@@ -35,7 +35,7 @@ const SearchResults = (props) => {
   }, [query]);
 
   return (
-    <div className="course">
+    <div className={CourseStyles["course"]}>
       {loading ? (
         <LoadingScreen loading={true} logoSrc={spinner} />
       ) : (
@@ -44,13 +44,13 @@ const SearchResults = (props) => {
             <h1>No matches</h1>
           ) : (
             <>
-              {" "}
+              {" "} 
+              <Filter corporate={corporate} />
               <div className={CourseStyles["course-list"]}>
                 {courses.map((el) => {
                   return <CourseCard data={el} corporate={corporate} />;
                 })}
               </div>
-              <Filter corporate={corporate} />
             </>
           )}
         </>

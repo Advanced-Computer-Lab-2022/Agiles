@@ -1,3 +1,20 @@
+.filter{
+  flex: 1;
+  border-right: 0.5px solid rgb(230, 227, 227);
+  min-height: 100vh;
+}
+.top {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: 8px;
+  color: #ff6529;
+}
 .filter-button {
     display: flex;
     flex-wrap: wrap;
@@ -8,3 +25,7 @@
   .panel{
     border-top: 1px solid #d1d7dc;
   }
+  .rating{
+    display: grid;
+  }
+  
