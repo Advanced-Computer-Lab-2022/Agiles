@@ -3,8 +3,12 @@ import { useState, useEffect } from "react";
 import CourseStyles from "./Courses.module.css";
 import Filter from "../../components/Filter";
 import LoadingScreen from "react-loading-screen";
-import spinner from "../../static/download.gif"
-const Courses = () => {
+import spinner from "../../static/download.gif";
+const Courses = (props) => {
+  let corporate = false;
+  if (props.corporate) {
+    corporate = true;
+  }
   const [courses, setCourses] = useState([]);
   const [isloading, setIsLoading] = useState(false);
   useEffect(() => {
@@ -27,8 +31,8 @@ const Courses = () => {
       ) : (
         <>
           <div className={CourseStyles["course-list"]}>
-            {courses.map((el,index) => {
-              return <CourseCard data={el} key={index}/>;
+            {courses.map((el, index) => {
+              return <CourseCard corporate={corporate} data={el} key={index} />;
             })}
           </div>
           <Filter />

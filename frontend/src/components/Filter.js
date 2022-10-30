@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const Filter = () => {
+const Filter = (props) => {
   const [minPrice, setMinPrice] = useState();
   const [maxPrice, setMaxPrice] = useState();
   const [subject, setSubject] = useState("");
@@ -11,7 +11,6 @@ const Filter = () => {
   let query = "";
   const handleSubmitSubject = async (event) => {
     event.preventDefault();
-
 
     if (query == "") query = query + `subject=${subject}`;
     else query = query + `&subject=${subject}`;
@@ -43,7 +42,6 @@ const Filter = () => {
       setRating(event.target.value);
       if (query == "") query = query + `rating=${rating}`;
       else query = query + `&rating=${rating}`;
-      
     } else {
       setRating(5);
       query.replace(`?rating=${rating}`, `rating=${5}`);
@@ -79,10 +77,14 @@ const Filter = () => {
   };
 
   const handleSubmit = async (event) => {
-    if (subject == "" && minPrice == null && maxPrice == null && rating == null) {
+    if (
+      subject == "" &&
+      minPrice == null &&
+      maxPrice == null &&
+      rating == null
+    ) {
       alert("please fill in at least one filter cell");
-    }
-    else {
+    } else {
       let url = "";
       if (!(minPrice == null)) {
         url += "lowerBound=" + minPrice + "&";
@@ -93,59 +95,60 @@ const Filter = () => {
       if (subject != "") {
         url += "subject=" + subject + "&";
       }
-      if ((rating != null)){
+      if (rating != null) {
         url += "rating=" + rating + "&";
       }
       console.log(url);
-      if(url!= ""){
-      navigate({
-        pathname: "/courses/filter",
-        search: url,
-      });
+      if (url != "") {
+        navigate({
+          pathname: "/courses/filter",
+          search: url,
+        });
+      }
     }
-      
-    }
-  }
-
+  };
+  let priceFilter = (
+    <div className="panel">
+      <h3>Price</h3>
+      <input
+        type="number"
+        placeholder="MinPrice"
+        value={minPrice}
+        onChange={handleChangePrice1}
+      />
+      <input
+        type="number"
+        placeholder="MaxPRice"
+        value={maxPrice}
+        onChange={handleChangePrice2}
+      />
+      <label>FREEE</label>
+      <input type="checkbox" value={0} onChange={handleChangePriceFree} />
+    </div>
+  );
   return (
     <div>
       <form onSubmit={handleSubmit}>
-      <div className="panel">
-        <h3>Subject</h3>
-        <label> Enter Subject</label>
-        <input type="text" value={subject} onChange={handleChangeSubject} />
-      </div>
-      <div className="panel">
-        <h3>Rating</h3>
-        <label> 1</label>
-        <input type="checkbox" value={1} onChange={handleChangeRating} />
-        <label>2</label>
-        <input type="checkbox" value={2} onChange={handleChangeRating} />
-        <label>3</label>
-        <input type="checkbox" value={3} onChange={handleChangeRating} />
-        <label> 4</label>
-        <input type="checkbox" value={4} onChange={handleChangeRating} />
-        <label> 5</label>
-        <input type="checkbox" value={5} onChange={handleChangeRating} />
-      </div>
-      <div className="panel">
-        <h3>Price</h3>
-        <input
-          type="number"
-          placeholder="MinPrice"
-          value={minPrice}
-          onChange={handleChangePrice1}
-        />
-        <input
-          type="number"
-          placeholder="MaxPRice"
-          value={maxPrice}
-          onChange={handleChangePrice2}
-        />
-        <label>FREEE</label>
-        <input type="checkbox" value={0} onChange={handleChangePriceFree} />
-      </div>
-      <button type="submit">Filter</button>
+        <div className="panel">
+          <h3>Subject</h3>
+          <label> Enter Subject</label>
+          <input type="text" value={subject} onChange={handleChangeSubject} />
+        </div>
+        <div className="panel">
+          <h3>Rating</h3>
+          <label> 1</label>
+          <input type="checkbox" value={1} onChange={handleChangeRating} />
+          <label>2</label>
+          <input type="checkbox" value={2} onChange={handleChangeRating} />
+          <label>3</label>
+          <input type="checkbox" value={3} onChange={handleChangeRating} />
+          <label> 4</label>
+          <input type="checkbox" value={4} onChange={handleChangeRating} />
+          <label> 5</label>
+          <input type="checkbox" value={5} onChange={handleChangeRating} />
+        </div>
+        {props.corporate ? "" : priceFilter}
+        <button type="submit">Filter</button>
       </form>
     </div>
   );

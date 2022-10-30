@@ -7,12 +7,16 @@ import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif";
 import Filter from "../../components/Filter";
 
-const SearchResults = () => {
+const SearchResults = (props) => {
   const location = useLocation();
   const query = new URLSearchParams(location.search).get("search");
   const [error, setError] = useState(false);
   const [courses, setCourses] = useState([]);
   const [loading, setIsLoading] = useState(false);
+  let corporate = false;
+  if (props.corporate) {
+    corporate = true;
+  }
   const fetchData = async () => {
     setIsLoading(true);
     const { data } = await axios.get(
@@ -41,13 +45,12 @@ const SearchResults = () => {
           ) : (
             <>
               {" "}
-              
               <div className={CourseStyles["course-list"]}>
                 {courses.map((el) => {
-                  return <CourseCard data={el} />;
+                  return <CourseCard data={el} corporate={corporate} />;
                 })}
               </div>
-              <Filter />
+              <Filter corporate={corporate} />
             </>
           )}
         </>

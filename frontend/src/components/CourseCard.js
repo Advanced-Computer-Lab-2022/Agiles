@@ -7,6 +7,15 @@ export const CourseCard = (props) => {
   const handleClick = () => {
     navigate("/course", { state: { id: courseId } });
   };
+  if (props.corporate) {
+    return (
+      <div className="card">
+        <h4>Title: {props.data.title}</h4>
+        <div>Total hours of Course: {props.data.totalHoursOfCourse}</div>
+        <div>{props.data.rating === 0 ? "unrated" : props.data.rating}</div>
+      </div>
+    );
+  }
   if (props.titleOnly) {
     return (
       <div className="card">

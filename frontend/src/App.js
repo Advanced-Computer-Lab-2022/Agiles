@@ -20,14 +20,15 @@ import Course from "./pages/Course/Course";
 import FilterResults from "./pages/Course/FilterResults";
 import { useState } from "react";
 function App() {
-  const [showNav , setShowNav] = useState(true);
+  const [showNav, setShowNav] = useState(true);
   return (
     <div className="App">
       <BrowserRouter>
-      { showNav && <nav>
-        <Navbar />
-        </nav>
-      }
+        {showNav && (
+          <nav>
+            <Navbar />
+          </nav>
+        )}
         <div className="pages">
           <Routes>
             {/* main pages */}
@@ -35,15 +36,25 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             {/* admin pages */}
-            <Route path="/admin" element={<Admin funcNav={setShowNav} /> } />
-            <Route path="/addInstructor" element={<AddInstructor  funcNav={setShowNav}/>} />{" "}
-            <Route path="/addAdmin" element={<AddAdmin funcNav={setShowNav} />} />{" "}
-            <Route path="/addCorporate" element={<AddCorporate  funcNav={setShowNav}/>} />{" "}
+            <Route path="/admin" element={<Admin funcNav={setShowNav} />} />
+            <Route
+              path="/addInstructor"
+              element={<AddInstructor funcNav={setShowNav} />}
+            />{" "}
+            <Route
+              path="/addAdmin"
+              element={<AddAdmin funcNav={setShowNav} />}
+            />{" "}
+            <Route
+              path="/addCorporate"
+              element={<AddCorporate funcNav={setShowNav} />}
+            />{" "}
             <Route path="/instructor" element={<Instructor />} />
             <Route path="/itrainee" element={<IndividualTrainee />} />
             <Route path="/ctrainee" element={<CorporateTrainee />} />
             {/* requirement pages */}
             <Route path="/courses" element={<Courses />} />{" "}
+            <Route path="/ccourses" element={<Courses corporate={true} />} />{" "}
             <Route path="/course" element={<Course />} />{" "}
             {/* requirement no: */}
             <Route path="/createCourse" element={<CreateCourse />} />{" "}
@@ -54,15 +65,18 @@ function App() {
             />{" "}
             {/* requirement no: */}
             {/* requirement no: */}
-            
             {/* requirement no: */}
             {/* requirement no: 6*/}
             <Route path="/coursesPrices" element={<CoursesPrices />} />{" "}
             {/* requirement no: */}
             <Route path="/search" element={<SearchResults />} />{" "}
+            <Route
+              path="/csearch"
+              element={<SearchResults corporate={true} />}
+            />{" "}
             <Route path="/instructorCreateCourse" element={<CreateCourse />} />{" "}
             {/* requirement no: */}
-            <Route path="/courses/filter" element = {<FilterResults />} />{" "}
+            <Route path="/courses/filter" element={<FilterResults />} />{" "}
           </Routes>
         </div>
       </BrowserRouter>
