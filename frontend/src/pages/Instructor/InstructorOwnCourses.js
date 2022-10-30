@@ -8,8 +8,8 @@ function InstructorOwnCourses() {
   const [firstLoad, setFirstLoad] = useState(true);
   const [searchString, setSearchString] = useState("");
   const [subject, setSubject] = useState("");
-  const [upperBound, setUpperBound] = useState("");
-  const [lowerBound, setLowerBound] = useState("");
+  const [upperBound, setUpperBound] = useState("0");
+  const [lowerBound, setLowerBound] = useState("0");
   const [free, setFree] = useState(false);
 
   const handleChange = (event) => {
@@ -30,18 +30,23 @@ function InstructorOwnCourses() {
   const handleFilterSubmit = async (event) => {
     event.preventDefault();
     setFirstLoad(false);
-
+    let lb = lowerBound;
+    let ub = upperBound;
+    if (free) {
+      lb = "0";
+      ub = "0";
+    }
     if (name == "") {
       alert("please enter your name");
-    } else if (subject === "" && lowerBound === "" && upperBound === "") {
+    } else if (subject == "" && lb == "" && ub == "") {
       alert("please fill in at least one filter cell");
     } else {
       let url = "/instructor/filterCourses/?";
-      if (!(lowerBound == "")) {
-        url += "lowerBound=" + lowerBound + "&";
+      if (!(lb == "")) {
+        url += "lowerBound=" + lb + "&";
       }
-      if (!(upperBound == "")) {
-        url += "upperBound=" + upperBound + "&";
+      if (!(ub == "")) {
+        url += "upperBound=" + ub + "&";
       }
       if (subject != "") {
         url += "subject=" + subject + "&";

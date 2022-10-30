@@ -34,7 +34,7 @@ const Course = () => {
             <h3>description : {course.description}</h3>
             <h4>created By : {course.instructor}</h4>
             <h5>Rating : {course.rating === 0 ? "unrated" : course.rating}</h5>
-            {course.price === 0 ? (
+            {course.price == 0 ? (
               <div>Price : Free</div>
             ) : (
               <>
