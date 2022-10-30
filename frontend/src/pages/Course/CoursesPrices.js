@@ -1,6 +1,6 @@
 import { CoursePrices } from "../../components/CoursePrices";
 import { useState, useEffect } from "react";
-import CourseStyles from "./Course.module.css";
+import CourseStyles from "./Courses.module.css";
 const CoursesPrices = () => {
   const [courses, setCourses] = useState([]);
   useEffect(() => {

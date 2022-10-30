@@ -39,8 +39,6 @@ function App() {
             <Route path="/addInstructor" element={<AddInstructor  funcNav={setShowNav}/>} />{" "}
             <Route path="/addAdmin" element={<AddAdmin funcNav={setShowNav} />} />{" "}
             <Route path="/addCorporate" element={<AddCorporate  funcNav={setShowNav}/>} />{" "}
-
-
             <Route path="/instructor" element={<Instructor />} />
             <Route path="/itrainee" element={<IndividualTrainee />} />
             <Route path="/ctrainee" element={<CorporateTrainee />} />

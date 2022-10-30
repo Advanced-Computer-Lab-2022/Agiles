@@ -1,4 +1,16 @@
-.course-list {
+.course{
   display: grid;
 }
+.mainTop{
+    height: 200px;
+    display: grid;
+    background-color: rgb(23, 21, 21);
+}
 
+.mainbottom{
+    border: 1px solid black;
+}
+.h1main{
+    color: rgb(255, 255, 255);
+    size: 100px;
+}

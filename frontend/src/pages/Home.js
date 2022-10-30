@@ -9,27 +9,13 @@ const Home = () => {
       <img src={a} alt="mainImage" className="mainImage"></img>
       <div className="guestContainer">
         <Link to="/courses">
-          <button className="guestButtons">view all courses</button>
+          <button className="guestButtons">Explore courses</button>
         </Link>
         
 <Link to="/coursesPrices">
 <button className="guestButtons">View the price of each course</button>
 </Link>
       </div>
-      
-
-      {/* <Link to="/instructor">
-        <button>Instructor (Azooz)</button>
-      </Link>
-      <Link to="/itrainee">
-        <button> I Trainee (Abdullah)</button>
-      </Link>
-      <Link to="/ctrainee">
-        <button>C Trainee (Adham)</button>
-      </Link>
-      <Link to="/guest">
-        <button>Guest (Yahia)</button>
-  </Link>*/}
     </div>
   );
 };

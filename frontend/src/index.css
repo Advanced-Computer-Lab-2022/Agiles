@@ -10,4 +10,6 @@
 }
 button{
   cursor: pointer;
+  background-color: #ff6529;
+  color: white;
 }

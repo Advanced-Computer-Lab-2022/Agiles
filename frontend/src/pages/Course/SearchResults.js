@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import CourseStyles from "./Course.module.css";
+import CourseStyles from "./Courses.module.css";
 import { CourseCard } from "../../components/CourseCard";
 import axios from "axios";
 import LoadingScreen from "react-loading-screen";

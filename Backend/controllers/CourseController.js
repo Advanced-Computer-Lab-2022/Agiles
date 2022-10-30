@@ -143,7 +143,7 @@ const coursesDetails = async (req, res) => {
   try {
     const courseAttr = await Course.find(
       {},
-      { title: 1, totalHourseOfCourse: 1, price: 1, rating: 1, _id: 1 }
+      { title: 1, totalHoursOfCourse: 1, price: 1, rating: 1, _id: 1 }
     );
     res.status(200).send(courseAttr);
   } catch (err) {
@@ -156,7 +156,7 @@ const oneCoursesDetails = async (req, res) => {
   try {
     const courseAttr = await Course.findOne(
       { _id: cid },
-      { title: 1, totalHourseOfCourse: 1, rating: 1, _id: 1 }
+      { title: 1, totalHoursOfCourse: 1, rating: 1, _id: 1 }
     );
     res.status(200).send(courseAttr);
   } catch (err) {
@@ -178,7 +178,6 @@ const coursePrice = async (req, res) => {
   } catch (err) {
     res.status(500).json({ mssg: "can't find prices of courses" });
   }
- // console.log(window.sessionStorage.getItem("country"));
 };
 
 const getCourseById = async (req, res) => {
@@ -199,16 +198,3 @@ module.exports = {
   courseSearch,
   getCourseById,
 };
-
-/*
-//select country
-courserouter.post("/users", async (req, res) => {
-  try {
-    const country = req.query.country;
-    res.cookie("country", country)
-    console.log(cookie["country"]);
-  } catch (err) {
-    res.status(500).json({ mssg: "can't find prices of courses" });
-  }
-});
-*/

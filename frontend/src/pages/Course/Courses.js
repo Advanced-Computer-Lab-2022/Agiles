@@ -1,6 +1,6 @@
 import { CourseCard } from "../../components/CourseCard";
 import { useState, useEffect } from "react";
-import CourseStyles from "./Course.module.css";
+import CourseStyles from "./Courses.module.css";
 import Filter from "../../components/Filter";
 import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif"

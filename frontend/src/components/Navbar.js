@@ -30,7 +30,6 @@ const Navbar = () => {
         ></input>
         <button
           className={NavbarStyles["search-button"]}
-         
         >
           search
         </button>
@@ -42,7 +41,6 @@ const Navbar = () => {
         <Link to="/signup">Sign up</Link>
       </div>
       <SelectCountry></SelectCountry>
-      {/* <div>{search}</div> */}
     </nav>
   );
 };
