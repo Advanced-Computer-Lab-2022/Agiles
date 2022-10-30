@@ -5,45 +5,59 @@ const filterCourses = async (req, res) => {
   const upperBound = req.query["upperBound"];
   const subjects = req.query["subject"];
   const ratings = req.query["rating"];
-  let courses = await Course.find({
-    $or: [
-      {
-        $and: [
-          { price: { $gte: lowerBound } },
-          { price: { $lte: upperBound } },
-        ],
-      },
-      { rating: ratings },
-      { subject: { $regex: new RegExp(subjects, "i") } },
-    ],
-  })
-    .sort({ price: 1 })
-    .exec();
+  // let courses = await Course.find({
+  //   $or: [
+  //     {
+  //       $and: [
+  //         { price: { $gte: lowerBound } },
+  //         { price: { $lte: upperBound } },
+  //       ],
+  //     },
+  //     { rating: ratings },
+  //     { subject: { $regex: new RegExp(subjects, "i") } },
+  //   ],
+  // })
+  //   .sort({ price: 1 })
+  //   .exec();
+
+  let courses = []
+  
   if (subjects && lowerBound && ratings) {
      courses = await Course.find({
-      price: { $gte: lowerBound },
-      price: { $lte: upperBound },
+      $and: [
+        {price: { $gte: lowerBound }},
+        {price: { $lte: upperBound }}
+        ]  ,
       rating: ratings,
       subject: { $regex: new RegExp(subjects, "i") },
     })
       .sort({ price: 1 })
       .exec();
+      console.log("subjects and lowerbound and rating")
   } else if (subjects && lowerBound) {
      courses = await Course.find({
-      price: { $gte: lowerBound },
-      price: { $lte: upperBound },
+      $and: [
+        {price: { $gte: lowerBound }},
+        {price: { $lte: upperBound }}
+        ]  ,
       subject: { $regex: new RegExp(subjects, "i") },
     })
       .sort({ price: 1 })
       .exec();
+      console.log("subjects and lowerbound")
+
   } else if (lowerBound && ratings) {
      courses = await Course.find({
-      price: { $gte: lowerBound },
-      price: { $lte: upperBound },
+      $and: [
+        {price: { $gte: lowerBound }},
+        {price: { $lte: upperBound }}
+        ]  ,
       rating: ratings,
     })
       .sort({ price: 1 })
       .exec();
+      console.log(" lowerbound and rating")
+
   } else if (subjects && ratings) {
      courses = await Course.find({
       rating: ratings,
@@ -51,22 +65,34 @@ const filterCourses = async (req, res) => {
     })
       .sort({ price: 1 })
       .exec();
+      console.log("subjects and  rating")
+
   }
   else if( subjects){
      courses = await Course.find({
       subject: { $regex: new RegExp(subjects, "i") }
     }).exec()
+    console.log("subjects")
+
   }
   else if (ratings){
      courses = await Course.find({
       rating: ratings
     }).exec()
+    console.log("rating")
+
   }
   else if (lowerBound){
-     courses = await Course.find({
-      price: { $gte: lowerBound },
-      price: { $lte: upperBound }      
+      courses = await Course.find({
+      $and: [
+      {price: { $gte: lowerBound }},
+      {price: { $lte: upperBound }}
+      ]  
     }).exec()
+    console.log("lowerbound ")
+    console.log(lowerBound)
+    console.log(courses)
+
   }
   
 

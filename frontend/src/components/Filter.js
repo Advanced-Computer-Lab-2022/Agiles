@@ -47,13 +47,21 @@ const Filter = (props) => {
       if (!(minPrice == null)) {
         url += "lowerBound=" + minPrice + "&";
       }
+      else if (maxPrice != null){
+        setMinPrice(0)
+        url += "lowerBound=" + 0   + "&";
+      }
       if (!(maxPrice == null)) {
         url += "upperBound=" + maxPrice + "&";
+      }
+      else if (minPrice != null){
+        setMaxPrice(Number.MAX_SAFE_INTEGER)
+        url += "upperBound=" + Number.MAX_SAFE_INTEGER + "&";
       }
       if (subject != "") {
         url += "subject=" + subject + "&";
       }
-      if (rating != null) {
+      if ((rating != null)){
         url += "rating=" + rating + "&";
       }
       console.log(url);
@@ -77,7 +85,7 @@ const Filter = (props) => {
       />
       <input
         type="number"
-        placeholder="MaxPRice"
+        placeholder="MaxPrice"
         value={maxPrice}
         onChange={handleChangePrice2}
       />
