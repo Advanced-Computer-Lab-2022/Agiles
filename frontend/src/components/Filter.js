@@ -81,7 +81,7 @@ const Filter = (props) => {
   };
   let priceFilter = (
     <div className={FilterStyles["prices"]}>
-      <h3>Price</h3>
+      <h3>Price in DOLLARS</h3>
       <hr></hr>
       <input
         type="number"
