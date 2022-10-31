@@ -40,7 +40,7 @@ const AddInstructor = (props) => {
       <div className="newContainer">
         <AdminNavbar></AdminNavbar>
         <div className="top">
-          <h1 className="h1Class">ADD NEW INSTRUCTOR</h1>
+          <h1 className="h1Class">Add new Instructor</h1>
         </div>
         <div className="bottom">
           <div className="left">

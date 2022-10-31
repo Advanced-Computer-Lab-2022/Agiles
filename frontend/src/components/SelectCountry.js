@@ -27,7 +27,13 @@ function SelectCountry() {
         const data = await response.json();
         let y = Object.values(data);
         window.sessionStorage.setItem("factor", y[1]);
-        navigate(location);
+        if (window.location.href == "http://localhost:3000/course" ){
+        const courseId = location.state.id;
+        navigate(location, { state: { id: courseId }});
+        }
+        else{
+          navigate(location);
+        }
       });
     });
   };

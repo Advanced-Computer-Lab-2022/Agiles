@@ -15,12 +15,6 @@ const Home = () => {
         <Link to="/courses">
           <button className="guestButtons">Explore courses</button>
         </Link>
-
-        <Link to="/coursesPrices">
-          <button className="guestButtons">
-            View the price of each course
-          </button>
-        </Link>
       </div>
     </div>
   );

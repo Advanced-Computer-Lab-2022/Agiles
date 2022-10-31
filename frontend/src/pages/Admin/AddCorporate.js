@@ -39,7 +39,7 @@ const AddCorporate = (props) => {
       <div className="newContainer">
         <AdminNavbar></AdminNavbar>
         <div className="top">
-          <h1 className="h1Class">ADD NEW CORPORATE Trainee</h1>
+          <h1 className="h1Class">Add New Corporate Trainee</h1>
         </div>
         <div className="bottom">
           <div className="left">

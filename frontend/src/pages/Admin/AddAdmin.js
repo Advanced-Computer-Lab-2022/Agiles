@@ -4,11 +4,9 @@ import "./AddInstructor.css";
 import AdminNavbar from "./adminComponents/AdminNavbar";
 import AdminSidebar from "./adminComponents/AdminSidebar";
 import AdminImg from "../../static/Admin.png";
-import { ToastContainer, toast } from "react-toastify";
 const AddAdmin = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
   props.funcNav(false);
   const handleSumbit = async (event) => {
     const admin = { username: username, password: password };
@@ -34,7 +32,7 @@ const AddAdmin = (props) => {
       <div className="newContainer">
         <AdminNavbar></AdminNavbar>
         <div className="top">
-          <h1 className="h1Class">ADD New Admin</h1>
+          <h1 className="h1Class">Add New Admin</h1>
         </div>
         <div className="bottom">
           <div className="left">

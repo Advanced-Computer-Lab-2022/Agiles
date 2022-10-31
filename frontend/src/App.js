@@ -13,7 +13,6 @@ import IndividualTrainee from "./pages/IndvidualTrainee/IndividualTrainee";
 import CorporateTrainee from "./pages/CorporateTrainee/CorporateTrainee";
 import InstructorOwnCourses from "./pages/Instructor/InstructorOwnCourses";
 import CreateCourse from "./pages/Course/CreateCourse";
-import CoursesPrices from "./pages/Course/CoursesPrices";
 import Instructor from "./pages/Instructor/Instructor";
 import SearchResults from "./pages/Course/SearchResults";
 import Course from "./pages/Course/Course";
@@ -67,7 +66,6 @@ function App() {
             {/* requirement no: */}
             {/* requirement no: */}
             {/* requirement no: 6*/}
-            <Route path="/coursesPrices" element={<CoursesPrices />} />{" "}
             {/* requirement no: */}
             <Route path="/search" element={<SearchResults />} />{" "}
             <Route

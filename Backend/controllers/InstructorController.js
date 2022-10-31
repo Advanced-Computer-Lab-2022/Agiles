@@ -8,7 +8,7 @@ const createInstructor = async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
   const newInstructor = new Instructor({
-    fullName: fullname,
+    fullname: fullname,
     username: username,
     password: hashedPassword,
     email: email,
@@ -24,7 +24,6 @@ const createInstructor = async (req, res) => {
 
 const listAllInstructorCoursesTitles = async (req, res) => {
   const username = req.query["username"];
-  console.log("username: " + username);
   try {
     const courseAttr = await Course.find(
       { instructor: username },
