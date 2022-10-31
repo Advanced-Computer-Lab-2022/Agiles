@@ -21,7 +21,6 @@ function SelectCountry() {
         window.sessionStorage.setItem("currency", data[0].currencies[0].code);
       }
       const curr = window.sessionStorage.getItem("currency").toLowerCase();
-      window.sessionStorage.setItem("factor", 1);
       fetch(
         `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/usd/${curr}.json`
       ).then(async (response) => {

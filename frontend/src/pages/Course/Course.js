@@ -82,8 +82,15 @@ const Course = () => {
                 : `discount: ${course.discount}`}
             </div>
             <div className={CourseStyles["item"]}>
+            exercises
               {course.exercises != null
-                ? `${course.exercises.length} exercises`
+                ? course.exercises.map((el ,index) => {
+                  return (
+                    <div>
+                      <span className={CourseStyles["item"]} id={index}>{index}: {el}</span>
+                    </div>
+                  );
+                })
                 : ""}
             </div>
           
