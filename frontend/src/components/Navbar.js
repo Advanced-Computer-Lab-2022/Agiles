@@ -28,6 +28,16 @@ const Navbar = () => {
       });
     }
   };
+  let coursesPath;
+  if (
+    window.location.href == "http://localhost:3000/ctrainee" ||
+    window.location.href == "http://localhost:3000/ccourses" ||
+    window.location.href.includes("http://localhost:3000/csearch")
+  ) {
+    coursesPath = "/ccourses";
+  } else {
+    coursesPath = "/courses";
+  }
   return (
     <nav className={NavbarStyles["navbar"]}>
       <h1 className={NavbarStyles["title"]}>
@@ -48,7 +58,8 @@ const Navbar = () => {
       </form>
       <div className="links">
         <Link to="/">Home</Link>
-        <Link to="/courses">Courses</Link>
+        {/* <Link to="/courses">Courses</Link> */}
+        <Link to={coursesPath}>Courses</Link>
         <Link to="/login">Log in</Link>
         <Link to="/signup">Sign up</Link>
       </div>
