@@ -5,6 +5,10 @@ import Rating from "@mui/material/Rating";
 import axios from "axios";
 
 const Filter = (props) => {
+  let corporate = false;
+  if (props.corporate) {
+    corporate = true;
+  }
   const [minPrice, setMinPrice] = useState();
   const [maxPrice, setMaxPrice] = useState();
   const [subject, setSubject] = useState("");
@@ -18,8 +22,8 @@ const Filter = (props) => {
     setMaxPrice(event.target.value);
   };
   const handleChangeRating = async (event) => {
-      setValue(event.target.value);
-      setRating(event.target.value);
+    setValue(event.target.value);
+    setRating(event.target.value);
   };
   const handleChangePriceFree = async (event) => {
     if (event.target.checked) {
@@ -46,25 +50,28 @@ const Filter = (props) => {
       let url = "";
       if (!(minPrice == null)) {
         url += "lowerBound=" + minPrice + "&";
-      }
-      else if (maxPrice != null){
-        setMinPrice(0)
-        url += "lowerBound=" + 0   + "&";
+      } else if (maxPrice != null) {
+        setMinPrice(0);
+        url += "lowerBound=" + 0 + "&";
       }
       if (!(maxPrice == null)) {
         url += "upperBound=" + maxPrice + "&";
-      }
-      else if (minPrice != null){
-        setMaxPrice(Number.MAX_SAFE_INTEGER)
+      } else if (minPrice != null) {
+        setMaxPrice(Number.MAX_SAFE_INTEGER);
         url += "upperBound=" + Number.MAX_SAFE_INTEGER + "&";
       }
       if (subject != "") {
         url += "subject=" + subject + "&";
       }
-      if ((rating != null)){
+      if (rating != null) {
         url += "rating=" + rating + "&";
       }
-      if (url != "") {
+      if (corporate) {
+        navigate({
+          pathname: "/ccourses/filter",
+          search: url,
+        });
+      } else if (url != "") {
         navigate({
           pathname: "/courses/filter",
           search: url,
@@ -99,31 +106,23 @@ const Filter = (props) => {
         <span className={FilterStyles["logo"]}>Filter</span>
       </div>
       <hr />
-        <div className="center">
-          <form onSubmit={handleSubmit}>
-            <div className="panel">
-              <h3>Subject</h3>
-              <hr></hr>
-              <label> Enter Subject</label>
-              <input
-                type="text"
-                value={subject}
-                onChange={handleChangeSubject}
-              />
-            </div>
-            <div className={FilterStyles["rating"]}>
-              <h3>Rating</h3>
-              <hr></hr>
-              <Rating
-                name="rating"
-                value={value}
-                onChange={handleChangeRating}
-              />
-            </div>
-            {props.corporate ? "" : priceFilter}
-            <button type="submit">Filter</button>
-          </form>
-        </div>
+      <div className="center">
+        <form onSubmit={handleSubmit}>
+          <div className="panel">
+            <h3>Subject</h3>
+            <hr></hr>
+            <label> Enter Subject</label>
+            <input type="text" value={subject} onChange={handleChangeSubject} />
+          </div>
+          <div className={FilterStyles["rating"]}>
+            <h3>Rating</h3>
+            <hr></hr>
+            <Rating name="rating" value={value} onChange={handleChangeRating} />
+          </div>
+          {props.corporate ? "" : priceFilter}
+          <button type="submit">Filter</button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -75,6 +75,10 @@ function App() {
             <Route path="/instructorCreateCourse" element={<CreateCourse />} />{" "}
             {/* requirement no: */}
             <Route path="/courses/filter" element={<FilterResults />} />{" "}
+            <Route
+              path="/ccourses/filter"
+              element={<FilterResults corporate={true} />}
+            />{" "}
           </Routes>
         </div>
       </BrowserRouter>

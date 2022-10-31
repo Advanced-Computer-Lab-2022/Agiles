@@ -7,8 +7,11 @@ import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif";
 import Filter from "../../components/Filter";
 
-
-const FilterResults =  () => {
+const FilterResults = (props) => {
+  let corporate = false;
+  if (props.corporate) {
+    corporate = true;
+  }
   const location = useLocation();
   console.log(location.search);
   const query = new URLSearchParams(location.search);
@@ -17,19 +20,18 @@ const FilterResults =  () => {
   const [loading, setIsLoading] = useState(false);
   const fetchData = async () => {
     setIsLoading(true);
-    let url = "/course/listCourses/filter" + location.search
-    console.log(url)
-  let res = await axios.get("/course/listCourses/filter" + location.search);
-  console.log(res)
-  if(!res){
-    setError(true);
-  }
-  else{
-    setCourses(res.data);
-    setError(false);
-  }
-  setIsLoading(false);
-}
+    let url = "/course/listCourses/filter" + location.search;
+    console.log(url);
+    let res = await axios.get("/course/listCourses/filter" + location.search);
+    console.log(res);
+    if (!res) {
+      setError(true);
+    } else {
+      setCourses(res.data);
+      setError(false);
+    }
+    setIsLoading(false);
+  };
   useEffect(() => {
     fetchData();
   }, [location.search]);
@@ -47,7 +49,7 @@ const FilterResults =  () => {
               {" "}
               <div className={CourseStyles["course-list"]}>
                 {courses.map((el) => {
-                  return <CourseCard data={el} />;
+                  return <CourseCard corporate={corporate} data={el} />;
                 })}
               </div>
             </>
