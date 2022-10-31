@@ -14,7 +14,8 @@ const Navbar = () => {
     event.preventDefault();
     if (
       window.location.href == "http://localhost:3000/ctrainee" ||
-      window.location.href == "http://localhost:3000/ccourses"
+      window.location.href == "http://localhost:3000/ccourses" ||
+      window.location.href.includes("http://localhost:3000/csearch")
     ) {
       navigate({
         pathname: "/csearch",
