@@ -19,17 +19,29 @@ function InstructorOwnCourses() {
     setSubject(event.target.value);
   };
   const handleUpperBoundChange = (event) => {
+    // if (window.sessionStorage.getItem("factor")) {
+    //   setUpperBound(
+    //     Math.floor(event.target.value / window.sessionStorage.getItem("factor"))
+    //   );
+    // } else {
     setUpperBound(event.target.value);
+    // }
   };
+
   const handleLowerBoundChange = (event) => {
+    // if (window.sessionStorage.getItem("factor")) {
+    //   setLowerBound(
+    //     Math.floor(event.target.value / window.sessionStorage.getItem("factor"))
+    //   );
+    // } else {
     setLowerBound(event.target.value);
+    // }
   };
   const handleSearchChange = (event) => {
     setSearchString(event.target.value);
   };
   const handleFilterSubmit = async (event) => {
     event.preventDefault();
-    setFirstLoad(false);
     let lb = lowerBound;
     let ub = upperBound;
     if (free) {
@@ -38,14 +50,25 @@ function InstructorOwnCourses() {
     }
     if (name == "") {
       alert("please enter your name");
+      return;
     } else if (subject == "" && lb == "" && ub == "") {
       alert("please fill in at least one filter cell");
+      return;
     } else {
+      setFirstLoad(false);
+
       let url = "/instructor/filterCourses/?";
       if (!(lb == "")) {
+        if (window.sessionStorage.getItem("factor")) {
+          lb = Math.floor(lb / window.sessionStorage.getItem("factor"));
+        }
+
         url += "lowerBound=" + lb + "&";
       }
       if (!(ub == "")) {
+        if (window.sessionStorage.getItem("factor")) {
+          ub = Math.floor(ub / window.sessionStorage.getItem("factor"));
+        }
         url += "upperBound=" + ub + "&";
       }
       if (subject != "") {
@@ -137,7 +160,9 @@ function InstructorOwnCourses() {
                 <input
                   type="checkbox"
                   checked={free}
-                  onClick={(event) => {
+                  onChange={(event) => {
+                    console.log("checked: " + event.target.checked);
+                    console.log("free: " + free);
                     setFree(event.target.checked);
                     setLowerBound(0);
                     setUpperBound(0);
