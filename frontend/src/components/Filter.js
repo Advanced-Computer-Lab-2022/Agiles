@@ -9,6 +9,9 @@ const Filter = (props) => {
   if (props.corporate) {
     corporate = true;
   }
+  if (window.location.href == "http://localhost:3000/ccourses") {
+    corporate = true;
+  }
   const [minPrice, setMinPrice] = useState();
   const [maxPrice, setMaxPrice] = useState();
   const [subject, setSubject] = useState("");
@@ -119,7 +122,7 @@ const Filter = (props) => {
             <hr></hr>
             <Rating name="rating" value={value} onChange={handleChangeRating} />
           </div>
-          {props.corporate ? "" : priceFilter}
+          {corporate ? "" : priceFilter}
           <button type="submit">Filter</button>
         </form>
       </div>
