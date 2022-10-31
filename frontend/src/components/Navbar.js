@@ -12,7 +12,10 @@ const Navbar = () => {
   const navigate = useNavigate();
   const handleSearch = async (event) => {
     event.preventDefault();
-    if (window.location.href == "http://localhost:3000/ctrainee") {
+    if (
+      window.location.href == "http://localhost:3000/ctrainee" ||
+      window.location.href == "http://localhost:3000/ccourses"
+    ) {
       navigate({
         pathname: "/csearch",
         search: `?search=${searchString}`,
