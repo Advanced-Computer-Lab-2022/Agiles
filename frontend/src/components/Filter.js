@@ -19,11 +19,21 @@ const Filter = (props) => {
   const [value, setValue] = useState(0);
   const navigate = useNavigate();
   const handleChangePrice1 = (event) => {
-    setMinPrice(event.target.value);
+    if(window.sessionStorage.getItem("factor")){
+    setMinPrice(Math.floor(event.target.value/window.sessionStorage.getItem("factor")));
+    }
+    else{
+      setMinPrice(event.target.value)
+    }
   };
   const handleChangePrice2 = (event) => {
-    setMaxPrice(event.target.value);
-  };
+    if(window.sessionStorage.getItem("factor")){
+      setMaxPrice(Math.floor(event.target.value/window.sessionStorage.getItem("factor")));
+      }
+      else{
+        setMaxPrice(event.target.value)
+      }
+    };
   const handleChangeRating = async (event) => {
     setValue(event.target.value);
     setRating(event.target.value);
@@ -84,18 +94,16 @@ const Filter = (props) => {
   };
   let priceFilter = (
     <div className={FilterStyles["prices"]}>
-      <h3>Price in DOLLARS</h3>
+      <h3>Price</h3>
       <hr></hr>
       <input
         type="number"
         placeholder="MinPrice"
-        value={minPrice}
         onChange={handleChangePrice1}
       />
       <input
         type="number"
         placeholder="MaxPrice"
-        value={maxPrice}
         onChange={handleChangePrice2}
       />
       <br></br>
