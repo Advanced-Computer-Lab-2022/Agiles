@@ -5,8 +5,12 @@ import a from "../static/a.png";
 const Home = () => {
   return (
     <div className="home">
-      <h1> Welcome !</h1>
+      <div className="firstLine">
+
       <img src={a} alt="mainImage" className="mainImage"></img>
+      <h1> Learn without limits</h1>
+      </div>
+      
       <div className="guestContainer">
         <Link to="/courses">
           <button className="guestButtons">Explore courses</button>
