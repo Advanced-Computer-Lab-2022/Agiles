@@ -24,7 +24,7 @@ const FilterResults = (props) => {
     console.log(url);
     let res = await axios.get("/course/listCourses/filter" + location.search);
     console.log(res);
-    if (!res) {
+    if (res.data.length == 0) {
       setError(true);
     } else {
       setCourses(res.data);
