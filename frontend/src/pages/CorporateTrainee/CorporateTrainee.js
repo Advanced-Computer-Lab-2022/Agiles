@@ -6,12 +6,14 @@ import a from "../../static/a.png";
 function CorporateTrainee() {
   return (
     <div className="home">
-      <h1> Welcome Ahmed!</h1>
+      <div className="firstLine">
       <img src={a} alt="mainImage" className="mainImage"></img>
+      <h1> Welcome Hossam!</h1>
       <div className="guestContainer">
         <Link to="/ccourses">
           <button className="guestButtons">Explore courses</button>
         </Link>
+      </div>
       </div>
     </div>
   );

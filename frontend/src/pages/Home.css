@@ -4,25 +4,12 @@
   padding: 20px;
   display: inline-block;
 }
-/*.mainImage {
-  margin-left: 200%;
-  margin-top: 10%;
-  width: 60%;
-  height: auto;
-}*/
-
 .guestContainer {
   margin-top: 50%;
   margin-bottom: 50%;
 
 }
 .guestButtons {
-  /*background-color: #ff6529;
-  color: white;
-  margin: 0 10px;
-  height: 60px;
-  border-width: 0;
-  border-radius: 10%;*/
   background-color: #ddd;
   height: 60px;
   border: none;

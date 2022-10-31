@@ -64,7 +64,6 @@ const Filter = (props) => {
       if ((rating != null)){
         url += "rating=" + rating + "&";
       }
-      console.log(url);
       if (url != "") {
         navigate({
           pathname: "/courses/filter",
@@ -90,7 +89,7 @@ const Filter = (props) => {
         onChange={handleChangePrice2}
       />
       <br></br>
-      <label>FREEE</label>
+      <label>FREE</label>
       <input type="checkbox" value={0} onChange={handleChangePriceFree} />
     </div>
   );
