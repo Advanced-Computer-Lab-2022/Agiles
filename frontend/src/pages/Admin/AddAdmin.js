@@ -3,7 +3,7 @@ import axios from "axios";
 import "./AddInstructor.css";
 import AdminNavbar from "./adminComponents/AdminNavbar";
 import AdminSidebar from "./adminComponents/AdminSidebar";
-import AdminImg from "../../static/Admin.png"
+import AdminImg from "../../static/Admin.png";
 const AddAdmin = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -23,6 +23,8 @@ const AddAdmin = (props) => {
     } catch (e) {
       console.log(e);
     }
+    setUsername("");
+    setPassword("");
   };
   return (
     <div className="new">
@@ -30,46 +32,44 @@ const AddAdmin = (props) => {
       <div className="newContainer">
         <AdminNavbar></AdminNavbar>
         <div className="top">
-          <h1 className="h1Class">ADD New Admin</h1>
+          <h1 className="h1Class">Add New Admin</h1>
         </div>
         <div className="bottom">
           <div className="left">
-            <img className="imgClass"
-              src={AdminImg
-              }
-              alt="adminImg"
-            />
+            <img className="imgClass" src={AdminImg} alt="adminImg" />
           </div>
           <div className="right">
-        <form className = "formClass"onSubmit={handleSumbit}>
-          <div className="formInput">
-          <label className="labelClass">
-            username <span className="required">*</span>
-          </label>
-          <input
-            type="text"
-            name="username"
-            placeholder="username.."
-            className="inputClass"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          </div>
-          <div className="formInput">
-          <label className="labelClass">
-            password <span className="required">*</span>
-          </label>
-          <input
-            type="password"
-            name="password"
-            placeholder="password.."
-            className="inputClass"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          </div>
+            <form className="formClass" onSubmit={handleSumbit}>
+              <div className="formInput">
+                <label className="labelClass">
+                  username <span className="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="username"
+                  required
+                  placeholder="username.."
+                  className="inputClass"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+              <div className="formInput">
+                <label className="labelClass">
+                  password <span className="required">*</span>
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  required
+                  placeholder="password.."
+                  className="inputClass"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
 
-          <button className="buttonClass">Send</button>
-        </form>
-        </div>
+              <button className="buttonClass">Send</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>

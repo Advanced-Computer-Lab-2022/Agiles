@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const instructorSchema = new Schema(
   {
-    fullName:{
+    fullname:{
       type: String,
       required: true,
     },

@@ -1,0 +1,22 @@
+.component {
+  font-size: 28px;
+}
+.flex {
+  margin: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.span {
+  font-size: 15px;
+  color: black;
+  margin-left: 1px;
+}
+
+.checkbox {
+  width: 20px;
+  height: 17px;
+  margin-left: 20px;
+  padding-top: 10px;
+  margin-bottom: 0;
+}

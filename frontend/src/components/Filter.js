@@ -1,100 +1,141 @@
-import "./Filter.module.css";
+import FilterStyles from "./Filter.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Rating from "@mui/material/Rating";
+import axios from "axios";
 
-const Filter = () => {
-  const [minPrice, setMinPrice] = useState(-1);
-  const [maxPrice, setMaxPrice] = useState(Number.MAX_SAFE_INTEGER);
+const Filter = (props) => {
+  let corporate = false;
+  if (props.corporate) {
+    corporate = true;
+  }
+  if (window.location.href == "http://localhost:3000/ccourses") {
+    corporate = true;
+  }
+  const [minPrice, setMinPrice] = useState();
+  const [maxPrice, setMaxPrice] = useState();
   const [subject, setSubject] = useState("");
-  const [rating, setRating] = useState(5);
-  const handleChangeSubject = (event) => {
-    if (event.target.checked) {
-      setSubject(event.target.value);
-      console.log(event.target.value);
-    } else {
-      setSubject("");
-      console.log("empty subject");
-    }
-  };
+  const [rating, setRating] = useState();
+  const [value, setValue] = useState(0);
+  const navigate = useNavigate();
   const handleChangePrice1 = (event) => {
-    setMinPrice(event.target.value);
+    if(window.sessionStorage.getItem("factor")){
+    setMinPrice(Math.floor(event.target.value/window.sessionStorage.getItem("factor")));
+    }
+    else{
+      setMinPrice(event.target.value)
+    }
   };
   const handleChangePrice2 = (event) => {
-    setMaxPrice(event.target.value);
+    if(window.sessionStorage.getItem("factor")){
+      setMaxPrice(Math.floor(event.target.value/window.sessionStorage.getItem("factor")));
+      }
+      else{
+        setMaxPrice(event.target.value)
+      }
+    };
+  const handleChangeRating = async (event) => {
+    setValue(event.target.value);
+    setRating(event.target.value);
   };
-  const handleChangeRating = (event) => {
-    if (event.target.checked) {
-      setRating(event.target.value);
-      console.log(event.target.value);
-    } else {
-      setRating(5);
-      console.log("remove rating");
-    }
-  };
-  const navigate = useNavigate();
-  const handlePrice = async (event) => {
-    event.preventDefault();
-    navigate({
-      pathname: '/courses/filter',
-      search: `?lowerBound=${minPrice}&upperBound=${maxPrice}`,
-    }); 
-}
-
-  const handleChangePriceFree = (event) => {
+  const handleChangePriceFree = async (event) => {
     if (event.target.checked) {
       setMinPrice(0);
       setMaxPrice(0);
+    } else {
+      setMaxPrice(Number.MAX_SAFE_INTEGER);
     }
-    else{
-        setMaxPrice(Number.MAX_SAFE_INTEGER)
+  };
+
+  const handleChangeSubject = (event) => {
+    setSubject(event.target.value);
+  };
+
+  const handleSubmit = async (event) => {
+    if (
+      subject == "" &&
+      minPrice == null &&
+      maxPrice == null &&
+      rating == null
+    ) {
+      alert("please fill in at least one filter cell");
+    } else {
+      let url = "";
+      if (!(minPrice == null)) {
+        url += "lowerBound=" + minPrice + "&";
+      } else if (maxPrice != null) {
+        setMinPrice(0);
+        url += "lowerBound=" + 0 + "&";
+      }
+      if (!(maxPrice == null)) {
+        url += "upperBound=" + maxPrice + "&";
+      } else if (minPrice != null) {
+        setMaxPrice(Number.MAX_SAFE_INTEGER);
+        url += "upperBound=" + Number.MAX_SAFE_INTEGER + "&";
+      }
+      if (subject != "") {
+        url += "subject=" + subject + "&";
+      }
+      if (rating != null) {
+        url += "rating=" + rating + "&";
+      }
+      if (corporate) {
+        navigate({
+          pathname: "/ccourses/filter",
+          search: url,
+        });
+      } else if (url != "") {
+        navigate({
+          pathname: "/courses/filter",
+          search: url,
+        });
+      }
     }
-  }
-
-
-
+  };
+  let priceFilter = (
+    <div className={FilterStyles["prices"]}>
+      <h3>Price</h3>
+      <hr></hr>
+      <input
+        type="number"
+        placeholder="MinPrice"
+        onChange={handleChangePrice1}
+      />
+      <input
+        type="number"
+        placeholder="MaxPrice"
+        onChange={handleChangePrice2}
+      />
+      <br></br>
+      <label>FREE</label>
+      <input type="checkbox" value={0} onChange={handleChangePriceFree} />
+    </div>
+  );
   return (
-    <div>
-      <div className="panel">
-        <h3>Subject</h3>
-        <label> wala 1</label>
-        <input type="checkbox" value="wala1" onChange={handleChangeSubject} />
-        <label> wala 2</label>
-        <input type="checkbox" value="wala2" onChange={handleChangeSubject} />
+    <div className={FilterStyles["filter"]}>
+      <div className={FilterStyles["top"]}>
+        <span className={FilterStyles["logo"]}>Filter</span>
       </div>
-      <div className="panel">
-        <h3>Rating</h3>
-        <label> 1</label>
-        <input type="checkbox" value={1} onChange={handleChangeRating} />
-        <label>2</label>
-        <input type="checkbox" value={2} onChange={handleChangeRating} />
-        <label>3</label>
-        <input type="checkbox" value={3} onChange={handleChangeRating} />
-        <label> 4</label>
-        <input type="checkbox" value={4} onChange={handleChangeRating} />
-        <label> 5</label>
-        <input type="checkbox" value={5} onChange={handleChangeRating} />
-      </div>
-      <div className="panel">
-        <h3>Price</h3>
-        <input
-          type="text"
-          
-          placeholder="MinPrice"
-          onChange={handleChangePrice1}
-        />
-        <input
-          type="text"
-          
-          placeholder="MaxPRice"
-          onChange={handleChangePrice2}
-        />
-        <label >FREEE</label>
-        <input type="checkbox" value={0} onChange={handleChangePriceFree} />
-        <button onClick={handlePrice}>GOO</button>
+      <hr />
+      <div className="center">
+        <form onSubmit={handleSubmit}>
+          <div className="panel">
+            <h3>Subject</h3>
+            <hr></hr>
+            <label> Enter Subject</label>
+            <input type="text" value={subject} onChange={handleChangeSubject} />
+          </div>
+          <div className={FilterStyles["rating"]}>
+            <h3>Rating</h3>
+            <hr></hr>
+            <Rating name="rating" value={value} onChange={handleChangeRating} />
+          </div>
+          {corporate ? "" : priceFilter}
+          <button type="submit">Filter</button>
+        </form>
       </div>
     </div>
   );
 };
 
 export default Filter;
-

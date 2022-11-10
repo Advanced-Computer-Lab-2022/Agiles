@@ -1,28 +1,43 @@
 .home {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 20px;
-    display: grid;
-  }
-  .mainImage{
-      margin-left:70% ;
-      margin-top: 10%;
-      width: 60%;
-      height: auto;
-   
-  }
-  button{
-    background-color: #ff6529;
-    color: white;
-    }
-    .guestContainer{
-        margin-left: 40%;
-        margin-top: 30vh;
-    }
-    .guestButtons{
-        margin: 0 10px;
-        height: 60px;
-        border-width: 0;
-        border-radius: 10%;
-    
-    }
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  display: inline-block;
+}
+.guestContainer {
+  margin-top: 50%;
+  margin-bottom: 50%;
+
+}
+.guestButtons {
+  background-color: #ddd;
+  height: 60px;
+  border: none;
+  color: black;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition: 0.3s;
+  border-width: 0;
+  border-radius: 10%;
+}
+.guestButtons:hover {
+  background-color: #ff6529;
+  color: white;
+}
+.firstLine img {
+  float: left;
+  width: 100px;
+  height: 100px;
+}
+
+.firstLine h1 {
+  position: relative;
+  top: 18px;
+  left: 10px;
+}
+.firstLine{
+  margin-bottom: 10px;
+}
+

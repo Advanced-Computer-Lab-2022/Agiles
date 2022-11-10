@@ -1,0 +1,8 @@
+.course{
+  display: flex;
+}
+.course-list {
+  flex: 6;
+  display: grid;
+}
+

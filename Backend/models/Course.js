@@ -8,7 +8,7 @@ const courseSchema = new Schema(
       required: true,
     },
     subtitles: {
-      type: String,
+      type: [Object],
       required: false,
     },
     subject: {
@@ -32,6 +32,10 @@ const courseSchema = new Schema(
       type: Number,
       required: true,
     },
+    free: {
+      type: Boolean,
+      required: false,
+    },
 
     language: {
       type: String,
@@ -45,10 +49,7 @@ const courseSchema = new Schema(
       type: Number,
       required: false,
     },
-    totalHoursOfSubtitles: {
-      type: Number,
-      required: false,
-    },
+
     exercises: {
       type: [String],
     },

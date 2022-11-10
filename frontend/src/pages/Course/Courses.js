@@ -1,10 +1,14 @@
 import { CourseCard } from "../../components/CourseCard";
 import { useState, useEffect } from "react";
-import CourseStyles from "./Course.module.css";
+import CourseStyles from "./Courses.module.css";
 import Filter from "../../components/Filter";
 import LoadingScreen from "react-loading-screen";
-import spinner from "../../static/download.gif"
-const Courses = () => {
+import spinner from "../../static/download.gif";
+const Courses = (props) => {
+  let corporate = false;
+  if (props.corporate) {
+    corporate = true;
+  }
   const [courses, setCourses] = useState([]);
   const [isloading, setIsLoading] = useState(false);
   useEffect(() => {
@@ -21,17 +25,18 @@ const Courses = () => {
   }, []);
 
   return (
-    <div className="course">
+    <div className={CourseStyles["course"]}>
       {isloading ? (
         <LoadingScreen loading={true} logoSrc={spinner} />
       ) : (
         <>
+        <Filter />
           <div className={CourseStyles["course-list"]}>
-            {courses.map((el) => {
-              return <CourseCard data={el} />;
+            {courses.map((el, index) => {
+              return <CourseCard corporate={corporate} data={el} key={index} />;
             })}
           </div>
-          <Filter />;
+          
         </>
       )}
     </div>
