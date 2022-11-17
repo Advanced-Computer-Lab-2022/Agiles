@@ -40,10 +40,8 @@ const Navbar = () => {
   }
   return (
     <nav className={NavbarStyles["navbar"]}>
-      <h1 className={NavbarStyles["title"]}>
-        <a href="/" className={NavbarStyles["title"]}>
-          Agiles
-        </a>
+      <h1 className={NavbarStyles["headerTitle"]}>
+       Agiles
       </h1>
       <form onSubmit={handleSearch} className={NavbarStyles["search-bar"]}>
         <BsSearch className={NavbarStyles["search-icon"]} />
@@ -56,7 +54,7 @@ const Navbar = () => {
         ></input>
         <button className={NavbarStyles["search-button"]}>search</button>
       </form>
-      <div className="links">
+      <div className={NavbarStyles["links"]}>
         <Link to="/">Home</Link>
         {/* <Link to="/courses">Courses</Link> */}
         <Link to={coursesPath}>Courses</Link>

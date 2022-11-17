@@ -5,19 +5,22 @@
   padding: 10px 200px;
   border-bottom: 1px solid #f2f2f2;
 }
-.title {
-  color: #ff6529;
+.headerTitle {
+  color: rgb(0, 65, 158);
+  font-weight: bold ;
+  font-size: x-large;
 }
-.navbar .links {
+.navbar.links {
   margin-left: auto;
 }
 .navbar a {
+  color: black;
   margin-left: 16px;
   text-decoration: none;
   padding: 6px;
 }
 .navbar a:hover {
-  color:  #ff6529;;
+  color:  rgb(0, 65, 158);
 }
 .inpt {
   border: 0px;

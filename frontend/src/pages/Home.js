@@ -7,9 +7,9 @@ const Home = () => {
     <div className="home">
       <div className="firstLine">
 
-      <img src={a} alt="mainImage" className="mainImage"></img>
-      <h1> Learn without limits</h1>
-      </div>
+     { /*<img src={a} alt="mainImage" className="mainImage"></img>
+      <h1> Learn without limits</h1>*/}
+  </div>
       
       <div className="guestContainer">
         <Link to="/courses">
@@ -19,5 +19,5 @@ const Home = () => {
     </div>
   );
 };
-
+  
 export default Home;

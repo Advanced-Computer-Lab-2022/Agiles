@@ -31,9 +31,9 @@ function App() {
         <div className="pages">
           <Routes>
             <Route index element={<Home />} />
-            <Route path="/login" element={<Login funcNav={setShowNav} />} />
-            <Route path="/signup" element={<SignUp funcNav={setShowNav} />} />
-            <Route path="/admin" element={<Admin funcNav={setShowNav} />} />
+            <Route path="/login" element={<Login/>} />
+            <Route path="/signup" element={<SignUp  />} />
+            <Route path="/admin" element={<Admin  />} />
             <Route
               path="/addInstructor"
               element={<AddInstructor funcNav={setShowNav} />}
