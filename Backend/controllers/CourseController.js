@@ -123,10 +123,7 @@ const createCourse = async (req, res) => {
     rating,
     exercises,
   } = req.body;
-  // const { title, subTitles, price, description } = req.body;
   const newCourse = new Course({
-    //exercise and promotion ? not required
-
     instructor: instructor,
     title: title,
     subtitles: subtitles,
