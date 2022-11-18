@@ -47,6 +47,7 @@ const SignUp = () => {
             <input
               className="form-control mt-1"
               placeholder="e.g Hossam "
+              required
               onChange={(e)=>setFirstname(e.target.value)}
             />
           </div>
@@ -55,6 +56,7 @@ const SignUp = () => {
             <input
               className="form-control mt-1"
               placeholder="e.g  Elfar"
+              required
               onChange={(e)=>setLastname(e.target.value)}
             />
           </div>
@@ -65,6 +67,7 @@ const SignUp = () => {
               type="email"
               className="form-control mt-1"
               placeholder="Email Address"
+              required
               onChange={(e)=>setEmail(e.target.value)}
             />
           </div>
@@ -73,6 +76,7 @@ const SignUp = () => {
             <input
               className="form-control mt-1"
               placeholder="e.g  hossamElfar41"
+              required
               onChange={(e)=>setUsername(e.target.value)}
             />
           </div>
@@ -82,6 +86,7 @@ const SignUp = () => {
               type="password"
               className="form-control mt-1"
               placeholder="Password"
+              required
               onChange={(e)=>setPassword(e.target.value)}
             />
           </div>

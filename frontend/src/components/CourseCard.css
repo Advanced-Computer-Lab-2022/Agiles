@@ -1,8 +1,8 @@
 .card {
   margin-top: 20px;
-  max-height: 200px;
+  min-height: 200px;
   background-color: #fff;
-  width: 80%;
+  width: 25%;
   box-shadow: 0 5px 25px rgba(1 1 1 /15%);
   border-radius: 10px;
   padding: 25px;
@@ -15,6 +15,7 @@
 }
 .card h4 {
   font-size: 20px;
-  color: #f1356d;
+  font-weight: bold;
+  color: #000000;
   margin-bottom: 8px;
 }
