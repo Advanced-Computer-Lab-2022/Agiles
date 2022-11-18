@@ -16,7 +16,11 @@ const individualTraineeSchema = new Schema(
       type: String,
       required: true,
     },
-    Fullname:{
+    firstname:{
+      type: String,
+      required: true,
+    },
+    lastname:{
       type: String,
       required: true,
     },
@@ -30,19 +34,19 @@ const individualTraineeSchema = new Schema(
     },
     cardholder_name: {
       type: String,
-      required: true,
+      required: false,
     },
     PAN: {
       type: String,
-      required: true,
+      required: false,
     },
     card_expiry_date: {
       type: String,
-      required: true,
+      required: false,
     },
     wallet_amount: {
       type: Number,
-      required: true,
+      required: false,
     },
     registered_courses: {
       type: [{ Number, Number }], // courseid , progress
