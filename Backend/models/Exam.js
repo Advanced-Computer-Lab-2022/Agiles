@@ -4,8 +4,9 @@ const Schema = mongoose.Schema;
 const examSchema = new Schema(
   {
     courseId: {
-      type: Number,
-      required: true,
+      type: mongoose.Types.ObjectId,
+      ref:'Course',
+      required: true;
     },
     questions: {
       type: [String],

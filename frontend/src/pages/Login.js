@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { useState } from "react";
 import {useNavigate} from "react-router-dom"
 import axios from "axios";
-const Login = () => {
+const Login = (props) => {
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
     const navigate = useNavigate();
@@ -21,7 +21,8 @@ const Login = () => {
           try {
             const res = await axios.post("/admin/logIn", user, config);
             console.log(res.data);
-            navigate("/")
+            props.funcLog(true);
+            navigate("/");
           } catch (e) {
             console.log(e);
           }

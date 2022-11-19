@@ -3,13 +3,15 @@ const Schema = mongoose.Schema;
 
 const reportSchema = new Schema(
   {
-    studentId: {
-      type: Number,
+    userId: {
+      type: mongoose.Types.ObjectId,
+      ref: 'IndvidualTrainee',
       required: true,
     },
     courseId: {
-      type: Number,
-      required: true,
+      type: mongoose.Types.ObjectId,
+      ref:'Course',
+      required: true
     },
     reportType: {
       type: String,

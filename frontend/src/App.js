@@ -20,20 +20,21 @@ import FilterResults from "./pages/Course/FilterResults";
 import { useState } from "react";
 function App() {
   const [showNav, setShowNav] = useState(true);
+  const [logged, setLogged] = useState(false);
   return (
     <div className="App">
       <BrowserRouter>
         {showNav && (
           <nav>
-            <Navbar />
+            <Navbar logged={logged} funcLog = {setLogged}/>
           </nav>
         )}
         <div className="pages">
           <Routes>
-            <Route index element={<Home />} />
-            <Route path="/login" element={<Login/>} />
+            <Route index element={<Home logged={logged} />} />
+            <Route path="/login" element={<Login funcLog = {setLogged}/>} />
             <Route path="/signup" element={<SignUp  />} />
-            <Route path="/admin" element={<Admin  />} />
+            <Route path="/admin" element={<Admin  funcNav={setShowNav} />} />
             <Route
               path="/addInstructor"
               element={<AddInstructor funcNav={setShowNav} />}

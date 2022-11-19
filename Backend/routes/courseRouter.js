@@ -9,10 +9,7 @@ const {
 
 courserouter.get("/listCourses/details", coursesDetails);
 //view the price of each course
-//Should i use title also or not?
 courserouter.get("/listCourses/prices", coursePrice);
-
-
 //Get single Course by id
 courserouter.get("/:id", getCourseById);
 
