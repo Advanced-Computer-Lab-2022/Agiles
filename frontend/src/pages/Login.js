@@ -30,8 +30,8 @@ const Login = (props) => {
           };
           try {
             const res = await axios.post(LOGIN_URL, user, config);
-            console.log(res.data);
             props.funcLog(true);
+            console.log(res);
             navigate("/");
           } catch (err) {
             if (!err?.response) {
