@@ -41,6 +41,8 @@ const logIn = async (req, res) => {
             process.env.REFRESH_TOKEN_SECRET,
             { expiresIn: '1d' }
           );
+          const status = 0;
+          res.cookie('status',status);
            res.cookie('jwt',refreshToken,{httpsOnly  : true ,maxAge : 24*60*60*1000})
            res.status(200).json({accessToken});
         } else {
@@ -64,6 +66,8 @@ const logIn = async (req, res) => {
             process.env.REFRESH_TOKEN_SECRET,
             { expiresIn: '1d' }
           );
+          const status = 1;
+          res.cookie('status',status);
            res.cookie('jwt',refreshToken,{httpsOnly  : true ,maxAge : 24*60*60*1000})
            res.status(200).json({accessToken});
         }

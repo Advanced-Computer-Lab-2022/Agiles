@@ -13,7 +13,6 @@ import IndividualTrainee from "./pages/IndvidualTrainee/IndividualTrainee";
 import CorporateTrainee from "./pages/CorporateTrainee/CorporateTrainee";
 import InstructorOwnCourses from "./pages/Instructor/InstructorOwnCourses";
 import CreateCourse from "./pages/Course/CreateCourse";
-import Instructor from "./pages/Instructor/Instructor";
 import SearchResults from "./pages/Course/SearchResults";
 import Course from "./pages/Course/Course";
 import FilterResults from "./pages/Course/FilterResults";
@@ -47,7 +46,6 @@ function App() {
               path="/addCorporate"
               element={<AddCorporate funcNav={setShowNav} />}
             />
-            <Route path="/instructor" element={<Instructor />} />
             <Route path="/itrainee" element={<IndividualTrainee />} />
             <Route path="/ctrainee" element={<CorporateTrainee />} />
             <Route path="/courses" element={<Courses />} />
