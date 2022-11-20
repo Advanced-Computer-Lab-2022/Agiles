@@ -35,67 +35,90 @@ const Course = () => {
         <LoadingScreen loading={true} logoSrc={spinner} />
       ) : (
         <>
-          
-          
-              <div className={CourseStyles["mainTop"]}>{course.title}</div>
-            
-            <div className={CourseStyles["item"]}> subject: {course.subject}</div>
-            <div className={CourseStyles["item"]}>Description : {course.description}</div>
-            <div className={CourseStyles["item"]}>Instructor : {course.instructor}</div>
-            <div className={CourseStyles["item"]}>Rating : {course.rating === 0 ? "unrated" : stars}</div>
-            {course.price == 0 ? (
-              <div className={CourseStyles["item"]}>Price : Free</div>
-            ) : (
-              <>
-                {!window.sessionStorage.getItem("factor") ? (
-                  <div className={CourseStyles["item"]}>Price: {course.price} USD</div>
-                ) : (
-                  <div className={CourseStyles["item"]}>
-                    Price:{" "}
-                    {course.price * window.sessionStorage.getItem("factor")}{" "}
-                    {window.sessionStorage.getItem("currency").toUpperCase()}
+          <div className={CourseStyles["mainTop"]}>{course.title}</div>
+          <div className={CourseStyles["item"]}> subject: {course.subject}</div>
+          <div className={CourseStyles["item"]}>
+            Description : {course.description}
+          </div>
+          <div className={CourseStyles["item"]}>
+            Instructor : {course.instructor}
+          </div>
+          <div className={CourseStyles["item"]}>
+            Rating : {course.rating === 0 ? "unrated" : stars}
+          </div>
+          {course.price == 0 ? (
+            <div className={CourseStyles["item"]}>Price : Free</div>
+          ) : (
+            <>
+              {!window.sessionStorage.getItem("factor") ? (
+                <div className={CourseStyles["item"]}>
+                  Price: {course.price} USD
+                </div>
+              ) : (
+                <div className={CourseStyles["item"]}>
+                  Price:{" "}
+                  {course.price * window.sessionStorage.getItem("factor")}{" "}
+                  {window.sessionStorage.getItem("currency").toUpperCase()}
+                </div>
+              )}
+            </>
+          )}
+          <div className={CourseStyles["item"]}>subtitles:</div>{" "}
+          {course.subtitles != null
+            ? course.subtitles.map((el) => {
+                return (
+                  <div>
+                    <span className={CourseStyles["item"]}>
+                      subtitle: {el.subtitle}
+                    </span>
+                    {"   "}
+                    <span className={CourseStyles["item"]}>
+                      time in hrs: {el.time}
+                    </span>
                   </div>
-                )}
-              </>
-            )}
-         
-          
-            
-              <div className={CourseStyles["item"]}>subtitles:</div>{" "}
-              {course.subtitles != null
-                ? course.subtitles.map((el) => {
-                    return (
-                      <div>
-                        <span className={CourseStyles["item"]}>subtitle: {el.subtitle}</span>
-                        {"   "}
-                        <span className={CourseStyles["item"]}>time in hrs: {el.time}</span>
-                      </div>
-                    );
-                  })
-                : ""}
-            
-            <div className={CourseStyles["item"]}>totalHoursOfCourse: {course.totalHoursOfCourse}</div>
-            <div className={CourseStyles["item"]}>language: {course.language}</div>
-            <div className={CourseStyles["item"]}>
-              {course.discount === 0
-                ? "no discount"
-                : `discount: ${course.discount}`}
-            </div>
-            <div className={CourseStyles["item"]}>
+                );
+              })
+            : ""}
+          <div className={CourseStyles["item"]}>
+            totalHoursOfCourse: {course.totalHoursOfCourse}
+          </div>
+          <div className={CourseStyles["item"]}>
+            language: {course.language}
+          </div>
+          <div className={CourseStyles["item"]}>
+            {course.discount === 0
+              ? "no discount"
+              : `discount: ${course.discount}`}
+          </div>
+          <div className={CourseStyles["item"]}>
             exercises
-              {course.exercises != null
-                ? course.exercises.map((el ,index) => {
+            {course.exercises != null
+              ? course.exercises.map((el, index) => {
                   return (
                     <div>
-                      <span className={CourseStyles["item"]} id={index}>{index}: {el}</span>
+                      <span className={CourseStyles["item"]} id={index}>
+                        {index}: {el}
+                      </span>
                     </div>
                   );
                 })
-                : ""}
-            </div>
-          
+              : ""}
+          </div>
         </>
       )}
+      <form>
+        <div>Add a Promotion</div>
+        <div>
+          <span>Amount </span>
+          <input type="number"></input>
+        </div>
+        <div>
+          <span>End Date </span>
+
+          <input type="date"></input>
+        </div>
+        <button type="submit">submit</button>
+      </form>
     </div>
   );
 };
