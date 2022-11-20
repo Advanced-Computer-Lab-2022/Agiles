@@ -21,6 +21,7 @@ mongoose
 const app = express();
 
 // middleware
+app.use(express.urlencoded({ extended: true }))
 app.use(cors());
 app.use(express.json());
 app.use((req, res, next) => {
@@ -31,7 +32,8 @@ app.use((req, res, next) => {
 const adminRoutes = require("./routes/adminRouter");
 const courseRoutes = require("./routes/courseRouter");
 const instructorRoutes = require("./routes/instructorRouter");
+const { verifyAdminJWT } = require("./controllers/verifyJWT");
 
 app.use("/course/", courseRoutes);
-app.use("/admin/", adminRoutes);
 app.use("/instructor/", instructorRoutes);
+app.use("/admin/", adminRoutes);

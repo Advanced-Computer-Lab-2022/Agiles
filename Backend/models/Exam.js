@@ -6,7 +6,7 @@ const examSchema = new Schema(
     courseId: {
       type: mongoose.Types.ObjectId,
       ref:'Course',
-      required: true;
+      required: true
     },
     questions: {
       type: [String],

@@ -42,3 +42,44 @@
 .last {
     display:inline-flex;    
 }
+.instructions {
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+  background: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+  padding: 0.25rem;
+  position: relative;
+  bottom: -10px;
+}
+
+.instructions > svg {
+  margin-right: 0.25rem;
+}
+
+.offscreen {
+  position: absolute;
+  left: -9999px;
+}
+.hide {
+  display: none;
+}
+
+.valid {
+  color: limegreen;
+  margin-left: 0.25rem;
+}
+
+.invalid {
+  color: red;
+  margin-left: 0.25rem;
+}
+.errmsg {
+  background-color: lightpink;
+  color: firebrick;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+
+}
