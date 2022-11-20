@@ -54,10 +54,12 @@ const filterCoursesByInstructor = async (req, res) => {
       $and: [
         {
           $and: [
-            {$and: [
-              {price: { $gte: lowerBound }},
-              {price: { $lte: upperBound }}
-              ]}  ,
+            {
+              $and: [
+                { price: { $gte: lowerBound } },
+                { price: { $lte: upperBound } },
+              ],
+            },
             { instructor: username },
           ],
         },
@@ -68,10 +70,7 @@ const filterCoursesByInstructor = async (req, res) => {
       .exec();
   } else if (lowerBound) {
     courses = await Course.find({
-      $and: [
-        {price: { $gte: lowerBound }},
-        {price: { $lte: upperBound }}
-        ]  ,
+      $and: [{ price: { $gte: lowerBound } }, { price: { $lte: upperBound } }],
       instructor: username,
     })
       .sort({ price: 1 })
@@ -111,9 +110,59 @@ const courseSearchByInstructor = async (req, res) => {
   }
 };
 
+const getInstructorbyId = async (req, res) => {
+  try {
+    const instructor = await Instructor.findById(req.query["id"]).exec();
+    res.status(200).send(instructor);
+  } catch (err) {
+    res.status(500).json({ mssg: "can't find Instructor" });
+  }
+};
+
+const updateInstructorBio = async (req, res) => {
+  try {
+    await Instructor.findByIdAndUpdate(
+      req.query["id"],
+      { mini_bio: req.body.bio },
+      function (err, docs) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Updated Instructor : ", docs);
+        }
+        res.status(200);
+      }
+    );
+  } catch (err) {
+    res.status(500).json({ msg: "can't update bio" });
+  }
+};
+
+const updateInstructorEmail = async (req, res) => {
+  try {
+    await Instructor.findByIdAndUpdate(
+      req.query["id"],
+      { email: req.body.email },
+      function (err, docs) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Updated Instructor : ", docs);
+        }
+        res.status(200);
+      }
+    );
+  } catch (err) {
+    res.status(500).json({ msg: "can't update email" });
+  }
+};
+
 module.exports = {
   createInstructor,
   listAllInstructorCoursesTitles,
   courseSearchByInstructor,
   filterCoursesByInstructor,
+  getInstructorbyId,
+  updateInstructorEmail,
+  updateInstructorBio,
 };
