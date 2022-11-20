@@ -32,10 +32,7 @@ app.use((req, res, next) => {
 const adminRoutes = require("./routes/adminRouter");
 const courseRoutes = require("./routes/courseRouter");
 const instructorRoutes = require("./routes/instructorRouter");
-<<<<<<< HEAD
-=======
 const IndividualTraineeRouter = require("./routes/IndividualTraineeRouter");
->>>>>>> 9ad4a02535cd3d3abf020633bb777d3b246b81c7
 
 app.use("/course/", courseRoutes);
 app.use("/admin/", adminRoutes);
