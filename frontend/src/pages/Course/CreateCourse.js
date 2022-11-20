@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import CreateCourseStyles from "./CreateCourse.module.css";
+import { Link } from "react-router-dom";
 const CreateCourse = () => {
   const [title, setTitle] = useState("");
   const [instructor, setInstructor] = useState("");
@@ -13,7 +14,6 @@ const CreateCourse = () => {
   const [subtitles, setSubtitles] = useState([{ subtitle: "", time: "" }]);
 
   const [language, setLanguage] = useState("");
-
   const handleSubmit = async (event) => {
     let sumOfHours = 0;
     for (let sub of subtitles) {
@@ -259,6 +259,14 @@ const CreateCourse = () => {
             <option value="Welsh">Welsh</option>
             <option value="Xhosa">Xhosa</option>
           </select>
+        </div>
+        <div>
+          <input required type="checkbox" on></input> I agree to the Contract
+          license and{" "}
+          <Link target="_blank" to="/instructor/contract/">
+            Instructor terms
+          </Link>{" "}
+          used by the organization
         </div>
 
         <input type="submit" value="create Course" />

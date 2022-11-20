@@ -12,6 +12,11 @@ function Instructor() {
           create new course
         </button>
       </Link>
+      <Link to="/instructor/instructorViewProfile">
+        <button className={InstructorStyles["button"]}>
+          View/Edit Profile
+        </button>
+      </Link>
 
       <div></div>
     </div>
