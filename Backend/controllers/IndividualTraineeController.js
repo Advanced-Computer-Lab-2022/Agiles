@@ -5,4 +5,6 @@ const getTraineebyID = async () => {
   return await IndividualTrainee.findById(id);
 };
 
+
+
 module.exports = getTraineebyID;
