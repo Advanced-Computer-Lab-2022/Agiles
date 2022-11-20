@@ -32,22 +32,6 @@ const individualTraineeSchema = new Schema(
       type: String,
       required: false,
     },
-    cardholder_name: {
-      type: String,
-      required: false,
-    },
-    PAN: {
-      type: String,
-      required: false,
-    },
-    card_expiry_date: {
-      type: String,
-      required: false,
-    },
-    wallet_amount: {
-      type: Number,
-      required: false,
-    },
     registered_courses: {
       type: [{ Number, Number }], // courseid , progress
       default: [],

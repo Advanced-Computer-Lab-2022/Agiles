@@ -3,17 +3,20 @@ const Schema = mongoose.Schema;
 
 const examResultSchema = new Schema(
   {
-    studentId: {
-      type: Number,
+    userId: {
+      type: mongoose.Types.ObjectId,
+      ref: 'IndvidualTrainee',
       required: true,
     },
     courseId: {
-      type: Number,
-      required: true,
+      type: mongoose.Types.ObjectId,
+      ref:'Course',
+      required: true
     },
     examId: {
-      type: Number,
-      required: true,
+      type: mongoose.Types.ObjectId,
+      ref:'Exam',
+      required: true
     },
     result: {
       type: Number,

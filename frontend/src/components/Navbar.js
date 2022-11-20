@@ -5,12 +5,17 @@ import { Link, useNavigate } from "react-router-dom";
 import SelectCountry from "./SelectCountry";
 import a from "../static/logo.png";
 
-const Navbar = () => {
+const Navbar = (props) => {
   const [searchString, setSearchString] = useState("");
+  const logged = props.logged;
   const handleChange = (event) => {
     setSearchString(event.target.value);
   };
   const navigate = useNavigate();
+  const handleLogOut = ()=>{
+    props.funcLog(false);
+    navigate("/");
+  }
   const handleSearch = async (event) => {
     event.preventDefault();
     if (
@@ -58,8 +63,12 @@ const Navbar = () => {
         <Link to="/">Home</Link>
         {/* <Link to="/courses">Courses</Link> */}
         <Link to={coursesPath}>Courses</Link>
-        <Link to="/login">Log in</Link>
-        <Link to="/signup">Sign up</Link>
+        {!logged ?(<>
+          <Link to="/login">Log in</Link>
+        <Link to="/signup">Sign up</Link></>):(<>
+        <button onClick={handleLogOut} className="btn">Log out</button>
+        </>)}
+       
       </div>
       <SelectCountry></SelectCountry>
     </nav>

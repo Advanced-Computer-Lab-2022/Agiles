@@ -15,7 +15,7 @@ function SelectCountry() {
       )}`
     ).then(async (response) => {
       const data = await response.json();
-      if (window.sessionStorage.getItem("country") == "United States") {
+      if (window.sessionStorage.getItem("country") === "United States") {
         window.sessionStorage.setItem("currency", "usd");
       } else {
         window.sessionStorage.setItem("currency", data[0].currencies[0].code);
@@ -27,7 +27,7 @@ function SelectCountry() {
         const data = await response.json();
         let y = Object.values(data);
         window.sessionStorage.setItem("factor", y[1]);
-        if (window.location.href == "http://localhost:3000/course" ){
+        if (window.location.href === "http://localhost:3000/course" ){
         const courseId = location.state.id;
         navigate(location, { state: { id: courseId }});
         }
