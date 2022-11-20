@@ -4,15 +4,15 @@ const Schema = mongoose.Schema;
 const examResultSchema = new Schema(
   {
     studentId: {
-      type: Number,
+      type: Schema.Types.ObjectId,
       required: true,
     },
     courseId: {
-      type: Number,
+      type: Schema.Types.ObjectId,
       required: true,
     },
     examId: {
-      type: Number,
+      type: Schema.Types.ObjectId,
       required: true,
     },
     result: {

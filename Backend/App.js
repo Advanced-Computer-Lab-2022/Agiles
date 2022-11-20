@@ -32,8 +32,10 @@ const adminRoutes = require("./routes/adminRouter");
 const courseRoutes = require("./routes/courseRouter");
 const instructorRoutes = require("./routes/instructorRouter");
 const IndividualTraineeRouter = require("./routes/IndividualTraineeRouter");
+const corporaterouter = require("./routes/corporateTraineeRouter");
 
 app.use("/course/", courseRoutes);
 app.use("/admin/", adminRoutes);
 app.use("/instructor/", instructorRoutes);
 app.use("/individualtrainee/", IndividualTraineeRouter);
+app.use("/corporate/",corporaterouter);
