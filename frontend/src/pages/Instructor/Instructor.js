@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import InstructorStyles from "./Instructor.module.css";
+// 635fba2f99f3f855c075eb6d
 function Instructor() {
   return (
     <div>
@@ -10,6 +11,11 @@ function Instructor() {
         {" "}
         <button className={InstructorStyles["button"]}>
           create new course
+        </button>
+      </Link>
+      <Link to="/instructor/instructorViewProfile">
+        <button className={InstructorStyles["button"]}>
+          View/Edit Profile
         </button>
       </Link>
 

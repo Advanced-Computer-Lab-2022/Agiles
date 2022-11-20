@@ -32,8 +32,10 @@ app.use((req, res, next) => {
 const adminRoutes = require("./routes/adminRouter");
 const courseRoutes = require("./routes/courseRouter");
 const instructorRoutes = require("./routes/instructorRouter");
-const { verifyAdminJWT } = require("./controllers/verifyJWT");
+const IndividualTraineeRouter = require("./routes/IndividualTraineeRouter");
 
 app.use("/course/", courseRoutes);
-app.use("/instructor/", instructorRoutes);
 app.use("/admin/", adminRoutes);
+app.use("/instructor/", instructorRoutes);
+app.use("/individualtrainee/", IndividualTraineeRouter);
+
