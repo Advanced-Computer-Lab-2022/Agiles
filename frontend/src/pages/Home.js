@@ -26,7 +26,6 @@ const Home = (props) => {
             <div className={NavbarStyles["links"]}>
             <button onClick = {()=>setChoice(0)} className={choice==0?"Inprogress" :"notPressed"} >Explore</button>
               <button onClick = {()=>setChoice(1)} className={choice==1?"Inprogress" :"notPressed"} >Inprogress</button>
-              <button onClick = {()=>setChoice(2)} className={choice==2?"Inprogress" :"notPressed"} >Completed</button>
             </div>
           </nav>
           {choice==1?<section ><Inprogress></Inprogress></section>:<section></section>
