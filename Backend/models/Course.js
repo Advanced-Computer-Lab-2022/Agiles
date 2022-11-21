@@ -49,6 +49,9 @@ const courseSchema = new Schema(
       type: Number,
       required: false,
     },
+    discount_enddate: {
+      type: Date,
+    },
     totalHoursOfCourse: {
       type: Number,
       required: false,

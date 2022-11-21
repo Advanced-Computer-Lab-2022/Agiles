@@ -12,4 +12,6 @@ const InprogressCourses = async(req , res) =>{
      return res.status(200).json(courses);
 }
 
+
 module.exports = {getTraineebyID,InprogressCourses};
+

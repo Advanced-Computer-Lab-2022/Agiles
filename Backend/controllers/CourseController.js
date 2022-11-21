@@ -158,6 +158,7 @@ const coursePrice = async (req, res) => {
 };
 
 const getCourseById = async (req, res) => {
+  console.log(req.params);
   const id = req.params["id"];
   try {
     const course = await Course.findById(id).exec();
@@ -166,7 +167,35 @@ const getCourseById = async (req, res) => {
     res.status(500).json({ mssg: "no such Id" });
   }
 };
+
+const addCoursePromotion = async (req, res) => {
+  const id = req.query["id"];
+  const disc = req.body.promo;
+  const enddate = req.body.enddate;
+  console.log(id);
+
+  try {
+    await Course.findByIdAndUpdate(
+      id,
+      {
+        discount: disc,
+        discount_enddate: enddate,
+      },
+      function (err, docs) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Updated Course : ", docs);
+        }
+        res.status(200);
+      }
+    );
+  } catch (err) {
+    res.status(500).json({ mssg: "no such Id" });
+  }
+};
 module.exports = {
+  addCoursePromotion,
   createCourse,
   coursePrice,
   coursesDetails,
