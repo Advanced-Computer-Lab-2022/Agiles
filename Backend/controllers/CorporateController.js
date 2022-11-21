@@ -1,5 +1,14 @@
 const Corporate = require("../models/CorporateTrainee");
 const bcrypt = require("bcrypt");
+const ExamResult = require("../models/ExamResult");
+const express = require("express");
+const Exam = require("../models/Exam")
+
+
+const getTraineebyID = async (req,res) => {
+  const id = req.query["id"];
+  return await Corporate.findById(id);
+};
 
 //create Corporate
 const createCorporate = async (req, res) => {
@@ -21,4 +30,41 @@ const createCorporate = async (req, res) => {
   }
 };
 
-module.exports = createCorporate;
+//get exercise grade
+
+
+
+const getExerciseGrade = async (req,res) => {
+  const studentId =  req.query["id"];
+  const exerciseId = req.query["exerciseId"];
+  const exercise = await ExamResult.findOne({
+    studentId: studentId,
+    exerciseId: exerciseId
+  },{result: 1}).exec();
+  try{
+  res.status(200).json(exercise);
+  }
+  catch(error){
+    res.status(400).json({error:error.message})
+  }
+}
+
+const compareAnswers = async (req,res) => {
+  const studentId =  req.query["id"];
+  const exerciseId = req.query["exerciseId"];
+  const exerciseChoices = await ExamResult.findOne({
+    studentId: studentId,
+    exerciseId: exerciseId
+  },{studentChoices: 1}).exec();
+
+  const exercise = await Exam.findById(exerciseId,{answers:1});
+  try{
+  res.status(200).json({choices: exerciseChoices, answers: exercise});
+  }
+  catch(error){
+    res.status(400).json({error:error.message})
+  }
+
+}
+
+module.exports = {createCorporate,getExerciseGrade,compareAnswers};

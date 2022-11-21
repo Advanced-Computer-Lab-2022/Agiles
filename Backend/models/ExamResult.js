@@ -3,9 +3,8 @@ const Schema = mongoose.Schema;
 
 const examResultSchema = new Schema(
   {
-    userId: {
-      type: mongoose.Types.ObjectId,
-      ref: 'IndvidualTrainee',
+    studentId: {
+      type: Schema.Types.ObjectId,
       required: true,
     },
     courseId: {
@@ -14,9 +13,8 @@ const examResultSchema = new Schema(
       required: true
     },
     examId: {
-      type: mongoose.Types.ObjectId,
-      ref:'Exam',
-      required: true
+      type: Schema.Types.ObjectId,
+      required: true,
     },
     result: {
       type: Number,
