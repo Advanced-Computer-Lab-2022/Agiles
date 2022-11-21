@@ -5,13 +5,15 @@ import CreateCourseStyles from "./CreateCourse.module.css";
 import { Link } from "react-router-dom";
 const CreateCourse = () => {
   const [title, setTitle] = useState("");
+  const [preview, setPreview] = useState("");
+
   const [instructor, setInstructor] = useState("");
   const [subject, setSubject] = useState("");
   const [price, setPrice] = useState("");
   const [shortSummary, setShortSummary] = useState("");
 
   const [free, setFree] = useState(false);
-  const [subtitles, setSubtitles] = useState([{ subtitle: "", time: "" }]);
+  const [subtitles, setSubtitles] = useState([{ subtitle: "", time: "" ,link:"" , linkDesc:""}]);
 
   const [language, setLanguage] = useState("");
   const handleSubmit = async (event) => {
@@ -22,6 +24,7 @@ const CreateCourse = () => {
     const course = {
       instructor: instructor,
       title: title,
+      coursePreview : preview,
       price: price,
       free: free,
       subtitles: subtitles,
@@ -54,7 +57,7 @@ const CreateCourse = () => {
   };
 
   let addFormFields = () => {
-    setSubtitles([...subtitles, { subtitle: "", time: "" }]);
+    setSubtitles([...subtitles, { subtitle: "", time: "",link:"",linkDesc:"" }]);
   };
 
   let removeFormFields = (i) => {
@@ -78,6 +81,18 @@ const CreateCourse = () => {
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
+        <div className={CreateCourseStyles["row"]}>
+          <label>
+            Course preview Link <span className="required">*</span>
+          </label>
+          <input
+            required
+            type="text"
+            name="preview"
+            placeholder="course preview link.."
+            onChange={(e) => setPreview(e.target.value)}
+          />
+        </div>
         <div>
           {subtitles.map((element, index) => (
             <div className={CreateCourseStyles["row"]} key={index}>
@@ -89,13 +104,30 @@ const CreateCourse = () => {
                 value={element.subtitle || ""}
                 onChange={(e) => handleChange(index, e)}
               />
-              {"   "}
               <label> time in hrs</label>
               <input
                 required
                 type="number"
                 name="time"
                 value={element.time || ""}
+                onChange={(e) => handleChange(index, e)}
+              />
+              <br></br>
+              <br></br>
+               <label>subtitle's youtube Link</label>
+              <input
+                required
+                type="text"
+                name="link"
+                value={element.link || ""}
+                onChange={(e) => handleChange(index, e)}
+              />
+               <label>subtitle's description</label>
+              <input
+                required
+                type="text"
+                name="linkDesc"
+                value={element.linkDesc || ""}
                 onChange={(e) => handleChange(index, e)}
               />
               {index ? (

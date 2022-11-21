@@ -25,7 +25,8 @@ const courseSchema = new Schema(
       required: false,
     },
     instructor: {
-      type: String,
+      type: mongoose.Types.ObjectId,
+      ref : 'Instructor',
       required: false,
     },
     price: {
@@ -36,7 +37,10 @@ const courseSchema = new Schema(
       type: Boolean,
       required: false,
     },
-
+    coursePreview :{
+      type : String,
+      required : false
+    },
     language: {
       type: String,
       required: false,
@@ -52,6 +56,9 @@ const courseSchema = new Schema(
 
     exercises: {
       type: [String],
+    },
+    courseImage:{
+         type:String
     },
     rating_nums: {
       type: String,

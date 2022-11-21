@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { CourseCard } from "../../components/CourseCard";
 import axios from "axios";
 import InstructorOwnCoursesStyles from "./InstructorOwnCourses.module.css";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 function InstructorOwnCourses() {
+  const id = cookies.get('currentUser');
   const [courses, SetCourses] = useState([]);
   const [name, setName] = useState("");
   const [firstLoad, setFirstLoad] = useState(true);
@@ -102,7 +105,7 @@ function InstructorOwnCourses() {
       alert("please enter your name");
     }
     let data = await axios.get(
-      `/instructor/listCourseTitles/?username=${name}`
+      `/instructor/listCourseTitles/?id=${id}`
     );
     SetCourses(data.data);
   };

@@ -37,6 +37,7 @@ const Course = () => {
         <>
           <div className={CourseStyles["mainTop"]}>{course.title}</div>
           <div className={CourseStyles["item"]}> subject: {course.subject}</div>
+          <div className={CourseStyles["item"]}> coursePreview: <a href={course.coursePreview}></a></div>
           <div className={CourseStyles["item"]}>
             Description : {course.description}
           </div>
@@ -74,6 +75,11 @@ const Course = () => {
                     {"   "}
                     <span className={CourseStyles["item"]}>
                       time in hrs: {el.time}
+                    </span>
+                    <br></br>
+                     <a href={el.link}>subtitleLink</a> 
+                    <span className={CourseStyles["item"]}>
+                      shortSummary: {el.linkDesc}
                     </span>
                   </div>
                 );

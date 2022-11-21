@@ -79,6 +79,7 @@ const createCourse = async (req, res) => {
   const {
     instructor,
     title,
+    coursePreview,
     subtitles,
     price,
     description,
@@ -93,6 +94,7 @@ const createCourse = async (req, res) => {
   const newCourse = new Course({
     instructor: instructor,
     title: title,
+    coursePreview:coursePreview,
     subtitles: subtitles,
     price: price,
     description: description,

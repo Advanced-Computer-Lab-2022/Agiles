@@ -42,6 +42,7 @@ const logIn = async (req, res) => {
             { expiresIn: '1d' }
           );
           const status = 0;
+          res.cookie('currentUser',user._id,{httpsOnly  : true ,maxAge : 24*60*60*1000})
           res.cookie('status',status);
            res.cookie('jwt',refreshToken,{httpsOnly  : true ,maxAge : 24*60*60*1000})
            res.status(200).json({accessToken});
@@ -67,6 +68,7 @@ const logIn = async (req, res) => {
             { expiresIn: '1d' }
           );
           const status = 1;
+          res.cookie('currentUser',user._id,{httpsOnly  : true ,maxAge : 24*60*60*1000})
           res.cookie('status',status);
            res.cookie('jwt',refreshToken,{httpsOnly  : true ,maxAge : 24*60*60*1000})
            res.status(200).json({accessToken});

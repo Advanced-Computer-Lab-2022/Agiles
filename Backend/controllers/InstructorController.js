@@ -23,10 +23,10 @@ const createInstructor = async (req, res) => {
 };
 
 const listAllInstructorCoursesTitles = async (req, res) => {
-  const username = req.query["username"];
+  const id = req.query["id"];
   try {
     const courseAttr = await Course.find(
-      { instructor: username },
+      { instructor: id },
       { title: 1 }
     );
     res.status(200).send(courseAttr);
