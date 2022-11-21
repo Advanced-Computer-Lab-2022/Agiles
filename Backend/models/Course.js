@@ -58,10 +58,10 @@ const courseSchema = new Schema(
     },
 
     exercises: {
-      type: [String],
+      type: [{type: mongoose.Types.ObjectId, ref: 'Exam'}],
     },
     courseImage:{
-         type:String
+        type:String
     },
     rating_nums: {
       type: String,
