@@ -7,10 +7,32 @@ import { AiFillStar } from "react-icons/ai";
 const Course = () => {
   const [course, setCourse] = useState([]);
   const [isloading, setIsLoading] = useState(false);
+  const [promotion, setPromotion] = useState(0);
+  const [enddate, setEnddate] = useState("");
   const location = useLocation();
   const courseId = location.state.id;
   const style = { color: "goldenrod" };
+  const handlePromo = (e) => {
+    setPromotion(e.target.value);
+  };
+  const handleEnddate = (e) => {
+    setEnddate(e.target.value);
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
+    try {
+      await fetch(`/course/addPromotion?id=6361b2deef7816eb1d9eb915`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "PATCH",
+        body: JSON.stringify({ promo: promotion, enddate: enddate }),
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
   let x = Array.from(Array(course.rating).keys()).map((el) => {
     return <AiFillStar style={style}></AiFillStar>;
   });
@@ -86,7 +108,7 @@ const Course = () => {
             language: {course.language}
           </div>
           <div className={CourseStyles["item"]}>
-            {course.discount === 0
+            {course.discount == 0
               ? "no discount"
               : `discount: ${course.discount}`}
           </div>
@@ -106,16 +128,26 @@ const Course = () => {
           </div>
         </>
       )}
-      <form>
+      <form onSubmit={handleSubmit}>
         <div>Add a Promotion</div>
         <div>
-          <span>Amount </span>
-          <input type="number"></input>
+          <span>Amount (%) </span>
+          <input
+            required
+            type="number"
+            value={promotion}
+            onChange={handlePromo}
+          ></input>
         </div>
         <div>
           <span>End Date </span>
 
-          <input type="date"></input>
+          <input
+            required
+            type="date"
+            value={enddate}
+            onChange={handleEnddate}
+          ></input>
         </div>
         <button type="submit">submit</button>
       </form>
