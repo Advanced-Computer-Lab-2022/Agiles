@@ -58,105 +58,170 @@ const Course = () => {
       ) : (
         <>
           <div className={CourseStyles["mainTop"]}>{course.title}</div>
-          <div className={CourseStyles["item"]}> subject: {course.subject}</div>
-          <div className={CourseStyles["item"]}> coursePreview: <a href={course.coursePreview}></a></div>
-          <div className={CourseStyles["item"]}>
-            Description : {course.description}
+          <div className={CourseStyles["bigDiv"]}>
+            <div className={CourseStyles["item"]}>
+              {" "}
+              <span className={CourseStyles["head"]}>Subject:</span>
+              <span className={CourseStyles["span"]}>{course.subject}</span>
+            </div>
+            <div className={CourseStyles["item"]}>
+              {" "}
+              <span className={CourseStyles["head"]}> CoursePreview: </span>
+              <span className={CourseStyles["span"]}>
+                {" "}
+                <a href={course.coursePreview}></a>
+              </span>
+            </div>
+            <div className={CourseStyles["item"]}>
+              <span className={CourseStyles["head"]}> Description:</span>{" "}
+              <span className={CourseStyles["span"]}>{course.description}</span>
+            </div>
           </div>
-          <div className={CourseStyles["item"]}>
-            Instructor : {course.instructor}
-          </div>
-          <div className={CourseStyles["item"]}>
-            Rating : {course.rating === 0 ? "unrated" : stars}
-          </div>
-          {course.price == 0 ? (
-            <div className={CourseStyles["item"]}>Price : Free</div>
-          ) : (
-            <>
-              {!window.sessionStorage.getItem("factor") ? (
-                <div className={CourseStyles["item"]}>
-                  Price: {course.price} USD
-                </div>
-              ) : (
-                <div className={CourseStyles["item"]}>
-                  Price:{" "}
-                  {course.price * window.sessionStorage.getItem("factor")}{" "}
-                  {window.sessionStorage.getItem("currency").toUpperCase()}
-                </div>
-              )}
-            </>
-          )}
-          <div className={CourseStyles["item"]}>subtitles:</div>{" "}
-          {course.subtitles != null
-            ? course.subtitles.map((el) => {
-                return (
-                  <div>
-                    <span className={CourseStyles["item"]}>
-                      subtitle: {el.subtitle}
-                    </span>
-                    {"   "}
-                    <span className={CourseStyles["item"]}>
-                      time in hrs: {el.time}
-                    </span>
-                    <br></br>
-                     <a href={el.link}>subtitleLink</a> 
-                    <span className={CourseStyles["item"]}>
-                      shortSummary: {el.linkDesc}
+          <div className={CourseStyles["bigDiv"]}>
+            <div className={CourseStyles["item"]}>
+              <span className={CourseStyles["head"]}>Instructor: </span>
+              <span className={CourseStyles["span"]}>{course.instructor}</span>
+            </div>
+            <div className={CourseStyles["item"]}>
+              <span className={CourseStyles["head"]}>Rating:</span>{" "}
+              <span className={CourseStyles["span"]}>
+                {course.rating === 0 ? "unrated" : stars}
+              </span>
+            </div>
+            {course.price == 0 ? (
+              <div className={CourseStyles["item"]}>
+                {" "}
+                <span className={CourseStyles["head"]}>Price:</span>
+                <span className={CourseStyles["span"]}> Free</span>
+              </div>
+            ) : (
+              <>
+                {!window.sessionStorage.getItem("factor") ? (
+                  <div className={CourseStyles["item"]}>
+                    <span className={CourseStyles["head"]}> Price:</span>{" "}
+                    <span className={CourseStyles["span"]}>
+                      {course.price} USD
                     </span>
                   </div>
-                );
-              })
-            : ""}
-          <div className={CourseStyles["item"]}>
-            totalHoursOfCourse: {course.totalHoursOfCourse}
+                ) : (
+                  <div className={CourseStyles["item"]}>
+                    <span className={CourseStyles["head"]}> Price:</span>{" "}
+                    <span className={CourseStyles["span"]}>
+                      {course.price * window.sessionStorage.getItem("factor")}{" "}
+                      {window.sessionStorage.getItem("currency").toUpperCase()}
+                    </span>
+                  </div>
+                )}
+              </>
+            )}
           </div>
-          <div className={CourseStyles["item"]}>
-            language: {course.language}
-          </div>
-          <div className={CourseStyles["item"]}>
-            {course.discount == 0
-              ? "no discount"
-              : `discount: ${course.discount}`}
-          </div>
-          <div className={CourseStyles["item"]}>
-            exercises
-            {course.exercises != null
-              ? course.exercises.map((el, index) => {
+          <div className={CourseStyles["bigDiv"]}>
+            <div className={CourseStyles["item"]}>
+              {" "}
+              <span className={CourseStyles["head"]}>Subtitles:</span>
+            </div>{" "}
+            {course.subtitles != null
+              ? course.subtitles.map((el) => {
                   return (
                     <div>
-                      <span className={CourseStyles["item"]} id={index}>
-                        {index}: {el}
+                      <span className={CourseStyles["item"]}>
+                        <span className={CourseStyles["subtitleItem"]}>
+                          Subtitle:
+                        </span>
+                        <span className={CourseStyles["span"]}>
+                          {" "}
+                          {el.subtitle}
+                        </span>
+                      </span>
+                      {"   "}
+                      <span className={CourseStyles["item"]}>
+                        <span className={CourseStyles["subtitleItem"]}>
+                          Time in Hrs:
+                        </span>{" "}
+                        <span className={CourseStyles["span"]}>{el.time}</span>{" "}
+                      </span>
+                      <a className={CourseStyles["item"]} href={el.link}>
+                        {" "}
+                        SubtitleLink
+                      </a>
+                      <br></br>
+
+                      <span className={CourseStyles["item"]}>
+                        <span className={CourseStyles["subtitleItem"]}>
+                          Short Summary:
+                        </span>{" "}
+                        <span className={CourseStyles["span"]}>
+                          {el.linkDesc}
+                        </span>{" "}
                       </span>
                     </div>
                   );
                 })
               : ""}
           </div>
+          <div className={CourseStyles["bigDiv"]}>
+            <div className={CourseStyles["item"]}>
+              <span className={CourseStyles["head"]}>totalHoursOfCourse:</span>{" "}
+              <span className={CourseStyles["span"]}>
+                {course.totalHoursOfCourse}
+              </span>
+            </div>
+            <div className={CourseStyles["item"]}>
+              <span className={CourseStyles["head"]}>language: </span>{" "}
+              <span className={CourseStyles["span"]}> {course.language} </span>
+            </div>
+            <div className={CourseStyles["item"]}>
+              <span className={CourseStyles["head"]}>
+                {course.discount == 0
+                  ? "No Discount"
+                  : `Discount: ${course.discount}`}
+              </span>
+            </div>
+            <div className={CourseStyles["item"]}>
+              <span className={CourseStyles["head"]}>Exercises </span>
+              <span className={CourseStyles["span"]}>
+                {" "}
+                {course.exercises != null
+                  ? course.exercises.map((el, index) => {
+                      return (
+                        <div>
+                          <span className={CourseStyles["span"]} id={index}>
+                            {index}: {el}
+                          </span>
+                        </div>
+                      );
+                    })
+                  : ""}
+              </span>
+            </div>
+          </div>
         </>
       )}
-      <form onSubmit={handleSubmit}>
-        <div>Add a Promotion</div>
-        <div>
-          <span>Amount (%) </span>
-          <input
-            required
-            type="number"
-            value={promotion}
-            onChange={handlePromo}
-          ></input>
-        </div>
-        <div>
-          <span>End Date </span>
+      <div className={CourseStyles["bigDiv"]}>
+        <form onSubmit={handleSubmit}>
+          <div>Add a Promotion</div>
+          <div>
+            <span>Amount (%) </span>
+            <input
+              required
+              type="number"
+              value={promotion}
+              onChange={handlePromo}
+            ></input>
+          </div>
+          <div>
+            <span>End Date </span>
 
-          <input
-            required
-            type="date"
-            value={enddate}
-            onChange={handleEnddate}
-          ></input>
-        </div>
-        <button type="submit">submit</button>
-      </form>
+            <input
+              required
+              type="date"
+              value={enddate}
+              onChange={handleEnddate}
+            ></input>
+          </div>
+          <button type="submit">submit</button>
+        </form>
+      </div>
     </div>
   );
 };
