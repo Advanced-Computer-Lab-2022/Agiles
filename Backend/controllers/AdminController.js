@@ -5,21 +5,45 @@ const Instructor = require("../models/Instructor");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require('dotenv').config;
+
+
+//authAdmin
+function verifyAdminJWT (authHeader) {
+  if (!authHeader) return res.sendStatus(401);
+  const token = authHeader.split(' ')[1];
+  jwt.verify(
+      token,
+      process.env.ACCESS_TOKEN_SECRET_ADMIN,
+      (err, decoded) => {
+          if (err) return err
+      }
+  );
+}
 //create admin
 const createAdmin = async (req, res) => {
   const { username, password } = req.body;
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
-  const newAdmin = new Admin({
-    username: username,
-    password: hashedPassword,
-  });
-  try {
-    const admin = await Admin.create(newAdmin);
-    res.status(200).json(admin);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+  let verficationerror = verifyAdminJWT(req.headers['authorization']);
+  if (!username || !password){
+    return res.status(500).json({ msg: "bad request" });
   }
+  else if (verficationerror){
+    return res.status(401).json({ msg: "unauthorized" }); 
+  }
+  else{
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const newAdmin = new Admin({
+      username: username,
+      password: hashedPassword,
+    });
+    try {
+      const admin = await Admin.create(newAdmin);
+      res.status(200).json(admin);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+  
 };
 const logIn = async (req, res) => {
   const { username, password } = req.body;
@@ -42,8 +66,9 @@ const logIn = async (req, res) => {
             { expiresIn: '1d' }
           );
           const status = 0;
-          res.cookie('currentUser',user._id,{httpsOnly  : true ,maxAge : 24*60*60*1000})
-          res.cookie('status',status);
+           res.cookie('logged',true,{httpsOnly  : true ,maxAge : 24*60*60*1000})
+           res.cookie('currentUser',user._id,{httpsOnly  : true ,maxAge : 24*60*60*1000})
+           res.cookie('status',status);
            res.cookie('jwt',refreshToken,{httpsOnly  : true ,maxAge : 24*60*60*1000})
            res.status(200).json({accessToken});
         } else {
@@ -108,5 +133,12 @@ const signUp = async (req, res) => {
     }
   }
 };
+const logOut = async(req,res)=>{
+  res.clearCookie('logged');
+  res.clearCookie('currentUser');
+  res.clearCookie('jwt');
+  res.cookie('status',-1);
+  res.status(200).json({msg : "logged out"});
+}
 
-module.exports = { createAdmin, logIn, signUp };
+module.exports = { createAdmin, logIn, signUp ,logOut };

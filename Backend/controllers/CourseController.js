@@ -1,5 +1,6 @@
 const Course = require("../models/Course");
-
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 const filterCourses = async (req, res) => {
   const lowerBound = req.query["lowerBound"];
   const upperBound = req.query["upperBound"];

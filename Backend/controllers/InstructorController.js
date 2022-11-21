@@ -2,6 +2,17 @@ const Instructor = require("../models/Instructor");
 const bcrypt = require("bcrypt");
 const Course = require("../models/Course");
 
+function verifyInstructorJWT (authHeader)  {
+  if (!authHeader) return true;
+  const token = authHeader.split(' ')[1];
+  jwt.verify(
+      token,
+      process.env.ACCESS_TOKEN_SECRET_INSTRUCTOR,
+      (err, decoded) => {
+          if (err) return err; //invalid token
+      }
+  );
+}
 //create Instructor
 const createInstructor = async (req, res) => {
   const { fullname, username, password, email, gender } = req.body;
