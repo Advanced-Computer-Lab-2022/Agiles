@@ -68,7 +68,7 @@ const logIn = async (req, res) => {
           const status = 0;
            res.cookie('logged',true,{httpsOnly  : true ,maxAge : 24*60*60*1000})
            res.cookie('currentUser',user._id,{httpsOnly  : true ,maxAge : 24*60*60*1000})
-           res.cookie('status',status);
+           res.cookie('status',status,{httpsOnly  : true ,maxAge : 24*60*60*1000});
            res.cookie('jwt',refreshToken,{httpsOnly  : true ,maxAge : 24*60*60*1000})
            res.status(200).json({accessToken});
         } else {
@@ -85,7 +85,7 @@ const logIn = async (req, res) => {
           const accessToken = jwt.sign(
             { "username": user.username },
             process.env.ACCESS_TOKEN_SECRET_INSTRUCTOR,
-            { expiresIn: '900s' }
+            { expiresIn: '300000s' }
         );
           const refreshToken = jwt.sign(
             { username: user.username },
@@ -93,8 +93,9 @@ const logIn = async (req, res) => {
             { expiresIn: '1d' }
           );
           const status = 1;
+          res.cookie('logged',true,{httpsOnly  : true ,maxAge : 24*60*60*1000})
           res.cookie('currentUser',user._id,{httpsOnly  : true ,maxAge : 24*60*60*1000})
-          res.cookie('status',status);
+          res.cookie('status',status,{httpsOnly  : true ,maxAge : 24*60*60*1000});
            res.cookie('jwt',refreshToken,{httpsOnly  : true ,maxAge : 24*60*60*1000})
            res.status(200).json({accessToken});
         }

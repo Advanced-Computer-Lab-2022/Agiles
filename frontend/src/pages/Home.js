@@ -4,16 +4,18 @@ import NavbarStyles from "../components/Navbar.module.css";
 import React from "react";
 import Cookies from "universal-cookie";
 import a from "../static/logo.png";
-import { useState,useEffect } from "react";
+import { useState} from "react";
 import Inprogress from "../components/Inprogress";
 const cookies = new Cookies();
-const Home = (props) => {
-  const logged = props.logged;
+const Home = () => {
+  const logged = cookies.get("logged");
   const status = cookies.get("status");
   const [choice , setChoice] = useState(0);
-
   if (logged) {
-    if (status == 0) {
+    // status 0 > Itrainee 
+    // status 1 > Instructor
+    // status 3 > Ctrainee
+    if (status == 0 || status==2) {
       return (
         <div className="home">
           <section className="main">
@@ -25,7 +27,7 @@ const Home = (props) => {
           <nav className={NavbarStyles["navbar"]}>
             <div className={NavbarStyles["links"]}>
             <button onClick = {()=>setChoice(0)} className={choice==0?"Inprogress" :"notPressed"} >Explore</button>
-              <button onClick = {()=>setChoice(1)} className={choice==1?"Inprogress" :"notPressed"} >Inprogress</button>
+              <button onClick = {()=>setChoice(1)} className={choice==1?"Inprogress" :"notPressed"} >Registered Courses</button>
             </div>
           </nav>
           {choice==1?<section ><Inprogress></Inprogress></section>:<section></section>
@@ -58,7 +60,7 @@ const Home = (props) => {
       <div className="home">
         <section className="main">
           <div>
-            <h2>Register now !</h2>
+            <h2><a href="/signUp" >Register now !</a></h2>
           </div>
           <img src={a} alt="mainImage" className="mainImage"></img>
         </section>

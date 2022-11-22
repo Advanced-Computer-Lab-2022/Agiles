@@ -2,13 +2,16 @@ import React from "react";
 import "./CourseCard.css";
 import { useNavigate } from "react-router-dom";
 import a from "../static/logo.png";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 export const CourseCard = (props) => {
   const navigate = useNavigate();
+  const status = cookies.get('status');
   const courseId = props.data._id;
   const handleClick = () => {
     navigate("/course", { state: { id: courseId } });
   };
-  if (props.corporate) {
+  if (status ==2) {
     return (
       <div className="card">
         <h4>Title: {props.data.title}</h4>

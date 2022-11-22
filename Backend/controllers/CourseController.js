@@ -61,7 +61,7 @@ const filterCourses = async (req, res) => {
 
 const courseSearch = async (req, res) => {
   const search = req.query["search"];
-  courses = await Course.find({
+  const courses = await Course.find({
     $or: [
       { subject: { $regex: new RegExp(search, "i") } },
       { title: { $regex: new RegExp(search, "i") } },
