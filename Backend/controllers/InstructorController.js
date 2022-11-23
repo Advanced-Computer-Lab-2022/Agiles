@@ -34,9 +34,9 @@ const createInstructor = async (req, res) => {
 };
 
 const listAllInstructorCoursesTitles = async (req, res) => {
-  const id = req.query["id"];
+  const id = req.params["id"];
   try {
-    const courseAttr = await Course.find({ instructor: id }, { title: 1 });
+    const courseAttr = await Course.where('instructor').equals(id);
     res.status(200).send(courseAttr);
   } catch (err) {
     res.status(500).json({ mssg: "can't find courses" });

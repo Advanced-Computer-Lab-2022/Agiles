@@ -47,10 +47,5 @@
   border-bottom: 5px solid rgb(0, 65, 158) ;
 }
 .middle{
-  width: 100%;
   background-color: rgba(241, 250, 252, 0.379);
-  min-height: 20vh;
-  align-items: center;
-  margin-left: 4rem;
-  background-position:center ;
 }

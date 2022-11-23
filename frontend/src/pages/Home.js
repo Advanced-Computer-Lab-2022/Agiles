@@ -7,11 +7,32 @@ import a from "../static/logo.png";
 import { useState } from "react";
 import Inprogress from "../components/Inprogress";
 import Explore from "../components/Explore";
+import InstructorOwnCourses from "./Instructor/InstructorOwnCourses";
+import CreateCourse from "./Course/CreateCourse";
+import InstructorProfile from "./Instructor/InstructorProfile";
+import TraineeProfile from "./Trainee/TraineeProfile";
 const cookies = new Cookies();
 const Home = () => {
   const logged = cookies.get("logged");
   const status = cookies.get("status");
   const [choice, setChoice] = useState(0);
+  const [chosen, setChosen] = useState(0);
+  const project = () => {
+    switch(chosen) {
+      case 0: return<InstructorOwnCourses/>
+      case 1: return <CreateCourse/>
+      case 2: return <InstructorProfile/>
+      default:return <h1>error</h1>
+    }
+  }
+  const project1 = () => {
+    switch(choice) {
+      case 0: return<Explore/>
+      case 1: return <Inprogress/>
+      case 2: return <TraineeProfile/>
+      default:return <h1>error</h1>
+    }
+  }
   if (logged) {
     // status 0 > Itrainee
     // status 1 > Instructor
@@ -26,8 +47,6 @@ const Home = () => {
             <img src={a} alt="mainImage" className="mainImage"></img>
           </section>
           {/*sub nav*/}
-
-
           <nav className={NavbarStyles["navbar"]}>
             <div className={NavbarStyles["links"]}>
               <button
@@ -42,11 +61,17 @@ const Home = () => {
               >
                 Registered Courses
               </button>
-              <Link to="/trainee/traineeViewProfile">My Profile</Link>
+              <button
+                onClick={() => setChoice(2)}
+                className={choice == 2? "Inprogress" : "notPressed"}
+              >
+                Profile
+              </button>
+              
             </div>
           </nav>
-          {/*middle*/}
-          {choice==1?<Inprogress/>:<Explore/>}
+          {/*middle*/}<div className="middle">{project1()}</div>
+          
           <footer></footer>
         </div>
       );
@@ -61,13 +86,27 @@ const Home = () => {
           </section>
           <nav className={NavbarStyles["navbar"]}>
             <div className={NavbarStyles["links"]}>
-              <Link to="/instructorOwnCourses">My courses</Link>
-              <Link to="/instructorCreateCourse">Create Course</Link>
-              <Link to="/instructor/instructorViewProfile">
-                View/Edit Profile
-              </Link>
+            <button
+                onClick={() => setChosen(0)}
+                className={chosen == 0 ? "Inprogress" : "notPressed"}
+              >
+                MyCourses
+              </button>
+              <button
+                onClick={() => setChosen(1)}
+                className={chosen == 1 ? "Inprogress" : "notPressed"}
+              >
+                CreateCourse
+              </button>
+              <button
+                onClick={() => setChosen(2)}
+                className={chosen ==2 ? "Inprogress" : "notPressed"}
+              >
+                Profile
+              </button>
             </div>
           </nav>
+          <div className="middle">{project()}</div>
           <footer></footer>
         </div>
       );

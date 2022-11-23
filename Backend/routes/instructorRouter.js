@@ -14,8 +14,7 @@ const {
 
 //create Course
 instructorRouter.post("/addCourse", createCourse);
-
-instructorRouter.get("/listCourseTitles", listAllInstructorCoursesTitles);
+instructorRouter.get("/listCourseTitles/:id", listAllInstructorCoursesTitles);
 instructorRouter.get("/filterCourses", filterCoursesByInstructor);
 instructorRouter.get("/searchCourses", courseSearchByInstructor);
 instructorRouter.get("/instructorbyid", getInstructorbyId);

@@ -1,49 +1,50 @@
 import React, { useState } from "react";
-import { CourseCard } from "../../components/CourseCard";
 import axios from "axios";
-import InstructorOwnCoursesStyles from "./InstructorOwnCourses.module.css";
 import Cookies from "universal-cookie";
+import { useEffect } from "react";
+import { BsSearch } from "react-icons/bs";
+import InstructorOwnCoursesStyles from "./InstructorOwnCourses.module.css";
+import RegCourseCardStyles from "../../components/RegCourseCard.module.css";
+import RegCourseInst from "../../components/RegCourseInst";
 const cookies = new Cookies();
+const FetchUrl = '/instructor/listCourseTitles';
 function InstructorOwnCourses() {
-  const id = cookies.get('currentUser');
-  const [courses, SetCourses] = useState([]);
-  const [name, setName] = useState("");
-  const [firstLoad, setFirstLoad] = useState(true);
+  const currentUser = cookies.get('currentUser');
+  const [isloading, setIsLoading] = useState(true);
+  const [courses, setCourses] = useState([]);
   const [searchString, setSearchString] = useState("");
   const [subject, setSubject] = useState("");
   const [upperBound, setUpperBound] = useState("0");
   const [lowerBound, setLowerBound] = useState("0");
   const [free, setFree] = useState(false);
 
-  const handleChange = (event) => {
-    setName(event.target.value);
-  };
   const handleSubjectChange = (event) => {
     setSubject(event.target.value);
   };
   const handleUpperBoundChange = (event) => {
-    // if (window.sessionStorage.getItem("factor")) {
-    //   setUpperBound(
-    //     Math.floor(event.target.value / window.sessionStorage.getItem("factor"))
-    //   );
-    // } else {
     setUpperBound(event.target.value);
-    // }
   };
 
   const handleLowerBoundChange = (event) => {
-    // if (window.sessionStorage.getItem("factor")) {
-    //   setLowerBound(
-    //     Math.floor(event.target.value / window.sessionStorage.getItem("factor"))
-    //   );
-    // } else {
     setLowerBound(event.target.value);
-    // }
   };
   const handleSearchChange = (event) => {
     setSearchString(event.target.value);
   };
-  const handleFilterSubmit = async (event) => {
+  const fetchData = async()=>{
+    setIsLoading(true);
+    try {
+      const res = await axios.get(FetchUrl + "/" + currentUser);
+      setCourses(res.data)
+    } catch (err) {
+      console.log(err);
+    }
+    setIsLoading(false);
+  }
+  useEffect(()=>{
+    fetchData();
+  },[]);
+  /*const handleFilterSubmit = async (event) => {
     event.preventDefault();
     let lb = lowerBound;
     let ub = upperBound;
@@ -83,59 +84,17 @@ function InstructorOwnCourses() {
       let data = await axios.get(url);
       SetCourses(data.data);
     }
-  };
-
-  const handleSearchSubmit = async (event) => {
-    event.preventDefault();
-    setFirstLoad(false);
-
-    if (name == "") {
-      alert("please enter your name");
-    } else {
-      let data = await axios.get(
-        `/instructor/searchCourses/?search=${searchString}&instructor=${name}`
-      );
-      SetCourses(data.data);
-    }
-  };
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setFirstLoad(false);
-    if (name == "") {
-      alert("please enter your name");
-    }
-    let data = await axios.get(
-      `/instructor/listCourseTitles/?id=${id}`
-    );
-    SetCourses(data.data);
-  };
+  };*/
 
   return (
-    <div className={InstructorOwnCoursesStyles["component"]}>
-      <div className={InstructorOwnCoursesStyles["flex"]}>
+    <div className={InstructorOwnCoursesStyles["Wrapper"]}>
+      <h2 className={InstructorOwnCoursesStyles["Wrapper_h2"]}>My Courses</h2>
+      <div className={InstructorOwnCoursesStyles["Wrapper-top"]}>
         <div>
-          <form onSubmit={handleSubmit}>
-            <div>Name:</div>
-            <input required type="text" value={name} onChange={handleChange} />
-            <input type="submit" value="View All Courses" />
-          </form>
-        </div>
-        <div>
-          <div>Search Your Courses</div>
-          <form onSubmit={handleSearchSubmit}>
-            <input
-              required
-              type="text"
-              value={searchString}
-              placeholder="Search your courses"
-              onChange={handleSearchChange}
-            />
-            <input type="submit" value="Search" />
-          </form>
-        </div>
-        <div>
-          <div>Filter Your Courses by Subject and/or Price</div>
-          <form onSubmit={handleFilterSubmit}>
+          <label>Filter by</label>
+         
+          <form >
+          <div className={InstructorOwnCoursesStyles["Wrapper-filter"]}>
             <div>
               <input
                 type="text"
@@ -175,16 +134,33 @@ function InstructorOwnCourses() {
                 <span className={InstructorOwnCoursesStyles["span"]}>free</span>
               </label>
             </div>
+            </div>
             <input type="submit" value="Filter" />
           </form>
+        
         </div>
+        <div>
+          <form  className={InstructorOwnCoursesStyles['search-bar']}>
+           <div className={InstructorOwnCoursesStyles['searchIcon']}><BsSearch></BsSearch></div>
+            <input
+              required
+              type="text"
+              className={InstructorOwnCoursesStyles["inpt"]}
+              value={searchString}
+              placeholder="Search my courses"
+              onChange={handleSearchChange}
+            />
+          </form>
+          </div>
       </div>
       <div>
+      <div className={RegCourseCardStyles["cardgrid"]}>
         {courses.map((el) => {
-          return <CourseCard data={el} titleOnly={true} />;
+          return <RegCourseInst data={el}></RegCourseInst>;
         })}
+        </div>
       </div>
-      <h2>{!firstLoad ? `${courses.length} results` : ""}</h2>
+
     </div>
   );
 }
