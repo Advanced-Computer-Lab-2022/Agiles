@@ -54,10 +54,7 @@ const logIn = async (req, res) => {
 
             { expiresIn: "900s" }
           );
-          console.log(
-            "🚀 ~ file: AdminController.js ~ line 63 ~ bcrypt.compare ~ accessToken",
-            accessToken
-          );
+
           const refreshToken = jwt.sign(
             { username: user.username },
             process.env.REFRESH_TOKEN_SECRET,
