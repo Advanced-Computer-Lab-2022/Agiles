@@ -26,13 +26,12 @@ const Courses = () => {
         <LoadingScreen loading={true} logoSrc={spinner} />
       ) : (
         <>
-        <Filter />
+          <Filter />
           <div className={CourseStyles["course-list"]}>
             {courses.map((el, index) => {
               return <CourseCard  data={el} key={index} />;
             })}
           </div>
-          
         </>
       )}
     </div>

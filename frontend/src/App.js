@@ -16,7 +16,6 @@ import Course from "./pages/Course/Course";
 import FilterResults from "./pages/Course/FilterResults";
 import InstructorTerms from "./pages/Instructor/InstructorTerms";
 import InstructorProfile from "./pages/Instructor/InstructorProfile";
-import RegCourse from "./pages/Course/RegCourse";
 import { useState } from "react";
 function App() {
   const [showNav, setShowNav] = useState(true);
@@ -25,7 +24,7 @@ function App() {
       <BrowserRouter>
         {showNav && (
           <nav>
-            <Navbar/>
+            <Navbar />
           </nav>
         )}
         <div className="pages">
@@ -33,7 +32,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/admin" element={<Admin  funcNav={setShowNav} />} />
+            <Route path="/admin" element={<Admin funcNav={setShowNav} />} />
             <Route
               path="/addInstructor"
               element={<AddInstructor funcNav={setShowNav} />}
@@ -55,13 +54,25 @@ function App() {
               element={<InstructorOwnCourses />}
             />
             <Route path="/search" element={<SearchResults />} />
+            <Route
+              path="/csearch"
+              element={<SearchResults  />}
+            />
             <Route path="/instructorCreateCourse" element={<CreateCourse />} />
             <Route path="/courses/filter" element={<FilterResults />} />
+            <Route
+              path="/ccourses/filter"
+              element={<FilterResults/>}
+            />
             <Route path="/instructor/contract" element={<InstructorTerms />} />
             <Route
               path="/instructor/instructorViewProfile"
               element={<InstructorProfile></InstructorProfile>}
-            ></Route>
+            />
+            <Route
+              path="/trainee/traineeViewProfile"
+              element={<TraineeProfile />}
+            />
           </Routes>
         </div>
       </BrowserRouter>
