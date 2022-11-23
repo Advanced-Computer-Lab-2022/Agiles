@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const registeredCourseSchema = new Schema({});
 const individualTraineeSchema = new Schema(
   {
     username: {
@@ -32,10 +33,19 @@ const individualTraineeSchema = new Schema(
       type: String,
       required: false,
     },
-    registered_courses: {
-      id: [{ type: Schema.ObjectId, ref: "Course"}],
-      progress: [Number],
-    },
+    registered_courses: [
+      {
+        courseId: {
+          type: Schema.ObjectId,
+          ref: "Course",
+        },
+        progress: {
+          type: Number,
+          min: 0,
+          max: 100,
+        },
+      },
+    ],
     accessToken: { type: String },
     refreshToken: { type: String },
   },

@@ -1,0 +1,40 @@
+.mainlabel{
+    color: rgb(97, 94, 94);
+    font-size: 1.5rem;
+    margin-top: 2rem;
+}
+.mainRight-hr{
+    height: 3px;
+    background-color: #000;
+    margin-top: 2rem;
+}
+.mainRight h1{
+    font-size: 2.5rem;
+    font-weight: bold;
+    font-family: Tahoma, sans-serif;
+    color: rgb(33, 32, 32);
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+.mainRight h3{
+    font-size: 1.3rem;
+    font-weight: bold;
+    font-family: Tahoma, sans-serif;
+    color: rgb(33, 32, 32);
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+.mainRight p {
+    margin-left: 2rem;
+}
+.video{
+    margin-left: 1rem;
+}
+.rating{
+    margin-bottom: 2rem;
+}
+.progressbar{
+    margin-top: 1rem;
+    height: 1rem;
+    width: 60rem;
+}

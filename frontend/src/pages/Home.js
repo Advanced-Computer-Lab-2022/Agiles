@@ -6,6 +6,7 @@ import Cookies from "universal-cookie";
 import a from "../static/logo.png";
 import { useState} from "react";
 import Inprogress from "../components/Inprogress";
+import Explore from "../components/Explore";
 const cookies = new Cookies();
 const Home = () => {
   const logged = cookies.get("logged");
@@ -18,27 +19,33 @@ const Home = () => {
     if (status == 0 || status==2) {
       return (
         <div className="home">
-          <section className="main">
-            <div>
+          <section className="mainSection">
+         
               <h2>Welcome Back !</h2>
-            </div>
+        
             <img src={a} alt="mainImage" className="mainImage"></img>
           </section>
+          {/*sub nav*/}
+
+
           <nav className={NavbarStyles["navbar"]}>
             <div className={NavbarStyles["links"]}>
             <button onClick = {()=>setChoice(0)} className={choice==0?"Inprogress" :"notPressed"} >Explore</button>
               <button onClick = {()=>setChoice(1)} className={choice==1?"Inprogress" :"notPressed"} >Registered Courses</button>
             </div>
           </nav>
-          {choice==1?<section ><Inprogress></Inprogress></section>:<section></section>
-             }
+          {/*middle*/}
+
+
+          {choice==1?<Inprogress/>:<Explore/>}
+
           <footer></footer>
         </div>
       );
     } else {
       return (
         <div className="home">
-          <section className="main">
+          <section className="mainSection">
             <div>
               <h2>Welcome Back !</h2>
             </div>
@@ -58,7 +65,7 @@ const Home = () => {
   } else {
     return (
       <div className="home">
-        <section className="main">
+        <section className="mainSection">
           <div>
             <h2><a href="/signUp" >Register now !</a></h2>
           </div>

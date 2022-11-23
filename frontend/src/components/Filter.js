@@ -2,7 +2,6 @@ import FilterStyles from "./Filter.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Rating from "@mui/material/Rating";
-import axios from "axios";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const Filter = () => {

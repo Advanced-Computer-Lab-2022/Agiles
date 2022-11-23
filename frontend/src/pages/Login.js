@@ -4,13 +4,11 @@ import {useEffect, useRef,useState } from "react";
 import {useNavigate} from "react-router-dom"
 import axios from "axios";
 const LOGIN_URL = "/admin/logIn";
-const Login = (props) => {
+const Login = () => {
     const errRef = useRef();
     const [username,setUsername] = useState('');
-    const [userFocus, setUserFocus] = useState(false);
 
     const [password,setPassword] = useState('');
-    const [pwdFocus, setPwdFocus] = useState(false);
 
     const [errMsg, setErrMsg] = useState("");
     const navigate = useNavigate();
@@ -62,8 +60,7 @@ const Login = (props) => {
               required
               placeholder="Enter username"
               onChange={(e) => setUsername(e.target.value)}
-              onFocus={() => setUserFocus(true)}
-              onBlur={() => setUserFocus(false)}
+
             />
           </div>
           <div className="form-group mt-3">
@@ -75,8 +72,6 @@ const Login = (props) => {
               placeholder="Enter password"
               required
               onChange={(e) => setPassword(e.target.value)}
-              onFocus={() => setPwdFocus(true)}
-              onBlur={() => setPwdFocus(false)}
             />
           </div>
           <div className="d-grid gap-2 mt-3">

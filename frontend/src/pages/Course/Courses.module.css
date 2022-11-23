@@ -2,7 +2,7 @@
   display: flex;
 }
 .course-list {
-  flex: 6;
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(850px, 1fr));  align-items: flex-start; 
 }
 

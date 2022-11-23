@@ -27,7 +27,7 @@ const InprogressCourses = async(req , res) =>{
     else{
     const id = req.params["id"];
     if (!id) return res.status(400).json({ msg: "bad request" });
-    const courses = await IndividualTrainee.findById(id,{registered_courses:1}).populate('registered_courses.id');
+    const courses = await IndividualTrainee.findById(id,{registered_courses:1}).populate('registered_courses.courseId');
     return res.status(200).json(courses);
     }
 }

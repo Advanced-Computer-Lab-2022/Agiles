@@ -16,6 +16,7 @@ import Course from "./pages/Course/Course";
 import FilterResults from "./pages/Course/FilterResults";
 import InstructorTerms from "./pages/Instructor/InstructorTerms";
 import InstructorProfile from "./pages/Instructor/InstructorProfile";
+import RegCourse from "./pages/Course/RegCourse";
 import { useState } from "react";
 function App() {
   const [showNav, setShowNav] = useState(true);
@@ -47,22 +48,15 @@ function App() {
             />
             <Route path="/courses" element={<Courses />} />
             <Route path="/course" element={<Course />} />
+            <Route path="/regcourse" element={<RegCourse/>} />
             <Route path="/createCourse" element={<CreateCourse />} />
             <Route
               path="/instructorOwnCourses"
               element={<InstructorOwnCourses />}
             />
             <Route path="/search" element={<SearchResults />} />
-            <Route
-              path="/csearch"
-              element={<SearchResults  />}
-            />
             <Route path="/instructorCreateCourse" element={<CreateCourse />} />
             <Route path="/courses/filter" element={<FilterResults />} />
-            <Route
-              path="/ccourses/filter"
-              element={<FilterResults/>}
-            />
             <Route path="/instructor/contract" element={<InstructorTerms />} />
             <Route
               path="/instructor/instructorViewProfile"

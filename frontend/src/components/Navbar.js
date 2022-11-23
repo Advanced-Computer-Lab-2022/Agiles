@@ -5,6 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import SelectCountry from "./SelectCountry";
 import Cookies from "universal-cookie";
 import a from "../static/logo.png";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import userpic from "../static/userpic.jpeg";
+import Dropdown from "react-bootstrap/Dropdown";
+
 import axios from "axios";
 const cookies = new Cookies();
 const LOGOUT_URL = "/admin/logOut";
@@ -64,19 +68,29 @@ const Navbar = () => {
       <div className={NavbarStyles["links"]}>
         <Link to="/">Home</Link>
         <Link to="/courses">Courses</Link>
-        {!logged ? (
+        {!logged && (
           <>
             <Link to="/login">Log in</Link>
             <Link to="/signup">Sign up</Link>
           </>
-        ) : (
-          <>
-            <button onClick={handleLogOut} className="btn">
-              Log out
-            </button>
-          </>
         )}
       </div>
+      {logged && (<>
+        <div className={NavbarStyles["dropUser"]}>
+          <img
+            src={userpic}
+            alt="userpic"
+            className={NavbarStyles["userpic"]}
+          ></img>
+          <label className={NavbarStyles["userlabel"]}>| Hossam Elfar</label>
+          <ArrowDropDownIcon className={NavbarStyles["dropicon"]} />
+          
+        </div>
+        <button onClick={handleLogOut} className="btn">
+        Log out
+      </button> 
+      </>
+      )}
       <SelectCountry></SelectCountry>
     </nav>
   );

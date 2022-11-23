@@ -27,6 +27,10 @@ const courseSchema = new Schema(
     instructor: {
       type: mongoose.Types.ObjectId,
       ref : 'Instructor',
+      required: true,
+    },
+    instructorname: {
+      type: String,
       required: false,
     },
     price: {
@@ -37,8 +41,12 @@ const courseSchema = new Schema(
       type: Boolean,
       required: false,
     },
-    coursePreview :{
+    coursePreviewUrl :{
       type : String,
+      validate: { 
+        validator: value => validator.isURL(value, { protocols: ['http','https','ftp'], require_tld: true, require_protocol: true }),
+        message: 'Must be a Valid URL' 
+      },
       required : false
     },
     language: {
@@ -56,15 +64,15 @@ const courseSchema = new Schema(
       type: Number,
       required: false,
     },
-
     exercises: {
       type: [{type: mongoose.Types.ObjectId, ref: 'Exam'}],
     },
-    courseImage:{
-        type:String
-    },
-    rating_nums: {
-      type: String,
+    imgUrl:{
+        type:String,
+        validate: { 
+          validator: value => validator.isURL(value, { protocols: ['http','https','ftp'], require_tld: true, require_protocol: true }),
+          message: 'Must be a Valid URL' 
+        }
     },
   },
   { timestamps: true }
