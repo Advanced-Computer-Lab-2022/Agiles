@@ -121,7 +121,7 @@ const coursesDetails = async (req, res) => {
   try {
     const courseAttr = await Course.find(
       {},
-      { title: 1, totalHoursOfCourse: 1, price: 1, rating: 1, _id: 1 }
+      { title: 1, totalHoursOfCourse: 1, price: 1, rating: 1,imgUrl :1,instructorname:1, _id: 1 }
     );
     res.status(200).send(courseAttr);
   } catch (err) {

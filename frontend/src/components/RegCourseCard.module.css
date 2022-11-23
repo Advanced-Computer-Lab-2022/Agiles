@@ -20,7 +20,8 @@
     margin-bottom: 0.25rem;
     border-radius: 0.25rem;
     width: 100%;
-    height: 100%;
+    height: 10rem;
+    cursor: pointer;
     object-fit: cover;
   }
   .regcard:hover > .regcard__image > img {

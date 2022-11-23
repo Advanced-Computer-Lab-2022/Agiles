@@ -3,11 +3,14 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 import { useEffect } from "react";
 import { BsSearch } from "react-icons/bs";
+import LoadingScreen from "react-loading-screen";
+import spinner from "../../static/download.gif";
 import InstructorOwnCoursesStyles from "./InstructorOwnCourses.module.css";
 import RegCourseCardStyles from "../../components/RegCourseCard.module.css";
 import RegCourseInst from "../../components/RegCourseInst";
 const cookies = new Cookies();
 const FetchUrl = '/instructor/listCourseTitles';
+const Search_URL = '/instructor/searchCourses'
 function InstructorOwnCourses() {
   const currentUser = cookies.get('currentUser');
   const [isloading, setIsLoading] = useState(true);
@@ -31,6 +34,19 @@ function InstructorOwnCourses() {
   const handleSearchChange = (event) => {
     setSearchString(event.target.value);
   };
+  const handleSearch = async(event)=>{
+    event.preventDefault();
+    setIsLoading(true);
+    try {
+      const res = await axios.get(Search_URL ,{ params: { search:searchString , instructor :currentUser }});
+      setCourses(res.data)
+    } catch (err) {
+      console.log(err);
+    }
+    setIsLoading(false);
+  
+  }
+
   const fetchData = async()=>{
     setIsLoading(true);
     try {
@@ -87,6 +103,10 @@ function InstructorOwnCourses() {
   };*/
 
   return (
+    <>
+    {isloading ? (
+      <LoadingScreen loading={true} logoSrc={spinner} />
+    ) : (
     <div className={InstructorOwnCoursesStyles["Wrapper"]}>
       <h2 className={InstructorOwnCoursesStyles["Wrapper_h2"]}>My Courses</h2>
       <div className={InstructorOwnCoursesStyles["Wrapper-top"]}>
@@ -140,7 +160,7 @@ function InstructorOwnCourses() {
         
         </div>
         <div>
-          <form  className={InstructorOwnCoursesStyles['search-bar']}>
+          <form onSubmit={handleSearch} className={InstructorOwnCoursesStyles['search-bar']}>
            <div className={InstructorOwnCoursesStyles['searchIcon']}><BsSearch></BsSearch></div>
             <input
               required
@@ -155,13 +175,13 @@ function InstructorOwnCourses() {
       </div>
       <div>
       <div className={RegCourseCardStyles["cardgrid"]}>
-        {courses.map((el) => {
-          return <RegCourseInst data={el}></RegCourseInst>;
-        })}
+        {courses.length>0 ?(<>{courses.map((el,index) => {
+          return <RegCourseInst data={el} key={index}></RegCourseInst>;
+        })}</>):<h3>No courses found</h3>}
         </div>
       </div>
 
-    </div>
+    </div>)}</>
   );
 }
 
