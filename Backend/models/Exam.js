@@ -6,14 +6,30 @@ const examSchema = new Schema(
     courseId: {
       type: mongoose.Types.ObjectId,
       ref:'Course',
-      required: true
+      required: true,
     },
     questions: {
-      type: [String],
+      type: String,
+      required: true,
+    },
+    firstChoices:{
+      type: String,
+      required: true,
+    },
+    secondChoices:{
+      type: String,
+      required: true,
+    },
+    thirdChoices:{
+      type: String,
+      required: true,
+    },
+    fourthChoices:{
+      type: String,
       required: true,
     },
     answers: {
-      type: Array,
+      type: String,
       required: true,
     },
   },

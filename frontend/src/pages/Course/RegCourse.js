@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import CoursePreview from "../../components/CoursePreview";
 import CoursContent from "../../components/CourseContent";
+import CourseExam from "./CourseExam";
 const RegCourse = () => {
     const location = useLocation();
     const course = location.state.course;
@@ -12,12 +13,13 @@ const RegCourse = () => {
       setChoice(e.target.value);
     }
     const project = () => {
+      console.log(course)
       switch(choice) {
 
         case 0:   return<CoursePreview course={course} progress={progress}/>;
         case 1:   return <CoursContent course={course}/>;
         case 2: return <></>;
-        case 3:  return <></>;
+        case 3:  return <CourseExam courseId={course._id}/>;
 
         default:return <h1>error</h1>
       }

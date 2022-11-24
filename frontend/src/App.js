@@ -10,6 +10,9 @@ import Admin from "./pages/Admin/Admin";
 import AddAdmin from "./pages/Admin/AddAdmin";
 import AddInstructor from "./pages/Admin/AddInstructor";
 import AddCorporate from "./pages/Admin/AddCorporate";
+import CreateCourse from "./pages/Course/CreateCourse";
+import SetExam from "./pages/Course/SetExam";
+import CourseExam from "./pages/Course/CourseExam";
 import SearchResults from "./pages/Course/SearchResults";
 import Course from "./pages/Course/Course";
 import FilterResults from "./pages/Course/FilterResults";
@@ -32,6 +35,9 @@ function App() {
             <Route path="/addCorporate" element={<AddCorporate funcNav={setShowNav} />}/>
             <Route path="/courses" element={<Courses />} />
             <Route path="/course" element={<Course />} />
+            <Route path="/createCourse" element={<CreateCourse />} />
+            <Route path="/setexam" element={<SetExam />} />
+            <Route path="/CourseExam" element={<CourseExam />} />
             <Route path="/regcourse" element={<Regcourse/>} />
             <Route path="/search" element={<SearchResults />} />
             <Route path="/courses/filter" element={<FilterResults />} />
