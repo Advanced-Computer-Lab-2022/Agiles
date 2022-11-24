@@ -13,7 +13,7 @@ function TraineeProfile() {
   const [newPassword, setNewPassword] = useState(null);
   const [username, setUsername] = useState("");
   const [instructor, setInstructor] = useState({});
-  const instructorid = "635fba2f99f3f855c075eb6d";
+  const iTraineeId = "637ab83325ee8c662d55b415";
   useEffect(() => {
     setErrMsg("");
   }, [oldPassword, newPassword]);
@@ -33,7 +33,7 @@ function TraineeProfile() {
     };
     try {
       const res = await axios.patch(
-        `/individualtrainee/updatePassword?id=6379bae73eeedf94f9aa4713`,
+        `/individualtrainee/updatePassword?id=${iTraineeId}`,
         passwordObject,
         config
       );
@@ -43,7 +43,7 @@ function TraineeProfile() {
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else if (err.response?.status === 400) {
-        setErrMsg("Username not exist");
+        setErrMsg("wrong username fetched not exist");
       } else if (err.response?.status === 401) {
         setErrMsg("old Password incorrect");
       } else if (err.response?.status === 500) {
@@ -55,7 +55,7 @@ function TraineeProfile() {
   const handleUpdateUsername = async (e) => {
     // e.preventDefault();
     try {
-      await fetch(`/individualtrainee/updateUsername?id=${instructorid}`, {
+      await fetch(`/individualtrainee/updateUsername?id=${iTraineeId}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -72,7 +72,7 @@ function TraineeProfile() {
     e.preventDefault();
     e.target.reset();
     try {
-      await fetch(`/individualtrainee/updateEmail?id=${instructorid}`, {
+      await fetch(`/individualtrainee/updateEmail?id=${iTraineeId}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -92,15 +92,14 @@ function TraineeProfile() {
   };
   return (
     <div>
-      <div>
-        <div className={TraineeProfileStyles["mainTop"]}>My Profile</div>
+      <div className={TraineeProfileStyles["mainTop"]}>My Profile</div>
 
-        <form onSubmit={handleUpdateEmail}>
-          <div className={TraineeProfileStyles["head"]}>
-            Edit your profile section :
-          </div>
-          <br></br>
-
+      <div className={TraineeProfileStyles["head"]}>
+        Edit your profile section :
+      </div>
+      <br></br>
+      <div className={TraineeProfileStyles["bigDiv"]}>
+        {/* <form onSubmit={handleUpdateEmail}>
           <div className={TraineeProfileStyles["subtitleItem"]}>
             Change Email:{" "}
           </div>
@@ -114,7 +113,7 @@ function TraineeProfile() {
           <button type="submit" className={TraineeProfileStyles["button"]}>
             update Email
           </button>
-        </form>
+        </form> */}
         <form onSubmit={handleUpdatingPassword}>
           <div className={TraineeProfileStyles["subtitleItem"]}>
             Change password:{" "}
@@ -145,7 +144,7 @@ function TraineeProfile() {
             update Password
           </button>
         </form>
-        <form>
+        {/* <form>
           <div className={TraineeProfileStyles["subtitleItem"]}>
             Change Username:{" "}
           </div>
@@ -162,7 +161,7 @@ function TraineeProfile() {
           >
             Update Username
           </button>
-        </form>
+        </form> */}
       </div>
     </div>
   );

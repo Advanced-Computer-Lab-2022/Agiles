@@ -18,21 +18,29 @@ const Home = () => {
   const [choice, setChoice] = useState(0);
   const [chosen, setChosen] = useState(0);
   const project = () => {
-    switch(chosen) {
-      case 0: return<InstructorOwnCourses/>
-      case 1: return <CreateCourse/>
-      case 2: return <InstructorProfile/>
-      default:return <h1>error</h1>
+    switch (chosen) {
+      case 0:
+        return <InstructorOwnCourses />;
+      case 1:
+        return <CreateCourse />;
+      case 2:
+        return <InstructorProfile />;
+      default:
+        return <h1>error</h1>;
     }
-  }
+  };
   const project1 = () => {
-    switch(choice) {
-      case 0: return<Explore/>
-      case 1: return <Inprogress/>
-      case 2: return <TraineeProfile/>
-      default:return <h1>error</h1>
+    switch (choice) {
+      case 0:
+        return <Explore />;
+      case 1:
+        return <Inprogress />;
+      case 2:
+        return <TraineeProfile />;
+      default:
+        return <h1>error</h1>;
     }
-  }
+  };
   if (logged) {
     // status 0 > Itrainee
     // status 1 > Instructor
@@ -41,9 +49,8 @@ const Home = () => {
       return (
         <div className="home">
           <section className="mainSection">
-         
-              <h2>Welcome Back !</h2>
-        
+            <h2>Welcome Back !</h2>
+
             <img src={a} alt="mainImage" className="mainImage"></img>
           </section>
           {/*sub nav*/}
@@ -63,15 +70,15 @@ const Home = () => {
               </button>
               <button
                 onClick={() => setChoice(2)}
-                className={choice == 2? "Inprogress" : "notPressed"}
+                className={choice == 2 ? "Inprogress" : "notPressed"}
               >
-                Profile
+                My Profile
               </button>
-              
             </div>
           </nav>
-          {/*middle*/}<div className="middle">{project1()}</div>
-          
+          {/*middle*/}
+          <div className="middle">{project1()}</div>
+
           <footer></footer>
         </div>
       );
@@ -86,7 +93,7 @@ const Home = () => {
           </section>
           <nav className={NavbarStyles["navbar"]}>
             <div className={NavbarStyles["links"]}>
-            <button
+              <button
                 onClick={() => setChosen(0)}
                 className={chosen == 0 ? "Inprogress" : "notPressed"}
               >
@@ -100,9 +107,9 @@ const Home = () => {
               </button>
               <button
                 onClick={() => setChosen(2)}
-                className={chosen ==2 ? "Inprogress" : "notPressed"}
+                className={chosen == 2 ? "Inprogress" : "notPressed"}
               >
-                Profile
+                My Profile
               </button>
             </div>
           </nav>
