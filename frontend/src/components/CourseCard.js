@@ -1,54 +1,81 @@
 import React from "react";
-import "./CourseCard.css";
+import style from "./CourseCard.module.css";
 import { useNavigate } from "react-router-dom";
-import a from "../static/logo.png";
+import Cookies from "universal-cookie";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+const cookies = new Cookies();
 export const CourseCard = (props) => {
   const navigate = useNavigate();
+  const status = cookies.get("status");
   const courseId = props.data._id;
   const handleClick = () => {
     navigate("/course", { state: { id: courseId } });
   };
-  if (props.corporate) {
+  if (status == 2) {
     return (
-      <div className="card">
-        <h4>Title: {props.data.title}</h4>
-        <div>Total hours of Course: {props.data.totalHoursOfCourse}</div>
+      <div className={style["card"]}>
+        <img
+          src={props.data.imgUrl}
+          onClick={handleClick}
+          alt="courseImage"
+        ></img>
+        <div className={style["cardheader"]}>{props.data.title}</div>
+        <div className={style["cardfooter"]}>{props.data.instructorname}</div>
         <div>
-          {props.data.rating === 0 ? "unrated" : `rating: ${props.data.rating}`}
+          <YouTubeIcon className={style["icon"]} />{" "}
+          <label className={style["time"]}>
+            {props.data.totalHoursOfCourse}h 30m
+          </label>
         </div>
+        <div>
+        <label className={style["time"]}>
+          rating: {props.data.rating === 0 ? "unrated" : props.data.rating}
+        </label>
       </div>
-    );
-  }
-  if (props.titleOnly) {
-    return (
-      <div className="card">
-        <h4>Title: {props.data.title}</h4>
-        <button onClick={handleClick}>View Course</button>
       </div>
     );
   }
   return (
-    <div className="card">
-      <img src={a} alt="courseImage"></img>
-      <h4>{props.data.title}</h4>
-      <div>Total hours of Course: {props.data.totalHoursOfCourse}</div>
-      <div>rating: {props.data.rating === 0 ? "unrated" : props.data.rating}</div>
+    <div className={style["card"]}>
+      <img
+        src={props.data.imgUrl}
+        onClick={handleClick}
+        alt="courseImage"
+      ></img>
+      <div className={style["cardheader"]}>{props.data.title}</div>
+      <div className={style["cardfooter"]}>{props.data.instructorname}</div>
+      <div>
+        <YouTubeIcon className={style["icon"]} />
+        <label className={style["time"]}>
+          {props.data.totalHoursOfCourse}h 30m
+        </label>
+      </div>
+      <div>
+        <label className={style["time"]}>
+          rating: {props.data.rating === 0 ? "unrated" : props.data.rating}
+        </label>
+      </div>
       {props.data.price === 0 ? (
-        <div>Price : Free</div>
+        <div>
+          <label className={style["time"]}>Free</label>
+        </div>
       ) : (
         <>
           {!window.sessionStorage.getItem("factor") ? (
-            <div>Price: {props.data.price} USD</div>
+            <div>
+              <label className={style["time"]}> {props.data.price} USD </label>
+            </div>
           ) : (
             <div>
-              Price:{" "}
-              {props.data.price * window.sessionStorage.getItem("factor")}{" "}
-              {window.sessionStorage.getItem("currency").toUpperCase()}
+              <label className={style["time"]}>
+                {Math.floor(props.data.price * window.sessionStorage.getItem("factor"))}
+                {" "}
+                {window.sessionStorage.getItem("currency").toUpperCase()}
+              </label>
             </div>
           )}
         </>
       )}
-      <button onClick={handleClick}>View Course</button>
     </div>
   );
 };

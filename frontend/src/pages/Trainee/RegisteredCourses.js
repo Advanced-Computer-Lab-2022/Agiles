@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { CourseCard } from "../../components/CourseCard";
 
 function RegisteredCourses() {
   const [registeredCourses, setRegisteredCourses] = useState([]);
@@ -8,7 +9,7 @@ function RegisteredCourses() {
       `/individualtrainee/getIndividualTraineebyId/${id}`
     );
     let jsondata = await res.json();
-    registeredCoursesData = jsondata.registered_courses.map(async (el) => {
+    let registeredCoursesData = jsondata.registered_courses.map(async (el) => {
       const course = await fetch(`/courses/${el.id}`);
       const coursejson = await course.json();
       return coursejson;

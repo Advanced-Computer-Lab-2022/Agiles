@@ -3,16 +3,20 @@ import { useState } from "react";
 import axios from "axios";
 import CreateCourseStyles from "./CreateCourse.module.css";
 import { Link } from "react-router-dom";
+import Cookies from "universal-cookie";
+import "bootstrap/dist/css/bootstrap.min.css";
+const cookies = new Cookies();
 const CreateCourse = () => {
+  const instructorname = cookies.get('username');
+  const instructorId = cookies.get('currentUser');
   const [title, setTitle] = useState("");
-  const [instructor, setInstructor] = useState("");
+  const [preview, setPreview] = useState("");
+  const [imgUrl, setImgUrl] = useState("");
   const [subject, setSubject] = useState("");
   const [price, setPrice] = useState("");
   const [shortSummary, setShortSummary] = useState("");
-
   const [free, setFree] = useState(false);
-  const [subtitles, setSubtitles] = useState([{ subtitle: "", time: "" }]);
-
+  const [subtitles, setSubtitles] = useState([{ subtitle: "", time: "" ,link:"" , linkDesc:""}]);
   const [language, setLanguage] = useState("");
   const handleSubmit = async (event) => {
     let sumOfHours = 0;
@@ -20,18 +24,18 @@ const CreateCourse = () => {
       sumOfHours += Number(sub["time"]);
     }
     const course = {
-      instructor: instructor,
+      instructorname: instructorname,
+      instructor : instructorId,
       title: title,
+      imgUrl : imgUrl,
+      coursePreview : preview,
+      subtitles: subtitles,
       price: price,
       free: free,
-      subtitles: subtitles,
       description: shortSummary,
       subject: subject,
       totalHoursOfCourse: sumOfHours,
-      language: language,
-      discount: 0,
-      rating: 0,
-      exercises: [],
+      language: language
     };
     event.preventDefault();
     event.target.reset();
@@ -40,6 +44,7 @@ const CreateCourse = () => {
         header1: "Access-Control-Allow-Origin",
       },
     };
+  
     try {
       const res = await axios.post("/instructor/addCourse", course, config);
     } catch (e) {
@@ -54,7 +59,7 @@ const CreateCourse = () => {
   };
 
   let addFormFields = () => {
-    setSubtitles([...subtitles, { subtitle: "", time: "" }]);
+    setSubtitles([...subtitles, { subtitle: "", time: "",link:"",linkDesc:"" }]);
   };
 
   let removeFormFields = (i) => {
@@ -63,39 +68,86 @@ const CreateCourse = () => {
     setSubtitles(newFormValues);
   };
   return (
-    <div className="contains">
-      <h1 className="title">Add A new Course</h1>
+    <section className={CreateCourseStyles["Wrapper"]}>
+    <h2 className={CreateCourseStyles["Wrapper_h2"]}>Create Course</h2>
       <form onSubmit={handleSubmit}>
-        <div className={CreateCourseStyles["row"]}>
-          <label>
-            title <span className="required">*</span>
+        <div className="form-group mt-3">
+          <label className="Auth-label">
+            Title <span className="required">*</span>
           </label>
           <input
             required
             type="text"
             name="title"
             placeholder="title.."
+            className="form-control mt-1"
             onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+        <div className={CreateCourseStyles["row"]}>
+          <label className="Auth-label">Course Image</label>
+          <input
+            type="text"
+            name="subject"
+            className="form-control mt-1"
+            placeholder="img url.."
+            onChange={(e) => setImgUrl(e.target.value)}
+          />
+        </div>
+        <div className="form-group mt-3">
+          <label className="Auth-label" >
+            Course preview Link <span className="required">*</span>
+          </label>
+          <input
+            required
+            type="text"
+            name="preview"
+            className="form-control mt-1"
+            placeholder="course preview link.."
+            onChange={(e) => setPreview(e.target.value)}
           />
         </div>
         <div>
           {subtitles.map((element, index) => (
             <div className={CreateCourseStyles["row"]} key={index}>
-              <label>subtitle</label>
+              <label className="Auth-label">Subtitle</label>
               <input
                 required
                 type="text"
+                placeholder="Subtitle name .."
                 name="subtitle"
+                className="form-control mt-1"
                 value={element.subtitle || ""}
                 onChange={(e) => handleChange(index, e)}
               />
-              {"   "}
               <label> time in hrs</label>
               <input
                 required
                 type="number"
                 name="time"
+                placeholder="Subtitle duration .."
+                className="form-control mt-1"
                 value={element.time || ""}
+                onChange={(e) => handleChange(index, e)}
+              />
+               <label>subtitle's youtube Link</label>
+              <input
+                required
+                type="text"
+                name="link"
+                placeholder="Subtitle video link .."
+                className="form-control mt-1"
+                value={element.link || ""}
+                onChange={(e) => handleChange(index, e)}
+              />
+               <label>subtitle's description</label>
+              <input
+                required
+                type="text"
+                name="linkDesc"
+                placeholder="Subtitle video link short desc .."
+                className="form-control mt-1"
+                value={element.linkDesc || ""}
                 onChange={(e) => handleChange(index, e)}
               />
               {index ? (
@@ -120,13 +172,13 @@ const CreateCourse = () => {
           </span>
         </div>
         <div className={CreateCourseStyles["row"]}>
-          <label>
+          <label className="Auth-label">
             price in $ <span className="required">*</span>
           </label>
           <input
             required
             readOnly={free}
-            // type="currency"
+            className="form-control mt-1"
             type="number"
             name="price"
             placeholder="price.."
@@ -145,40 +197,30 @@ const CreateCourse = () => {
         </div>
 
         <div className={CreateCourseStyles["row"]}>
-          <label>
-            shortSummary <span className="required">*</span>
+          <label className="Auth-label">
+            ShortSummary <span className="required">*</span>
           </label>
           <input
             required
             type="text"
+            className="form-control mt-1"
             name="shortSummary"
             placeholder="shortSummary.."
             onChange={(e) => setShortSummary(e.target.value)}
           />
         </div>
         <div className={CreateCourseStyles["row"]}>
-          <label>subject</label>
+          <label className="Auth-label">Subject</label>
           <input
             type="text"
             name="subject"
+            className="form-control mt-1"
             placeholder="subject.."
             onChange={(e) => setSubject(e.target.value)}
           />
         </div>
         <div className={CreateCourseStyles["row"]}>
-          <label>
-            instructor username <span className="required">*</span>
-          </label>
-          <input
-            required
-            type="text"
-            name="username"
-            placeholder="username.."
-            onChange={(e) => setInstructor(e.target.value)}
-          />
-        </div>
-        <div className={CreateCourseStyles["row"]}>
-          <label>language</label>
+          <label className="Auth-label">language</label>
 
           <select
             data-placeholder="Choose a Language..."
@@ -265,13 +307,13 @@ const CreateCourse = () => {
           license and{" "}
           <Link target="_blank" to="/instructor/contract/">
             Instructor terms
-          </Link>{" "}
+          </Link>
           used by the organization
         </div>
 
-        <input type="submit" value="create Course" />
+        <input type="submit" className="btn btn-primary" value="create Course" />
       </form>
-    </div>
+    </section>
   );
 };
 

@@ -7,7 +7,7 @@ import axios from "axios";
 
 const CourseExam = (props) => {
     const location = useLocation();
-    const query = new URLSearchParams(location.search).get("courseId");
+    const query = props.courseId;
     const [CourseExam, setCourseExam] = useState([]);
     const [isloading, setIsLoading] = useState(false);
     

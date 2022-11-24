@@ -1,6 +1,21 @@
 const Corporate = require("../models/CorporateTrainee");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 const ExamResult = require("../models/ExamResult");
+//authorize Corporate
+function verifyCorporateJWT  (authHeader) {
+  if (!authHeader) return true;
+  const token = authHeader.split(' ')[1];
+  jwt.verify(
+      token,
+      process.env.ACCESS_TOKEN_SECRET_CORPORATE,
+      (err, decoded) => {
+          if (err) return err; //invalid token
+        
+      }
+  );
+}
 const express = require("express");
 const Exam = require("../models/Exam")
 

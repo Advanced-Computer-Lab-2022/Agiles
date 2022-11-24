@@ -25,6 +25,11 @@ const courseSchema = new Schema(
       required: false,
     },
     instructor: {
+      type: mongoose.Types.ObjectId,
+      ref : 'Instructor',
+      required: true,
+    },
+    instructorname: {
       type: String,
       required: false,
     },
@@ -36,7 +41,10 @@ const courseSchema = new Schema(
       type: Boolean,
       required: false,
     },
-
+    coursePreviewUrl :{
+      type : String,
+      required : false
+    },
     language: {
       type: String,
       required: false,
@@ -52,12 +60,11 @@ const courseSchema = new Schema(
       type: Number,
       required: false,
     },
-
     exercises: {
-      type: [String],
+      type: [{type: mongoose.Types.ObjectId, ref: 'Exam'}],
     },
-    rating_nums: {
-      type: String,
+    imgUrl:{
+        type:String,
     },
   },
   { timestamps: true }

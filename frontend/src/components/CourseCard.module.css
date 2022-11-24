@@ -1,0 +1,33 @@
+.card {
+  margin-top: 20px;
+  min-height: 10rem;
+  background-color: #fff;
+  border-radius: 10px;
+}
+.card img {
+  display: block;
+  margin-bottom: 0.25rem;
+  border-radius: 0.25rem;
+  width: 100%;
+  height: 10rem;
+  cursor: pointer;
+  object-fit: cover;
+}
+.cardheader {
+  font-size: 1.3rem;
+  font-weight: bolder;
+  font-family: "Open Sans", sans-serif;
+  max-height: 30px;
+  overflow: clip;
+}
+.cardfooter {
+  font-size: 0.8rem;
+  margin-bottom: 0.25rem;
+  align-items: center;
+  font-family: "Open Sans", sans-serif;
+}
+.time {
+  font-size: 0.8rem;
+  font-weight: bold;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}

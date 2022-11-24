@@ -1,0 +1,17 @@
+.Wrapper{
+    background-color: rgba(241, 250, 252, 0.379);
+    padding-top: 2.5rem;
+    margin-left: 16rem;
+    min-height: 60rem;
+}
+.Wrapper_h2{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 5rem;
+    color: white;
+    background-color: #1c1d1f;
+    overflow: hidden;
+    padding: 0.6rem;
+    text-align: center;
+    max-width: 180px;
+}

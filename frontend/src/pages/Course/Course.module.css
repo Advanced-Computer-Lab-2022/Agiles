@@ -1,14 +1,11 @@
-/* .course {
+ .course {
   display: grid;
-  background-color: bisque;
 }
 .mainTop {
-  
-    margin: 100px;
-    height: 0px;
+  background-color: rgb(0, 0, 0);
+    margin: 5px;
     display: grid;
-    color: red;
-    background-color: orange;
+    color: rgb(255, 255, 255);
     font-size: 50px;
     justify-content: space-around;
 }
@@ -20,13 +17,11 @@
   margin: 50px;
 }
 .item{
-  border-color: #000;
-  border-style: double;
-  margin: 10px;
+  margin: 10px; 
   color: #000;
   font-size: 25px;
   margin-left: 10px;
-  background-color: aqua;
+  background-color: rgb(255, 255, 255);
 }
 .title{
   text-decoration :underline; 
@@ -38,5 +33,33 @@
 
 .span{
   margin: 15px;
+  font-size: 20px;
+  margin: 10px; 
+  color: #000;
+  font-size: 20px;
+  margin-left: 10px;
+  background-color: rgb(255, 255, 255);
+} 
+.bigDiv{
+  border-color: #000;
+  border-style: groove;
+  border-width: 1px;
+  margin: 10px;
+}
+.head{
+  margin: -2px; 
+  color: #000;
   font-size: 25px;
-} */
+  margin-left: 0px;
+  background-color: rgb(255, 255, 255);
+  text-decoration: underline;
+}
+.subtitleItem{
+  margin: -2px; 
+  /* font-style: italic; */
+  color: rgb(0, 0, 0);
+  font-size: 22px;
+  margin-left: 0px;
+  background-color: rgb(255, 255, 255);
+  text-decoration: underline dashed;
+}

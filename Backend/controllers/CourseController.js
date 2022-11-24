@@ -1,6 +1,7 @@
 const Course = require("../models/Course");
 const Exam = require("../models/Exam");
-
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 const filterCourses = async (req, res) => {
   const lowerBound = req.query["lowerBound"];
   const upperBound = req.query["upperBound"];
@@ -61,14 +62,13 @@ const filterCourses = async (req, res) => {
 
 const courseSearch = async (req, res) => {
   const search = req.query["search"];
-  courses = await Course.find({
+  const courses = await Course.find({
     $or: [
       { subject: { $regex: new RegExp(search, "i") } },
       { title: { $regex: new RegExp(search, "i") } },
-      { instructor: { $regex: new RegExp(search, "i") } },
+      { instructorname: { $regex: new RegExp(search, "i") } },
     ],
   });
-
   if (!courses) {
     res.status(400).json({ error: "Empty" });
   } else {
@@ -91,32 +91,32 @@ const courseExam = async (req , res) => {
 
 const createCourse = async (req, res) => {
   const {
+    instructorname,
     instructor,
     title,
+    imgUrl,
+    coursePreviewUrl,
     subtitles,
     price,
     description,
     subject,
     totalHoursOfCourse,
     totalHoursOfSubtitles,
-    language,
-    discount,
-    rating,
-    exercises,
+    language
   } = req.body;
   const newCourse = new Course({
     instructor: instructor,
+    instructorname:instructorname,
     title: title,
+    imgUrl:imgUrl,
+    coursePreviewUrl:coursePreviewUrl,
     subtitles: subtitles,
     price: price,
     description: description,
     subject: subject,
     totalHoursOfCourse: totalHoursOfCourse,
     totalHoursOfSubtitles: totalHoursOfSubtitles,
-    language: language,
-    discount: discount,
-    rating: rating,
-    exercises: exercises,
+    language: language
   });
   try {
     const course = await Course.create(newCourse);
@@ -163,7 +163,7 @@ const coursesDetails = async (req, res) => {
   try {
     const courseAttr = await Course.find(
       {},
-      { title: 1, totalHoursOfCourse: 1, price: 1, rating: 1, _id: 1 }
+      { title: 1, totalHoursOfCourse: 1, price: 1, rating: 1,imgUrl :1,instructorname:1, _id: 1 }
     );
     res.status(200).send(courseAttr);
   } catch (err) {

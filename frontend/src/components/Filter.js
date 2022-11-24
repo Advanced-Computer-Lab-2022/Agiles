@@ -2,16 +2,10 @@ import FilterStyles from "./Filter.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Rating from "@mui/material/Rating";
-import axios from "axios";
-
-const Filter = (props) => {
-  let corporate = false;
-  if (props.corporate) {
-    corporate = true;
-  }
-  if (window.location.href == "http://localhost:3000/ccourses") {
-    corporate = true;
-  }
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
+const Filter = () => {
+  const status = cookies.get('status');
   const [minPrice, setMinPrice] = useState();
   const [maxPrice, setMaxPrice] = useState();
   const [subject, setSubject] = useState("");
@@ -79,17 +73,12 @@ const Filter = (props) => {
       if (rating != null) {
         url += "rating=" + rating + "&";
       }
-      if (corporate) {
-        navigate({
-          pathname: "/ccourses/filter",
-          search: url,
-        });
-      } else if (url != "") {
+      
         navigate({
           pathname: "/courses/filter",
           search: url,
         });
-      }
+  
     }
   };
   let priceFilter = (
@@ -130,7 +119,7 @@ const Filter = (props) => {
             <hr></hr>
             <Rating name="rating" value={value} onChange={handleChangeRating} />
           </div>
-          {corporate ? "" : priceFilter}
+          {status == 2 ? "" : priceFilter}
           <button type="submit">Filter</button>
         </form>
       </div>

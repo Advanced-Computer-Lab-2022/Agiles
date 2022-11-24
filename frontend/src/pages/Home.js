@@ -4,34 +4,88 @@ import NavbarStyles from "../components/Navbar.module.css";
 import React from "react";
 import Cookies from "universal-cookie";
 import a from "../static/logo.png";
+import { useState } from "react";
+import Inprogress from "../components/Inprogress";
+import Explore from "../components/Explore";
+import InstructorOwnCourses from "./Instructor/InstructorOwnCourses";
+import CreateCourse from "./Course/CreateCourse";
+import InstructorProfile from "./Instructor/InstructorProfile";
+import TraineeProfile from "./Trainee/TraineeProfile";
 const cookies = new Cookies();
-const Home = (props) => {
-  const logged = props.logged;
+const Home = () => {
+  const logged = cookies.get("logged");
   const status = cookies.get("status");
+  const [choice, setChoice] = useState(0);
+  const [chosen, setChosen] = useState(0);
+  const project = () => {
+    switch (chosen) {
+      case 0:
+        return <InstructorOwnCourses />;
+      case 1:
+        return <CreateCourse />;
+      case 2:
+        return <InstructorProfile />;
+      default:
+        return <h1>error</h1>;
+    }
+  };
+  const project1 = () => {
+    switch (choice) {
+      case 0:
+        return <Explore />;
+      case 1:
+        return <Inprogress />;
+      case 2:
+        return <TraineeProfile />;
+      default:
+        return <h1>error</h1>;
+    }
+  };
   if (logged) {
-    if (status == 0) {
+    // status 0 > Itrainee
+    // status 1 > Instructor
+    // status 3 > Ctrainee
+    if (status == 0 || status == 2) {
       return (
         <div className="home">
-          <section className="main">
-            <div>
-              <h2>Welcome Back !</h2>
-            </div>
+          <section className="mainSection">
+            <h2>Welcome Back !</h2>
+
             <img src={a} alt="mainImage" className="mainImage"></img>
           </section>
+          {/*sub nav*/}
           <nav className={NavbarStyles["navbar"]}>
             <div className={NavbarStyles["links"]}>
-              <Link to="/courses">Explore</Link>
-              <Link to="/login">In progress</Link>
-              <Link to="/signup">Completed</Link>
+              <button
+                onClick={() => setChoice(0)}
+                className={choice == 0 ? "Inprogress" : "notPressed"}
+              >
+                Explore
+              </button>
+              <button
+                onClick={() => setChoice(1)}
+                className={choice == 1 ? "Inprogress" : "notPressed"}
+              >
+                Registered Courses
+              </button>
+              <button
+                onClick={() => setChoice(2)}
+                className={choice == 2 ? "Inprogress" : "notPressed"}
+              >
+                My Profile
+              </button>
             </div>
           </nav>
+          {/*middle*/}
+          <div className="middle">{project1()}</div>
+
           <footer></footer>
         </div>
       );
     } else {
       return (
         <div className="home">
-          <section className="main">
+          <section className="mainSection">
             <div>
               <h2>Welcome Back !</h2>
             </div>
@@ -39,11 +93,27 @@ const Home = (props) => {
           </section>
           <nav className={NavbarStyles["navbar"]}>
             <div className={NavbarStyles["links"]}>
-              <Link to="/instructorOwnCourses">My courses</Link>
-              <Link to="/instructorCreateCourse">Create Course</Link>
-              <Link to="/instructor/instructorViewProfile">View/Edit Profile</Link>
+              <button
+                onClick={() => setChosen(0)}
+                className={chosen == 0 ? "Inprogress" : "notPressed"}
+              >
+                MyCourses
+              </button>
+              <button
+                onClick={() => setChosen(1)}
+                className={chosen == 1 ? "Inprogress" : "notPressed"}
+              >
+                CreateCourse
+              </button>
+              <button
+                onClick={() => setChosen(2)}
+                className={chosen == 2 ? "Inprogress" : "notPressed"}
+              >
+                My Profile
+              </button>
             </div>
           </nav>
+          <div className="middle">{project()}</div>
           <footer></footer>
         </div>
       );
@@ -51,9 +121,11 @@ const Home = (props) => {
   } else {
     return (
       <div className="home">
-        <section className="main">
+        <section className="mainSection">
           <div>
-            <h2>Register now !</h2>
+            <h2>
+              <a href="/signUp">Register now !</a>
+            </h2>
           </div>
           <img src={a} alt="mainImage" className="mainImage"></img>
         </section>

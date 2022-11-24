@@ -6,14 +6,11 @@ import axios from "axios";
 import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif";
 import Filter from "../../components/Filter";
-
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 const FilterResults = (props) => {
-  let corporate = false;
-  if (props.corporate) {
-    corporate = true;
-  }
+  const status = cookies.get('status');
   const location = useLocation();
-  console.log(location.search);
   const query = new URLSearchParams(location.search);
   const [error, setError] = useState(false);
   const [courses, setCourses] = useState([]);
@@ -21,9 +18,7 @@ const FilterResults = (props) => {
   const fetchData = async () => {
     setIsLoading(true);
     let url = "/course/listCourses/filter" + location.search;
-    console.log(url);
-    let res = await axios.get("/course/listCourses/filter" + location.search);
-    console.log(res);
+    let res = await axios.get(url);
     if (res.data.length == 0) {
       setError(true);
     } else {
@@ -49,7 +44,7 @@ const FilterResults = (props) => {
               {" "}
               <div className={CourseStyles["course-list"]}>
                 {courses.map((el) => {
-                  return <CourseCard corporate={corporate} data={el} />;
+                  return <CourseCard data={el} />;
                 })}
               </div>
             </>

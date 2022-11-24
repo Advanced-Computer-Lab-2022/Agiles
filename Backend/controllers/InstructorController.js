@@ -2,6 +2,17 @@ const Instructor = require("../models/Instructor");
 const bcrypt = require("bcrypt");
 const Course = require("../models/Course");
 
+function verifyInstructorJWT(authHeader) {
+  if (!authHeader) return true;
+  const token = authHeader.split(" ")[1];
+  jwt.verify(
+    token,
+    process.env.ACCESS_TOKEN_SECRET_INSTRUCTOR,
+    (err, decoded) => {
+      if (err) return err; //invalid token
+    }
+  );
+}
 //create Instructor
 const createInstructor = async (req, res) => {
   const { fullname, username, password, email, gender } = req.body;
@@ -23,12 +34,9 @@ const createInstructor = async (req, res) => {
 };
 
 const listAllInstructorCoursesTitles = async (req, res) => {
-  const username = req.query["username"];
+  const id = req.params["id"];
   try {
-    const courseAttr = await Course.find(
-      { instructor: username },
-      { title: 1 }
-    );
+    const courseAttr = await Course.where('instructor').equals(id);
     res.status(200).send(courseAttr);
   } catch (err) {
     res.status(500).json({ mssg: "can't find courses" });
@@ -157,6 +165,33 @@ const updateInstructorEmail = async (req, res) => {
   }
 };
 
+const updateInstructorPassword = async (req, res) => {
+  const { oldPass, newPass } = req.body;
+
+  const id = req.query["id"];
+  if (!oldPass || !newPass || !id) {
+    return res.status(500);
+  } else {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPass, salt);
+    const user = await Instructor.findById(id);
+
+    if (!user) return res.status(400).json({ msg: "User not exist" });
+    bcrypt.compare(oldPass, user.password, (err, data) => {
+      if (err) throw err;
+      if (data) {
+        user.password = hashedPassword;
+        user.save();
+        return res.status(200).json({ msg: "updated data" });
+      } else {
+        return res.status(401).json({ msg: "invalid credentials" });
+      }
+    });
+  }
+};
+
+//---------------
+
 module.exports = {
   createInstructor,
   listAllInstructorCoursesTitles,
@@ -165,4 +200,5 @@ module.exports = {
   getInstructorbyId,
   updateInstructorEmail,
   updateInstructorBio,
+  updateInstructorPassword,
 };

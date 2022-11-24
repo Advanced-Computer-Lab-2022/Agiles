@@ -2,7 +2,8 @@
   display: flex;
   align-items: center;
   margin: 0 auto;
-  padding: 10px 100px;
+  max-height: 70px;
+  padding: 10px 3rem;
   border-bottom: 1px solid #f2f2f2;
   box-shadow: rgb(0 0 0 / 16%) 0px 0px 6px;
 }
@@ -14,6 +15,7 @@
 }
 .navbar.links {
   margin-left: auto;
+  margin-right: 5rem;
 }
 .navbar a {
   color: black;
@@ -37,7 +39,6 @@
   border-radius: 9999px;
   background-color: #f7f9fa;
   flex-grow: 1;
-  /* padding: 20px 0 20px 0; */
   border: 1px solid #1c1d1f;
   display: flex;
   margin-left: 10px;
@@ -46,4 +47,33 @@
 .search-icon {
   margin: 15px 0 0 15px;
   cursor: pointer;
+}
+.userpic{
+  width: 40px;
+  height: 40px;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  padding: auto;
+}
+.userlabel{
+  font-size: 1rem;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
+  padding-right: 0.25rem;
+  cursor: pointer;
+  color: black;
+}
+.dropUser{
+  position: relative;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  border-radius: 0.25rem;
+  background-color: white;
+  cursor: pointer;
+}
+.dropicon{
+  cursor: pointer;
+}
+.dropUser:hover{
+  background-color: rgba(217, 239, 244, 0.379);
 }

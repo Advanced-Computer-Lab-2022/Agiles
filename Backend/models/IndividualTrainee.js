@@ -16,11 +16,11 @@ const individualTraineeSchema = new Schema(
       type: String,
       required: true,
     },
-    firstname:{
+    firstname: {
       type: String,
       required: true,
     },
-    lastname:{
+    lastname: {
       type: String,
       required: true,
     },
@@ -32,10 +32,21 @@ const individualTraineeSchema = new Schema(
       type: String,
       required: false,
     },
-    registered_courses: {
-      type: [{ Number, Number }], // courseid , progress
-      default: [],
-    },
+    registered_courses: [
+      {
+        courseId: {
+          type: Schema.ObjectId,
+          ref: "Course",
+        },
+        progress: {
+          type: Number,
+          min: 0,
+          max: 100,
+        },
+      },
+    ],
+    accessToken: { type: String },
+    refreshToken: { type: String },
   },
   { timestamps: true }
 );
