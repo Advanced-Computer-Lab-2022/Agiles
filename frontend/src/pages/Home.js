@@ -48,7 +48,7 @@ const Home = () => {
           </section>
           {/*sub nav*/}
           <nav className={NavbarStyles["navbar"]}>
-            <div className={NavbarStyles["links"]}>
+            <div >
               <button
                 onClick={() => setChoice(0)}
                 className={choice == 0 ? "Inprogress" : "notPressed"}
@@ -85,7 +85,7 @@ const Home = () => {
             <img src={a} alt="mainImage" className="mainImage"></img>
           </section>
           <nav className={NavbarStyles["navbar"]}>
-            <div className={NavbarStyles["links"]}>
+            <div>
             <button
                 onClick={() => setChosen(0)}
                 className={chosen == 0 ? "Inprogress" : "notPressed"}
@@ -117,15 +117,15 @@ const Home = () => {
         <section className="mainSection">
           <div>
             <h2>
-              <a href="/signUp">Register now !</a>
+              <a href="/signUp" style={{textDecoration :'none'}}>Register now !</a>
             </h2>
           </div>
           <img src={a} alt="mainImage" className="mainImage"></img>
         </section>
         <nav className={NavbarStyles["navbar"]}>
-          <div className={NavbarStyles["links"]}>
-            <Link to="/courses">Explore</Link>
-          </div>
+        <button className="Inprogress"   >
+                Explore
+              </button>
         </nav>
         <footer></footer>
       </div>

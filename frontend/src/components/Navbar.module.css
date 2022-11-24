@@ -13,17 +13,16 @@
   margin-right: 30px;
   width: 150px;
 }
-.navbar.links {
+
+.links{
   margin-left: auto;
-  margin-right: 5rem;
-}
-.navbar a {
   color: black;
-  margin-left: 17px;
+  margin-right: 1rem;
   text-decoration: none;
   padding: 6px;
 }
-.navbar a:hover {
+
+.links:hover {
   color:  rgb(0, 65, 158);
 }
 .inpt {
@@ -48,32 +47,10 @@
   margin: 15px 0 0 15px;
   cursor: pointer;
 }
-.userpic{
-  width: 40px;
-  height: 40px;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  padding: auto;
-}
-.userlabel{
-  font-size: 1rem;
-  margin-left: 1rem;
-  margin-top: 0.5rem;
-  padding-right: 0.25rem;
-  cursor: pointer;
-  color: black;
-}
 .dropUser{
   position: relative;
-  margin-left: 1rem;
   margin-right: 1rem;
   border-radius: 0.25rem;
-  background-color: white;
   cursor: pointer;
 }
-.dropicon{
-  cursor: pointer;
-}
-.dropUser:hover{
-  background-color: rgba(217, 239, 244, 0.379);
-}
+

@@ -5,14 +5,14 @@ import { Link, useNavigate } from "react-router-dom";
 import SelectCountry from "./SelectCountry";
 import Cookies from "universal-cookie";
 import a from "../static/logo.png";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import userpic from "../static/userpic.jpeg";
-import Dropdown from "react-bootstrap/Dropdown";
+import NavDropdown from "react-bootstrap/NavDropdown";
+
 
 import axios from "axios";
 const cookies = new Cookies();
 const LOGOUT_URL = "/admin/logOut";
 const Navbar = () => {
+  const username = cookies.get("username");
   const [searchString, setSearchString] = useState("");
   const logged = cookies.get("logged");
   const handleChange = (event) => {
@@ -65,31 +65,32 @@ const Navbar = () => {
           onChange={handleChange}
         ></input>
       </form>
-      <div className={NavbarStyles["links"]}>
-        <Link to="/">Home</Link>
-        <Link to="/courses">Courses</Link>
+      <div className={NavbarStyles["linkContainer"]}>
+        <Link to="/" className={NavbarStyles["links"]}>Home</Link>
+        <Link to="/courses" className={NavbarStyles["links"]}>Courses</Link>
         {!logged && (
           <>
-            <Link to="/login">Log in</Link>
-            <Link to="/signup">Sign up</Link>
+            <Link to="/login" className={NavbarStyles["links"]}>Log in</Link>
+            <Link to="/signup" className={NavbarStyles["links"]}>Sign up</Link>
           </>
         )}
       </div>
-      {logged && (<>
-        <div className={NavbarStyles["dropUser"]}>
-          <img
-            src={userpic}
-            alt="userpic"
-            className={NavbarStyles["userpic"]}
-          ></img>
-          <label className={NavbarStyles["userlabel"]}>| Hossam Elfar</label>
-          <ArrowDropDownIcon className={NavbarStyles["dropicon"]} />
-          
-        </div>
-        <button onClick={handleLogOut} className="btn">
-        Log out
-      </button> 
-      </>
+      {logged && (
+        <>
+          <div className={NavbarStyles["dropUser"]}>
+              <NavDropdown
+              title={`Hi ! ${username}`}
+              expand="lg"
+            >
+              <NavDropdown.Item href="#action3">profile</NavDropdown.Item>
+              <NavDropdown.Item href="#action4">
+                Another action
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item onClick={handleLogOut}>Log Out</NavDropdown.Item>
+            </NavDropdown>
+          </div>
+        </>
       )}
       <SelectCountry></SelectCountry>
     </nav>
