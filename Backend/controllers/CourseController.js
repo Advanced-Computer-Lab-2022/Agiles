@@ -1,4 +1,5 @@
 const Course = require("../models/Course");
+const Exam = require("../models/Exam");
 
 const filterCourses = async (req, res) => {
   const lowerBound = req.query["lowerBound"];
@@ -75,6 +76,19 @@ const courseSearch = async (req, res) => {
   }
 };
 
+const courseExam = async (req , res) => {
+  const courseId = req.query["courseId"];
+  questions = await Exam.find({courseId : courseId});
+
+  if (!questions) {
+    res.status(400).json({ error: "Empty" });
+  } else {
+    res.status(200).json(questions);
+  }
+
+
+};
+
 const createCourse = async (req, res) => {
   const {
     instructor,
@@ -112,6 +126,37 @@ const createCourse = async (req, res) => {
   }
 };
 
+//create multiple choices exam
+const setExam = async (req, res) => {
+  const {
+    courseId,
+    questions,
+    firstChoices,
+    secondChoices,
+    thirdChoices,
+    fourthChoices,
+    answers,
+  } = req.body;
+  const newExam = new Exam({
+    courseId : courseId,
+    questions : questions,
+    firstChoices :firstChoices,
+    secondChoices :secondChoices ,
+    thirdChoices : thirdChoices,
+    fourthChoices :fourthChoices,
+    answers : answers,
+  });
+  
+  try {
+    const exam = await Exam.create(newExam);
+    res.status(200).json(exam);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+
+
 //get all the titles of the courses available including the total hours of the course and course rating
 
 const coursesDetails = async (req, res) => {
@@ -138,6 +183,13 @@ const oneCoursesDetails = async (req, res) => {
     res.status(500).json({ mssg: "can't find courses" });
   }
 };
+
+
+
+
+
+
+
 //module.exports = coursesDetails;
 
 //view the price of each course
@@ -201,4 +253,6 @@ module.exports = {
   filterCourses,
   courseSearch,
   getCourseById,
+  setExam,
+  courseExam,
 };

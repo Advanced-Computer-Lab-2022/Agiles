@@ -1,7 +1,7 @@
 const express = require("express");
 const instructorRouter = express.Router();
 
-const { createCourse } = require("../controllers/CourseController");
+const { createCourse , setExam } = require("../controllers/CourseController");
 const {
   filterCoursesByInstructor,
   courseSearchByInstructor,
@@ -13,6 +13,8 @@ const {
 
 //create Course
 instructorRouter.post("/addCourse", createCourse);
+//set Exam
+instructorRouter.post("/setExam", setExam);
 
 instructorRouter.get("/listCourseTitles", listAllInstructorCoursesTitles);
 instructorRouter.get("/filterCourses", filterCoursesByInstructor);

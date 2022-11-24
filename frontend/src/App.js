@@ -13,6 +13,8 @@ import IndividualTrainee from "./pages/IndvidualTrainee/IndividualTrainee";
 import CorporateTrainee from "./pages/CorporateTrainee/CorporateTrainee";
 import InstructorOwnCourses from "./pages/Instructor/InstructorOwnCourses";
 import CreateCourse from "./pages/Course/CreateCourse";
+import SetExam from "./pages/Course/SetExam";
+import CourseExam from "./pages/Course/CourseExam";
 import SearchResults from "./pages/Course/SearchResults";
 import Course from "./pages/Course/Course";
 import FilterResults from "./pages/Course/FilterResults";
@@ -54,6 +56,8 @@ function App() {
             <Route path="/ccourses" element={<Courses corporate={true} />} />
             <Route path="/course" element={<Course />} />
             <Route path="/createCourse" element={<CreateCourse />} />
+            <Route path="/setexam" element={<SetExam />} />
+            <Route path="/CourseExam" element={<CourseExam />} />
             <Route
               path="/instructorOwnCourses"
               element={<InstructorOwnCourses />}
