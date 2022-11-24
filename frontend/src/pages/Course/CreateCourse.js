@@ -3,19 +3,20 @@ import { useState } from "react";
 import axios from "axios";
 import CreateCourseStyles from "./CreateCourse.module.css";
 import { Link } from "react-router-dom";
+import Cookies from "universal-cookie";
 import "bootstrap/dist/css/bootstrap.min.css";
+const cookies = new Cookies();
 const CreateCourse = () => {
+  const instructorname = cookies.get('username');
+  const instructorId = cookies.get('currentUser');
   const [title, setTitle] = useState("");
   const [preview, setPreview] = useState("");
-
-  const [instructor, setInstructor] = useState("");
+  const [imgUrl, setImgUrl] = useState("");
   const [subject, setSubject] = useState("");
   const [price, setPrice] = useState("");
   const [shortSummary, setShortSummary] = useState("");
-
   const [free, setFree] = useState(false);
   const [subtitles, setSubtitles] = useState([{ subtitle: "", time: "" ,link:"" , linkDesc:""}]);
-
   const [language, setLanguage] = useState("");
   const handleSubmit = async (event) => {
     let sumOfHours = 0;
@@ -23,19 +24,18 @@ const CreateCourse = () => {
       sumOfHours += Number(sub["time"]);
     }
     const course = {
-      instructor: instructor,
+      instructorname: instructorname,
+      instructor : instructorId,
       title: title,
+      imgUrl : imgUrl,
       coursePreview : preview,
+      subtitles: subtitles,
       price: price,
       free: free,
-      subtitles: subtitles,
       description: shortSummary,
       subject: subject,
       totalHoursOfCourse: sumOfHours,
-      language: language,
-      discount: 0,
-      rating: 0,
-      exercises: [],
+      language: language
     };
     event.preventDefault();
     event.target.reset();
@@ -44,6 +44,7 @@ const CreateCourse = () => {
         header1: "Access-Control-Allow-Origin",
       },
     };
+  
     try {
       const res = await axios.post("/instructor/addCourse", course, config);
     } catch (e) {
@@ -81,6 +82,16 @@ const CreateCourse = () => {
             placeholder="title.."
             className="form-control mt-1"
             onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+        <div className={CreateCourseStyles["row"]}>
+          <label className="Auth-label">Course Image</label>
+          <input
+            type="text"
+            name="subject"
+            className="form-control mt-1"
+            placeholder="img url.."
+            onChange={(e) => setImgUrl(e.target.value)}
           />
         </div>
         <div className="form-group mt-3">
@@ -206,19 +217,6 @@ const CreateCourse = () => {
             className="form-control mt-1"
             placeholder="subject.."
             onChange={(e) => setSubject(e.target.value)}
-          />
-        </div>
-        <div className={CreateCourseStyles["row"]}>
-          <label className="Auth-label">
-            instructor username <span className="required">*</span>
-          </label>
-          <input
-            required
-            type="text"
-            className="form-control mt-1"
-            name="username"
-            placeholder="username.."
-            onChange={(e) => setInstructor(e.target.value)}
           />
         </div>
         <div className={CreateCourseStyles["row"]}>

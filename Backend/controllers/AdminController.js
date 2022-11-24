@@ -100,6 +100,10 @@ const logIn = async (req, res) => {
             { expiresIn: "1d" }
           );
           const status = 1;
+          res.cookie("username", user.username, {
+            httpsOnly: true,
+            maxAge: 24 * 60 * 60 * 1000,
+          });
           res.cookie("logged", true, {
             httpsOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
