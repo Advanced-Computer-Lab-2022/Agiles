@@ -65,10 +65,9 @@ const courseSearch = async (req, res) => {
     $or: [
       { subject: { $regex: new RegExp(search, "i") } },
       { title: { $regex: new RegExp(search, "i") } },
-      { instructor: { $regex: new RegExp(search, "i") } },
+      { instructorname: { $regex: new RegExp(search, "i") } },
     ],
   });
-
   if (!courses) {
     res.status(400).json({ error: "Empty" });
   } else {
@@ -78,34 +77,32 @@ const courseSearch = async (req, res) => {
 
 const createCourse = async (req, res) => {
   const {
+    instructorname,
     instructor,
     title,
-    coursePreview,
+    imgUrl,
+    coursePreviewUrl,
     subtitles,
     price,
     description,
     subject,
     totalHoursOfCourse,
     totalHoursOfSubtitles,
-    language,
-    discount,
-    rating,
-    exercises,
+    language
   } = req.body;
   const newCourse = new Course({
     instructor: instructor,
+    instructorname:instructorname,
     title: title,
-    coursePreview:coursePreview,
+    imgUrl:imgUrl,
+    coursePreviewUrl:coursePreviewUrl,
     subtitles: subtitles,
     price: price,
     description: description,
     subject: subject,
     totalHoursOfCourse: totalHoursOfCourse,
     totalHoursOfSubtitles: totalHoursOfSubtitles,
-    language: language,
-    discount: discount,
-    rating: rating,
-    exercises: exercises,
+    language: language
   });
   try {
     const course = await Course.create(newCourse);
