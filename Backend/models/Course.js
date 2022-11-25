@@ -18,7 +18,12 @@ const courseSchema = new Schema(
     rating: {
       type: Number,
       required: false,
-      default: 0,
+      default: 3,
+    },
+    ratingCount :{
+      type: Number,
+      required: false,
+      default: 1,
     },
     description: {
       type: String,
@@ -52,6 +57,8 @@ const courseSchema = new Schema(
     discount: {
       type: Number,
       required: false,
+      min:0,
+      max : 100
     },
     discount_enddate: {
       type: Date,

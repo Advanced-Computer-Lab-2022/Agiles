@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import CourseStyles from "./Courses.module.css";
+import style from "./Courses.module.css";
 import { CourseCard } from "../../components/CourseCard";
 import axios from "axios";
 import LoadingScreen from "react-loading-screen";
@@ -33,7 +33,7 @@ const SearchResults = () => {
   }, [query]);
 
   return (
-    <div className={CourseStyles["course"]}>
+    <div className={style["course"]}>
       {loading ? (
         <LoadingScreen loading={true} logoSrc={spinner} />
       ) : (
@@ -41,15 +41,21 @@ const SearchResults = () => {
           {error ? (
             <h1>No matches</h1>
           ) : (
-            <>
-              {" "} 
-              <Filter  />
-              <div className={CourseStyles["course-list"]}>
-                {courses.map((el) => {
-                  return <CourseCard data={el}/>;
-                })}
-              </div>
-            </>
+            <div className={style["wrapper"]}>
+              <section className={style["wrapper-right"]}>
+                <h1>Search Resutls</h1>
+                <h2>{courses.length} serach results</h2>
+                
+                <hr></hr>
+                {courses.length > 0 && (
+                  <div className={style["course-list"]}>
+                    {courses.map((el, index) => {
+                      return <CourseCard data={el} key={index} />;
+                    })}
+                  </div>
+                )}
+              </section>
+            </div>
           )}
         </>
       )}

@@ -3,9 +3,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Rating from "@mui/material/Rating";
 import Cookies from "universal-cookie";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import Accordion from "react-bootstrap/Accordion";
+import { subjectList } from "../pages/Course/subjectList";
+import Form from "react-bootstrap/Form";
 const cookies = new Cookies();
-const Filter = () => {
-  const status = cookies.get('status');
+const Filter = ({ chooseMessage ,currentMessage }) => {
+  const status = cookies.get("status");
+  const [disapled,setDisapled] = useState(false);
   const [minPrice, setMinPrice] = useState();
   const [maxPrice, setMaxPrice] = useState();
   const [subject, setSubject] = useState("");
@@ -13,21 +18,24 @@ const Filter = () => {
   const [value, setValue] = useState(0);
   const navigate = useNavigate();
   const handleChangePrice1 = (event) => {
-    if(window.sessionStorage.getItem("factor")){
-    setMinPrice(Math.floor(event.target.value/window.sessionStorage.getItem("factor")));
-    }
-    else{
-      setMinPrice(event.target.value)
+    if (window.sessionStorage.getItem("factor")) {
+      setMinPrice(
+        Math.floor(event.target.value / window.sessionStorage.getItem("factor"))
+      );
+    } else {
+      setMinPrice(event.target.value);
     }
   };
   const handleChangePrice2 = (event) => {
-    if(window.sessionStorage.getItem("factor")){
-      setMaxPrice(Math.floor(event.target.value/window.sessionStorage.getItem("factor")));
-      }
-      else{
-        setMaxPrice(event.target.value)
-      }
-    };
+    if (window.sessionStorage.getItem("factor")) {
+      setMaxPrice(
+        Math.floor(event.target.value / window.sessionStorage.getItem("factor"))
+      );
+    } else {
+      setMaxPrice(event.target.value);
+
+    }
+  };
   const handleChangeRating = async (event) => {
     setValue(event.target.value);
     setRating(event.target.value);
@@ -36,8 +44,11 @@ const Filter = () => {
     if (event.target.checked) {
       setMinPrice(0);
       setMaxPrice(0);
+      setDisapled(true);  
     } else {
       setMaxPrice(Number.MAX_SAFE_INTEGER);
+      setDisapled(false);  
+
     }
   };
 
@@ -45,7 +56,8 @@ const Filter = () => {
     setSubject(event.target.value);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async () => {
+    chooseMessage(!currentMessage)
     if (
       subject == "" &&
       minPrice == null &&
@@ -73,56 +85,79 @@ const Filter = () => {
       if (rating != null) {
         url += "rating=" + rating + "&";
       }
-      
-        navigate({
-          pathname: "/courses/filter",
-          search: url,
-        });
-  
+
+      navigate({
+        pathname: "/courses/filter",
+        search: url,
+      });
     }
   };
-  let priceFilter = (
-    <div className={FilterStyles["prices"]}>
-      <h3>Price</h3>
-      <hr></hr>
-      <input
-        type="number"
-        placeholder="MinPrice"
-        onChange={handleChangePrice1}
-      />
-      <input
-        type="number"
-        placeholder="MaxPrice"
-        onChange={handleChangePrice2}
-      />
-      <br></br>
-      <label>FREE</label>
-      <input type="checkbox" value={0} onChange={handleChangePriceFree} />
-    </div>
-  );
   return (
     <div className={FilterStyles["filter"]}>
-      <div className={FilterStyles["top"]}>
-        <span className={FilterStyles["logo"]}>Filter</span>
-      </div>
-      <hr />
-      <div className="center">
-        <form onSubmit={handleSubmit}>
-          <div className="panel">
-            <h3>Subject</h3>
-            <hr></hr>
-            <label> Enter Subject</label>
-            <input type="text" value={subject} onChange={handleChangeSubject} />
-          </div>
-          <div className={FilterStyles["rating"]}>
-            <h3>Rating</h3>
-            <hr></hr>
-            <Rating name="rating" value={value} onChange={handleChangeRating} />
-          </div>
-          {status == 2 ? "" : priceFilter}
-          <button type="submit">Filter</button>
-        </form>
-      </div>
+        <div className={FilterStyles["top"]}>
+          <button className={FilterStyles["logo"]} onClick={handleSubmit}>
+            <span>
+              <FilterListIcon /> Filter
+            </span>
+          </button>
+        </div>
+        <hr />
+        <div className="center">
+          <Accordion defaultActiveKey="0" alwaysOpen>
+            <Accordion.Item eventKey="0">
+              <Accordion.Header>Subject</Accordion.Header>
+              <Accordion.Body style={{ display: "grid" }}>
+                {subjectList.map((subject) => (
+                  <Form.Check
+                    name="subject"
+                    type="radio"
+                    id={`default-${subject}`}
+                    value={subject}
+                    onChange={handleChangeSubject}
+                    label={subject}
+                  />
+                ))}
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="1">
+              <Accordion.Header>Rating</Accordion.Header>
+              <Accordion.Body>
+                <Rating
+                  name="rating"
+                  value={value}
+                  onChange={handleChangeRating}
+                />
+              </Accordion.Body>
+            </Accordion.Item>
+            {status != 2 && (
+              <Accordion.Item eventKey="2">
+                <Accordion.Header>Price</Accordion.Header>
+                <Accordion.Body style={{display : 'flex'}} >
+                  <Form.Control
+                    type="number"
+                    placeholder="Min"
+                    disabled={disapled}
+                    onChange={handleChangePrice1}
+                    className={FilterStyles["inpt"]}
+                  />
+                  <Form.Control
+                    type="number"
+                    placeholder="Max"
+                    disabled={disapled}
+                    className={FilterStyles["inpt"]}
+                    onChange={handleChangePrice2}
+                  />
+                  <Form.Check
+                    type='checkbox'
+                    label='Free'
+                    className={FilterStyles["check"]}
+                    onClick={handleChangePriceFree}
+                  />
+                </Accordion.Body>
+              </Accordion.Item>
+            )}
+          </Accordion>
+        </div>
     </div>
   );
 };

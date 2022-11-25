@@ -21,5 +21,6 @@ courserouter.get("/listCourses/filter", filterCourses);
 
 courserouter.get("/listCourses/search", courseSearch);
 courserouter.patch("/addPromotion", addCoursePromotion);
+// courserouter.patch("/updateRating", updateRating);
 
 module.exports = courserouter;

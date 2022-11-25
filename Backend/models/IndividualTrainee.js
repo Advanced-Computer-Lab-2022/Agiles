@@ -28,10 +28,6 @@ const individualTraineeSchema = new Schema(
       type: String,
       required: false,
     },
-    country: {
-      type: String,
-      required: false,
-    },
     registered_courses: [
       {
         courseId: {
@@ -42,6 +38,16 @@ const individualTraineeSchema = new Schema(
           type: Number,
           min: 0,
           max: 100,
+        },
+        courserating: {
+          type: Number,
+          min: 0,
+          max: 5,
+        },
+        instrating: {
+          type: Number,
+          min: 0,
+          max: 5,
         },
       },
     ],

@@ -1,65 +1,153 @@
  .course {
+  width: 100%;
+  display: inline-block;
+  min-height: 200vh;
+}
+.mainSection {
+  width: 100%;
+  min-height:45vh;
+  margin-top: 10px;
   display: grid;
+  grid-template-columns: 70% 35%;
+  align-items: center;
+  background-color:#1c1d1f;
+  background-position:center ;
 }
-.mainTop {
-  background-color: rgb(0, 0, 0);
-    margin: 5px;
-    display: grid;
-    color: rgb(255, 255, 255);
-    font-size: 50px;
-    justify-content: space-around;
+.mainSection-left{
+  padding-left: 15rem;
+  padding-top: 1.3rem;
 }
-
-.mainbottom {
-  margin: 50px;
+.mainSection h1{
+  color: #fff;
+  font-size: 3.1rem;
+  font-weight: bold;
+  font-family: 'Open Sans', sans-serif;
 }
-.h1main {
-  margin: 50px;
+.mainSection h2{
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 100;
+  font-family: 'Open Sans', sans-serif;
+  margin-bottom: 0.5rem;
 }
-.item{
-  margin: 10px; 
-  color: #000;
-  font-size: 25px;
-  margin-left: 10px;
+.mainSection-left-rating{
+  display: flex;
+  font-family: 'Open Sans', sans-serif;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+.mainSection-left-rating label{
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  margin-bottom: 0.5rem;
+}
+.mainSection-left-language label{
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  margin-bottom: 0.5rem;
+}
+.instlabel{
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  margin-bottom: 0.5rem;
+}
+.mainSection-right{
+  width: 60%;
+  padding: 0;
+  display: grid;
+  min-height: 40vh;;
   background-color: rgb(255, 255, 255);
-}
-.title{
-  text-decoration :underline; 
+  box-shadow: rgb(0 0 0 / 16%) 0px 0px 6px;
 
 }
-.star {
-  color: goldenrod;
+.preview{
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+  background-color: white;
+  color: black;
+  border:none ;
 }
-
-.span{
-  margin: 15px;
-  font-size: 20px;
-  margin: 10px; 
-  color: #000;
-  font-size: 20px;
-  margin-left: 10px;
-  background-color: rgb(255, 255, 255);
-} 
-.bigDiv{
-  border-color: #000;
-  border-style: groove;
-  border-width: 1px;
-  margin: 10px;
+.totalhours{
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+  color: rgb(153, 147, 147);
+  margin-left: 5%;
+  font-size: 0.8rem;
+  margin-bottom: 0.2rem;
+  border:none ;
 }
-.head{
-  margin: -2px; 
-  color: #000;
-  font-size: 25px;
-  margin-left: 0px;
-  background-color: rgb(255, 255, 255);
-  text-decoration: underline;
+.buyme{
+  width: 90%;
+  margin-left: 5%;
+  border-radius: 0.25rem;
+  margin-bottom: 0.2rem;
+  font-weight: bold;
+  font-family: "Open Sans", sans-serif;
+  padding: 0.4rem;
+  background-color: white ;
+  border: 0.5px solid rgb(111, 109, 109);
 }
-.subtitleItem{
-  margin: -2px; 
-  /* font-style: italic; */
+.price{
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.3rem;
+  font-weight: bold;
   color: rgb(0, 0, 0);
-  font-size: 22px;
-  margin-left: 0px;
-  background-color: rgb(255, 255, 255);
-  text-decoration: underline dashed;
+  margin-left:1rem;
+  border:none ;
+}
+.discount{
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: medium;
+  color: rgb(102, 100, 100);
+  border:none ;
+}
+.enddate{
+  margin-left:1rem;
+  font-size: 0.8rem;
+  margin-bottom: 0.2rem;
+}
+.enddatelabel{
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: red;
+}
+.middle-top{
+  width: 80%;
+  min-height:5vh;
+  margin-top: 2rem;
+  margin-left: 5rem;
+  align-items: center;
+  background-position:center ;
+}
+.middle-top label{
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: Tahoma, sans-serif;
+  color: rgb(33, 32, 32);
+  margin-bottom: 2rem;
+}
+.middle-top h2{
+  font-size: 1rem;
+  font-weight: 100;
+  font-family: 'Open Sans', sans-serif;
+  margin-bottom: 2rem;
+}
+.middle-bottom{
+  width: 80%;
+  min-height:45vh;
+  margin-left: 5rem;
+  align-items: center;
+  background-position:center ;
+}
+.middle-bottom label{
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: Tahoma, sans-serif;
+  color: rgb(33, 32, 32);
+  margin-bottom: 2rem;
 }

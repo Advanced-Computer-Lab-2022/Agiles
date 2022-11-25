@@ -1,20 +1,25 @@
 .filter {
-  flex: 1;
-  border-right: 0.5px solid rgb(230, 227, 227);
-  min-height: 100vh;
+  flex: 2;
+  margin-left: 1.5rem;
+  margin-top: 10rem;
 }
 .top {
   height: 50px;
-  display: flex;
+  display: grid;
   align-items: center;
-  justify-content: center;
 }
 .logo {
-  font-size: 20px;
+  width: 50%;
+  margin-left: 4rem;
+  border-radius: 0.25rem;
   font-weight: bold;
   font-family: "Open Sans", sans-serif;
-  margin-right: 8px;
-  color: #000000;
+  padding: 0.5rem;
+  background-color: white ;
+  border: 0.5px solid rgb(111, 109, 109);
+}
+.logo:hover {
+  background-color: rgba(208, 236, 242, 0.379);
 }
 .filter-button {
   display: flex;
@@ -22,10 +27,10 @@
   row-gap: 0.8rem;
   margin: 0 -0.4rem;
 }
-
-.panel {
-  border-top: 1px solid #d1d7dc;
+.inpt{
+  width:5rem;
+  margin-right: 1rem;
 }
-.rating {
-  display: grid;
+.check{
+  margin-top: 0.4rem;
 }

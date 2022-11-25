@@ -30,7 +30,7 @@ const CoursePreview = (props) => {
     <h3>Subject</h3>
     <p>{course.subject}</p>
     <hr className={style["mainRight-hr"]}></hr>
-    <h3>Rating</h3>
+    <h3>Course Rating</h3>
     <Rating name="rating" readOnly value={course.rating} className={style['rating']} />
 
   </div>

@@ -36,17 +36,17 @@ ul {
   margin-top: 15px;
   margin-bottom: 5px;
 }
-li {
+.center li {
   display: flex;
   align-items: center;
   padding: 5px;
   cursor: pointer;
   
 }
-li:hover{
+.center li:hover{
     background-color: #ece8ff;
 }
-  span{
+ .center li span{
     font-size: 13px;
     font-weight: 600;
     color: #888;

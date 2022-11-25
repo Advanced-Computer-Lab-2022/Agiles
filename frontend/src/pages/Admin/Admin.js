@@ -1,12 +1,12 @@
-import "./Admin.css";
+import style from "./Admin.module.css";
 import AdminNavbar from './adminComponents/AdminNavbar';
 import AdminSidebar from './adminComponents/AdminSidebar';
 const Admin = (props) => {
   props.funcNav(false);
   return (
-    <div className="admin">
+    <div className={style["admin"]}>
       <AdminSidebar/>
-      <div className='adminContainer'>
+      <div className={style['adminContainer']}>
         <h1>Admin home page</h1>
 
       <AdminNavbar/>

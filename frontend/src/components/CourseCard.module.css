@@ -1,8 +1,18 @@
 .card {
   margin-top: 20px;
   min-height: 10rem;
-  background-color: #fff;
-  border-radius: 10px;
+  display: grid;
+  background-color: rgba(241, 250, 252, 0.379);
+  cursor: pointer;
+  overflow: hidden;
+}
+.card button{
+  background-color:rgba(241, 250, 252, 0.379);
+  padding: 0;
+  width: 100%;
+  margin: 0;
+  cursor: pointer;
+  border: none;
 }
 .card img {
   display: block;
@@ -30,4 +40,19 @@
   font-size: 0.8rem;
   font-weight: bold;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.rating{
+  width: 100%;
+  margin-left: 2rem;
+  margin-top: 0.1rem;
+  display: flex;
+}
+.rating label{
+  margin-top: 0.2rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.price{
+  width: 100%;
 }

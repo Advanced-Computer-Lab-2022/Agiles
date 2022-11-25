@@ -1,5 +1,5 @@
 import CountryDropdown from "country-dropdown-with-flags-for-react";
-import "./SelectCountry.css";
+import style from "./SelectCountry.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function SelectCountry() {
@@ -41,7 +41,7 @@ function SelectCountry() {
     <div className="chooseCountry">
       <CountryDropdown
         id="UNIQUE_ID"
-        className="YOUR_CSS_CLASS"
+        className={style["YOUR_CSS_CLASS"]}
         value={[window.sessionStorage.getItem("country")]}
         handleChange={handleChange}
       ></CountryDropdown>

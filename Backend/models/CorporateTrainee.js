@@ -16,7 +16,11 @@ const corporateTraineeSchema = new Schema(
       type: String,
       required: true,
     },
-    fullname: {
+    firstname: {
+      type: String,
+      required: true,
+    },
+    lastname: {
       type: String,
       required: true,
     },
@@ -24,14 +28,28 @@ const corporateTraineeSchema = new Schema(
       type: String,
       required: false,
     },
-    country: {
-      type: String,
-      required: false,
-    },
-    registered_courses: {
-      type: [{ Number, Number }], // courseid , progress
-      default: [],
-    },
+    registered_courses: [
+      {
+        courseId: {
+          type: Schema.ObjectId,
+          ref: "Course",
+        },
+        progress: {
+          type: Number,
+          min: 0,
+          max: 100,
+        },courserating: {
+          type: Number,
+          min: 0,
+          max: 5,
+        },
+        instrating: {
+          type: Number,
+          min: 0,
+          max: 5,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

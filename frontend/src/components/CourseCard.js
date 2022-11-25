@@ -2,6 +2,7 @@ import React from "react";
 import style from "./CourseCard.module.css";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
+import Rating from "@mui/material/Rating";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 const cookies = new Cookies();
 export const CourseCard = (props) => {
@@ -11,32 +12,9 @@ export const CourseCard = (props) => {
   const handleClick = () => {
     navigate("/course", { state: { id: courseId } });
   };
-  if (status == 2) {
-    return (
-      <div className={style["card"]}>
-        <img
-          src={props.data.imgUrl}
-          onClick={handleClick}
-          alt="courseImage"
-        ></img>
-        <div className={style["cardheader"]}>{props.data.title}</div>
-        <div className={style["cardfooter"]}>{props.data.instructorname}</div>
-        <div>
-          <YouTubeIcon className={style["icon"]} />{" "}
-          <label className={style["time"]}>
-            {props.data.totalHoursOfCourse}h 30m
-          </label>
-        </div>
-        <div>
-        <label className={style["time"]}>
-          rating: {props.data.rating === 0 ? "unrated" : props.data.rating}
-        </label>
-      </div>
-      </div>
-    );
-  }
   return (
     <div className={style["card"]}>
+      <button  onClick={handleClick}>
       <img
         src={props.data.imgUrl}
         onClick={handleClick}
@@ -50,11 +28,11 @@ export const CourseCard = (props) => {
           {props.data.totalHoursOfCourse}h 30m
         </label>
       </div>
-      <div>
-        <label className={style["time"]}>
-          rating: {props.data.rating === 0 ? "unrated" : props.data.rating}
-        </label>
-      </div>
+      <div className={style['rating']}>
+      <Rating name="rating" readOnly value={props.data.rating} />
+      <label >({props.data.ratingCount} ratings)</label>
+       </div>
+       { status != 2 &&<div className={style['price']}>
       {props.data.price === 0 ? (
         <div>
           <label className={style["time"]}>Free</label>
@@ -76,6 +54,8 @@ export const CourseCard = (props) => {
           )}
         </>
       )}
+     </div>}
+      </button>
     </div>
   );
 };

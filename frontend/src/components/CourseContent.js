@@ -6,7 +6,7 @@ const CoursContent = (props) => {
   console.log(subtitles);
   
   return (
-    <div>
+    <div className={style["mainRight"]}>
       <label className={style["mainlabel"]}>Course Content</label>
       <Accordion defaultActiveKey="0" className={style["subtitles"]}>
           {subtitles.map((subtitle, index) => (

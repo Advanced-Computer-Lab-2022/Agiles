@@ -1,7 +1,7 @@
 const Course = require("../models/Course");
 const Exam = require("../models/Exam");
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 const filterCourses = async (req, res) => {
   const lowerBound = req.query["lowerBound"];
   const upperBound = req.query["upperBound"];
@@ -76,17 +76,15 @@ const courseSearch = async (req, res) => {
   }
 };
 
-const courseExam = async (req , res) => {
+const courseExam = async (req, res) => {
   const courseId = req.query["courseId"];
-  questions = await Exam.find({courseId : courseId});
+  questions = await Exam.find({ courseId: courseId });
 
   if (!questions) {
     res.status(400).json({ error: "Empty" });
   } else {
     res.status(200).json(questions);
   }
-
-
 };
 
 const createCourse = async (req, res) => {
@@ -102,21 +100,21 @@ const createCourse = async (req, res) => {
     subject,
     totalHoursOfCourse,
     totalHoursOfSubtitles,
-    language
+    language,
   } = req.body;
   const newCourse = new Course({
     instructor: instructor,
-    instructorname:instructorname,
+    instructorname: instructorname,
     title: title,
-    imgUrl:imgUrl,
-    coursePreviewUrl:coursePreviewUrl,
+    imgUrl: imgUrl,
+    coursePreviewUrl: coursePreviewUrl,
     subtitles: subtitles,
     price: price,
     description: description,
     subject: subject,
     totalHoursOfCourse: totalHoursOfCourse,
     totalHoursOfSubtitles: totalHoursOfSubtitles,
-    language: language
+    language: language,
   });
   try {
     const course = await Course.create(newCourse);
@@ -138,15 +136,15 @@ const setExam = async (req, res) => {
     answers,
   } = req.body;
   const newExam = new Exam({
-    courseId : courseId,
-    questions : questions,
-    firstChoices :firstChoices,
-    secondChoices :secondChoices ,
-    thirdChoices : thirdChoices,
-    fourthChoices :fourthChoices,
-    answers : answers,
+    courseId: courseId,
+    questions: questions,
+    firstChoices: firstChoices,
+    secondChoices: secondChoices,
+    thirdChoices: thirdChoices,
+    fourthChoices: fourthChoices,
+    answers: answers,
   });
-  
+
   try {
     const exam = await Exam.create(newExam);
     res.status(200).json(exam);
@@ -155,16 +153,12 @@ const setExam = async (req, res) => {
   }
 };
 
-
-
 //get all the titles of the courses available including the total hours of the course and course rating
 
 const coursesDetails = async (req, res) => {
   try {
     const courseAttr = await Course.find(
-      {},
-      { title: 1, totalHoursOfCourse: 1, price: 1, rating: 1,imgUrl :1,instructorname:1, _id: 1 }
-    );
+      {});
     res.status(200).send(courseAttr);
   } catch (err) {
     res.status(500).json({ mssg: "can't find courses" });
@@ -183,12 +177,6 @@ const oneCoursesDetails = async (req, res) => {
     res.status(500).json({ mssg: "can't find courses" });
   }
 };
-
-
-
-
-
-
 
 //module.exports = coursesDetails;
 
@@ -244,6 +232,37 @@ const addCoursePromotion = async (req, res) => {
     res.status(500).json({ mssg: "no such Id" });
   }
 };
+// const updateRating = async (req, res) => {
+//   const {rating,updateid,userid,state} = req.body;
+//   // state T> update course >F update instructor
+//   if (!rating || !updateid || !userid) {
+//     return res.status(400).json({ error: "bad request" });
+//   }
+//   if (state) {
+//     try {
+//       const data = await Rating.findOneAndUpdate(
+//         { userid: userid, courseid: updateid },
+//         { courserating: rating },
+//         { new: true }
+//       );
+//       return res.status(200).json(data);
+//     } catch (err) {
+//       return res.status(402).json({ mssg: "no such Id" });
+//     }
+//   } else {
+//     try {
+//       const data = await Rating.findOneAndUpdate(
+//         { userid: userid, instid: updateid },
+//         { instrating: rating },
+//         { new: true }
+//       );
+//       return res.status(200).json(data);
+//     } catch (err) {
+//       return res.status(500).json({ mssg: "no such Id" });
+//     }
+//   }
+// };
+
 module.exports = {
   addCoursePromotion,
   createCourse,

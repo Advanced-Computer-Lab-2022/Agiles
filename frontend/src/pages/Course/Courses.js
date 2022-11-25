@@ -1,12 +1,18 @@
 import { CourseCard } from "../../components/CourseCard";
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import style from "./Courses.module.css";
 import Filter from "../../components/Filter";
 import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif";
 const Courses = () => {
   const [courses, setCourses] = useState([]);
+  const [message, setMessage] = useState(true);
+  const location = useLocation();
   const [isloading, setIsLoading] = useState(false);
+  const chooseMessage = (message) => {
+    setMessage(message);
+  };
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -26,8 +32,8 @@ const Courses = () => {
         <LoadingScreen loading={true} logoSrc={spinner} />
       ) : (
         <div className={style['wrapper']}>
-        <Filter/>
-          <section className={style["course-main"]}>
+          <Filter className={style['wrapper-left']} chooseMessage={chooseMessage} currentMessage={message}/>
+          <section className={style["wrapper-right"]}>
             <h1>Courses</h1>
             <h2>courses to get you started</h2>
             <hr></hr>

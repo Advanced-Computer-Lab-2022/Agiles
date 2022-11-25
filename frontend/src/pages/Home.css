@@ -12,7 +12,6 @@
 .mainSection{
   padding: 100px 200px;
   width: 100%;
-  min-height: 20vh;
   margin-top: 10px;
   display: flex;
   align-items: center;
@@ -25,7 +24,7 @@
 }
 .mainSection h2{
   color: #fff;
-  font-size: 2.5em;
+  font-size: 2em;
   font-weight: 500;
   font-family: 'Open Sans', sans-serif;
 }

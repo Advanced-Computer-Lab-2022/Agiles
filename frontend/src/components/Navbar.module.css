@@ -24,6 +24,8 @@
 
 .links:hover {
   color:  rgb(0, 65, 158);
+  background-color: rgba(209, 211, 212, 0.379);
+  border-radius: 0.5rem;
 }
 .inpt {
   border: 0px;
@@ -40,7 +42,8 @@
   flex-grow: 1;
   border: 1px solid #1c1d1f;
   display: flex;
-  margin-left: 10px;
+  margin-left: 0.25rem;
+  margin-right: 2rem;
 }
 
 .search-icon {
@@ -51,6 +54,12 @@
   position: relative;
   margin-right: 1rem;
   border-radius: 0.25rem;
+  padding: 0.3rem;
   cursor: pointer;
+}
+.dropUser:hover{
+  color:  rgb(0, 65, 158);  
+  background-color: rgba(209, 211, 212, 0.379);
+  border-radius: 0.5rem;
 }
 

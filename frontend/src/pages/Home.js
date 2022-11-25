@@ -1,5 +1,5 @@
 import "./Home.css";
-import { Link } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 import NavbarStyles from "../components/Navbar.module.css";
 import React from "react";
 import Cookies from "universal-cookie";
@@ -123,9 +123,7 @@ const Home = () => {
       <div className="home">
         <section className="mainSection">
           <div>
-            <h2>
-              <a href="/signUp" style={{textDecoration :'none'}}>Register now !</a>
-            </h2>
+          <Button href="/signUp" size="lg">Register now</Button> 
           </div>
           <img src={a} alt="mainImage" className="mainImage"></img>
         </section>
