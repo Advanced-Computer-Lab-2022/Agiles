@@ -165,22 +165,40 @@ const updateInstructorEmail = async (req, res) => {
   }
 };
 const uploadSubLink = async (req, res) => {
-  const { courseId, subId, linkDesc, linkUrl } = req.body;
+  const { courseId, subId, linkDesc, linkUrl, allowed } = req.body;
   if (!courseId || !subId) {
     return res.status(400).json({ msg: "missing data" });
   }
   const newlink = {
     linkDesc: linkDesc,
     linkUrl: linkUrl,
+    allowed: allowed,
   };
   try {
     const data = await Course.updateOne(
       { _id: courseId, "subtitles._id": subId },
-      { $push: { "subtitles.$.link" :newlink }},{new: true}
+      { $push: { "subtitles.$.link": newlink } },
+      { new: true }
     );
     res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ msg: "can't update links" });
+  }
+};
+const deleteSubLink = async (req, res) => {
+  const { courseId, subId, linkId } = req.body;
+  if (!courseId || !subId || !linkId) {
+    return res.status(400).json({ msg: "missing data" });
+  }
+  try {
+    const data = await Course.findOneAndUpdate(
+      { _id: courseId, "subtitles._id": subId },
+      { $pull: { "subtitles.$.link": linkId } },
+      { new: true }
+    );
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json({ msg: "can't delet link" });
   }
 };
 const uploadPreLink = async (req, res) => {
@@ -235,4 +253,5 @@ module.exports = {
   updateInstructorPassword,
   uploadSubLink,
   uploadPreLink,
+  deleteSubLink,
 };
