@@ -16,7 +16,7 @@ const CoursContent = (props) => {
            <Accordion.Body>
               <YouTubeIcon className={style["youtubeIcon"]} />
               {subtitle.link?.map((link, index) => (
-                <div className={style["link"]}>
+                <div  key={index} className={style["link"] }>
                   <a href={link.linkUrl} target
                   ="_blank" rel="noreferrer">
                     {link.linkDesc}
