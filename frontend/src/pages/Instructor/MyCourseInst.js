@@ -1,11 +1,11 @@
 import regStyles from "./MyCourseInst.module.css";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import CoursContent from "../../components/CourseContent";
 import CourseExam from "../Course/CourseExam";
-import video from "../../static/videonotFound.png";
 import CoursePreInst from "./CoursePreInst";
+import CourseConInst from "./CourseConInst";
 import axios from "axios";
+import SetExam from "./SetExam";
 const MyCourseInst = () => {
     const location = useLocation();
     const course_id = location.state.course_id;
@@ -30,9 +30,9 @@ const MyCourseInst = () => {
       switch(choice) {
 
         case 0:   return<CoursePreInst course={course}/>;
-        case 1:   return <CoursContent course={course}/>;
+        case 1:   return <CourseConInst course={course}/>
         case 2: return <></>;
-        case 3:  return <CourseExam courseId={course._id}/>;
+        case 3:  return <SetExam/>;
 
         default:return <h1>error</h1>
       }

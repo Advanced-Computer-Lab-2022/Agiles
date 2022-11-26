@@ -10,8 +10,9 @@ import LanguageIcon from "@mui/icons-material/Language";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
+import ListGroup from "react-bootstrap/ListGroup";
 import Accordion from "react-bootstrap/Accordion";
-import DoNotDisturbIcon from '@mui/icons-material/DoNotDisturb';
+import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
 import axios from "axios";
 const Course = () => {
   const [course, setCourse] = useState([]);
@@ -90,31 +91,31 @@ const Course = () => {
               </div>
             </section>
             <section className={styled["mainSection-right"]}>
-              {course.coursePreviewUrl != "" ? (<>
-                <iframe
-                  width="100%"
-                  src={course.coursePreviewUrl}
-                  title="YouTube video player"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-                <button className={styled["preview"]} onClick={handleShow}>
-                &nbsp;preview this course
-              </button>
-              <div className={styled["totalhours"]}>
-                <YouTubeIcon className={styled["icon"]} />
-                <label className={styled["time"]}>
-                  {course.totalHoursOfCourse}h 30m Video on demand
-                </label>
-              </div>
-              </>
+              {course.coursePreviewUrl != "" ? (
+                <>
+                  <iframe
+                    width="100%"
+                    src={course.coursePreviewUrl}
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                  <button className={styled["preview"]} onClick={handleShow}>
+                    &nbsp;preview this course
+                  </button>
+                  <div className={styled["totalhours"]}>
+                    <YouTubeIcon className={styled["icon"]} />
+                    <label className={styled["time"]}>
+                      {course.totalHoursOfCourse}h 30m Video on demand
+                    </label>
+                  </div>
+                </>
               ) : (
                 <h6 style={{ textAlign: "center" }}>
                   <DoNotDisturbIcon /> No Preview Video for this Course
                 </h6>
               )}
 
-              
               <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                   <Modal.Title>Course Preview</Modal.Title>
@@ -126,7 +127,7 @@ const Course = () => {
                   </Button>
                 </Modal.Footer>
               </Modal>
-             
+
               {course.price === 0 ? (
                 <div className={styled["price"]}>
                   <label className={styled["time"]}>Free</label>
@@ -183,14 +184,23 @@ const Course = () => {
           <section className={styled["middle-bottom"]}>
             <label>Course Content</label>
             {course.subtitles && (
-              <Accordion defaultActiveKey="0">
+              <Accordion defaultActiveKey="0" alwaysOpen>
                 {course.subtitles.map((subtitle, index) => (
                   <Accordion.Item eventKey={index}>
                     <Accordion.Header>
-                      Section {index + 1}: {subtitle.subtitle}
+                    <h5>Section {index + 1}: {subtitle.subtitle}</h5>
                     </Accordion.Header>
                     <Accordion.Body>
                       <YouTubeIcon /> {subtitle.time}
+                      <ListGroup>
+                        {subtitle.link?.map((link, index) => (
+                          <ListGroup.Item>
+                            {index + 1}.{" "}
+                            {link.allowed ?  ( <a href={link.linkUrl}> {link.linkDesc}</a>) :(<a className={styled["isDisabled"]}> {link.linkDesc}</a>)}
+                           
+                          </ListGroup.Item>
+                        ))}
+                      </ListGroup>
                     </Accordion.Body>
                   </Accordion.Item>
                 ))}
