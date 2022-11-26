@@ -128,21 +128,13 @@ const createCourse = async (req, res) => {
 const setExam = async (req, res) => {
   const {
     courseId,
+    subtitleId,
     questions,
-    firstChoices,
-    secondChoices,
-    thirdChoices,
-    fourthChoices,
-    answers,
   } = req.body;
   const newExam = new Exam({
     courseId: courseId,
+    subtitleId,
     questions: questions,
-    firstChoices: firstChoices,
-    secondChoices: secondChoices,
-    thirdChoices: thirdChoices,
-    fourthChoices: fourthChoices,
-    answers: answers,
   });
 
   try {

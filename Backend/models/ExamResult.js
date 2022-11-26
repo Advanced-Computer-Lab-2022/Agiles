@@ -12,8 +12,8 @@ const examResultSchema = new Schema(
       ref:'Course',
       required: true
     },
-    examId: {
-      type: Schema.Types.ObjectId,
+    subtitleId: {
+      type:mongoose.Types.ObjectId,
       required: true,
     },
     result: {
