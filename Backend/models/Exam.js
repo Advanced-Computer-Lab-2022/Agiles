@@ -8,30 +8,36 @@ const examSchema = new Schema(
       ref:'Course',
       required: true,
     },
-    questions: {
+    subtitleId: {
+      type:mongoose.Types.ObjectId,
+      required: true,
+    },
+    questions:[
+      {content:{
       type: String,
       required: true,
     },
-    firstChoices:{
-      type: String,
-      required: true,
-    },
-    secondChoices:{
-      type: String,
-      required: true,
-    },
-    thirdChoices:{
-      type: String,
-      required: true,
-    },
-    fourthChoices:{
-      type: String,
-      required: true,
-    },
-    answers: {
-      type: String,
-      required: true,
-    },
+   firstChoice:{
+    type: String,
+    required: true,
+  },
+  secondChoice:{
+    type: String,
+    required: true,
+  },
+  thirdChoice:{
+    type: String,
+    required: true,
+  },
+  fourthChoice:{
+    type: String,
+    required: true,
+  },
+   answer: {
+    type: String,
+    required: true,
+  },}
+  ],
   },
   { timestamps: true }
 );

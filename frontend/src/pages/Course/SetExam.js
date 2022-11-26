@@ -6,23 +6,21 @@ import { Link } from "react-router-dom";
 const SetExam = () => {
 
     const [courseId, setCourseId] = useState("");
-    const [questions, setQuestions] = useState("");
-    const [firstChoices, setFirstChoices] = useState("");
-    const [secondChoices, setSecondChoices] = useState("");
-    const [thirdChoices, setThirdChoices] = useState("");
-    const [fourthChoices, setFourthChoices] = useState("");
-    const [answers, setAnswers] = useState("");
+    const [subtitleId, setSubtitleId] = useState("");
+    const [content, setContent] = useState("");
+    const [firstChoice, setFirstChoice] = useState("");
+    const [secondChoice, setSecondChoice] = useState("");
+    const [thirdChoice, setThirdChoice] = useState("");
+    const [fourthChoice, setFourthChoice] = useState("");
+    const [questions, setQuestions] = useState([]);
+
 
 const handleSubmit = async (event) => {
 
 const exam = {
     courseId : courseId,
-    questions : questions,
-    firstChoices : firstChoices,
-    secondChoices : secondChoices,
-    thirdChoices : thirdChoices,
-    fourthChoices : fourthChoices,
-    answers : answers,
+    subtitleId : subtitleId,
+    questions:questions,
 };
 
 event.preventDefault();
