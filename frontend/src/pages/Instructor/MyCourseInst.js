@@ -1,15 +1,15 @@
-import regStyles from "./RegCourse.module.css";
+import regStyles from "./MyCourseInst.module.css";
 import { useLocation } from "react-router-dom";
-import { useState ,useEffect } from "react";
-import CoursePreview from "../../components/CoursePreview";
+import { useEffect, useState } from "react";
 import CoursContent from "../../components/CourseContent";
+import CourseExam from "../Course/CourseExam";
+import video from "../../static/videonotFound.png";
+import CoursePreInst from "./CoursePreInst";
 import axios from "axios";
-import CourseExam from "./CourseExam";
-const RegCourse = () => {
+const MyCourseInst = () => {
     const location = useLocation();
     const course_id = location.state.course_id;
-    const[course,setCourse] = useState([]);
-    const progress=location.state.progress;
+    const[course,setCourse]=useState([]);
     const [choice , setChoice] = useState(0);
     const handleClick=(e)=>{
       setChoice(e.target.value);
@@ -26,9 +26,10 @@ const RegCourse = () => {
       fetchdata();
     },[])
     const project = () => {
+      console.log(course)
       switch(choice) {
 
-        case 0:   return<CoursePreview course={course} progress={progress}/>;
+        case 0:   return<CoursePreInst course={course}/>;
         case 1:   return <CoursContent course={course}/>;
         case 2: return <></>;
         case 3:  return <CourseExam courseId={course._id}/>;
@@ -48,8 +49,7 @@ const RegCourse = () => {
           <ul>
             <li value ={0} className={choice==0?regStyles["leftsection-liclicked"]:""} onClick={handleClick}>Course Preview</li>
             <li value ={1} className={choice==1?regStyles["leftsection-liclicked"]:""} onClick={handleClick}>Course Content</li>
-            <li value ={2} className={choice==2?regStyles["leftsection-liclicked"]:""} onClick={handleClick}>Grades</li>
-            <li value ={3} className={choice==3?regStyles["leftsection-liclicked"]:""} onClick={handleClick}>Exams</li>
+            <li value ={3} className={choice==3?regStyles["leftsection-liclicked"]:""} onClick={handleClick}>Set Final Exam</li>
           </ul>
           </div>
     </section>
@@ -60,4 +60,4 @@ const RegCourse = () => {
   );
 };
 
-export default RegCourse;
+export default MyCourseInst;

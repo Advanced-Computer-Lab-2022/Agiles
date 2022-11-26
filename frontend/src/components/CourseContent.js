@@ -4,6 +4,7 @@ import Accordion from "react-bootstrap/Accordion";
 const CoursContent = (props) => {
   const subtitles = props.course.subtitles;
   console.log(subtitles);
+  console.log(subtitles[0].link)
   
   return (
     <div className={style["mainRight"]}>
@@ -13,9 +14,17 @@ const CoursContent = (props) => {
            <Accordion.Item eventKey={index}>
            <Accordion.Header>Section {index + 1}: {subtitle.subtitle}</Accordion.Header>
            <Accordion.Body>
-             <YouTubeIcon className={style["icon"]} /> {subtitle.time}
+              <YouTubeIcon className={style["youtubeIcon"]} />
+              {subtitle.link?.map((link, index) => (
+                <div  key={index} className={style["link"] }>
+                  <a href={link.linkUrl} target
+                  ="_blank" rel="noreferrer">
+                    {link.linkDesc}
+                  </a>
+                </div>
+              ))}
+              
              <br></br>
-             {subtitle.linkDesc}
            </Accordion.Body>
          </Accordion.Item>
           ))}

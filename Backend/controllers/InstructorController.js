@@ -36,7 +36,7 @@ const createInstructor = async (req, res) => {
 const listAllInstructorCoursesTitles = async (req, res) => {
   const id = req.params["id"];
   try {
-    const courseAttr = await Course.where('instructor').equals(id);
+    const courseAttr = await Course.where("instructor").equals(id);
     res.status(200).send(courseAttr);
   } catch (err) {
     res.status(500).json({ mssg: "can't find courses" });
@@ -164,7 +164,39 @@ const updateInstructorEmail = async (req, res) => {
     res.status(500).json({ msg: "can't update email" });
   }
 };
-
+const uploadSubLink = async (req, res) => {
+  const { courseId, subId, linkDesc, linkUrl } = req.body;
+  if (!courseId || !subId) {
+    return res.status(400).json({ msg: "missing data" });
+  }
+  const newlink = {
+    linkDesc: linkDesc,
+    linkUrl: linkUrl,
+  };
+  try {
+    const data = await Course.updateOne(
+      { _id: courseId, "subtitles._id": subId },
+      { $push: { "subtitles.$.link" :newlink }},{new: true}
+    );
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json({ msg: "can't update links" });
+  }
+};
+const uploadPreLink = async (req, res) => {
+  const { courseId, coursePreviewUrl } = req.body;
+  if (!courseId || !coursePreviewUrl) {
+    return res.status(400).json({ msg: "missing data" });
+  }
+  try {
+    const course = await Course.findByIdAndUpdate(courseId, {
+      coursePreviewUrl: coursePreviewUrl,
+    });
+    res.status(200).json("updated");
+  } catch (err) {
+    res.status(500).json({ msg: "can't update links" });
+  }
+};
 const updateInstructorPassword = async (req, res) => {
   const { oldPass, newPass } = req.body;
 
@@ -201,4 +233,6 @@ module.exports = {
   updateInstructorEmail,
   updateInstructorBio,
   updateInstructorPassword,
+  uploadSubLink,
+  uploadPreLink,
 };

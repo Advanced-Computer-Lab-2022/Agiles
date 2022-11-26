@@ -8,7 +8,6 @@ import spinner from "../../static/download.gif";
 const Courses = () => {
   const [courses, setCourses] = useState([]);
   const [message, setMessage] = useState(true);
-  const location = useLocation();
   const [isloading, setIsLoading] = useState(false);
   const chooseMessage = (message) => {
     setMessage(message);

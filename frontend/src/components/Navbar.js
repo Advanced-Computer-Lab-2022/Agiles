@@ -43,7 +43,7 @@ const Navbar = () => {
 
   return (
     <nav className={NavbarStyles["navbar"]}>
-      <h1 className={NavbarStyles["headerTitle"]}>
+      {/* <h1 className={NavbarStyles["headerTitle"]}>
         <Link to="/">
           <img
             src={a}
@@ -51,7 +51,7 @@ const Navbar = () => {
             className={NavbarStyles["headerTitle"]}
           ></img>
         </Link>
-      </h1>
+      </h1> */}
       <form onSubmit={handleSearch} className={NavbarStyles["search-bar"]}>
         <BsSearch
           className={NavbarStyles["search-icon"]}
