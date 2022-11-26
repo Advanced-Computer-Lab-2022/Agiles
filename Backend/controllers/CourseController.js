@@ -158,7 +158,7 @@ const setExam = async (req, res) => {
 const coursesDetails = async (req, res) => {
   try {
     const courseAttr = await Course.find(
-      {});
+      {}).populate();
     res.status(200).send(courseAttr);
   } catch (err) {
     res.status(500).json({ mssg: "can't find courses" });

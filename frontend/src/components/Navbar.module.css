@@ -15,7 +15,6 @@
 }
 
 .links{
-  margin-left: auto;
   color: black;
   margin-right: 1rem;
   text-decoration: none;
@@ -23,9 +22,8 @@
 }
 
 .links:hover {
-  color:  rgb(0, 65, 158);
+  color:  rgba(192,4,24,255);  
   background-color: rgba(209, 211, 212, 0.379);
-  border-radius: 0.5rem;
 }
 .inpt {
   border: 0px;
@@ -33,15 +31,14 @@
   background-color: #f7f9fa;
   display: inline-block;
   outline: none;
-  flex-grow: 1;
 }
 
 .search-bar {
-  border-radius: 9999px;
+  border-radius: 0.5rem;
   background-color: #f7f9fa;
-  flex-grow: 1;
   border: 1px solid #1c1d1f;
   display: flex;
+  flex-grow: 1;
   margin-left: 0.25rem;
   margin-right: 2rem;
 }
@@ -53,13 +50,11 @@
 .dropUser{
   position: relative;
   margin-right: 1rem;
-  border-radius: 0.25rem;
   padding: 0.3rem;
   cursor: pointer;
 }
 .dropUser:hover{
-  color:  rgb(0, 65, 158);  
+  color:  rgba(192,4,24,255);  
   background-color: rgba(209, 211, 212, 0.379);
-  border-radius: 0.5rem;
 }
 

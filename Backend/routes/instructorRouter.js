@@ -10,6 +10,8 @@ const {
   updateInstructorBio,
   updateInstructorEmail,
   updateInstructorPassword,
+  uploadSubLink,
+  uploadPreLink
 } = require("../controllers/InstructorController");
 
 //create Course
@@ -24,5 +26,7 @@ instructorRouter.get("/instructorbyid", getInstructorbyId);
 instructorRouter.patch("/updateBio", updateInstructorBio);
 instructorRouter.patch("/updateEmail", updateInstructorEmail);
 instructorRouter.patch("/updatePassword", updateInstructorPassword);
+instructorRouter.patch("/updateSubtitle", uploadSubLink);
+instructorRouter.patch("/updatePreview", uploadPreLink);
 
 module.exports = instructorRouter;

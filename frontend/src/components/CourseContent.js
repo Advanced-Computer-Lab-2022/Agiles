@@ -15,7 +15,6 @@ const CoursContent = (props) => {
            <Accordion.Body>
              <YouTubeIcon className={style["icon"]} /> {subtitle.time}
              <br></br>
-             {subtitle.linkDesc}
            </Accordion.Body>
          </Accordion.Item>
           ))}

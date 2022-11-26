@@ -7,10 +7,13 @@ const courseSchema = new Schema(
       type: String,
       required: true,
     },
-    subtitles: {
-      type: [Object],
-      required: false,
-    },
+    subtitles: [
+      {
+        subtitle : {type : String , default:""},
+        time : {type : String , default:"h::mm:ss"},
+        link : [{linkUrl :{type :String ,default:""},linkDesc :{type :String ,default:""},allowed :{type :Boolean ,default:false}}],
+      }
+    ],
     subject: {
       type: String,
       required: false,
@@ -20,7 +23,7 @@ const courseSchema = new Schema(
       required: false,
       default: 3,
     },
-    ratingCount :{
+    ratingCount: {
       type: Number,
       required: false,
       default: 1,
@@ -31,7 +34,7 @@ const courseSchema = new Schema(
     },
     instructor: {
       type: mongoose.Types.ObjectId,
-      ref : 'Instructor',
+      ref: "Instructor",
       required: true,
     },
     instructorname: {
@@ -46,9 +49,10 @@ const courseSchema = new Schema(
       type: Boolean,
       required: false,
     },
-    coursePreviewUrl :{
-      type : String,
-      required : false
+    coursePreviewUrl: {
+      type: String,
+      required: false,
+      default:""
     },
     language: {
       type: String,
@@ -57,8 +61,8 @@ const courseSchema = new Schema(
     discount: {
       type: Number,
       required: false,
-      min:0,
-      max : 100
+      min: 0,
+      max: 100,
     },
     discount_enddate: {
       type: Date,
@@ -68,10 +72,10 @@ const courseSchema = new Schema(
       required: false,
     },
     exercises: {
-      type: [{type: mongoose.Types.ObjectId, ref: 'Exam'}],
+      type: [{ type: mongoose.Types.ObjectId, ref: "Exam" }],
     },
-    imgUrl:{
-        type:String,
+    imgUrl: {
+      type: String,
     },
   },
   { timestamps: true }

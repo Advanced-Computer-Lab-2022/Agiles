@@ -11,6 +11,7 @@ import UpgradeIcon from "@mui/icons-material/Upgrade";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import Accordion from "react-bootstrap/Accordion";
+import ListGroup from 'react-bootstrap/ListGroup';
 import axios from "axios";
 const Course = () => {
   const [course, setCourse] = useState([]);
@@ -22,6 +23,7 @@ const Course = () => {
   const courseId = location.state.id;
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  console.log(course);
   const handlePromo = (e) => {
     setPromotion(e.target.value);
   };
@@ -155,12 +157,10 @@ const Course = () => {
             </section>
           </section>
           <section className={styled["middle-top"]}>
-            {" "}
             <label>Description</label>
             <h2>{course.description}</h2>
           </section>
           <section className={styled["middle-top"]}>
-            {" "}
             <label>Subject</label>
             <h2>{course.subject}</h2>
           </section>
@@ -175,8 +175,6 @@ const Course = () => {
                     </Accordion.Header>
                     <Accordion.Body>
                       <YouTubeIcon /> {subtitle.time}
-                      <br></br>
-                      {subtitle.linkDesc}
                     </Accordion.Body>
                   </Accordion.Item>
                 ))}

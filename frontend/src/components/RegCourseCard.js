@@ -20,11 +20,11 @@ const RegCourseCard = (props) => {
       pathname: "/regcourse",
       search: `?course=${props.data.title}`,
       
-    },{state: { course: props.data , progress: props.progress }});
+    },{state: { course_id: props.data._id , progress: props.progress }});
   }
   return (
     <div className={RegCourseCardStyles["regcard"]}>
-      <button>
+      <button  onClick={handelClick}>
       <div className={RegCourseCardStyles["regcard__image"]}>
         <img
           src={props.data.imgUrl}
