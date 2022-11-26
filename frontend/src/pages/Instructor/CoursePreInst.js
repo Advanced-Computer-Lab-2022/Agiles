@@ -12,8 +12,8 @@ import axios from "axios";
 const UPLOAD_URL = "/instructor/updatePreview"
 const CoursePreInst = (props) => {
   const course = props.course;
-  const [show, setShow] = useState(false);
   const [coursePreviewUrl, setCoursePreviewUrl] = useState("");
+  const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleSave =async ()=>{
@@ -131,7 +131,7 @@ const CoursePreInst = (props) => {
       <Rating
         name="rating"
         readOnly
-        value={course.rating}
+        value={!course.rating?0:course.rating}
         className={style["rating"]}
       />
     </div>

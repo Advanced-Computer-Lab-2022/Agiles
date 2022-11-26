@@ -39,7 +39,7 @@ const CoursePreview = (props) => {
       <Rating
         name="rating"
         readOnly
-        value={course.rating}
+        value={!course.rating?0:course.rating}
         className={style["rating"]}
       />
     </div>

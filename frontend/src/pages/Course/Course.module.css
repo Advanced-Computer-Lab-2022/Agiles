@@ -151,3 +151,13 @@
   color: rgb(33, 32, 32);
   margin-bottom: 2rem;
 }
+.isDisabled {
+  color: currentColor;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+}
+.isDisabled:hover {
+  color: currentColor;
+
+}
