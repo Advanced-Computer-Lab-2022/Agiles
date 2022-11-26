@@ -12,6 +12,7 @@ const SetExam = () => {
     const [secondChoice, setSecondChoice] = useState("");
     const [thirdChoice, setThirdChoice] = useState("");
     const [fourthChoice, setFourthChoice] = useState("");
+    const [answers,setAnswers] = useState("");
     const [questions, setQuestions] = useState([]);
 
 
@@ -70,7 +71,7 @@ return (
     required
     type="text"
     name="firstChoices"
-    onChange={(e) => setFirstChoices(e.target.value)}
+    onChange={(e) => setFirstChoice(e.target.value)}
     />
     <br/>
     <br/>
@@ -78,8 +79,8 @@ return (
     <input
     required
     type="text"
-    name="secondChoices"
-    onChange={(e) => setSecondChoices(e.target.value)}
+    name="secondChoice"
+    onChange={(e) => setSecondChoice(e.target.value)}
     />
     <br/>
     <br/>
@@ -87,8 +88,8 @@ return (
     <input
     required
     type="text"
-    name="thirdChoices"
-    onChange={(e) => setThirdChoices(e.target.value)}
+    name="thirdChoice"
+    onChange={(e) => setThirdChoice(e.target.value)}
     />
     <br/>
     <br/>
@@ -96,13 +97,13 @@ return (
     <input
     required
     type="text"
-    name="fourthChoices"
-    onChange={(e) => setFourthChoices(e.target.value)}
+    name="fourthChoice"
+    onChange={(e) => setFourthChoice(e.target.value)}
     />
     <br/>
     <br/>
     <label>Answer</label>
-    <select name="answers" id="answers"     onChange={(e) => setAnswers(e.target.value)}>
+    <select name="answers" id="answers"     onChange={(e) => setAnswers (e.target.value)}>
     <option value="1">First Choice</option>
    <option value="2">Second Choice</option>
     <option value="3">Third choice</option>
