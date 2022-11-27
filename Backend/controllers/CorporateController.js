@@ -49,37 +49,39 @@ const createCorporate = async (req, res) => {
 
 
 
-const getExerciseGrade = async (req,res) => {
-  const studentId =  req.query["id"];
-  const exerciseId = req.query["exerciseId"];
-  const exercise = await ExamResult.findOne({
-    studentId: studentId,
-    exerciseId: exerciseId
-  },{result: 1}).exec();
-  try{
-  res.status(200).json(exercise);
+const getExerciseGrade = async (req, res) => {
+  const studentId = req.query["id"];
+  const subtitleId = req.query["subtitleId"];
+  const exercise = await ExamResult.findOne(
+    {
+      studentId: studentId,
+      subtitleId: subtitleId,
+    },
+    { result: 1 }
+  ).exec();
+  try {
+    res.status(200).json(exercise);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
-  catch(error){
-    res.status(400).json({error:error.message})
-  }
-}
+};
+const compareAnswers = async (req, res) => {
+  const studentId = req.query["id"];
+  const subtitleId = req.query["subtitleId"];
+  const exerciseChoices = await ExamResult.findOne(
+    {
+      studentId: studentId,
+      subtitleId: subtitleId,
+    },
+    { studentChoices: 1 }
+  ).exec();
 
-const compareAnswers = async (req,res) => {
-  const studentId =  req.query["id"];
-  const exerciseId = req.query["exerciseId"];
-  const exerciseChoices = await ExamResult.findOne({
-    studentId: studentId,
-    exerciseId: exerciseId
-  },{studentChoices: 1}).exec();
-
-  const exercise = await Exam.findById(exerciseId,{answers:1});
-  try{
-  res.status(200).json({choices: exerciseChoices, answers: exercise});
+  const exercise = await Exam.findById(subtitleId, { questions: 1 });
+  try {
+    res.status(200).json({ exerciseChoices, exercise });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
-  catch(error){
-    res.status(400).json({error:error.message})
-  }
-
-}
+};
 
 module.exports = {createCorporate,getExerciseGrade,compareAnswers};

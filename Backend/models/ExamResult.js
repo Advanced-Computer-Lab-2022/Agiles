@@ -18,7 +18,6 @@ const examResultSchema = new Schema(
     },
     result: {
       type: Number,
-      required: true,
     },
     studentChoices: {
       type: Array,
