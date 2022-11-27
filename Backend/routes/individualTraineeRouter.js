@@ -1,6 +1,9 @@
 const express = require("express");
 const IndividualTraineeRouter = express.Router();
-const {courseExam} = require("../controllers/CourseController");
+const {
+  courseExam,
+  courseFinalExam,
+} = require("../controllers/CourseController");
 const {
   getTraineebyID,
   InprogressCourses,
@@ -17,5 +20,6 @@ IndividualTraineeRouter.patch("/updateUsername", updateITraineeUsername);
 IndividualTraineeRouter.patch("/updatePassword", updateITraineePassword);
 
 IndividualTraineeRouter.get("/courseExam", courseExam);
+IndividualTraineeRouter.get("/courseFinalExam", courseFinalExam);
 
 module.exports = IndividualTraineeRouter;
