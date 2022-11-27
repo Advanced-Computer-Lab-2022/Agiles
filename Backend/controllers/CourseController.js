@@ -214,7 +214,58 @@ const getLink = async (req, res) => {
     res.status(500).json({ mssg: "no such Id" });
   }
 };
+const rateCourse = async (req, res) => {
+  const { courseId, userId, userRating, userReview } = req.body;
+  if (!instId || !userId || !userRating || !userReview) {
+    return res.status(400).json({ error: "Empty" });
+  }
+  try {
+    const data = await Course.findById(courseId).exec();
+    const oldRating = data.rating;
+    const oldCount = data.ratingCount;
+    const newRating = (oldRating + userRating) / (oldCount + 1);
+    const Review = {
+      userId: userId,
+      userRating: userRating,
+      userReview: userReview,
+    };
+    const UpdatedRating = await Instructor.updateOne(
+      { _id: instId },
+      {
+        $push: {
+          reviews: Review,
+        },
+        $set :{
+          rating: newRating,
+          ratingCount: oldCount + 1,
+        }
+      }
+    ).exec();
+    res.status(200).json(UpdatedRating);
+  } catch (err) {
+    res.status(500).json({ msg: "can't update rating" });
+  }
+};
 
+const updateRateCourse = async (req, res) => {
+  const { CourseId, userId, userRating, userReview,currentRating } = req.body;
+  if (!instId || !userId || !userRating || !userReview) {
+    return res.status(400).json({ error: "Empty" });
+  }
+  try {
+    const data = await Instructor.findById(instId).exec();
+    const oldRating = data.rating;
+    const oldCount = data.ratingCount;
+    const newRating = (((oldRating * oldCount)-currentRating)+ userRating )/ oldCount;
+    const UpdatedRating = await Course.updateOne(
+      { _id: CourseId , "reviews.userId": userId},
+      { $set :{"reviews.$.userRating": userRating,"reviews.$.userReview": userReview,rating: newRating}}
+    ).exec();
+    res.status(200).json(UpdatedRating);
+  } catch (err) {
+    res.status(500).json({ msg: "can't update rating" });
+  }
+};
 module.exports = {
   addCoursePromotion,
   createCourse,
@@ -227,4 +278,6 @@ module.exports = {
   setExam,
   courseExam,
   getLink,
+  rateCourse,
+  updateRateCourse
 };
