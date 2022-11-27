@@ -16,7 +16,9 @@ const CourseExam = (props) => {
   const query = "63810085e606ba473f59e1ba";
   const [CourseExam, setCourseExam] = useState([]);
   const [isloading, setIsLoading] = useState(false);
-
+  const [exam, setExam] = useState(false);
+  const [answers,setAnswers]= useState([]);
+  
   let corporate = false;
   if (props.corporate) {
     corporate = true;
@@ -26,18 +28,29 @@ const CourseExam = (props) => {
       setIsLoading(true);
       const res = await fetch(
         `/individualtrainee/courseExam?subtitleId=${query}`
-      );
-      let jsondata = await res.json();
-      if (res.ok) {
-        setCourseExam(jsondata["questions"]);
-      }
-      setIsLoading(false);
-    };
-    fetchData();
-  }, []);
-
-  return (
-    <div>
+        );
+        let jsondata = await res.json();
+        if (res.ok) {
+          setCourseExam(jsondata["questions"]);
+        }
+        setIsLoading(false);
+      };
+      fetchData();
+    }, []);
+    
+    // const handleSubmit = async (e) => {
+    //   e.preventDefault();
+    //   console.log("submitted");
+    //   const result = await axios.get(`/individualtrainee/submitExam?subtitleId=${query}&answers=${answers}`);
+      
+    // };
+  
+    const handleRadioChange = (e) => {
+      setAnswers(oldArray => [...oldArray, e.target.value]);
+      console.log(answers);
+    }
+    return (
+      <div>
       <h1>Exam</h1>
       <div class="d-grid gap-3">
         <Form>
@@ -59,7 +72,8 @@ const CourseExam = (props) => {
                           <InputGroup.Radio
                             value="1"
                             name={`Choices${index}`}
-                          />
+                            handleChange={handleRadioChange}
+                            />
                           <Form.Label>- {exam["firstChoice"]} </Form.Label>
                         </InputGroup>
                       </ListGroup.Item>
@@ -68,7 +82,8 @@ const CourseExam = (props) => {
                           <InputGroup.Radio
                             value="1"
                             name={`Choices${index}`}
-                          />
+                            handleChange={handleRadioChange}
+                            />
                           <Form.Label>- {exam["secondChoice"]} </Form.Label>
                         </InputGroup>
                       </ListGroup.Item>
@@ -77,7 +92,8 @@ const CourseExam = (props) => {
                           <InputGroup.Radio
                             value="1"
                             name={`Choices${index}`}
-                          />
+                            handleChange={handleRadioChange}
+                            />
                           <Form.Label>- {exam["thirdChoice"]} </Form.Label>
                         </InputGroup>
                       </ListGroup.Item>
@@ -86,7 +102,8 @@ const CourseExam = (props) => {
                           <InputGroup.Radio
                             value="1"
                             name={`Choices${index}`}
-                          />
+                            handleChange={handleRadioChange}
+                            />
                           <Form.Label>- {exam["fourthChoice"]} </Form.Label>
                         </InputGroup>
                       </ListGroup.Item>

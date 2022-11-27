@@ -85,7 +85,13 @@ const courseExam = async (req, res) => {
   } else {
     res.status(200).json(questions);
   }
+
 };
+
+const getAllExams = async (req, res) => {
+  const courseId = req.query["courseId"];
+  const exams = await Exam.find({courseId:courseId});
+}
 
 const createCourse = async (req, res) => {
   const {
