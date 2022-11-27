@@ -11,14 +11,17 @@ import InputGroup from "react-bootstrap/InputGroup";
 import style from "./CourseExam.module.css";
 
 const CourseExam = (props) => {
+
+  
   const location = useLocation();
   // const query = new URLSearchParams(location.search);
   const query = "63810085e606ba473f59e1ba";
   const [CourseExam, setCourseExam] = useState([]);
   const [isloading, setIsLoading] = useState(false);
-  const [exam, setExam] = useState(false);
-  const [answers, setAnswers] = useState([]);
-
+  const [examState, setExam] = useState(false);
+  const [answers,setAnswers]= useState([]);
+  let result = [];
+  
   let corporate = false;
   if (props.corporate) {
     corporate = true;
@@ -41,11 +44,37 @@ const CourseExam = (props) => {
     };
     fetchData();
   }, []);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("submitted");
+    let res = {};
+    if(!corporate){
+      res = await axios.post(`/individualtrainee/submitExam?subtitleId=${subtitleId}&studentId=${studentId}&courseId=${courseId}`, {
+      answers: answers,
+    });
+    }
+    else{
+        res = await axios.post(`/corporate/submitExam?subtitleId=${subtitleId}&studentId=${studentId}&courseId=${courseId}`, {
+        answers: answers,
+      });
+    }
+    result = res.result;
+    setExam(true);
+  };
+
 
   const handleRadioChange = (e) => {
-    setAnswers((oldArray) => [...oldArray, e.target.value]);
+    const indexname = e.target.name;
+    //get last char from name
+    let index = indexname.charAt(indexname.length - 1);
+    if(answers[index] !== null && e.target.checked){
+      answers[index] = e.target.value;
+    }
+    else if(e.target.checked){
+      setAnswers(oldArray => [...oldArray, e.target.value]);
+    }
     console.log(answers);
-  };
+  }
   return (
     <div>
       <h1>Exam</h1>
@@ -65,44 +94,77 @@ const CourseExam = (props) => {
                     </Card.Text>
                     <ListGroup className="list-group-flush">
                       <ListGroup.Item>
-                        <InputGroup>
-                          <InputGroup.Radio
-                            value="1"
-                            name={`Choices${index}`}
-                            handleChange={handleRadioChange}
-                          />
-                          <Form.Label>- {exam["firstChoice"]} </Form.Label>
-                        </InputGroup>
+                        {examState? (result[index] === 1? (<>
+                        <i class="bi bi-check"></i>
+                        <Form.Label>- {exam["firstChoice"]}</Form.Label>
+                        </>):
+                            <><i class="bi bi-x"></i>
+                            <Form.Label>- {exam["firstChoice"]}
+                            </Form.Label></>):(
+                            <InputGroup>
+                            <InputGroup.Radio
+                              value={1}
+                              name={`Choices${index}`}
+                              onChange={handleRadioChange}
+                              />
+                            <Form.Label>- {exam["firstChoice"]} </Form.Label>
+                          </InputGroup>)
+                            }
+                        
                       </ListGroup.Item>
                       <ListGroup.Item>
-                        <InputGroup>
-                          <InputGroup.Radio
-                            value="1"
-                            name={`Choices${index}`}
-                            handleChange={handleRadioChange}
-                          />
-                          <Form.Label>- {exam["secondChoice"]} </Form.Label>
-                        </InputGroup>
+                      {examState? (result[index] === 1? (<>
+                        <i class="bi bi-check"></i>
+                        <Form.Label>- {exam["secondChoice"]}</Form.Label>
+                        </>):
+                            <><i class="bi bi-x"></i>
+                            <Form.Label>- {exam["secondChoice"]}
+                            </Form.Label></>):(
+                            <InputGroup>
+                            <InputGroup.Radio
+                              value={1}
+                              name={`Choices${index}`}
+                              onChange={handleRadioChange}
+                              />
+                            <Form.Label>- {exam["secondChoice"]} </Form.Label>
+                          </InputGroup>)
+                            }
                       </ListGroup.Item>
                       <ListGroup.Item>
-                        <InputGroup>
-                          <InputGroup.Radio
-                            value="1"
-                            name={`Choices${index}`}
-                            handleChange={handleRadioChange}
-                          />
-                          <Form.Label>- {exam["thirdChoice"]} </Form.Label>
-                        </InputGroup>
+                      {examState? (result[index] === 1? (<>
+                        <i class="bi bi-check"></i>
+                        <Form.Label>- {exam["thirdChoice"]}</Form.Label>
+                        </>):
+                            <><i class="bi bi-x"></i>
+                            <Form.Label>- {exam["thirdChoice"]}
+                            </Form.Label></>):(
+                            <InputGroup>
+                            <InputGroup.Radio
+                              value={1}
+                              name={`Choices${index}`}
+                              onChange={handleRadioChange}
+                              />
+                            <Form.Label>- {exam["thirdChoice"]} </Form.Label>
+                          </InputGroup>)
+                            }
                       </ListGroup.Item>
                       <ListGroup.Item>
-                        <InputGroup>
-                          <InputGroup.Radio
-                            value="1"
-                            name={`Choices${index}`}
-                            handleChange={handleRadioChange}
-                          />
-                          <Form.Label>- {exam["fourthChoice"]} </Form.Label>
-                        </InputGroup>
+                        {examState? (result[index] === 1? (<>
+                        <i class="bi bi-check"></i>
+                        <Form.Label>- {exam["fourthChoice"]}</Form.Label>
+                        </>):
+                            <><i class="bi bi-x"></i>
+                            <Form.Label>- {exam["fourthChoice"]}
+                            </Form.Label></>):(
+                            <InputGroup>
+                            <InputGroup.Radio
+                              value={1}
+                              name={`Choices${index}`}
+                              onChange={handleRadioChange}
+                              />
+                            <Form.Label>- {exam["fourthChoice"]} </Form.Label>
+                          </InputGroup>)
+                            }
                       </ListGroup.Item>
                     </ListGroup>
                   </Card.Body>

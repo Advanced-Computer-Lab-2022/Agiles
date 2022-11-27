@@ -52,14 +52,13 @@ const instructorSchema = new Schema(
       required: false,
       default: 1,
     },
-    reviews:[{
-      userId :{type:mongoose.SchemaTypes.ObjectId},
-      userRating :{ type: Number,
-      required: true,
-      default: 0},
-      userReview :{type : String , default:""}
- }
- ],
+    reviews: [
+      {
+        userId: { type: mongoose.SchemaTypes.ObjectId },
+        userRating: { type: Number, required: true, default: 0 , min : 0 , max :5 },
+        userReview: { type: String, default: "" },
+      },
+    ],
     mini_bio: {
       type: String,
       required: false,

@@ -15,7 +15,13 @@ const examSchema = new Schema(
       type: [Object],
       required: true,
     },
+    courseId: {
+      type: mongoose.Types.ObjectId,
+      ref: "Course",
+      required: true,
+    }
   },
+  
   { timestamps: true }
 );
 

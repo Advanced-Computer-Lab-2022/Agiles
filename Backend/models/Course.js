@@ -32,6 +32,7 @@ const courseSchema = new Schema(
          userId :{type:mongoose.SchemaTypes.ObjectId ,required:true},
          userRating :{ type: Number,
          required: true,
+         min : 0 , max :5,
          default: 0},
          userReview :{type : String , default:""}
     }

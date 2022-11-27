@@ -2,6 +2,8 @@ const IndividualTrainee = require("../models/IndividualTrainee");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const ExamResult = require("../models/ExamResult");
+const Exam = require("../models/Exam");
 function verifyItraineeJWT(authHeader) {
   //const authHeader = req.headers['authorization'];
   if (!authHeader) return true;
@@ -14,8 +16,9 @@ function verifyItraineeJWT(authHeader) {
     }
   );
 }
+
 const getTraineebyID = async (req, res) => {
-  const id = req.params["id"];
+  const id = req.query.id;
   const Itrainee = await IndividualTrainee.findById(id);
   return res.status(200).json(Itrainee);
 };
@@ -31,13 +34,53 @@ const InprogressCourses = async (req, res) => {
   }
 };
 
+const submitExam = async (req, res) => {
+  const answers = req.body;
+  let result = [];
+  let resultno = 0;
+  const { studentId, subtitleId,courseId } = req.query;
+  const exerciseAnswers = await Exam.findOne({subtitleId: subtitleId}, { questions: 1 });
+  exerciseAnswers.questions.forEach((question, index) => {
+    if (question.answer === answers[index]){
+      result.push(answers[index]);
+      resultno++;
+    }
+    else{
+      result.push(false);
+    }
+
+    ExamResult.create({
+      studentId: studentId,
+      subtitleId: subtitleId,
+      studentChoices: answers,
+      result: resultno,
+    });
+
+    try{
+      res.status(200).json({result: result});
+    }
+    catch(error){
+      res.status(400).json({error: error.message});
+    }
+    
+      
+  });
+  //create examresult
+  const examResult = new ExamResult({
+    studentId: studentId,
+    subtitleId: subtitleId,
+    courseId: courseId,
+  });
+  
+};
+
 const getExerciseGrade = async (req, res) => {
-  const studentId = req.params["id"];
-  const exerciseId = req.params["exerciseId"];
+  const studentId = req.query["id"];
+  const subtitleId = req.query["subtitleId"];
   const exercise = await ExamResult.findOne(
     {
       studentId: studentId,
-      exerciseId: exerciseId,
+      subtitleId: subtitleId,
     },
     { result: 1 }
   ).exec();
@@ -49,19 +92,19 @@ const getExerciseGrade = async (req, res) => {
 };
 
 const compareAnswers = async (req, res) => {
-  const studentId = req.params["id"];
-  const exerciseId = req.params["exerciseId"];
+  const studentId = req.query["id"];
+  const subtitleId = req.query["subtitleId"];
   const exerciseChoices = await ExamResult.findOne(
     {
       studentId: studentId,
-      exerciseId: exerciseId,
+      subtitleId: subtitleId,
     },
     { studentChoices: 1 }
   ).exec();
 
-  const exercise = await Exam.findById(exerciseId, { answers: 1 });
+  const exerciseAnswers = await Exam.findOne({subtitleId: subtitleId}, { questions: 1 });
   try {
-    res.status(200).json({ exerciseChoices, exercise });
+    res.status(200).json({ exerciseChoices, exerciseAnswers });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -117,4 +160,5 @@ module.exports = {
   compareAnswers,
   updateITraineeUsername,
   updateITraineePassword,
+  submitExam,
 };
