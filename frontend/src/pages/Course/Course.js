@@ -20,6 +20,7 @@ const Course = () => {
   const [isloading, setIsLoading] = useState(false);
   const [promotion, setPromotion] = useState(0);
   const [enddate, setEnddate] = useState("");
+  const [change, setChange] = useState(false);
   const location = useLocation();
   const courseId = location.state.id;
   const handleClose = () => setShow(false);
@@ -34,13 +35,14 @@ const Course = () => {
     e.preventDefault();
 
     try {
-      await fetch(`/course/addPromotion?id=6361b2deef7816eb1d9eb915`, {
+      await fetch(`/course/addPromotion?id=${courseId}`, {
         headers: {
           "Content-Type": "application/json",
         },
         method: "PATCH",
         body: JSON.stringify({ promo: promotion, enddate: enddate }),
       });
+      setChange(!change);
     } catch (e) {
       console.log(e);
     }
@@ -57,7 +59,7 @@ const Course = () => {
       setIsLoading(false);
     };
     fetchData();
-  }, []);
+  }, [change]);
 
   return (
     <>
@@ -187,7 +189,9 @@ const Course = () => {
                 {course.subtitles.map((subtitle, index) => (
                   <Accordion.Item eventKey={index}>
                     <Accordion.Header>
-                    <h5>Section {index + 1}: {subtitle.subtitle}</h5>
+                      <h5>
+                        Section {index + 1}: {subtitle.subtitle}
+                      </h5>
                     </Accordion.Header>
                     <Accordion.Body>
                       <YouTubeIcon /> {subtitle.time}
@@ -195,8 +199,14 @@ const Course = () => {
                         {subtitle.link?.map((link, index) => (
                           <ListGroup.Item>
                             {index + 1}.{" "}
-                            {link.allowed ?  ( <a href={link.linkUrl}> {link.linkDesc}</a>) :(<a className={styled["isDisabled"]}> {link.linkDesc}</a>)}
-                           
+                            {link.allowed ? (
+                              <a href={link.linkUrl}> {link.linkDesc}</a>
+                            ) : (
+                              <a className={styled["isDisabled"]}>
+                                {" "}
+                                {link.linkDesc}
+                              </a>
+                            )}
                           </ListGroup.Item>
                         ))}
                       </ListGroup>

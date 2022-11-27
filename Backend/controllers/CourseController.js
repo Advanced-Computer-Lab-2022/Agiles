@@ -77,8 +77,8 @@ const courseSearch = async (req, res) => {
 };
 
 const courseExam = async (req, res) => {
-  const courseId = req.query["courseId"];
-  questions = await Exam.find({ courseId: courseId });
+  const subtitleId = req.query["subtitleId"];
+  questions = await Exam.findOne({ subtitleId: subtitleId });
 
   if (!questions) {
     res.status(400).json({ error: "Empty" });
