@@ -9,7 +9,7 @@ const instructorSchema = new Schema(
     },
     secondename: {
       type: String,
-      required: true,
+      required: false,
     },
     username: {
       type: String,
