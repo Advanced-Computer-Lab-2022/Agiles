@@ -7,9 +7,8 @@ const RegCourseInst = (props) => {
     navigate(
       {
         pathname: "/myCourseInst",
-        search: `?course=${props.data.title}`,
-      },
-      { state: { course_id: props.data._id } }
+        search: `?view=preview&courseId=${props.data._id}`,
+      }
     );
   };
 

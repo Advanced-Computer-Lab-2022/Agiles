@@ -4,6 +4,7 @@ const {
   getExerciseGrade,
   createCorporate,
   compareAnswers,
+  getTraineebyID,
 } = require("../controllers/CorporateController");
 const {
   courseExam,
@@ -12,6 +13,7 @@ const {
 
 corporaterouter.get("/getCorporateExerciseGrade", getExerciseGrade);
 corporaterouter.get("/getCorporateAnswers", compareAnswers);
+corporaterouter.get("/getCorporateTraineebyId", getTraineebyID);
 corporaterouter.get("/courseExam", courseExam);
 corporaterouter.get("/courseFinalExam", courseFinalExam);
 

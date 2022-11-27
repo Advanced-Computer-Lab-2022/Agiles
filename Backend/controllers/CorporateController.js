@@ -84,4 +84,4 @@ const compareAnswers = async (req, res) => {
   }
 };
 
-module.exports = {createCorporate,getExerciseGrade,compareAnswers};
+module.exports = {createCorporate,getExerciseGrade,compareAnswers,getTraineebyID};

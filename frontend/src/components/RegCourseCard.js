@@ -3,7 +3,7 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 import Rating from "@mui/material/Rating";
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Cookies from "universal-cookie"
@@ -12,13 +12,14 @@ const RegCourseCard = (props) => {
   const userId = cookies.get("currentUser");
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
-  const [value, setValue] = useState(props.courserating);
+  const [value, setValue] = useState(0);
   const [review, setReview] = useState("");
+  const [oldReview , setOldReview] = useState([]);
   const handleClose = () => setShow(false);
   const handleShow = () => {
-    setValue(props.courserating);
+    setValue(oldReview.userRating);
+    setReview(oldReview.userReview);
     setShow(true);
-    setReview("");
   }
   const handleChangeRating = async (event) => {
     setValue(event.target.value);
@@ -35,6 +36,15 @@ const RegCourseCard = (props) => {
       { state: { course_id: props.data._id, progress: props.progress } }
     );
   };
+  useEffect(()=>{
+      props.data.reviews.map(review=>{
+        if(review.userId==userId){
+          setOldReview(review);
+        }
+       
+      })
+      console.log(review.length);  
+  },[])
   return (
     <div className={RegCourseCardStyles["regcard"]}>
       <Modal show={show} onHide={handleClose}>

@@ -137,7 +137,7 @@ const Home = () => {
       <div className="home">
         <section className="mainSection">
           <div>
-          <Button variant="light" onClick={handleClick}>Register now</Button>{' '}
+          <Button variant="light" onClick={handleClick}>Register now</Button>
           </div>
           <img src={a} alt="mainImage" className="mainImage"></img>
         </section>
