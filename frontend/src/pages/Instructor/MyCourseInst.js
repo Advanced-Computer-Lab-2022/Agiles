@@ -1,6 +1,8 @@
 import regStyles from "../Course/RegCourse.module.css"
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import LoadingScreen from "react-loading-screen";
+import spinner from "../../static/download.gif";
 import CoursePreInst from "./CoursePreInst";
 import CourseConInst from "./CourseConInst";
 import axios from "axios";
@@ -8,34 +10,45 @@ import SetExam from "./SetExam";
 import CoursePromo from "./CoursePromo";
 const MyCourseInst = () => {
   const location = useLocation();
-  const course_id = location.state.course_id;
+  const course_id = new URLSearchParams(location.search).get('courseId');;
+  const name = new URLSearchParams(location.search).get('view');
   const [course, setCourse] = useState([]);
-  const [choice, setChoice] = useState(0);
+  const [isloading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const handleClick = (e) => {
-    setChoice(e.target.value);
+    navigate(
+      {
+        pathname: "/myCourseInst",
+        search: `?view=${e.target.id}&courseId=${course_id}`,
+      },);
   };
   const fetchdata = async () => {
+    setIsLoading(true);
     try {
       const res = await axios.get(`/course/${course_id}`);
       setCourse(res.data);
     } catch (e) {
       console.log(e);
     }
+    setIsLoading(false);
   };
   useEffect(()=>{
     fetchdata();
-  },[]);
+  },[name]);
     const project = () => {
-      switch(choice) {
+      switch(name) {
 
-        case 0:   return<CoursePreInst course={course}/>;
-        case 1:   return <CourseConInst course={course}/>
-        case 2: return  <CoursePromo course_id = {course._id}/>;
-        case 3:  return <SetExam/>;
+        case 'preview':   return<CoursePreInst course={course}/>;
+        case 'content':   return <CourseConInst course={course}/>
+        case 'promo': return  <CoursePromo course_id = {course_id}/>;
+        case 'setexam':  return <SetExam/>;
         default:return <h1>error</h1>
       }
     }
   return (
+    <>{isloading ? (
+      <LoadingScreen loading={true} logoSrc={spinner} />
+    ) : (
     <div className={regStyles["mainreg"]}>
       <section className={regStyles["leftsection"]}>
         <div className={regStyles["leftsection-top"]}>
@@ -53,15 +66,15 @@ const MyCourseInst = () => {
         </div>
         <div className={regStyles["leftsection-bottom"]}>
           <ul>
-            <li value ={0} className={choice==0?regStyles["leftsection-liclicked"]:""} onClick={handleClick}>Course Preview</li>
-            <li value ={1} className={choice==1?regStyles["leftsection-liclicked"]:""} onClick={handleClick}>Course Content</li>
-            <li value ={2} className={choice==2?regStyles["leftsection-liclicked"]:""} onClick={handleClick}>define a promotion</li>
-            <li value ={3} className={choice==3?regStyles["leftsection-liclicked"]:""} onClick={handleClick}>Set Final Exam</li>
+            <li id ='preview' className={name=='preview'?regStyles["leftsection-liclicked"]:""} onClick={handleClick}>Course Preview</li>
+            <li id ='content' className={name=='content'?regStyles["leftsection-liclicked"]:""} onClick={handleClick}>Course Content</li>
+            <li id ='promo' className={name=='promo'?regStyles["leftsection-liclicked"]:""} onClick={handleClick}>define a promotion</li>
+            <li id ='setexam' className={name=='setexam'?regStyles["leftsection-liclicked"]:""} onClick={handleClick}>Set Final Exam</li>
           </ul>
         </div>
       </section>
       <section className={regStyles["rightsection"]}>{project()}</section>
-    </div>
+    </div>)}</>
   );
 };
 

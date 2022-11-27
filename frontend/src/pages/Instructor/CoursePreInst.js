@@ -1,56 +1,93 @@
 import style from "../../components/CoursePreview.module.css";
 import Rating from "@mui/material/Rating";
 import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
+import CircleIcon from "@mui/icons-material/Circle";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import InputGroup from 'react-bootstrap/InputGroup';
-import Modal from 'react-bootstrap/Modal';
+import InputGroup from "react-bootstrap/InputGroup";
+import Modal from "react-bootstrap/Modal";
 import UploadIcon from "@mui/icons-material/Upload";
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
-const UPLOAD_URL = "/instructor/updatePreview"
+import ReviewCard from "../../components/ReviewCard";
+const UPLOAD_URL = "/instructor/updatePreview";
 const CoursePreInst = (props) => {
   const course = props.course;
   const [coursePreviewUrl, setCoursePreviewUrl] = useState("");
   const [show, setShow] = useState(false);
+  const [showRatings, setShowRating] = useState(false);
+  const [reviews, setReviews] = useState([]);
   const handleClose = () => setShow(false);
+  const handleCloseRatings = () => setShowRating(false);
   const handleShow = () => setShow(true);
-  const handleSave =async ()=>{
-       let config = {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }
-        const data= {
-            courseId : course._id,
-            coursePreviewUrl: coursePreviewUrl,
-        }
-        await axios.patch(UPLOAD_URL, data, config).then((response) => {
-            console.log(response);
-            window.location.reload();
-          }, (error) => {
-            console.log(error);
-          });;
-  }
+  const handleShowRatings = () => {
+    setReviews(props.course.reviews);
+    setShowRating(true);
+  };
+  const handleSave = async () => {
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const data = {
+      courseId: course._id,
+      coursePreviewUrl: coursePreviewUrl,
+    };
+    await axios.patch(UPLOAD_URL, data, config).then(
+      (response) => {
+        console.log(response);
+        window.location.reload();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
   return (
     <div className={style["mainRight"]}>
+      <Modal show={showRatings} onHide={handleCloseRatings}>
+        <Modal.Header closeButton>
+          <Modal.Title>Course Reviews</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className={style["rating-box"]}>
+            {reviews
+              .filter((review, idx) => idx < 5)
+              .map((review) => {
+                return (
+                  <ReviewCard
+                    userId={review.userId}
+                    rating={review.userRating}
+                    review={review.userReview}
+                  ></ReviewCard>
+                );
+              })}
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseRatings}>
+            close
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <label className={style["mainlabel"]}>Course Preview</label>
       <h1>Welcome to the {course.title} Course</h1>
       <div className={style["video"]}>
         {course.coursePreviewUrl != "" ? (
           <>
-          <iframe
-            width="1000"
-            height="500"
-            src={course.coursePreviewUrl}
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-          <Button variant="dark"  onClick={handleShow}>
-          <EditIcon/> Edit Course Preview Video
+            <iframe
+              width="1000"
+              height="500"
+              src={course.coursePreviewUrl}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+            <Button variant="dark" onClick={handleShow}>
+              <EditIcon /> Edit Course Preview Video
             </Button>
             <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>
@@ -59,7 +96,7 @@ const CoursePreInst = (props) => {
               <Modal.Body>
                 <InputGroup className="mb-2">
                   <InputGroup.Text id="basic-addon3">
-                   youtube Url
+                    youtube Url
                   </InputGroup.Text>
                   <Form.Control
                     id="basic-url"
@@ -77,13 +114,13 @@ const CoursePreInst = (props) => {
                 </Button>
               </Modal.Footer>
             </Modal>
-            </>
+          </>
         ) : (
           <div className={style["notFound"]}>
             <h6 style={{ textAlign: "center" }}>
               <DoNotDisturbIcon /> No Preview Video for this Course
             </h6>
-            <Button variant="dark"  onClick={handleShow}>
+            <Button variant="dark" onClick={handleShow}>
               <UploadIcon /> Upload Video from Youtube
             </Button>
             <Modal show={show} onHide={handleClose}>
@@ -93,7 +130,7 @@ const CoursePreInst = (props) => {
               <Modal.Body>
                 <InputGroup className="mb-2">
                   <InputGroup.Text id="basic-addon3">
-                   youtube Url
+                    youtube Url
                   </InputGroup.Text>
                   <Form.Control
                     id="basic-url"
@@ -117,24 +154,35 @@ const CoursePreInst = (props) => {
       <hr className={style["mainRight-hr"]}></hr>
       <h3>About this course</h3>
       <p>{course.description}</p>
-      <Button variant="dark"  >
-      <EditIcon/> Edit Course Description
-            </Button>
+      <Button variant="dark">
+        <EditIcon /> Edit Course Description
+      </Button>
       <hr className={style["mainRight-hr"]}></hr>
       <h3>Subject</h3>
       <p>{course.subject}</p>
-      <Button variant="dark"  >
-      <EditIcon/> Edit Subject
-            </Button>
+      <Button variant="dark">
+        <EditIcon /> Edit Subject
+      </Button>
       <hr className={style["mainRight-hr"]}></hr>
       <div className={style["mainRight-rating"]}>
-      <Rating
-        name="rating"
-        readOnly
-        value={!course.rating?0:course.rating}
-        className={style["rating"]}
-      />
-      <label>({course.ratingCount} ratings)</label>
+        <h3>
+          <Rating
+            name="rating"
+            readOnly
+            value={!course.rating ? 0 : course.rating}
+            className={style["rating"]}
+          />{" "}
+          {course.rating} course rating{" "}
+          <CircleIcon style={{ fontSize: "0.5rem" }} /> ({course.ratingCount}{" "}
+          ratings)
+        </h3>
+        <Button
+          variant="light"
+          onClick={handleShowRatings}
+          style={{ border: "1px solid black", width: "13%" }}
+        >
+          show all reviews
+        </Button>
       </div>
     </div>
   );
