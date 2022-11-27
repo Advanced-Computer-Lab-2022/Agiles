@@ -158,7 +158,7 @@ const SetExam = () => {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               {index ? (
                 <Button
-                  variant="primary"
+                  variant="danger"
                   type="button"
                   className="button remove"
                   onClick={() => removeFormFields(index)}
