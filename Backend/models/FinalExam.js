@@ -1,12 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const examSchema = new Schema(
+const finalExamSchema = new Schema(
   {
-    subtitleId: {
-      type: mongoose.Types.ObjectId,
-      required: true,
-    },
     courseId: {
       type: mongoose.Types.ObjectId,
       required: true,
@@ -19,5 +15,5 @@ const examSchema = new Schema(
   { timestamps: true }
 );
 
-const Exam = mongoose.model("Exam", examSchema);
-module.exports = Exam;
+const FinalExam = mongoose.model("FinalExam", finalExamSchema);
+module.exports = FinalExam;

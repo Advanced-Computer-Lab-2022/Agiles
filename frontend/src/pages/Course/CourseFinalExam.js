@@ -10,11 +10,11 @@ import axios from "axios";
 import InputGroup from "react-bootstrap/InputGroup";
 import style from "./CourseExam.module.css";
 
-const CourseExam = (props) => {
+const CourseFinalExam = (props) => {
   const location = useLocation();
   // const query = new URLSearchParams(location.search);
-  const query = "63810085e606ba473f59e1ba";
-  const [CourseExam, setCourseExam] = useState([]);
+  const query = props.courseId;
+  const [CourseFinalExam, setCourseFinalExam] = useState([]);
   const [isloading, setIsLoading] = useState(false);
   const [exam, setExam] = useState(false);
   const [answers, setAnswers] = useState([]);
@@ -29,13 +29,15 @@ const CourseExam = (props) => {
       setIsLoading(true);
       let res = {};
       if (!corporate) {
-        res = await fetch(`/individualtrainee/courseExam?subtitleId=${query}`);
+        res = await fetch(
+          `/individualtrainee/courseFinalExam?courseId=${query}`
+        );
       } else {
-        res = await fetch(`/corporate/courseExam?subtitleId=${query}`);
+        res = await fetch(`/corporate/courseFinalExam?courseId=${query}`);
       }
       let jsondata = await res.json();
       if (res.ok) {
-        setCourseExam(jsondata["questions"]);
+        setCourseFinalExam(jsondata["questions"]);
       }
       setIsLoading(false);
     };
@@ -48,13 +50,13 @@ const CourseExam = (props) => {
   };
   return (
     <div>
-      <h1>Exam</h1>
+      <h1>Final Exam</h1>
       <div class="d-grid gap-3">
         <Form>
-          {CourseExam.map((exam, index) => {
+          {CourseFinalExam.map((exam, index) => {
             return (
               <div class="p-2 bg-light border">
-                <Card border="primary" style={{ width: "135rem" }}>
+                <Card border="primary" style={{ width: "100rem" }}>
                   <Card.Body>
                     <Card.Title>
                       {" "}
@@ -120,4 +122,4 @@ const CourseExam = (props) => {
     </div>
   );
 };
-export default CourseExam;
+export default CourseFinalExam;
