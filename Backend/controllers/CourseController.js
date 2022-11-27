@@ -1,5 +1,6 @@
 const Course = require("../models/Course");
 const Exam = require("../models/Exam");
+const Link = require("../models/Link");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const filterCourses = async (req, res) => {
@@ -164,11 +165,6 @@ const oneCoursesDetails = async (req, res) => {
   }
 };
 
-//module.exports = coursesDetails;
-
-//view the price of each course
-//Should i use title also or not?
-
 const coursePrice = async (req, res) => {
   try {
     const coursePrice = await Course.find(
@@ -182,10 +178,9 @@ const coursePrice = async (req, res) => {
 };
 
 const getCourseById = async (req, res) => {
-  console.log(req.params);
   const id = req.params["id"];
   try {
-    const course = await Course.findById(id).exec();
+    const course = await Course.findById(id).populate('subtitles.link').exec();
     res.status(200).send(course);
   } catch (err) {
     res.status(500).json({ mssg: "no such Id" });
@@ -198,45 +193,27 @@ const addCoursePromotion = async (req, res) => {
   const enddate = req.body.enddate;
   try {
     await Course.findByIdAndUpdate(
-      id, {
+      id,
+      {
         discount: disc,
         discount_enddate: enddate,
-      },{new :true});
-      res.status(200).json("updated");
+      },
+      { new: true }
+    );
+    res.status(200).json("updated");
   } catch (err) {
     res.status(500).json({ mssg: "no such Id" });
   }
 };
-// const updateRating = async (req, res) => {
-//   const {rating,updateid,userid,state} = req.body;
-//   // state T> update course >F update instructor
-//   if (!rating || !updateid || !userid) {
-//     return res.status(400).json({ error: "bad request" });
-//   }
-//   if (state) {
-//     try {
-//       const data = await Rating.findOneAndUpdate(
-//         { userid: userid, courseid: updateid },
-//         { courserating: rating },
-//         { new: true }
-//       );
-//       return res.status(200).json(data);
-//     } catch (err) {
-//       return res.status(402).json({ mssg: "no such Id" });
-//     }
-//   } else {
-//     try {
-//       const data = await Rating.findOneAndUpdate(
-//         { userid: userid, instid: updateid },
-//         { instrating: rating },
-//         { new: true }
-//       );
-//       return res.status(200).json(data);
-//     } catch (err) {
-//       return res.status(500).json({ mssg: "no such Id" });
-//     }
-//   }
-// };
+const getLink = async (req, res) => {
+  const id = req.query.linkId;
+  try {
+    const data = await Link.findById(id);
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json({ mssg: "no such Id" });
+  }
+};
 
 module.exports = {
   addCoursePromotion,
@@ -249,4 +226,5 @@ module.exports = {
   getCourseById,
   setExam,
   courseExam,
+  getLink,
 };

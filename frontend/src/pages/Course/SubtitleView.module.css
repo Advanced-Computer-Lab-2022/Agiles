@@ -1,0 +1,36 @@
+.main-section{
+    min-height: 150vh;
+    display: grid;
+    grid-template-columns: 75% 25%;
+}
+.main-section-left-top{
+    background-color:#1c1d1f;
+    display: flex;
+    justify-content: center;
+}
+.main-section-left-bottom{
+    margin-left: 4rem;
+}
+.main-section-left-bottom h3{
+    font-size: 1.3rem;
+    font-weight: bold;
+    font-family: Tahoma, sans-serif;
+    color: rgb(33, 32, 32);
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+.main-section-left-bottom hr{
+    height: 3px;
+    width: 80%;
+    background-color: #000;
+    margin-top: 2rem;
+}
+.main-section-right{
+    border: 0.5px solid black ;
+    border-radius: 0.5rem;
+}
+.subtitleView{
+    background-color: white;
+    color: blue;
+    border: none;
+}

@@ -11,7 +11,7 @@ const courseSchema = new Schema(
       {
         subtitle : {type : String , default:""},
         time : {type : String , default:"h::mm:ss"},
-        link : [{linkUrl :{type :String ,default:""},linkDesc :{type :String ,default:""},allowed :{type :Boolean ,default:false}}],
+        link : [{type: mongoose.Schema.Types.ObjectId, ref: "Link"}],
       }
     ],
     subject: {

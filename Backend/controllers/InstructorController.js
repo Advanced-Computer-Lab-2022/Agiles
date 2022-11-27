@@ -1,7 +1,7 @@
 const Instructor = require("../models/Instructor");
 const bcrypt = require("bcrypt");
 const Course = require("../models/Course");
-
+const Link = require("../models/Link");
 function verifyInstructorJWT(authHeader) {
   if (!authHeader) return true;
   const token = authHeader.split(" ")[1];
@@ -169,36 +169,37 @@ const uploadSubLink = async (req, res) => {
   if (!courseId || !subId) {
     return res.status(400).json({ msg: "missing data" });
   }
-  const newlink = {
-    linkDesc: linkDesc,
+  const newlink = new Link({
     linkUrl: linkUrl,
+    linkDesc: linkDesc,
     allowed: allowed,
-  };
+  });
+  console.log(newlink);
+
   try {
-    const data = await Course.updateOne(
+    const data = await Link.create(newlink);
+    const dataFinal = await Course.updateOne(
       { _id: courseId, "subtitles._id": subId },
-      { $push: { "subtitles.$.link": newlink } },
+      { $push: { "subtitles.$.link": data._id } },
       { new: true }
     );
-    res.status(200).json(data);
+    res.status(200).json(dataFinal);
   } catch (err) {
     res.status(500).json({ msg: "can't update links" });
   }
 };
-const deleteSubLink = async (req, res) => {
-  const { courseId, subId, linkId } = req.body;
-  if (!courseId || !subId || !linkId) {
-    return res.status(400).json({ msg: "missing data" });
-  }
+const deletLink = async (req, res) => {
+  const {linkId, courseId, subId} = req.body;
   try {
-    const data = await Course.findOneAndUpdate(
-      { _id: courseId, "subtitles._id": subId },
+    const data = await Link.findByIdAndRemove(linkId);
+    const dataFinal = await Course.deleteOne(
+      { _id: courseId, "subtitles._id": subId,"subtitles.$ink":linkId },
       { $pull: { "subtitles.$.link": linkId } },
       { new: true }
     );
     res.status(200).json(data);
   } catch (err) {
-    res.status(500).json({ msg: "can't delet link" });
+    res.status(500).json({ mssg: "no such Id" });
   }
 };
 const uploadPreLink = async (req, res) => {
@@ -253,5 +254,5 @@ module.exports = {
   updateInstructorPassword,
   uploadSubLink,
   uploadPreLink,
-  deleteSubLink,
+  deletLink,
 };
