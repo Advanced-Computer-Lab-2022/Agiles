@@ -77,8 +77,8 @@ const courseSearch = async (req, res) => {
 };
 
 const courseExam = async (req, res) => {
-  const courseId = req.query["courseId"];
-  questions = await Exam.find({ courseId: courseId });
+  const subtitleId = req.query["subtitleId"];
+  questions = await Exam.findOne({ subtitleId: subtitleId });
 
   if (!questions) {
     res.status(400).json({ error: "Empty" });
@@ -126,13 +126,8 @@ const createCourse = async (req, res) => {
 
 //create multiple choices exam
 const setExam = async (req, res) => {
-  const {
-    courseId,
-    subtitleId,
-    questions,
-  } = req.body;
+  const { subtitleId, questions } = req.body;
   const newExam = new Exam({
-    courseId: courseId,
     subtitleId,
     questions: questions,
   });
@@ -149,8 +144,7 @@ const setExam = async (req, res) => {
 
 const coursesDetails = async (req, res) => {
   try {
-    const courseAttr = await Course.find(
-      {});
+    const courseAttr = await Course.find({}).populate();
     res.status(200).send(courseAttr);
   } catch (err) {
     res.status(500).json({ mssg: "can't find courses" });

@@ -38,3 +38,8 @@
     height: 1rem;
     width: 60rem;
 }
+.notFound{
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}

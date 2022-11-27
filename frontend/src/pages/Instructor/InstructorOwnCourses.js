@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { BsSearch } from "react-icons/bs";
 import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif";
+import InprogressStyles from "../../components/Inprogress.module.css";
 import InstructorOwnCoursesStyles from "./InstructorOwnCourses.module.css";
 import RegCourseCardStyles from "../../components/RegCourseCard.module.css";
 import RegCourseInst from "../../components/RegCourseInst";
@@ -20,7 +21,6 @@ function InstructorOwnCourses() {
   const [upperBound, setUpperBound] = useState("0");
   const [lowerBound, setLowerBound] = useState("0");
   const [free, setFree] = useState(false);
-
   const handleSubjectChange = (event) => {
     setSubject(event.target.value);
   };
@@ -107,8 +107,8 @@ function InstructorOwnCourses() {
     {isloading ? (
       <LoadingScreen loading={true} logoSrc={spinner} />
     ) : (
-    <div className={InstructorOwnCoursesStyles["Wrapper"]}>
-      <h2 className={InstructorOwnCoursesStyles["Wrapper_h2"]}>My Courses</h2>
+    <div className={InprogressStyles["Wrapper"]}>
+      <h2 className={InprogressStyles["Wrapper_h2"]}>My Courses</h2>
       <div className={InstructorOwnCoursesStyles["Wrapper-top"]}>
         <div>
           <label>Filter by</label>

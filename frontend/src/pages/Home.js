@@ -5,6 +5,7 @@ import React from "react";
 import Cookies from "universal-cookie";
 import a from "../static/logo.png";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Inprogress from "../components/Inprogress";
 import Explore from "../components/Explore";
 import InstructorOwnCourses from "./Instructor/InstructorOwnCourses";
@@ -14,9 +15,13 @@ import TraineeProfile from "./Trainee/TraineeProfile";
 const cookies = new Cookies();
 const Home = () => {
   const logged = cookies.get("logged");
+  const navigate = useNavigate();
   const status = cookies.get("status");
   const [choice, setChoice] = useState(0);
-  const [chosen, setChosen] = useState(0);
+  const [chosen, setChosen] = useState(3);
+  const handleClick = ()=>{
+    navigate("/signUp");
+  }
   const project = () => {
     switch (chosen) {
       case 0:
@@ -25,6 +30,8 @@ const Home = () => {
         return <CreateCourse />;
       case 2:
         return <InstructorProfile />;
+        case 3:
+        return <Explore />;
       default:
         return <h1>error</h1>;
     }
@@ -94,6 +101,12 @@ const Home = () => {
           <nav className={NavbarStyles["navbar"]}>
             <div>
             <button
+                onClick={() => setChosen(3)}
+                className={chosen == 3 ? "Inprogress" : "notPressed"}
+              >
+                Explore
+              </button>
+            <button
                 onClick={() => setChosen(0)}
                 className={chosen == 0 ? "Inprogress" : "notPressed"}
               >
@@ -111,6 +124,7 @@ const Home = () => {
               >
                 My Profile
               </button>
+             
             </div>
           </nav>
           <div className="middle">{project()}</div>
@@ -123,7 +137,7 @@ const Home = () => {
       <div className="home">
         <section className="mainSection">
           <div>
-          <Button href="/signUp" size="lg">Register now</Button> 
+          <Button variant="light" onClick={handleClick}>Register now</Button>{' '}
           </div>
           <img src={a} alt="mainImage" className="mainImage"></img>
         </section>

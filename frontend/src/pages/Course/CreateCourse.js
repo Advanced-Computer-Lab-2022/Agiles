@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import CreateCourseStyles from "./CreateCourse.module.css";
+import InprogressStyles from "../../components/Inprogress.module.css";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -16,7 +16,7 @@ const CreateCourse = () => {
   const [price, setPrice] = useState("");
   const [shortSummary, setShortSummary] = useState("");
   const [free, setFree] = useState(false);
-  const [subtitles, setSubtitles] = useState([{ subtitle: "", time: "" ,link:"" , linkDesc:""}]);
+  const [subtitles, setSubtitles] = useState([{ subtitle: "", time: ""}]);
   const [language, setLanguage] = useState("");
   const handleSubmit = async (event) => {
     let sumOfHours = 0;
@@ -28,7 +28,7 @@ const CreateCourse = () => {
       instructor : instructorId,
       title: title,
       imgUrl : imgUrl,
-      coursePreview : preview,
+      coursePreviewUrl : preview,
       subtitles: subtitles,
       price: price,
       free: free,
@@ -59,7 +59,7 @@ const CreateCourse = () => {
   };
 
   let addFormFields = () => {
-    setSubtitles([...subtitles, { subtitle: "", time: "",link:"",linkDesc:"" }]);
+    setSubtitles([...subtitles, { subtitle: "", time: ""}]);
   };
 
   let removeFormFields = (i) => {
@@ -68,8 +68,8 @@ const CreateCourse = () => {
     setSubtitles(newFormValues);
   };
   return (
-    <section className={CreateCourseStyles["Wrapper"]}>
-    <h2 className={CreateCourseStyles["Wrapper_h2"]}>Create Course</h2>
+    <section className={InprogressStyles["Wrapper"]}>
+    <h2 className={InprogressStyles["Wrapper_h2"]}>Create Course</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group mt-3">
           <label className="Auth-label">
@@ -84,7 +84,7 @@ const CreateCourse = () => {
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
-        <div className={CreateCourseStyles["row"]}>
+        <div >
           <label className="Auth-label">Course Image</label>
           <input
             type="text"
@@ -96,7 +96,7 @@ const CreateCourse = () => {
         </div>
         <div className="form-group mt-3">
           <label className="Auth-label" >
-            Course preview Link <span className="required">*</span>
+            Course preview Link 
           </label>
           <input
             required
@@ -109,7 +109,7 @@ const CreateCourse = () => {
         </div>
         <div>
           {subtitles.map((element, index) => (
-            <div className={CreateCourseStyles["row"]} key={index}>
+            <div  key={index}>
               <label className="Auth-label">Subtitle</label>
               <input
                 required
@@ -128,26 +128,6 @@ const CreateCourse = () => {
                 placeholder="Subtitle duration .."
                 className="form-control mt-1"
                 value={element.time || ""}
-                onChange={(e) => handleChange(index, e)}
-              />
-               <label>subtitle's youtube Link</label>
-              <input
-                required
-                type="text"
-                name="link"
-                placeholder="Subtitle video link .."
-                className="form-control mt-1"
-                value={element.link || ""}
-                onChange={(e) => handleChange(index, e)}
-              />
-               <label>subtitle's description</label>
-              <input
-                required
-                type="text"
-                name="linkDesc"
-                placeholder="Subtitle video link short desc .."
-                className="form-control mt-1"
-                value={element.linkDesc || ""}
                 onChange={(e) => handleChange(index, e)}
               />
               {index ? (
@@ -171,7 +151,7 @@ const CreateCourse = () => {
             </button>
           </span>
         </div>
-        <div className={CreateCourseStyles["row"]}>
+        <div >
           <label className="Auth-label">
             price in $ <span className="required">*</span>
           </label>
@@ -196,7 +176,7 @@ const CreateCourse = () => {
           free
         </div>
 
-        <div className={CreateCourseStyles["row"]}>
+        <div >
           <label className="Auth-label">
             ShortSummary <span className="required">*</span>
           </label>
@@ -209,7 +189,7 @@ const CreateCourse = () => {
             onChange={(e) => setShortSummary(e.target.value)}
           />
         </div>
-        <div className={CreateCourseStyles["row"]}>
+        <div >
           <label className="Auth-label">Subject</label>
           <input
             type="text"
@@ -219,7 +199,7 @@ const CreateCourse = () => {
             onChange={(e) => setSubject(e.target.value)}
           />
         </div>
-        <div className={CreateCourseStyles["row"]}>
+        <div >
           <label className="Auth-label">language</label>
 
           <select

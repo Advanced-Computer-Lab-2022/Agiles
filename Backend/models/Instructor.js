@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 
 const instructorSchema = new Schema(
   {
-    firstname:{
+    firstname: {
       type: String,
       required: true,
     },
-    secondename:{
+    secondename: {
       type: String,
       required: true,
     },
@@ -24,9 +24,9 @@ const instructorSchema = new Schema(
       type: String,
       required: true,
     },
-    gender:{
-      type:String,
-      required :false
+    gender: {
+      type: String,
+      required: false,
     },
     country: {
       type: Number,
@@ -35,12 +35,12 @@ const instructorSchema = new Schema(
     courseList: {
       type: Array,
       required: false,
-      default:[]
+      default: [],
     },
     money: {
       type: Number,
       required: false,
-      default:0
+      default: 0,
     },
     rating: {
       type: Number,
@@ -49,7 +49,7 @@ const instructorSchema = new Schema(
     mini_bio: {
       type: String,
       required: false,
-      default:''
+      default: "",
     },
   },
   { timestamps: true }

@@ -13,15 +13,11 @@
 .icon{
     font-size: small;
 }
-
-.youtubeIcon{
-    font-size: 2.5rem;
-    color: red;
+.accordation-body{
+    display: grid;
+    gap: 0.5rem;
+    align-items: center;
 }
-
-.link
-{
-    color: rgb(97, 94, 94);
-    font-size: 1.5rem;
-    margin-top: 2rem;
+.accordation-body button {
+    width: 20%;
 }
