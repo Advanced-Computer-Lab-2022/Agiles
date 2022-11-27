@@ -24,7 +24,6 @@ const Course = () => {
   const courseId = location.state.id;
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  console.log(course);
   const handlePromo = (e) => {
     setPromotion(e.target.value);
   };

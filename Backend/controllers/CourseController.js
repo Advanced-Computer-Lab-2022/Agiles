@@ -193,27 +193,16 @@ const getCourseById = async (req, res) => {
 };
 
 const addCoursePromotion = async (req, res) => {
-  const id = req.query["id"];
+  const id = req.body.id;
   const disc = req.body.promo;
   const enddate = req.body.enddate;
-  console.log(id);
-
   try {
     await Course.findByIdAndUpdate(
-      id,
-      {
+      id, {
         discount: disc,
         discount_enddate: enddate,
-      },
-      function (err, docs) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("Updated Course : ", docs);
-        }
-        res.status(200);
-      }
-    );
+      },{new :true});
+      res.status(200).json("updated");
   } catch (err) {
     res.status(500).json({ mssg: "no such Id" });
   }
