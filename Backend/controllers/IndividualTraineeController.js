@@ -35,42 +35,51 @@ const InprogressCourses = async (req, res) => {
 };
 
 const submitExam = async (req, res) => {
-  const answers = req.body;
+  const answers = req.body.answers;
   let result = [];
   let resultno = 0;
   const { studentId, subtitleId,courseId } = req.query;
   const exerciseAnswers = await Exam.findOne({subtitleId: subtitleId}, { questions: 1 });
   exerciseAnswers.questions.forEach((question, index) => {
     if (question.answer === answers[index]){
-      result.push(answers[index]);
+      result.push(question.answer);
       resultno++;
     }
     else{
-      result.push(false);
-    }
-
-    ExamResult.create({
-      studentId: studentId,
-      subtitleId: subtitleId,
-      studentChoices: answers,
-      result: resultno,
-    });
-
-    try{
-      res.status(200).json({result: result});
-    }
-    catch(error){
-      res.status(400).json({error: error.message});
+      result.push(0);
     }
     
+    
+    
+  });
+  const test =  await ExamResult.findOne({ studentId: studentId, subtitleId: subtitleId,courseId:courseId });
+  if(test){
+    ExamResult.findOneAndUpdate({studentId:studentId,subtitleId:subtitleId,courseId:courseId},{$set:{studentChoices:answers,result:resultno}},{new:true} ,function(err,docs){
+      if(err)
+        console.log(err);
+      else
+      console.log("Updated User : ", docs);
+      });
       
-  });
-  //create examresult
-  const examResult = new ExamResult({
-    studentId: studentId,
-    subtitleId: subtitleId,
-    courseId: courseId,
-  });
+  }
+
+
+  else{
+      ExamResult.create({
+        studentId: studentId,
+        subtitleId: subtitleId,
+        studentChoices: answers,
+        courseId:courseId,
+        result: resultno,
+      });
+  }
+  
+  try{
+    res.status(200).json({result: result});
+  }
+  catch(error){
+    res.status(400).json({error: error.message});
+  } 
   
 };
 
