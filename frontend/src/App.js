@@ -11,13 +11,18 @@ import AddAdmin from "./pages/Admin/AddAdmin";
 import AddInstructor from "./pages/Admin/AddInstructor";
 import AddCorporate from "./pages/Admin/AddCorporate";
 import CreateCourse from "./pages/Course/CreateCourse";
+import SetExam from "./pages/Instructor/SetExam";
 import SearchResults from "./pages/Course/SearchResults";
 import Course from "./pages/Course/Course";
 import FilterResults from "./pages/Course/FilterResults";
 import Regcourse from "./pages/Course/RegCourse";
 import InstructorTerms from "./pages/Instructor/InstructorTerms";
+
 import MyCourseInst from "./pages/Instructor/MyCourseInst";
 import CourseExam from "./pages/Course/CourseExam";
+
+import InstructorRating from "./pages/Course/InstructorRating";
+
 import { useState } from "react";
 function App() {
   const [showNav, setShowNav] = useState(true);
@@ -56,6 +61,11 @@ function App() {
             <Route path="/courses/filter" element={<FilterResults />} />
             <Route path="/instructor/contract" element={<InstructorTerms />} />
             <Route path="/CourseExam" element={<CourseExam />} />
+            <Route path="/setExam" element={<SetExam />} />
+            <Route path="/rateInstructor" element={<InstructorRating />} />
+            <Route path="/search" element={<SearchResults />} />
+            <Route path="/courses/filter" element={<FilterResults />} />
+            <Route path="/instructor/contract" element={<InstructorTerms />} />
           </Routes>
         </div>
       </BrowserRouter>
