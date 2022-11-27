@@ -6,8 +6,7 @@ import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
-const SetExam = () => {
-  const [subtitleId, setSubtitleId] = useState("");
+const SetFinalExam = () => {
   const [courseId, setCourseId] = useState("");
   const [questions, setQuestions] = useState([
     {
@@ -22,7 +21,6 @@ const SetExam = () => {
 
   const handleSubmit = async (event) => {
     const exam = {
-      subtitleId: subtitleId,
       courseId: courseId,
       questions: questions,
     };
@@ -36,7 +34,7 @@ const SetExam = () => {
     };
 
     try {
-      const res = await axios.post("/instructor/setExam", exam, config);
+      const res = await axios.post("/instructor/setFinalExam", exam, config);
     } catch (e) {
       console.log(e);
     }
@@ -70,17 +68,7 @@ const SetExam = () => {
   return (
     <div className={styled["course"]}>
       <Form onSubmit={handleSubmit}>
-        <h1>Add an Exam for This Subtitle</h1>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Form.Label>Subtitle ID</Form.Label>
-          <Form.Control
-            required
-            placeholder="write the subtitle ID"
-            type="text"
-            name="subtitleId"
-            onChange={(e) => setSubtitleId(e.target.value)}
-          />
-        </Form.Group>
+        <h1>Add Final Exam</h1>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>Course ID</Form.Label>
           <Form.Control
@@ -202,4 +190,4 @@ const SetExam = () => {
     </div>
   );
 };
-export default SetExam;
+export default SetFinalExam;

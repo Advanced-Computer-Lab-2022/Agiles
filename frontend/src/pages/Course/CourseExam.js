@@ -26,53 +26,57 @@ const CourseExam = (props) => {
   if (props.corporate) {
     corporate = true;
   }
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const res = await fetch(
-        `/individualtrainee/courseExam?subtitleId=${query}`
-        );
-        let jsondata = await res.json();
-        if (res.ok) {
-          setCourseExam(jsondata["questions"]);
-        }
-        setIsLoading(false);
-      };
-      fetchData();
-    }, []);
-    
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      console.log("submitted");
       let res = {};
-      if(!corporate){
-        res = await axios.post(`/individualtrainee/submitExam?subtitleId=${subtitleId}&studentId=${studentId}&courseId=${courseId}`, {
+      if (!corporate) {
+        res = await fetch(`/individualtrainee/courseExam?subtitleId=${query}`);
+      } else {
+        res = await fetch(`/corporate/courseExam?subtitleId=${query}`);
+      }
+      let jsondata = await res.json();
+      if (res.ok) {
+        setCourseExam(jsondata["questions"]);
+      }
+      setIsLoading(false);
+    };
+    fetchData();
+  }, []);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("submitted");
+    let res = {};
+    if(!corporate){
+      res = await axios.post(`/individualtrainee/submitExam?subtitleId=${subtitleId}&studentId=${studentId}&courseId=${courseId}`, {
+      answers: answers,
+    });
+    }
+    else{
+        res = await axios.post(`/corporate/submitExam?subtitleId=${subtitleId}&studentId=${studentId}&courseId=${courseId}`, {
         answers: answers,
       });
-      }
-      else{
-          res = await axios.post(`/corporate/submitExam?subtitleId=${subtitleId}&studentId=${studentId}&courseId=${courseId}`, {
-          answers: answers,
-        });
-      }
-      result = res.result;
-      setExam(true);
-    };
-  
-    const handleRadioChange = (e) => {
-      const indexname = e.target.name;
-      //get last char from name
-      let index = indexname.charAt(indexname.length - 1);
-      if(answers[index] !== null && e.target.checked){
-        answers[index] = e.target.value;
-      }
-      else if(e.target.checked){
-        setAnswers(oldArray => [...oldArray, e.target.value]);
-      }
-      console.log(answers);
     }
-    return (
-      <div>
+    result = res.result;
+    setExam(true);
+  };
+
+
+  const handleRadioChange = (e) => {
+    const indexname = e.target.name;
+    //get last char from name
+    let index = indexname.charAt(indexname.length - 1);
+    if(answers[index] !== null && e.target.checked){
+      answers[index] = e.target.value;
+    }
+    else if(e.target.checked){
+      setAnswers(oldArray => [...oldArray, e.target.value]);
+    }
+    console.log(answers);
+  }
+  return (
+    <div>
       <h1>Exam</h1>
       <div class="d-grid gap-3">
         <Form>
