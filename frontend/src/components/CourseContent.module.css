@@ -18,8 +18,10 @@
     gap: 0.5rem;
     align-items: center;
 }
-.accordation-body button {
-    width: 20%;
+.subtitleView{
+    background-color: white;
+    color: blue;
+    border: none;
 }
 .videoDesc{
     width: 80%;

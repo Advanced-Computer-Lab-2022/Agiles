@@ -127,13 +127,15 @@ const CoursePreInst = (props) => {
       <EditIcon/> Edit Subject
             </Button>
       <hr className={style["mainRight-hr"]}></hr>
-      <h3>Course Rating</h3>
+      <div className={style["mainRight-rating"]}>
       <Rating
         name="rating"
         readOnly
         value={!course.rating?0:course.rating}
         className={style["rating"]}
       />
+      <label>({course.ratingCount} ratings)</label>
+      </div>
     </div>
   );
 };

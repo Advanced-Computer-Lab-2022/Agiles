@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useState ,useEffect } from "react";
 import CoursePreview from "../../components/CoursePreview";
 import CoursContent from "../../components/CourseContent";
-import InstructorRating from "./InstructorRating";
+import InstructorRating from "./InstructorRating.js";
 import axios from "axios";
 import CourseExam from "./CourseExam";
 const RegCourse = () => {

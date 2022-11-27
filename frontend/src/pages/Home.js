@@ -73,7 +73,7 @@ const Home = () => {
                 onClick={() => setChoice(1)}
                 className={choice == 1 ? "Inprogress" : "notPressed"}
               >
-                Registered Courses
+                My Learning
               </button>
               <button
                 onClick={() => setChoice(2)}
@@ -110,7 +110,7 @@ const Home = () => {
                 onClick={() => setChosen(0)}
                 className={chosen == 0 ? "Inprogress" : "notPressed"}
               >
-                MyCourses
+                My Courses
               </button>
               <button
                 onClick={() => setChosen(1)}

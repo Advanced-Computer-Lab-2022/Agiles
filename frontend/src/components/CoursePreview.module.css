@@ -43,3 +43,13 @@
     align-items: center;
     justify-content: center;
 }
+.mainRight-rating{
+    display: flex;
+    align-items: center;
+}
+.mainRight-rating label{
+    margin-left: 0.5rem;
+    margin-bottom: 1.7rem;
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+}

@@ -17,13 +17,11 @@ import Course from "./pages/Course/Course";
 import FilterResults from "./pages/Course/FilterResults";
 import Regcourse from "./pages/Course/RegCourse";
 import InstructorTerms from "./pages/Instructor/InstructorTerms";
-
 import MyCourseInst from "./pages/Instructor/MyCourseInst";
 import CourseExam from "./pages/Course/CourseExam";
-
-import InstructorRating from "./pages/Course/InstructorRating";
-
+import InstructorRating from "./pages/Course/InstructorRating.js";
 import { useState } from "react";
+import Subtitle from "./pages/Course/SubtitleView";
 function App() {
   const [showNav, setShowNav] = useState(true);
   return (
@@ -62,10 +60,8 @@ function App() {
             <Route path="/instructor/contract" element={<InstructorTerms />} />
             <Route path="/CourseExam" element={<CourseExam />} />
             <Route path="/setExam" element={<SetExam />} />
-            <Route path="/rateInstructor" element={<InstructorRating />} />
-            <Route path="/search" element={<SearchResults />} />
-            <Route path="/courses/filter" element={<FilterResults />} />
-            <Route path="/instructor/contract" element={<InstructorTerms />} />
+            <Route path="/rateInstructor" element={<InstructorRating/>} />
+            <Route path="/subtitleView" element = {<Subtitle/>}></Route>
           </Routes>
         </div>
       </BrowserRouter>

@@ -11,7 +11,7 @@ const courseSchema = new Schema(
       {
         subtitle : {type : String , default:""},
         time : {type : String , default:"h::mm:ss"},
-        link : [{linkUrl :{type :String ,default:""},linkDesc :{type :String ,default:""},allowed :{type :Boolean ,default:false}}],
+        link : [{type: mongoose.Schema.Types.ObjectId, ref: "Link"}],
       }
     ],
     subject: {
@@ -28,6 +28,14 @@ const courseSchema = new Schema(
       required: false,
       default: 1,
     },
+    reviews:[{
+         userId :{type:mongoose.SchemaTypes.ObjectId ,required:true},
+         userRating :{ type: Number,
+         required: true,
+         default: 0},
+         userReview :{type : String , default:""}
+    }
+    ],
     description: {
       type: String,
       required: false,
