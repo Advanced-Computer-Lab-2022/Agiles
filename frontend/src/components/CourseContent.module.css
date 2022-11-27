@@ -13,3 +13,15 @@
 .icon{
     font-size: small;
 }
+
+.youtubeIcon{
+    font-size: 2.5rem;
+    color: red;
+}
+
+.link
+{
+    color: rgb(97, 94, 94);
+    font-size: 1.5rem;
+    margin-top: 2rem;
+}
