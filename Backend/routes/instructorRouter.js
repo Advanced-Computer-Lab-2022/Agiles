@@ -12,7 +12,9 @@ const {
   updateInstructorPassword,
   uploadSubLink,
   uploadPreLink,
-  deletLink
+  deletLink,
+  rateInstructor,
+  updateRateIns
 } = require("../controllers/InstructorController");
 
 //create Course
@@ -31,6 +33,8 @@ instructorRouter.patch("/updateSubtitle", uploadSubLink);
 instructorRouter.patch("/deletSubtitle", uploadSubLink);
 instructorRouter.delete("/deletSubtitle", deletLink);
 instructorRouter.patch("/updatePreview", uploadPreLink);
+instructorRouter.post("/setRating", rateInstructor);
+instructorRouter.patch("/updateRating", updateRateIns);
 
 
 module.exports = instructorRouter;

@@ -38,17 +38,7 @@ const individualTraineeSchema = new Schema(
           type: Number,
           min: 0,
           max: 100,
-        },
-        courserating: {
-          type: Number,
-          min: 0,
-          max: 5,
-        },
-        instrating: {
-          type: Number,
-          min: 0,
-          max: 5,
-        },
+        }
       },
     ],
     accessToken: { type: String },

@@ -1,24 +1,31 @@
 import RegCourseCardStyles from "./RegCourseCard.module.css";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Rating from "@mui/material/Rating";
+import Form from 'react-bootstrap/Form';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-
+import Cookies from "universal-cookie"
+const cookies = new Cookies();
 const RegCourseCard = (props) => {
+  const userId = cookies.get("currentUser");
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [value, setValue] = useState(props.courserating);
+  const [review, setReview] = useState("");
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setValue(props.courserating);
     setShow(true);
+    setReview("");
   }
   const handleChangeRating = async (event) => {
     setValue(event.target.value);
   };
-  const handleSave = async () => {};
+  const handleSave = async () => {
+
+  };
   const handelClick = () => {
     navigate(
       {
@@ -36,6 +43,13 @@ const RegCourseCard = (props) => {
         </Modal.Header>
         <Modal.Body>
           <Rating name="rating" value={value} onChange={handleChangeRating} />
+          <Form.Control
+            required
+            placeholder="write review for the Courses"
+            type="text"
+            name="review"
+            onChange={(e) => setReview(e.target.value)}
+          />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

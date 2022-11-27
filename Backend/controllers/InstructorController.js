@@ -145,7 +145,57 @@ const updateInstructorBio = async (req, res) => {
     res.status(500).json({ msg: "can't update bio" });
   }
 };
-
+const rateInstructor = async (req, res) => {
+  const { instId, userId, userRating, userReview } = req.body;
+  if (!instId || !userId || !userRating || !userReview) {
+    return res.status(400).json({ error: "Empty" });
+  }
+  try {
+    const data = await Instructor.findById(instId).exec();
+    const oldRating = data.rating;
+    const oldCount = data.ratingCount;
+    const newRating = (oldRating + userRating) / (oldCount + 1);
+    const Review = {
+      userId: userId,
+      userRating: userRating,
+      userReview: userReview,
+    };
+    const UpdatedRating = await Instructor.updateOne(
+      { _id: instId },
+      {
+        $push: {
+          reviews: Review,
+        },
+        $set :{
+          rating: newRating,
+          ratingCount: oldCount + 1,
+        }
+      }
+    ).exec();
+    res.status(200).json(UpdatedRating);
+  } catch (err) {
+    res.status(500).json({ msg: "can't update rating" });
+  }
+};
+const updateRateIns = async (req, res) => {
+  const { instId, userId, userRating, userReview,currentRating } = req.body;
+  if (!instId || !userId || !userRating || !userReview) {
+    return res.status(400).json({ error: "Empty" });
+  }
+  try {
+    const data = await Instructor.findById(instId).exec();
+    const oldRating = data.rating;
+    const oldCount = data.ratingCount;
+    const newRating = (((oldRating * oldCount)-currentRating)+ userRating )/ oldCount;
+    const UpdatedRating = await Instructor.updateOne(
+      { _id: instId , "reviews.userId": userId},
+      { $set :{"reviews.$.userRating": userRating,"reviews.$.userReview": userReview,rating: newRating}}
+    ).exec();
+    res.status(200).json(UpdatedRating);
+  } catch (err) {
+    res.status(500).json({ msg: "can't update rating" });
+  }
+};
 const updateInstructorEmail = async (req, res) => {
   try {
     await Instructor.findByIdAndUpdate(
@@ -189,11 +239,11 @@ const uploadSubLink = async (req, res) => {
   }
 };
 const deletLink = async (req, res) => {
-  const {linkId, courseId, subId} = req.body;
+  const { linkId, courseId, subId } = req.body;
   try {
     const data = await Link.findByIdAndRemove(linkId);
     const dataFinal = await Course.deleteOne(
-      { _id: courseId, "subtitles._id": subId,"subtitles.$ink":linkId },
+      { _id: courseId, "subtitles._id": subId, "subtitles.$ink": linkId },
       { $pull: { "subtitles.$.link": linkId } },
       { new: true }
     );
@@ -255,4 +305,6 @@ module.exports = {
   uploadSubLink,
   uploadPreLink,
   deletLink,
+  rateInstructor,
+  updateRateIns
 };
