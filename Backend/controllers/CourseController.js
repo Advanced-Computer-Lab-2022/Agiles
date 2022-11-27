@@ -249,7 +249,7 @@ const getLink = async (req, res) => {
 };
 const rateCourse = async (req, res) => {
   const { courseId, userId, userRating, userReview } = req.body;
-  if (!instId || !userId || !userRating || !userReview) {
+  if (! courseId|| !userId || !userRating || !userReview) {
     return res.status(400).json({ error: "Empty" });
   }
   try {
@@ -262,8 +262,8 @@ const rateCourse = async (req, res) => {
       userRating: userRating,
       userReview: userReview,
     };
-    const UpdatedRating = await Instructor.updateOne(
-      { _id: instId },
+    const UpdatedRating = await  Course.updateOne(
+      { _id: courseId },
       {
         $push: {
           reviews: Review,
@@ -282,11 +282,11 @@ const rateCourse = async (req, res) => {
 
 const updateRateCourse = async (req, res) => {
   const { CourseId, userId, userRating, userReview,currentRating } = req.body;
-  if (!instId || !userId || !userRating || !userReview) {
+  if (!courseId || !userId || !userRating || !userReview) {
     return res.status(400).json({ error: "Empty" });
   }
   try {
-    const data = await Instructor.findById(instId).exec();
+    const data = await Course.findById(courseId).exec();
     const oldRating = data.rating;
     const oldCount = data.ratingCount;
     const newRating = (((oldRating * oldCount)-currentRating)+ userRating )/ oldCount;
@@ -312,7 +312,7 @@ module.exports = {
   courseExam,
   getLink,
   rateCourse,
-  updateRateCourse
+  updateRateCourse,
   setFinalExam,
   courseFinalExam,
 };
