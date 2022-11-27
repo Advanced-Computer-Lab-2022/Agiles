@@ -9,13 +9,11 @@ import CoursePromo from "./CoursePromo";
 const MyCourseInst = () => {
   const location = useLocation();
   const course_id = location.state.course_id;
-
   const [course, setCourse] = useState([]);
   const [choice, setChoice] = useState(0);
   const handleClick = (e) => {
     setChoice(e.target.value);
   };
-
   const fetchdata = async () => {
     try {
       const res = await axios.get(`/course/${course_id}`);
@@ -23,21 +21,20 @@ const MyCourseInst = () => {
     } catch (e) {
       console.log(e);
     }
-    useEffect(()=>{
-      fetchdata();
-    },[])
+  };
+  useEffect(()=>{
+    fetchdata();
+  },[]);
     const project = () => {
       switch(choice) {
 
         case 0:   return<CoursePreInst course={course}/>;
         case 1:   return <CourseConInst course={course}/>
-        case 2: return <></>;
+        case 2: return  <CoursePromo course_id = {course._id}/>;
         case 3:  return <SetExam/>;
-
         default:return <h1>error</h1>
       }
     }
-  };
   return (
     <div className={regStyles["mainreg"]}>
       <section className={regStyles["leftsection"]}>

@@ -17,14 +17,10 @@ import Course from "./pages/Course/Course";
 import FilterResults from "./pages/Course/FilterResults";
 import Regcourse from "./pages/Course/RegCourse";
 import InstructorTerms from "./pages/Instructor/InstructorTerms";
-
 import MyCourseInst from "./pages/Instructor/MyCourseInst";
 import CourseExam from "./pages/Course/CourseExam";
-
 import InstructorRating from "./pages/Course/InstructorRating";
-
 import { useState } from "react";
-import MyCourseInst from "./pages/Instructor/MyCourseInst";
 function App() {
   const [showNav, setShowNav] = useState(true);
   return (
