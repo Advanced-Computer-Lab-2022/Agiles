@@ -4,6 +4,8 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 import "../Login.css";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 function InstructorProfile() {
   const navigate = useNavigate();
@@ -14,7 +16,9 @@ function InstructorProfile() {
   const [newPassword, setNewPassword] = useState(null);
   const [bio, setBio] = useState("");
   const [instructor, setInstructor] = useState({});
-  const instructorid = "635fba2f99f3f855c075eb6d";
+  const [change, setChange] = useState(false);
+  // const instructorid = "635fba2f99f3f855c075eb6d";
+  const instructorid = cookies.get("currentUser");
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -23,7 +27,7 @@ function InstructorProfile() {
     setBio(e.target.value);
   };
   const handleUpdateBio = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     try {
       await fetch(`/instructor/updateBio?id=${instructorid}`, {
         headers: {
@@ -32,43 +36,10 @@ function InstructorProfile() {
         method: "PATCH",
         body: JSON.stringify({ bio: bio }),
       });
+      setBio(bio);
+      setChange(!change);
     } catch (e) {
       console.log(e);
-    }
-    setBio(bio);
-  };
-
-  const handleUpdatingPassword = async (event) => {
-    event.preventDefault();
-    event.target.reset();
-    const passwordObject = {
-      oldPass: oldPassword,
-      newPass: newPassword,
-    };
-
-    let config = {
-      headers: {
-        header1: "Access-Control-Allow-Origin",
-      },
-    };
-    try {
-      const res = await axios.patch(
-        `/instructor/updatePassword?id=6379bae73eeedf94f9aa4713`,
-        passwordObject,
-        config
-      );
-      alert("Password Updated succesfuly");
-    } catch (err) {
-      console.log(err);
-      if (!err?.response) {
-        setErrMsg("No Server Response");
-      } else if (err.response?.status === 400) {
-        setErrMsg("Username not exist");
-      } else if (err.response?.status === 401) {
-        setErrMsg("old Password incorrect");
-      } else if (err.response?.status === 500) {
-        setErrMsg("please Fill all fields");
-      }
     }
   };
 
@@ -84,14 +55,48 @@ function InstructorProfile() {
         body: JSON.stringify({ email: email }),
       });
       setEmail(email);
+      setChange(!change);
     } catch (e) {
       console.log(e);
     }
   };
+  const handleUpdatingPassword = async (event) => {
+    event.preventDefault();
+    event.target.reset();
+    const passwordObject = {
+      oldPass: oldPassword,
+      newPass: newPassword,
+    };
+
+    let config = {
+      headers: {
+        header1: "Access-Control-Allow-Origin",
+      },
+    };
+    try {
+      const res = await axios.patch(
+        `/instructor/updatePassword?id=${instructorid}`,
+        passwordObject,
+        config
+      );
+      alert("Password Updated succesfuly");
+      setChange(!change);
+    } catch (err) {
+      console.log(err);
+      if (!err?.response) {
+        setErrMsg("No Server Response");
+      } else if (err.response?.status === 400) {
+        setErrMsg("Username not exist");
+      } else if (err.response?.status === 401) {
+        setErrMsg("old Password incorrect");
+      } else if (err.response?.status === 500) {
+        setErrMsg("please Fill all fields");
+      }
+    }
+  };
+
   useEffect(() => {
     setErrMsg("");
-  }, [oldPassword, newPassword]);
-  useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(`/instructor/instructorbyid?id=${instructorid}`);
       let jsondata = await res.json();
@@ -100,7 +105,7 @@ function InstructorProfile() {
       }
     };
     fetchData();
-  }, [bio, email]);
+  }, [change]);
   return (
     <div>
       <div className={InstructorProfileStyles["mainTop"]}>
