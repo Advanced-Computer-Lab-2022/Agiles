@@ -44,23 +44,23 @@ const CourseExam = (props) => {
     };
     fetchData();
   }, []);
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("submitted");
-    let res = {};
-    if(!corporate){
-      res = await axios.post(`/individualtrainee/submitExam?subtitleId=${subtitleId}&studentId=${studentId}&courseId=${courseId}`, {
-      answers: answers,
-    });
-    }
-    else{
-        res = await axios.post(`/corporate/submitExam?subtitleId=${subtitleId}&studentId=${studentId}&courseId=${courseId}`, {
-        answers: answers,
-      });
-    }
-    result = res.result;
-    setExam(true);
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   console.log("submitted");
+  //   let res = {};
+  //   if(!corporate){
+  //     res = await axios.post(`/individualtrainee/submitExam?subtitleId=${subtitleId}&studentId=${studentId}&courseId=${courseId}`, {
+  //     answers: answers,
+  //   });
+  //   }
+  //   else{
+  //       res = await axios.post(`/corporate/submitExam?subtitleId=${subtitleId}&studentId=${studentId}&courseId=${courseId}`, {
+  //       answers: answers,
+  //     });
+  //   }
+  //   result = res.result;
+  //   setExam(true);
+  // };
 
 
   const handleRadioChange = (e) => {
