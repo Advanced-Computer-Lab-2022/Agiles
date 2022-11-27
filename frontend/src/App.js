@@ -19,7 +19,7 @@ import Regcourse from "./pages/Course/RegCourse";
 import InstructorTerms from "./pages/Instructor/InstructorTerms";
 import MyCourseInst from "./pages/Instructor/MyCourseInst";
 import CourseExam from "./pages/Course/CourseExam";
-import InstructorRating from "./pages/Course/InstructorRating";
+import InstructorRating from "./pages/Course/InstructorRating.js";
 import { useState } from "react";
 function App() {
   const [showNav, setShowNav] = useState(true);
