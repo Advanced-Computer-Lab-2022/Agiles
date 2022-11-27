@@ -21,6 +21,7 @@ import MyCourseInst from "./pages/Instructor/MyCourseInst";
 import CourseExam from "./pages/Course/CourseExam";
 import InstructorRating from "./pages/Course/InstructorRating";
 import { useState } from "react";
+import Subtitle from "./pages/Course/SubtitleView";
 function App() {
   const [showNav, setShowNav] = useState(true);
   return (
@@ -59,12 +60,8 @@ function App() {
             <Route path="/instructor/contract" element={<InstructorTerms />} />
             <Route path="/CourseExam" element={<CourseExam />} />
             <Route path="/setExam" element={<SetExam />} />
-            <Route path="/regCourse" element={<Regcourse/>} />
-            <Route path="/myCourseInst" element={<MyCourseInst/>} />
             <Route path="/rateInstructor" element={<InstructorRating/>} />
-            <Route path="/search" element={<SearchResults />} />
-            <Route path="/courses/filter" element={<FilterResults />} />
-            <Route path="/instructor/contract" element={<InstructorTerms />} />
+            <Route path="/subtitleView" element = {<Subtitle/>}></Route>
           </Routes>
         </div>
       </BrowserRouter>
