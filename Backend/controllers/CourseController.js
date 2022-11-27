@@ -312,7 +312,7 @@ module.exports = {
   courseExam,
   getLink,
   rateCourse,
-  updateRateCourse
+  updateRateCourse,
   setFinalExam,
   courseFinalExam,
 };

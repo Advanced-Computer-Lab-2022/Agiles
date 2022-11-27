@@ -28,6 +28,6 @@ courserouter.get("/link/view",getLink)
 
 courserouter.post("/setRating", rateCourse);
 
-courserouter.patch("/updateRating", updateRateIns);
+courserouter.patch("/updateRating", updateRateCourse);
 
 module.exports = courserouter;
