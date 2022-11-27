@@ -7,7 +7,8 @@ const {
   filterCourses,
   courseSearch,
   getCourseById,
-  getLink
+  getLink  ,rateCourse,updateRateCourse
+
 } = require("../controllers/CourseController");
 
 //get all the titles of the courses available including the total hours of the course and course rating
@@ -24,5 +25,9 @@ courserouter.get("/listCourses/search", courseSearch);
 courserouter.patch("/addPromotion", addCoursePromotion);
 // courserouter.patch("/updateRating", updateRating);
 courserouter.get("/link/view",getLink)
+
+courserouter.post("/setRating", rateCourse);
+
+courserouter.patch("/updateRating", updateRateIns);
 
 module.exports = courserouter;

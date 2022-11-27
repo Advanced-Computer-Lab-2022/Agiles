@@ -1,5 +1,6 @@
 const Course = require("../models/Course");
 const Exam = require("../models/Exam");
+const FinalExam = require("../models/FinalExam");
 const Link = require("../models/Link");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -76,7 +77,7 @@ const courseSearch = async (req, res) => {
     res.status(200).json(courses);
   }
 };
-
+//get the subtitle exam
 const courseExam = async (req, res) => {
   const subtitleId = req.query["subtitleId"];
   questions = await Exam.findOne({ subtitleId: subtitleId });
@@ -86,6 +87,21 @@ const courseExam = async (req, res) => {
   } else {
     res.status(200).json(questions);
   }
+};
+const courseFinalExam = async (req, res) => {
+  const courseId = req.query["courseId"];
+  questions = await FinalExam.findOne({ courseId: courseId });
+
+  if (!questions) {
+    res.status(400).json({ error: "Empty" });
+  } else {
+    res.status(200).json(questions);
+  }
+};
+
+const getAllExams = async (req, res) => {
+  const courseId = req.query["courseId"];
+  const exams = await Exam.find({ courseId: courseId });
 };
 
 const createCourse = async (req, res) => {
@@ -125,16 +141,33 @@ const createCourse = async (req, res) => {
   }
 };
 
-//create multiple choices exam
+//create multiple choices exam for subtitles
 const setExam = async (req, res) => {
-  const { subtitleId, questions } = req.body;
+  const { subtitleId, courseId, questions } = req.body;
   const newExam = new Exam({
     subtitleId,
+    courseId,
     questions: questions,
   });
 
   try {
     const exam = await Exam.create(newExam);
+    res.status(200).json(exam);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+//create final exam for the course
+const setFinalExam = async (req, res) => {
+  const { courseId, questions } = req.body;
+  const newExam = new FinalExam({
+    courseId,
+    questions: questions,
+  });
+
+  try {
+    const exam = await FinalExam.create(newExam);
     res.status(200).json(exam);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -180,7 +213,7 @@ const coursePrice = async (req, res) => {
 const getCourseById = async (req, res) => {
   const id = req.params["id"];
   try {
-    const course = await Course.findById(id).populate('subtitles.link').exec();
+    const course = await Course.findById(id).populate("subtitles.link").exec();
     res.status(200).send(course);
   } catch (err) {
     res.status(500).json({ mssg: "no such Id" });
@@ -214,7 +247,58 @@ const getLink = async (req, res) => {
     res.status(500).json({ mssg: "no such Id" });
   }
 };
+const rateCourse = async (req, res) => {
+  const { courseId, userId, userRating, userReview } = req.body;
+  if (!instId || !userId || !userRating || !userReview) {
+    return res.status(400).json({ error: "Empty" });
+  }
+  try {
+    const data = await Course.findById(courseId).exec();
+    const oldRating = data.rating;
+    const oldCount = data.ratingCount;
+    const newRating = (oldRating + userRating) / (oldCount + 1);
+    const Review = {
+      userId: userId,
+      userRating: userRating,
+      userReview: userReview,
+    };
+    const UpdatedRating = await Instructor.updateOne(
+      { _id: instId },
+      {
+        $push: {
+          reviews: Review,
+        },
+        $set :{
+          rating: newRating,
+          ratingCount: oldCount + 1,
+        }
+      }
+    ).exec();
+    res.status(200).json(UpdatedRating);
+  } catch (err) {
+    res.status(500).json({ msg: "can't update rating" });
+  }
+};
 
+const updateRateCourse = async (req, res) => {
+  const { CourseId, userId, userRating, userReview,currentRating } = req.body;
+  if (!instId || !userId || !userRating || !userReview) {
+    return res.status(400).json({ error: "Empty" });
+  }
+  try {
+    const data = await Instructor.findById(instId).exec();
+    const oldRating = data.rating;
+    const oldCount = data.ratingCount;
+    const newRating = (((oldRating * oldCount)-currentRating)+ userRating )/ oldCount;
+    const UpdatedRating = await Course.updateOne(
+      { _id: CourseId , "reviews.userId": userId},
+      { $set :{"reviews.$.userRating": userRating,"reviews.$.userReview": userReview,rating: newRating}}
+    ).exec();
+    res.status(200).json(UpdatedRating);
+  } catch (err) {
+    res.status(500).json({ msg: "can't update rating" });
+  }
+};
 module.exports = {
   addCoursePromotion,
   createCourse,
@@ -227,4 +311,8 @@ module.exports = {
   setExam,
   courseExam,
   getLink,
+  rateCourse,
+  updateRateCourse
+  setFinalExam,
+  courseFinalExam,
 };

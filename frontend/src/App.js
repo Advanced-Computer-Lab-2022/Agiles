@@ -12,6 +12,7 @@ import AddInstructor from "./pages/Admin/AddInstructor";
 import AddCorporate from "./pages/Admin/AddCorporate";
 import CreateCourse from "./pages/Course/CreateCourse";
 import SetExam from "./pages/Instructor/SetExam";
+import SetFinalExam from "./pages/Instructor/SetFinalExam";
 import SearchResults from "./pages/Course/SearchResults";
 import Course from "./pages/Course/Course";
 import FilterResults from "./pages/Course/FilterResults";
@@ -60,8 +61,9 @@ function App() {
             <Route path="/instructor/contract" element={<InstructorTerms />} />
             <Route path="/CourseExam" element={<CourseExam />} />
             <Route path="/setExam" element={<SetExam />} />
-            <Route path="/rateInstructor" element={<InstructorRating/>} />
-            <Route path="/subtitleView" element = {<Subtitle/>}></Route>
+            <Route path="/setFinalExam" element={<SetFinalExam />} />
+            <Route path="/rateInstructor" element={<InstructorRating />} />
+            <Route path="/subtitleView" element={<Subtitle />}></Route>
           </Routes>
         </div>
       </BrowserRouter>

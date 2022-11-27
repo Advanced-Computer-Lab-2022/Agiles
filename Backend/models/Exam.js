@@ -7,11 +7,21 @@ const examSchema = new Schema(
       type: mongoose.Types.ObjectId,
       required: true,
     },
+    courseId: {
+      type: mongoose.Types.ObjectId,
+      required: true,
+    },
     questions: {
       type: [Object],
       required: true,
     },
+    courseId: {
+      type: mongoose.Types.ObjectId,
+      ref: "Course",
+      required: true,
+    }
   },
+  
   { timestamps: true }
 );
 

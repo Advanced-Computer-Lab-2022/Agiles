@@ -1,7 +1,11 @@
 const express = require("express");
 const instructorRouter = express.Router();
 
-const { createCourse , setExam } = require("../controllers/CourseController");
+const {
+  createCourse,
+  setExam,
+  setFinalExam,
+} = require("../controllers/CourseController");
 const {
   filterCoursesByInstructor,
   courseSearchByInstructor,
@@ -14,13 +18,14 @@ const {
   uploadPreLink,
   deletLink,
   rateInstructor,
-  updateRateIns
+  updateRateIns,
 } = require("../controllers/InstructorController");
 
 //create Course
 instructorRouter.post("/addCourse", createCourse);
 //set Exam
 instructorRouter.post("/setExam", setExam);
+instructorRouter.post("/setFinalExam", setFinalExam);
 instructorRouter.get("/listCourseTitles", listAllInstructorCoursesTitles);
 instructorRouter.get("/listCourseTitles/:id", listAllInstructorCoursesTitles);
 instructorRouter.get("/filterCourses", filterCoursesByInstructor);
@@ -35,6 +40,5 @@ instructorRouter.delete("/deletSubtitle", deletLink);
 instructorRouter.patch("/updatePreview", uploadPreLink);
 instructorRouter.post("/setRating", rateInstructor);
 instructorRouter.patch("/updateRating", updateRateIns);
-
 
 module.exports = instructorRouter;

@@ -23,3 +23,7 @@
     color: blue;
     border: none;
 }
+.videoDesc{
+    width: 80%;
+    margin-top: 1rem;
+}
