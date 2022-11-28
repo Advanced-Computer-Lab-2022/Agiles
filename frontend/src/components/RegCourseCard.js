@@ -52,7 +52,7 @@ const RegCourseCard = (props) => {
           <Rating name="rating" value={value} onChange={handleChangeRating} />
           <Form.Control
             required
-            placeholder="write review for the Courses"
+            placeholder="write review for the course.."
             type="text"
             name="review"
             onChange={(e) => setReview(e.target.value)}

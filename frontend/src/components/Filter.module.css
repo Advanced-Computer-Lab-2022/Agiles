@@ -19,7 +19,7 @@
   border: 0.5px solid rgb(111, 109, 109);
 }
 .logo:hover {
-  background-color: rgba(208, 236, 242, 0.379);
+  background-color: rgba(127, 177, 251, 0.379);
 }
 .filter-button {
   display: flex;

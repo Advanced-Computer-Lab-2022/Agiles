@@ -1,6 +1,5 @@
 .wrapper{
   display: flex;
-  background-color: rgba(241, 250, 252, 0.379);
 }
 .course-list {
   display: grid;

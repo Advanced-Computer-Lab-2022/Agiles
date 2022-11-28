@@ -75,7 +75,7 @@ const Login = () => {
               disabled={!username || !password ? true : false}
               className="btn btn-primary"
             >
-              Submit
+              Log In
             </button>
           </div>
           <p className="footForm">

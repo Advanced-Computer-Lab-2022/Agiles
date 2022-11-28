@@ -41,6 +41,11 @@ const individualTraineeSchema = new Schema(
         }
       },
     ],
+    mini_bio: {
+      type: String,
+      required: false,
+      default: "",
+    },
     accessToken: { type: String },
     refreshToken: { type: String },
   },

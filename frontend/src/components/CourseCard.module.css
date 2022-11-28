@@ -2,12 +2,11 @@
   margin-top: 20px;
   min-height: 10rem;
   display: grid;
-  background-color: rgba(241, 250, 252, 0.379);
   cursor: pointer;
   overflow: hidden;
 }
 .card button{
-  background-color:rgba(241, 250, 252, 0.379);
+  background-color:inherit;
   padding: 0;
   width: 100%;
   margin: 0;

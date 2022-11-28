@@ -20,12 +20,16 @@ import InstructorTerms from "./pages/Instructor/InstructorTerms";
 import CourseExam from "./pages/Course/CourseExam";
 import InstructorRating from "./pages/Course/InstructorRating.js";
 import { useState } from "react";
+import Profile from "./pages/Trainee/Profile"
 import Subtitle from "./pages/Course/SubtitleView";
 import CoursePreInst from "./pages/Instructor/CoursePreInst";
 import CourseConInst from "./pages/Instructor/CourseConInst";
 import CoursePreview from "./components/CoursePreview";
 import CourseContent from "./components/CourseContent";
 import CourseFinalExam from "./pages/Course/CourseFinalExam";
+import InstructorProfile from "./pages/Instructor/InstructorProfile";
+import AccountSecurity from "./pages/Trainee/AccountSecurity"
+import PaymentMethods from "./pages/Trainee/PaymentMethods"
 function App() {
   const [showNav, setShowNav] = useState(true);
   return (
@@ -64,6 +68,10 @@ function App() {
             <Route path="/preInst" element={<CoursePreInst />} />
             <Route path="/conInst" element={<CourseConInst/>} />
             <Route path="/setExam" element={<SetExam />} />
+            <Route path="/user/profile" element={<Profile />} />
+            <Route path="/user/accountsettings" element={<AccountSecurity />} />
+            <Route path="/user/paymentMethods" element={<PaymentMethods />} />
+            <Route path="/instructor/profile" element={<InstructorProfile />} />
             <Route path="/search" element={<SearchResults />} />
             <Route path="/courses/filter" element={<FilterResults />} />
             <Route path="/instructor/contract" element={<InstructorTerms />} />
