@@ -7,7 +7,10 @@ import style from "./SubtitleView.module.css";
 import ListGroup from "react-bootstrap/ListGroup";
 import Accordion from "react-bootstrap/Accordion";
 import { useNavigate } from "react-router-dom";
+import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
+import Cookies from "universal-cookie"
 const LINK_URL = "/course/link/view";
+const cookies = new Cookies();
 const Subtitle = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -15,6 +18,7 @@ const Subtitle = () => {
   const [link, setLink] = useState({ linkUrl: "", linkDesc: "" });
   const [subtitles, setSubtitles] = useState([]);
   const [isloading, setIsLoading] = useState(false);
+  const [exam, setExam] = useState([]);
   const handleClick = (e) => {
     navigate(
       {
@@ -25,6 +29,14 @@ const Subtitle = () => {
     );
     window.location.reload();
   };
+
+  const handleExamClick = (e) => {
+    navigate(
+      {
+        pathname: "/courseExam",
+        search: "?subtitleId=" + location.state.data._id + "&studentId="+cookies.get("currentUser")+ "&courseId=" +location.state.courseId,
+      })
+    }
   const FetchData = async () => {
     setIsLoading(true);
     try {
@@ -88,6 +100,16 @@ const Subtitle = () => {
                             </button>
                           </ListGroup.Item>
                         ))}
+                        <ListGroup.Item key ={"exam"}>
+                          <button
+                            id={"linkId=" + subtitle._id}
+                            name={"exam"}
+                            onClick={handleExamClick}
+                            className={style["subtitleView"]}
+                          >
+                            Exam
+                          </button>
+                        </ListGroup.Item>
                       </ListGroup>
                     </Accordion.Body>
                   </Accordion.Item>
