@@ -16,9 +16,9 @@ const CourseExam = (props) => {
   
   const location = useLocation();
   // const query = new URLSearchParams(location.search);
-  const subtitleId = "63810085e606ba473f59e1ba";
-  const studentId = "6361b642c27988acb69dfba4";
-  const courseId = "6361b2deef7816eb1d9eb915";
+  const subtitleId = req.query["subtitleId"];
+  const studentId = req.query["studentId"];
+  const courseId = req.query["courseId"];
   const [CourseExam, setCourseExam] = useState([]);
   const [isloading, setIsLoading] = useState(false);
   const [examState, setExam] = useState(false);
