@@ -110,7 +110,7 @@ const CoursePreview = () => {
             className={style["rating"]}
           />{" "}<span>
           {course.rating} course rating{" "}
-          <CircleIcon style={{ fontSize: "0.5rem" }} /> ({course.ratingCount}{" "}
+          <CircleIcon style={{ fontSize: "0.5rem" }} /> ({course.ratingCount-1}{" "}
           ratings)</span>
         </h3>
         <Button

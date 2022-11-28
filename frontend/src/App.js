@@ -25,6 +25,7 @@ import CoursePreInst from "./pages/Instructor/CoursePreInst";
 import CourseConInst from "./pages/Instructor/CourseConInst";
 import CoursePreview from "./components/CoursePreview";
 import CourseContent from "./components/CourseContent";
+import CourseFinalExam from "./pages/Course/CourseFinalExam";
 function App() {
   const [showNav, setShowNav] = useState(true);
   return (
@@ -59,7 +60,7 @@ function App() {
             <Route path="/preReg" element={<CoursePreview />} />
             <Route path="/conReg" element={<CourseContent/>} />
             <Route path="/grades" element={<CourseContent/>} />
-            <Route path="/exams" element={<CourseContent/>} />
+            <Route path="/finalexam" element={<CourseFinalExam/>} />
             <Route path="/preInst" element={<CoursePreInst />} />
             <Route path="/conInst" element={<CourseConInst/>} />
             <Route path="/setExam" element={<SetExam />} />
