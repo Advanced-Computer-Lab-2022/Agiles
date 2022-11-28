@@ -58,6 +58,6 @@
 }
 .rating-box{
     display: grid;
-    grid-template-columns: 50% 50%;
+    gap: 2rem;
     margin-bottom: 2rem;
 }

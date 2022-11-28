@@ -1,22 +1,52 @@
 import style from "./CoursePreview.module.css";
+import regStyles from "../pages/Course/RegCourse.module.css"
 import Rating from "@mui/material/Rating";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import CircleIcon from "@mui/icons-material/Circle";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
-import { useState } from "react";
+import { useEffect,useState } from "react";
+import { useLocation } from "react-router-dom";
+import LoadingScreen from "react-loading-screen";
+import spinner from "../static/download.gif";
+import axios from "axios";
 import ReviewCard from "./ReviewCard";
-const CoursePreview = (props) => {
-  const course = props.course;
+import RegCourse from "../pages/Course/RegCourse";
+import InstructorRating from "../pages/Course/InstructorRating";
+const CoursePreview = () => {
+  const location = useLocation();
+  const course_id = new URLSearchParams(location.search).get('courseId');
+  const progress =location.state.progress;
+  const [isloading, setIsLoading] = useState(false);
+  const [course, setCourse] = useState([]);
   const [show, setShow] = useState(false);
   const [reviews, setReviews] = useState([]);
   const handleClose = () => setShow(false);
   const handleShow = () => {
-    setReviews(props.course.reviews);
+    setReviews(course.reviews);
     setShow(true);
   };
+  const fetchdata = async () => {
+    setIsLoading(true);
+    try {
+      const res = await axios.get(`/course/${course_id}`);
+      setCourse(res.data);
+    } catch (e) {
+      console.log(e);
+    }
+    setIsLoading(false);
+  };
+  useEffect(()=>{
+    fetchdata();
+  },[]);
   return (
+    <>
+    {isloading ? (
+      <LoadingScreen loading={true} logoSrc={spinner} />
+    ) : (
+      <div className={regStyles["mainreg"]}>
+        <RegCourse course_id={course_id} course_img={course.imgUrl} progress={progress} course_title={course.title} course_inst={course.instructorname} name={'preview'}/>
     <div className={style["mainRight"]}>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -39,9 +69,9 @@ const CoursePreview = (props) => {
       </Modal>
       <label className={style["mainlabel"]}>Course Preview</label>
       <ProgressBar
-        now={props.progress}
+        now={progress}
         className={style["progressbar"]}
-        label={`${props.progress}% completed`}
+        label={`${progress}% completed`}
       ></ProgressBar>
       <h1>Welcome to the {course.title} Course</h1>
       <div className={style["video"]}>
@@ -68,6 +98,9 @@ const CoursePreview = (props) => {
       <h3>Subject</h3>
       <p>{course.subject}</p>
       <hr className={style["mainRight-hr"]}></hr>
+      <h3>Rate Instructor</h3>
+       <InstructorRating/>
+      <hr className={style["mainRight-hr"]}></hr>
       <div className={style["mainRight-rating"]}>
         <h3>
           <Rating
@@ -77,7 +110,7 @@ const CoursePreview = (props) => {
             className={style["rating"]}
           />{" "}<span>
           {course.rating} course rating{" "}
-          <CircleIcon style={{ fontSize: "0.5rem" }} /> ({course.ratingCount}{" "}
+          <CircleIcon style={{ fontSize: "0.5rem" }} /> ({course.ratingCount-1}{" "}
           ratings)</span>
         </h3>
         <Button
@@ -88,7 +121,8 @@ const CoursePreview = (props) => {
             show all reviews
           </Button>
       </div>
-    </div>
+      </div>
+    </div>)}</>
   );
 };
 

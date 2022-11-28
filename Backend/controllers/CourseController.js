@@ -213,7 +213,7 @@ const coursePrice = async (req, res) => {
 const getCourseById = async (req, res) => {
   const id = req.params["id"];
   try {
-    const course = await Course.findById(id).populate("subtitles.link").exec();
+    const course = await Course.findById(id).populate("subtitles.link").populate("reviews.userId").exec();
     res.status(200).send(course);
   } catch (err) {
     res.status(500).json({ mssg: "no such Id" });
@@ -259,6 +259,7 @@ const rateCourse = async (req, res) => {
     const newRating = (oldRating + userRating) / (oldCount + 1);
     const Review = {
       userId: userId,
+      username : username,
       userRating: userRating,
       userReview: userReview,
     };

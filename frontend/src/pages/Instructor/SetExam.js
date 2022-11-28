@@ -184,7 +184,7 @@ const SetExam = () => {
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <span className="button-section">
             <Button
-              variant="primary"
+              variant="dark"
               className="button add"
               type="button"
               onClick={() => addFormFields()}
@@ -194,7 +194,7 @@ const SetExam = () => {
           </span>
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Button variant="primary" type="submit">
+          <Button variant="dark" type="submit">
             create Exam{" "}
           </Button>
         </Form.Group>
