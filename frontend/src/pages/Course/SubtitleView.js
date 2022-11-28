@@ -9,6 +9,8 @@ import Accordion from "react-bootstrap/Accordion";
 import { useNavigate } from "react-router-dom";
 import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
 import Cookies from "universal-cookie"
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 const LINK_URL = "/course/link/view";
 const cookies = new Cookies();
 const Subtitle = () => {
@@ -18,7 +20,10 @@ const Subtitle = () => {
   const [link, setLink] = useState({ linkUrl: "", linkDesc: "" });
   const [subtitles, setSubtitles] = useState([]);
   const [isloading, setIsLoading] = useState(false);
-  const [exam, setExam] = useState([]);
+  const [grade, setGrade] = useState([]);
+  const [questions, setQuestions] = useState(0);
+  const [show, setShow] = useState(false);
+
   const handleClick = (e) => {
     navigate(
       {
@@ -30,13 +35,30 @@ const Subtitle = () => {
     window.location.reload();
   };
 
-  const handleExamClick = (e) => {
+  const handleClose = () => setShow(false);
+
+  const handleExamClick = async (e) => {
+
+    try{
+    const exam = await axios.get(`/individualtrainee/getIndividualExerciseGrade?id=${cookies.get("currentUser")}&subtitleId=${e.target.id}`);
+    console.log(exam.data)
+    if(exam.data == null){
     navigate(
       {
         pathname: "/courseExam",
-        search: "?subtitleId=" + location.state.data._id + "&studentId="+cookies.get("currentUser")+ "&courseId=" +location.state.courseId,
+        search: "?subtitleId=" + e.target.id+ "&studentId="+cookies.get("currentUser")+ "&courseId=" + location.state.courseId,
       })
     }
+    else{
+      setShow(true);
+      setGrade(exam.data.result);
+      setQuestions(exam.data.studentChoices.length);
+    }
+  }
+    catch(e){
+      console.log(e);
+    };
+  }
   const FetchData = async () => {
     setIsLoading(true);
     try {
@@ -102,13 +124,32 @@ const Subtitle = () => {
                         ))}
                         <ListGroup.Item key ={"exam"}>
                           <button
-                            id={"linkId=" + subtitle._id}
+                            id={subtitle._id}
                             name={"exam"}
                             onClick={handleExamClick}
                             className={style["subtitleView"]}
                           >
                             Exam
                           </button>
+                          <Modal backdrop = {false}show={show} onHide={handleClose}>
+                      
+                        <Modal.Header closeButton>
+                          <Modal.Title>Grade
+                          </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                        <div className={style["rating-box"]}>
+                          { !grade ? <h3>Not Graded Yet</h3> : <h3>Grade: {grade}</h3>}
+                          
+                        </div>
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <Button variant="secondary" onClick={handleClose}>
+                            close
+                          </Button>
+                        </Modal.Footer>
+                       
+                      </Modal>
                         </ListGroup.Item>
                       </ListGroup>
                     </Accordion.Body>

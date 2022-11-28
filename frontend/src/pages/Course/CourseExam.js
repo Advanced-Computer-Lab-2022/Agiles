@@ -10,25 +10,24 @@ import axios from "axios";
 import InputGroup from "react-bootstrap/InputGroup";
 import style from "./CourseExam.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useNavigate } from "react-router-dom";
 
-const CourseExam = (props) => {
+const CourseExam = () => {
 
   
   const location = useLocation();
-  // const query = new URLSearchParams(location.search);
-  const subtitleId = req.query["subtitleId"];
-  const studentId = req.query["studentId"];
-  const courseId = req.query["courseId"];
+  const subtitleId = new URLSearchParams(location.search).get("subtitleId");
+  const studentId = new URLSearchParams(location.search).get("studentId");
+  const courseId =  new URLSearchParams(location.search).get("courseId");
   const [CourseExam, setCourseExam] = useState([]);
   const [isloading, setIsLoading] = useState(false);
   const [examState, setExam] = useState(false);
   const [answers,setAnswers]= useState([]);
   const [result,setResult]= useState([]);
+  const [grade,setGrade] = useState(0);
   
   let corporate = false;
-  if (props.corporate) {
-    corporate = true;
-  }
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,6 +58,9 @@ const CourseExam = (props) => {
       res = await axios.post(`/individualtrainee/submitExam?subtitleId=${subtitleId}&studentId=${studentId}&courseId=${courseId}`, {
       answers: answers,
     });
+    const exam = await axios.get(`/individualtrainee/getIndividualExerciseGrade?id=${studentId}&subtitleId=${subtitleId}`);
+    setGrade(exam.data.result);
+
     }
     else{
         res = await axios.post(`/corporate/submitExam?subtitleId=${subtitleId}&studentId=${studentId}&courseId=${courseId}`, {
@@ -86,6 +88,12 @@ const CourseExam = (props) => {
     console.log(answers);
     
   }
+
+  const handleBack = () => {
+    //navigate to course page
+    navigate(`/preReg?courseId=${courseId}`);
+  }
+
   return (
     <div>
       <h1>Exam</h1>
@@ -105,7 +113,7 @@ const CourseExam = (props) => {
                     </Card.Text>
                     <ListGroup className="list-group-flush">
                       <ListGroup.Item>
-                        {examState? (result[index] === "1"? (<>
+                        {examState? (result[index] === "1" || result[index] === "-1"? (<>
                         <Form.Label className={style["correct"]}>- {exam["firstChoice"]}</Form.Label>
                         </>):(answers[index] === "1"?(
                             <>
@@ -127,7 +135,7 @@ const CourseExam = (props) => {
                         
                       </ListGroup.Item>
                       <ListGroup.Item>
-                      {examState? (result[index] === "2"? (<>
+                      {examState? (result[index] === "2" || result[index] === "-2"? (<>
                         <Form.Label className={style["correct"]}>- {exam["secondChoice"]}</Form.Label>
                         </>):(answers[index] === "2"?(
                             <>
@@ -149,7 +157,7 @@ const CourseExam = (props) => {
                             }
                       </ListGroup.Item>
                       <ListGroup.Item>
-                      {examState? (result[index] === "3"? (<>
+                      {examState? (result[index] === "3" || result[index] === "-3" ? (<>
                         <Form.Label className={style["correct"]}>- {exam["thirdChoice"]}</Form.Label>
                         </>):(answers[index] === "3"?(
                             <>
@@ -170,7 +178,7 @@ const CourseExam = (props) => {
                             }
                       </ListGroup.Item>
                       <ListGroup.Item>
-                      {examState? (result[index] === "4"? (<>
+                      {examState? (result[index] === "4" || result[index] === "-4"? (<>
                         <Form.Label className={style["correct"]}>- {exam["fourthChoice"]}</Form.Label>
                         </>):(answers[index] === "4"?(
                             <>
@@ -199,7 +207,12 @@ const CourseExam = (props) => {
           <div class="col-md-12 text-center">
             {!examState?(<Button variant="primary" onClick={handleSubmit} size="lg">
               Submit
-            </Button>):(<></>)}
+            </Button>):(<>
+              <h1>Grade: {grade} / {answers.length}</h1>
+              <Button variant="primary" onClick={handleBack} size="lg">
+              Back
+            </Button>
+            </>)}
             
           </div>
         </Form>

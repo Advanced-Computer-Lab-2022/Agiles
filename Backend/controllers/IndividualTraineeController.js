@@ -46,7 +46,7 @@ const submitExam = async (req, res) => {
       resultno++;
     }
     else{
-      result.push(0);
+      result.push("-" + question.answer);
     }
     
     
@@ -91,8 +91,9 @@ const getExerciseGrade = async (req, res) => {
       studentId: studentId,
       subtitleId: subtitleId,
     },
-    { result: 1 }
+    { result: 1 , studentChoices:1}
   ).exec();
+    
   try {
     res.status(200).json(exercise);
   } catch (error) {
