@@ -9,18 +9,21 @@ import Form from "react-bootstrap/Form";
 import axios from "axios";
 import InputGroup from "react-bootstrap/InputGroup";
 import style from "./CourseExam.module.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const CourseExam = (props) => {
 
   
   const location = useLocation();
   // const query = new URLSearchParams(location.search);
-  const query = "63810085e606ba473f59e1ba";
+  const subtitleId = "63810085e606ba473f59e1ba";
+  const studentId = "6361b642c27988acb69dfba4";
+  const courseId = "6361b2deef7816eb1d9eb915";
   const [CourseExam, setCourseExam] = useState([]);
   const [isloading, setIsLoading] = useState(false);
   const [examState, setExam] = useState(false);
   const [answers,setAnswers]= useState([]);
-  let result = [];
+  const [result,setResult]= useState([]);
   
   let corporate = false;
   if (props.corporate) {
@@ -32,9 +35,9 @@ const CourseExam = (props) => {
       setIsLoading(true);
       let res = {};
       if (!corporate) {
-        res = await fetch(`/individualtrainee/courseExam?subtitleId=${query}`);
+        res = await fetch(`/individualtrainee/courseExam?subtitleId=${subtitleId}`);
       } else {
-        res = await fetch(`/corporate/courseExam?subtitleId=${query}`);
+        res = await fetch(`/corporate/courseExam?subtitleId=${subtitleId}`);
       }
       let jsondata = await res.json();
       if (res.ok) {
@@ -44,36 +47,44 @@ const CourseExam = (props) => {
     };
     fetchData();
   }, []);
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   console.log("submitted");
-  //   let res = {};
-  //   if(!corporate){
-  //     res = await axios.post(`/individualtrainee/submitExam?subtitleId=${subtitleId}&studentId=${studentId}&courseId=${courseId}`, {
-  //     answers: answers,
-  //   });
-  //   }
-  //   else{
-  //       res = await axios.post(`/corporate/submitExam?subtitleId=${subtitleId}&studentId=${studentId}&courseId=${courseId}`, {
-  //       answers: answers,
-  //     });
-  //   }
-  //   result = res.result;
-  //   setExam(true);
-  // };
+
+  
+        
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("submitted");
+    let res = {};
+    if(!corporate){
+      res = await axios.post(`/individualtrainee/submitExam?subtitleId=${subtitleId}&studentId=${studentId}&courseId=${courseId}`, {
+      answers: answers,
+    });
+    }
+    else{
+        res = await axios.post(`/corporate/submitExam?subtitleId=${subtitleId}&studentId=${studentId}&courseId=${courseId}`, {
+        answers: answers,
+      });
+    }
+    let jsondata = await res.data;
+    setResult(jsondata["result"]);
+    
+    setExam(true);
+  };
 
 
-  const handleRadioChange = (e) => {
-    const indexname = e.target.name;
+  const handleRadioChange = (event) => {
+    const indexname = event.target.name;
+    console.log("lol")
     //get last char from name
     let index = indexname.charAt(indexname.length - 1);
-    if(answers[index] !== null && e.target.checked){
-      answers[index] = e.target.value;
+    if(answers[index] !== null && event.target.checked){
+      answers[index] = event.target.value;
     }
-    else if(e.target.checked){
-      setAnswers(oldArray => [...oldArray, e.target.value]);
+    else if(event.target.checked){
+      setAnswers(oldArray => [...oldArray, event.target.value]);
     }
     console.log(answers);
+    
   }
   return (
     <div>
@@ -94,13 +105,16 @@ const CourseExam = (props) => {
                     </Card.Text>
                     <ListGroup className="list-group-flush">
                       <ListGroup.Item>
-                        {examState? (result[index] === 1? (<>
-                        <i class="bi bi-check"></i>
-                        <Form.Label>- {exam["firstChoice"]}</Form.Label>
-                        </>):
-                            <><i class="bi bi-x"></i>
-                            <Form.Label>- {exam["firstChoice"]}
-                            </Form.Label></>):(
+                        {examState? (result[index] === "1"? (<>
+                        <Form.Label className={style["correct"]}>- {exam["firstChoice"]}</Form.Label>
+                        </>):(answers[index] === "1"?(
+                            <>
+                            <Form.Label className={style["wrong"]}>- {exam["firstChoice"]}</Form.Label></>):
+                            (
+                            <>
+                            <Form.Label>- {exam["firstChoice"]}</Form.Label>
+                            </>)
+                            )):(
                             <InputGroup>
                             <InputGroup.Radio
                               value={1}
@@ -113,16 +127,20 @@ const CourseExam = (props) => {
                         
                       </ListGroup.Item>
                       <ListGroup.Item>
-                      {examState? (result[index] === 1? (<>
-                        <i class="bi bi-check"></i>
-                        <Form.Label>- {exam["secondChoice"]}</Form.Label>
-                        </>):
-                            <><i class="bi bi-x"></i>
-                            <Form.Label>- {exam["secondChoice"]}
-                            </Form.Label></>):(
+                      {examState? (result[index] === "2"? (<>
+                        <Form.Label className={style["correct"]}>- {exam["secondChoice"]}</Form.Label>
+                        </>):(answers[index] === "2"?(
+                            <>
+                            <Form.Label className={style["wrong"]}>- {exam["secondChoice"]}</Form.Label>
+                            </>):
+                            (
+                            <>
+                            <Form.Label>- {exam["secondChoice"]}</Form.Label>
+                            </>)
+                            )):(
                             <InputGroup>
                             <InputGroup.Radio
-                              value={1}
+                              value={2}
                               name={`Choices${index}`}
                               onChange={handleRadioChange}
                               />
@@ -131,16 +149,19 @@ const CourseExam = (props) => {
                             }
                       </ListGroup.Item>
                       <ListGroup.Item>
-                      {examState? (result[index] === 1? (<>
-                        <i class="bi bi-check"></i>
-                        <Form.Label>- {exam["thirdChoice"]}</Form.Label>
-                        </>):
-                            <><i class="bi bi-x"></i>
-                            <Form.Label>- {exam["thirdChoice"]}
-                            </Form.Label></>):(
+                      {examState? (result[index] === "3"? (<>
+                        <Form.Label className={style["correct"]}>- {exam["thirdChoice"]}</Form.Label>
+                        </>):(answers[index] === "3"?(
+                            <>
+                            <Form.Label className={style["wrong"]}>- {exam["thirdChoice"]}</Form.Label></>):
+                            (
+                            <>
+                            <Form.Label>- {exam["thirdChoice"]}</Form.Label>
+                            </>)
+                            )):(
                             <InputGroup>
                             <InputGroup.Radio
-                              value={1}
+                              value={3}
                               name={`Choices${index}`}
                               onChange={handleRadioChange}
                               />
@@ -149,16 +170,19 @@ const CourseExam = (props) => {
                             }
                       </ListGroup.Item>
                       <ListGroup.Item>
-                        {examState? (result[index] === 1? (<>
-                        <i class="bi bi-check"></i>
-                        <Form.Label>- {exam["fourthChoice"]}</Form.Label>
-                        </>):
-                            <><i class="bi bi-x"></i>
-                            <Form.Label>- {exam["fourthChoice"]}
-                            </Form.Label></>):(
+                      {examState? (result[index] === "4"? (<>
+                        <Form.Label className={style["correct"]}>- {exam["fourthChoice"]}</Form.Label>
+                        </>):(answers[index] === "4"?(
+                            <>
+                            <Form.Label className={style["wrong"]}>- {exam["fourthChoice"]}</Form.Label></>):
+                            (
+                            <>
+                            <Form.Label>- {exam["fourthChoice"]}</Form.Label>
+                            </>)
+                            )):(
                             <InputGroup>
                             <InputGroup.Radio
-                              value={1}
+                              value={4}
                               name={`Choices${index}`}
                               onChange={handleRadioChange}
                               />
@@ -173,9 +197,10 @@ const CourseExam = (props) => {
             );
           })}
           <div class="col-md-12 text-center">
-            <Button variant="primary" size="lg">
+            {!examState?(<Button variant="primary" onClick={handleSubmit} size="lg">
               Submit
-            </Button>
+            </Button>):(<></>)}
+            
           </div>
         </Form>
       </div>

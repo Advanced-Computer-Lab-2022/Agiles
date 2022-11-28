@@ -1,3 +1,10 @@
 .mt-0 {
     margin-top: 5% !important;
+
   }
+.correct{
+    color: rgb(66, 224, 66);
+}
+.wrong{
+  color:red;
+}

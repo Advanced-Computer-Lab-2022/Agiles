@@ -248,8 +248,8 @@ const getLink = async (req, res) => {
   }
 };
 const rateCourse = async (req, res) => {
-  const { courseId, userId, userRating, userReview ,username} = req.body;
-  if (! courseId|| !userId || !userRating || !userReview) {
+  const { courseId, userId, userRating, userReview } = req.body;
+  if ( !courseId|| !userId || !userRating || !userReview) {
     return res.status(400).json({ error: "Empty" });
   }
   try {
@@ -282,7 +282,7 @@ const rateCourse = async (req, res) => {
 };
 
 const updateRateCourse = async (req, res) => {
-  const { CourseId, userId, userRating, userReview,currentRating } = req.body;
+  const { courseId, userId, userRating, userReview,currentRating } = req.body;
   if (!courseId || !userId || !userRating || !userReview) {
     return res.status(400).json({ error: "Empty" });
   }
@@ -292,7 +292,7 @@ const updateRateCourse = async (req, res) => {
     const oldCount = data.ratingCount;
     const newRating = (((oldRating * oldCount)-currentRating)+ userRating )/ oldCount;
     const UpdatedRating = await Course.updateOne(
-      { _id: CourseId , "reviews.userId": userId},
+      { _id: courseId , "reviews.userId": userId},
       { $set :{"reviews.$.userRating": userRating,"reviews.$.userReview": userReview,rating: newRating}}
     ).exec();
     res.status(200).json(UpdatedRating);
