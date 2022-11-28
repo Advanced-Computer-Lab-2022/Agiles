@@ -12,7 +12,8 @@ const {
   updateITraineePassword,
   submitExam,
   updateFieldUser,
-  updateEmail
+  updateEmail,
+  getFinalExamGrade
 } = require("../controllers/IndividualTraineeController");
 IndividualTraineeRouter.get("/getIndividualTraineebyId", getTraineebyID);
 IndividualTraineeRouter.get("/inprogress/:id", InprogressCourses);
@@ -24,5 +25,6 @@ IndividualTraineeRouter.patch("/updatePassword", updateITraineePassword);
 IndividualTraineeRouter.post("/submitExam", submitExam)
 IndividualTraineeRouter.get("/courseExam", courseExam);
 IndividualTraineeRouter.get("/courseFinalExam", courseFinalExam);
-updateFieldUser
+IndividualTraineeRouter.get("/getFinalExamGrade", getFinalExamGrade);
+//updateFieldUser
 module.exports = IndividualTraineeRouter;

@@ -8,7 +8,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Accordion from "react-bootstrap/Accordion";
 import { useNavigate } from "react-router-dom";
 import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
-import Cookies from "universal-cookie"
+import Cookies from "universal-cookie";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 const LINK_URL = "/course/link/view";
@@ -38,27 +38,65 @@ const Subtitle = () => {
   const handleClose = () => setShow(false);
 
   const handleExamClick = async (e) => {
-
-    try{
-    const exam = await axios.get(`/individualtrainee/getIndividualExerciseGrade?id=${cookies.get("currentUser")}&subtitleId=${e.target.id}`);
-    console.log(exam.data)
-    if(exam.data == null){
-    navigate(
-      {
-        pathname: "/courseExam",
-        search: "?subtitleId=" + e.target.id+ "&studentId="+cookies.get("currentUser")+ "&courseId=" + location.state.courseId,
-      })
-    }
-    else{
-      setShow(true);
-      setGrade(exam.data.result);
-      setQuestions(exam.data.studentChoices.length);
-    }
-  }
-    catch(e){
+    try {
+      const exam = await axios.get(
+        `/individualtrainee/getIndividualExerciseGrade?id=${cookies.get(
+          "currentUser"
+        )}&subtitleId=${e.target.id}`
+      );
+      console.log(exam.data);
+      if (exam.data == null) {
+        navigate({
+          pathname: "/courseExam",
+          search:
+            "?subtitleId=" +
+            e.target.id +
+            "&studentId=" +
+            cookies.get("currentUser") +
+            "&courseId=" +
+            location.state.courseId,
+        });
+      } else {
+        setShow(true);
+        setGrade(exam.data.result);
+        setQuestions(exam.data.studentChoices.length);
+      }
+    } catch (e) {
       console.log(e);
-    };
-  }
+    }
+  };
+
+  const handleFinalExamClick = async (e) => {
+    try {
+      const exam = await axios.get(
+        `/individualtrainee/getFinalExamGrade?studentId=${cookies.get(
+          "currentUser"
+        )}&courseId=${location.state.courseId}`
+      );
+
+      if (exam.data.result == null) {
+        navigate(
+          {
+            pathname: "/courseExam",
+            search:
+              "&studentId=" +
+              cookies.get("currentUser") +
+              "&courseId=" +
+              location.state.courseId,
+          },
+          { state: { final: "true" } }
+        );
+      } else {
+        console.log(exam.data);
+        setShow(true);
+        setGrade(exam.data.result);
+        setQuestions(exam.data.studentChoices.length);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const FetchData = async () => {
     setIsLoading(true);
     try {
@@ -98,7 +136,7 @@ const Subtitle = () => {
             </section>
           </section>
           <section className={style["main-section-right"]}>
-            <Accordion   alwaysOpen className={style["subtitles"]}>
+            <Accordion alwaysOpen className={style["subtitles"]}>
               {subtitles &&
                 subtitles.map((subtitle, index0) => (
                   <Accordion.Item eventKey={index0} key={index0}>
@@ -122,7 +160,7 @@ const Subtitle = () => {
                             </button>
                           </ListGroup.Item>
                         ))}
-                        <ListGroup.Item key ={"exam"}>
+                        <ListGroup.Item key={"exam"}>
                           <button
                             id={subtitle._id}
                             name={"exam"}
@@ -131,30 +169,66 @@ const Subtitle = () => {
                           >
                             Exam
                           </button>
-                          <Modal backdrop = {false}show={show} onHide={handleClose}>
-                      
-                        <Modal.Header closeButton>
-                          <Modal.Title>Grade
-                          </Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                        <div className={style["rating-box"]}>
-                          { !grade ? <h3>Not Graded Yet</h3> : <h3>Grade: {grade}</h3>}
-                          
-                        </div>
-                        </Modal.Body>
-                        <Modal.Footer>
-                          <Button variant="secondary" onClick={handleClose}>
-                            close
-                          </Button>
-                        </Modal.Footer>
-                       
-                      </Modal>
+                          <Modal
+                            backdrop={false}
+                            show={show}
+                            onHide={handleClose}
+                          >
+                            <Modal.Header closeButton>
+                              <Modal.Title>Grade</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                              <div className={style["rating-box"]}>
+                                {grade == null ? (
+                                  <h3>Not Graded Yet</h3>
+                                ) : (
+                                  <h3>Grade: {grade}</h3>
+                                )}
+                              </div>
+                            </Modal.Body>
+                            <Modal.Footer>
+                              <Button variant="secondary" onClick={handleClose}>
+                                close
+                              </Button>
+                            </Modal.Footer>
+                          </Modal>
                         </ListGroup.Item>
                       </ListGroup>
                     </Accordion.Body>
                   </Accordion.Item>
                 ))}
+              <div>
+                <Accordion.Item key={"finalExam"} className="d-grid gap-2">
+                  <Button
+                    id={location.state.courseId}
+                    name={"finalexam"}
+                    onClick={handleFinalExamClick}
+                    size="lg"
+                    variant="light"
+                  >
+                    Final Exam
+                  </Button>
+                  <Modal backdrop={false} show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Grade</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <div className={style["rating-box"]}>
+                        {grade == null ? (
+                          <h3>Not Graded Yet</h3>
+                        ) : (
+                          <h3>Grade: {grade}</h3>
+                        )}
+                      </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleClose}>
+                        close
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                </Accordion.Item>
+              </div>
             </Accordion>
           </section>
         </section>

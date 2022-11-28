@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+  import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif";
@@ -13,7 +13,7 @@ import style from "./CourseExam.module.css";
 import regStyles from "./RegCourse.module.css";
 const CourseFinalExam = () => {
   const location = useLocation();
-  const courseId = new URLSearchParams(location.search);
+  const courseId = new URLSearchParams(location.search).get("courseId");
   const [CourseFinalExam, setCourseFinalExam] = useState([]);
   const [isloading, setIsLoading] = useState(false);
   const [exam, setExam] = useState(false);
@@ -27,11 +27,11 @@ const CourseFinalExam = () => {
       setIsLoading(true);
       let res = {};
       if (!corporate) {
-        res = await axios.get(
+        res = await fetch(
           `/individualtrainee/courseFinalExam?courseId=${courseId}`
         );
       } else {
-        res = await axios.get(`/corporate/courseFinalExam?courseId=${courseId}`);
+        res = await fetch(`/corporate/courseFinalExam?courseId=${courseId}`);
       }
       let jsondata = await res.json();
       if (res.ok) {
