@@ -13,8 +13,17 @@ const cookies = new Cookies();
 const LOGOUT_URL = "/admin/logOut";
 const Navbar = () => {
   const username = cookies.get("username");
+  const status = cookies.get("status");
   const [searchString, setSearchString] = useState("");
   const logged = cookies.get("logged");
+  const navigatetoProfile =()=>{
+      if (status == 0 || status ==2){
+          navigate({pathname:'/user/profile'})
+      }
+      else{
+        navigate({pathname:'/instructor/profile'})
+      }
+  }
   const handleChange = (event) => {
     setSearchString(event.target.value);
   };
@@ -82,7 +91,7 @@ const Navbar = () => {
               title={`Hi ! ${username}`}
               expand="lg"
             >
-              <NavDropdown.Item href="#action3">profile</NavDropdown.Item>
+              <NavDropdown.Item onClick = {navigatetoProfile}>profile</NavDropdown.Item>
               <NavDropdown.Item href="#action4">
                 Another action
               </NavDropdown.Item>

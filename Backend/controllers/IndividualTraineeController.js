@@ -82,7 +82,26 @@ const submitExam = async (req, res) => {
   } 
   
 };
-
+const updateFieldUser = async(req,res)=>{
+     const {userId , firstname,lastname , minibio} = req.body;
+     try{
+          const user = await IndividualTrainee.findByIdAndUpdate(userId , {firstname : firstname ,lastname :lastname , mini_bio:minibio});
+          res.status(200).json("updated succ");
+     }
+     catch(err){
+          res.status(500).json(err);
+     }
+}
+const updateEmail = async(req,res)=>{
+  const {userId ,email} = req.body;
+  try{
+       const user = await IndividualTrainee.findByIdAndUpdate(userId , {email:email});
+       res.status(200).json("updated succ");
+  }
+  catch(err){
+       res.status(500).json(err);
+  }
+}
 const getExerciseGrade = async (req, res) => {
   const studentId = req.query["id"];
   const subtitleId = req.query["subtitleId"];
@@ -118,24 +137,7 @@ const compareAnswers = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-const updateITraineeUsername = async (req, res) => {
-  try {
-    await IndividualTrainee.findByIdAndUpdate(
-      req.query["id"],
-      { username: req.body.username },
-      function (err, docs) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("Updated Trainee : ", docs);
-        }
-        res.status(200);
-      }
-    );
-  } catch (err) {
-    res.status(500).json({ msg: "can't update username" });
-  }
-};
+
 
 const updateITraineePassword = async (req, res) => {
   const { oldPass, newPass } = req.body;
@@ -167,7 +169,8 @@ module.exports = {
   InprogressCourses,
   getExerciseGrade,
   compareAnswers,
-  updateITraineeUsername,
   updateITraineePassword,
   submitExam,
+  updateFieldUser,
+  updateEmail
 };

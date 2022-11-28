@@ -70,7 +70,7 @@ const CreateCourse = () => {
   return (
     <section className={InprogressStyles["Wrapper"]}>
     <h2 className={InprogressStyles["Wrapper_h2"]}>Create Course</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}style = {{width :'30%'}}>
         <div className="form-group mt-3">
           <label className="Auth-label">
             Title <span className="required">*</span>
@@ -106,6 +106,30 @@ const CreateCourse = () => {
             placeholder="course preview link.."
             onChange={(e) => setPreview(e.target.value)}
           />
+        </div>
+        <div >
+          <label className="Auth-label">
+            price in $ <span className="required">*</span>
+          </label>
+          <input
+            required
+            readOnly={free}
+            className="form-control mt-1"
+            type="number"
+            name="price"
+            placeholder="price.."
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+          />
+          <input
+            type="checkbox"
+            id="freeCheck"
+            onClick={(e) => {
+              setFree(e.target.checked);
+              setPrice("0");
+            }}
+          />
+          free
         </div>
         <div>
           {subtitles.map((element, index) => (
@@ -151,30 +175,7 @@ const CreateCourse = () => {
             </button>
           </span>
         </div>
-        <div >
-          <label className="Auth-label">
-            price in $ <span className="required">*</span>
-          </label>
-          <input
-            required
-            readOnly={free}
-            className="form-control mt-1"
-            type="number"
-            name="price"
-            placeholder="price.."
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-          />
-          <input
-            type="checkbox"
-            id="freeCheck"
-            onClick={(e) => {
-              setFree(e.target.checked);
-              setPrice("0");
-            }}
-          />
-          free
-        </div>
+        
 
         <div >
           <label className="Auth-label">

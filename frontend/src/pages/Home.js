@@ -11,7 +11,6 @@ import Explore from "../components/Explore";
 import InstructorOwnCourses from "./Instructor/InstructorOwnCourses";
 import CreateCourse from "./Course/CreateCourse";
 import InstructorProfile from "./Instructor/InstructorProfile";
-import TraineeProfile from "./Trainee/TraineeProfile";
 const cookies = new Cookies();
 const Home = () => {
   const logged = cookies.get("logged");
@@ -42,8 +41,6 @@ const Home = () => {
         return <Explore />;
       case 1:
         return <Inprogress />;
-      case 2:
-        return <TraineeProfile />;
       default:
         return <h1>error</h1>;
     }
@@ -74,12 +71,6 @@ const Home = () => {
                 className={choice == 1 ? "Inprogress" : "notPressed"}
               >
                 My Learning
-              </button>
-              <button
-                onClick={() => setChoice(2)}
-                className={choice == 2 ? "Inprogress" : "notPressed"}
-              >
-                My Profile
               </button>
             </div>
           </nav>
