@@ -3,6 +3,8 @@ import regStyles from "../pages/Course/RegCourse.module.css";
 import ListGroup from "react-bootstrap/ListGroup";
 import Accordion from "react-bootstrap/Accordion";
 import { useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie"
+const cookies = new Cookies();
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import LoadingScreen from "react-loading-screen";
@@ -23,8 +25,8 @@ const CoursContent = () => {
       {
         pathname: "/subtitleView",
         search: e.target.id,
-      },
-      { state: { currentState: e.target.name, data: subtitles } }
+       },
+      { state: { currentState: e.target.name, data: subtitles , courseId:props.course._id} }
     );
   };
   const fetchdata = async () => {
@@ -41,6 +43,14 @@ const CoursContent = () => {
   useEffect(() => {
     fetchdata();
   }, []);
+
+  const handleExamClick = (e) => {
+    navigate(
+      {
+        pathname: "/courseExam",
+        search: "?subtitleId=" + e.target.id+ "&studentId="+cookies.get("currentUser")+ "&courseId=" +props.course._id ,
+      })
+    }
   return (
     <>
       {isloading ? (
@@ -85,7 +95,13 @@ const CoursContent = () => {
                             </button>
                           </ListGroup.Item>
                         ))}
-                      </ListGroup>
+                        <ListGroup.Item key ={"exam"}>
+                    <button id = {subtitle._id} name = {"exam"} onClick={handleExamClick} className = {style['subtitleView']}>
+                      Exam
+                      </button>
+                      
+                      </ListGroup.Item>
+                </ListGroup>
                     </Accordion.Body>
                   </Accordion.Item>
                 ))}
