@@ -1,8 +1,10 @@
 import style from "../../components/CoursePreview.module.css";
+import regStyles from "../Course/RegCourse.module.css"
 import Rating from "@mui/material/Rating";
 import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
 import CircleIcon from "@mui/icons-material/Circle";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -11,9 +13,16 @@ import UploadIcon from "@mui/icons-material/Upload";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 import ReviewCard from "../../components/ReviewCard";
+import MyCourseInst from "./MyCourseInst";
+import LoadingScreen from "react-loading-screen";
+import spinner from "../../static/download.gif";
+import CoursePromo from "./CoursePromo";
 const UPLOAD_URL = "/instructor/updatePreview";
-const CoursePreInst = (props) => {
-  const course = props.course;
+const CoursePreInst = () => {
+  const location = useLocation();
+  const course_id = new URLSearchParams(location.search).get('courseId');;
+  const [isloading, setIsLoading] = useState(false);
+  const [course, setCourse] = useState([]);
   const [coursePreviewUrl, setCoursePreviewUrl] = useState("");
   const [show, setShow] = useState(false);
   const [showRatings, setShowRating] = useState(false);
@@ -21,10 +30,7 @@ const CoursePreInst = (props) => {
   const handleClose = () => setShow(false);
   const handleCloseRatings = () => setShowRating(false);
   const handleShow = () => setShow(true);
-  const handleShowRatings = () => {
-    setReviews(props.course.reviews);
-    setShowRating(true);
-  };
+  const handleShowRatings = () => {setReviews(course.reviews);setShowRating(true);};
   const handleSave = async () => {
     let config = {
       headers: {
@@ -41,11 +47,27 @@ const CoursePreInst = (props) => {
         window.location.reload();
       },
       (error) => {
-        console.log(error);
-      }
-    );
-  };
+        console.log(error);  });};
+      const fetchdata = async () => {
+        setIsLoading(true);
+        try {
+          const res = await axios.get(`/course/${course_id}`);
+          setCourse(res.data);
+        } catch (e) {
+          console.log(e);
+        }
+        setIsLoading(false);
+      };
+      useEffect(()=>{
+        fetchdata();
+      },[]);
   return (
+    <>
+    {isloading ? (
+      <LoadingScreen loading={true} logoSrc={spinner} />
+    ) : (
+    <div className={regStyles["mainreg"]}>
+    <MyCourseInst course_id={course_id} course_img={course.imgUrl} course_title={course.title} course_inst={course.instructorname} name={'preview'}/>
     <div className={style["mainRight"]}>
       <Modal show={showRatings} onHide={handleCloseRatings}>
         <Modal.Header closeButton>
@@ -164,6 +186,9 @@ const CoursePreInst = (props) => {
         <EditIcon /> Edit Subject
       </Button>
       <hr className={style["mainRight-hr"]}></hr>
+      <h3>Define promotion</h3>
+      <CoursePromo course_id={course_id}></CoursePromo>
+      <hr className={style["mainRight-hr"]}></hr>
       <div className={style["mainRight-rating"]}>
         <h3>
           <Rating
@@ -185,6 +210,7 @@ const CoursePreInst = (props) => {
         </Button>
       </div>
     </div>
+    </div>)} </>
   );
 };
 

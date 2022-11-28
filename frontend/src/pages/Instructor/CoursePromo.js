@@ -2,8 +2,7 @@ import style from "../../components/CoursePreview.module.css";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
-
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import Button from "react-bootstrap/Button";
 
 const PROMO_URL = "/course/addPromotion";
@@ -38,11 +37,9 @@ const CoursePromo = (props) => {
     setEnddate("");
   };
   return (
-    <div className={style["mainRight"]}>
-      <label className={style["mainlabel"]}>Course Promotion</label>
+    <div >
       <form onSubmit={handleSubmit} style={{display : 'grid' ,maxWidth:'50%' , gap:'2rem' , marginTop :'2rem'}}>
         <div>
-
         {flag &&<Alert key={alert} variant={alert}>
              {alert == 'success' ? "promotion updated successfully" :"error happened"}
         </Alert>}
@@ -66,7 +63,7 @@ const CoursePromo = (props) => {
             onChange={handleEnddate}
           ></input>
         </div>
-        <Button variant="primary" type="submit" style={{width:'17rem'}}>Sumbit
+        <Button variant="dark" type="submit" style={{width:'17rem'}}>Sumbit
           </Button>
       </form>
     </div>

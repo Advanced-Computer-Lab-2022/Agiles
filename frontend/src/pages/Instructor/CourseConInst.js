@@ -7,11 +7,19 @@ import Modal from "react-bootstrap/Modal";
 import UploadIcon from "@mui/icons-material/Upload";
 import ListGroup from "react-bootstrap/ListGroup";
 import axios from "axios";
-import {useNavigate } from "react-router-dom";
-import { useState } from "react";
+import LoadingScreen from "react-loading-screen";
+import spinner from "../../static/download.gif";
+import {useNavigate ,useLocation} from "react-router-dom";
+import { useState,useEffect } from "react";
+import MyCourseInst from "./MyCourseInst";
+import regStyles from "../Course/RegCourse.module.css"
 let UPLOAD_URL = "/instructor/updateSubtitle";
-const CourseConInst = (props) => {
-  const subtitles = props.course.subtitles;
+const CourseConInst = () => {
+  const location = useLocation();
+  const course_id = new URLSearchParams(location.search).get('courseId');
+  const [course, setCourse] = useState([]);
+  const[subtitles , setSubtitles] = useState([]);
+  const [isloading, setIsLoading] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
   const [linkDesc, setLinKDesc] = useState("");
   const [subId, setSubId] = useState("");
@@ -20,8 +28,8 @@ const CourseConInst = (props) => {
   const navigate = useNavigate();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const handlehelper = (id) => {
-    setSubId(id);
+  const handleUpload = (e) => {
+    setSubId(e.target.id);
     handleShow();
   };  
   const handleClick = (e) => {
@@ -40,7 +48,7 @@ const CourseConInst = (props) => {
   }
   const handleSave = async () => {
     const data = {
-      courseId: props.course._id,
+      courseId: course_id,
       subId: subId,
       linkUrl: linkUrl,
       linkDesc: linkDesc,
@@ -61,7 +69,27 @@ const CourseConInst = (props) => {
       }
     );
   };
+  const fetchdata = async () => {
+    setIsLoading(true);
+    try {
+      const res = await axios.get(`/course/${course_id}`);
+      setCourse(res.data)
+      setSubtitles(res.data.subtitles);
+    } catch (e) {
+      console.log(e);
+    }
+    setIsLoading(false);
+  };
+  useEffect(()=>{
+    fetchdata();
+  },[]);
   return (
+    <>
+    {isloading ? (
+      <LoadingScreen loading={true} logoSrc={spinner} />
+    ) :(
+      <div className={regStyles["mainreg"]}>
+      <MyCourseInst course_id={course_id} course_img={course.imgUrl} course_title={course.title} course_inst={course.instructorname} name={'content'}/>
     <div className={style["mainRight"]}>
       <label className={style["mainlabel"]}>Course Content</label>
       <Modal show={show} onHide={handleClose}>
@@ -112,9 +140,10 @@ const CourseConInst = (props) => {
               <div className={style["accordation-body"]}>
                 <Button
                   variant="dark"
+                  id = {subtitle._id}
                   size="sm"
                    style={{width :'20%'}}
-                  onClick={() => handlehelper(subtitle._id)}
+                  onClick={handleUpload}
                 >
                   <UploadIcon /> Upload Video
                 </Button>
@@ -131,6 +160,8 @@ const CourseConInst = (props) => {
         ))}
       </Accordion>
     </div>
+    </div>
+    )}</>
   );
 };
 

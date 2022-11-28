@@ -6,8 +6,8 @@ const RegCourseInst = (props) => {
   const handelClick = () => {
     navigate(
       {
-        pathname: "/myCourseInst",
-        search: `?view=preview&courseId=${props.data._id}`,
+        pathname: "/preInst",
+        search: `courseId=${props.data._id}`,
       }
     );
   };

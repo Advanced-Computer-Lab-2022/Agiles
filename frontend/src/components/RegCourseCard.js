@@ -30,11 +30,9 @@ const RegCourseCard = (props) => {
   const handelClick = () => {
     navigate(
       {
-        pathname: "/regcourse",
-        search: `?course=${props.data.title}`,
-      },
-      { state: { course_id: props.data._id, progress: props.progress } }
-    );
+        pathname: "/preReg",
+        search: `courseId=${props.data._id}`,
+      },{state :{progress : props.progress}});
   };
   useEffect(()=>{
       props.data.reviews.map(review=>{
@@ -43,7 +41,6 @@ const RegCourseCard = (props) => {
         }
        
       })
-      console.log(review.length);  
   },[])
   return (
     <div className={RegCourseCardStyles["regcard"]}>

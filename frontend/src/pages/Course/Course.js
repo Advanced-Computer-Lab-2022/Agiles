@@ -22,7 +22,7 @@ const Course = () => {
   const courseId = location.state.id;
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
- 
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -68,31 +68,22 @@ const Course = () => {
               </div>
             </section>
             <section className={styled["mainSection-right"]}>
-              {course.coursePreviewUrl != "" ? (
-                <>
-                  <iframe
-                    width="100%"
-                    src={course.coursePreviewUrl}
-                    title="YouTube video player"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                  <button className={styled["preview"]} onClick={handleShow}>
-                    &nbsp;preview this course
-                  </button>
-                  <div className={styled["totalhours"]}>
-                    <YouTubeIcon className={styled["icon"]} />
-                    <label className={styled["time"]}>
-                      {course.totalHoursOfCourse}h 30m Video on demand
-                    </label>
-                  </div>
-                </>
-              ) : (
-                <h6 style={{ textAlign: "center" }}>
-                  <DoNotDisturbIcon /> No Preview Video for this Course
-                </h6>
-              )}
-
+              <iframe
+                width="100%"
+                src={course.coursePreviewUrl}
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+              <button className={styled["preview"]} onClick={handleShow}>
+                &nbsp;preview this course
+              </button>
+              <div className={styled["totalhours"]}>
+                <YouTubeIcon className={styled["icon"]} />
+                <label className={styled["time"]}>
+                  {course.totalHoursOfCourse}h 30m Video on demand
+                </label>
+              </div>
               <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                   <Modal.Title>Course Preview</Modal.Title>
@@ -165,7 +156,9 @@ const Course = () => {
                 {course.subtitles.map((subtitle, index) => (
                   <Accordion.Item eventKey={index}>
                     <Accordion.Header>
-                    <h5>Section {index + 1}: {subtitle.subtitle}</h5>
+                      <h5>
+                        Section {index + 1}: {subtitle.subtitle}
+                      </h5>
                     </Accordion.Header>
                     <Accordion.Body>
                       <YouTubeIcon /> {subtitle.time}
@@ -173,8 +166,14 @@ const Course = () => {
                         {subtitle.link?.map((link, index) => (
                           <ListGroup.Item>
                             {index + 1}.{" "}
-                            {link.allowed ?  ( <a href={link.linkUrl}> {link.linkDesc}</a>) :(<a className={styled["isDisabled"]}> {link.linkDesc}</a>)}
-                           
+                            {link.allowed ? (
+                              <a href={link.linkUrl}> {link.linkDesc}</a>
+                            ) : (
+                              <a className={styled["isDisabled"]}>
+                                {" "}
+                                {link.linkDesc}
+                              </a>
+                            )}
                           </ListGroup.Item>
                         ))}
                       </ListGroup>

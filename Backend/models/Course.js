@@ -9,10 +9,10 @@ const courseSchema = new Schema(
     },
     subtitles: [
       {
-        subtitle : {type : String , default:""},
-        time : {type : String , default:"h::mm:ss"},
-        link : [{type: mongoose.Schema.Types.ObjectId, ref: "Link"}],
-      }
+        subtitle: { type: String, default: "" },
+        time: { type: String, default: "h::mm:ss" },
+        link: [{ type: mongoose.Schema.Types.ObjectId, ref: "Link" }],
+      },
     ],
     subject: {
       type: String,
@@ -28,14 +28,12 @@ const courseSchema = new Schema(
       required: false,
       default: 1,
     },
-    reviews:[{
-         userId :{type:mongoose.SchemaTypes.ObjectId ,required:true},
-         userRating :{ type: Number,
-         required: true,
-         min : 0 , max :5,
-         default: 0},
-         userReview :{type : String , default:""}
-    }
+    reviews: [
+      {
+        userId: { type: mongoose.SchemaTypes.ObjectId ,ref:'IndividualTrainee', required: true },
+        userRating: {type: Number,required: true,  min: 0,  max: 5,default: 0,},
+        userReview: { type: String, default: "" },
+      },
     ],
     description: {
       type: String,
@@ -61,7 +59,7 @@ const courseSchema = new Schema(
     coursePreviewUrl: {
       type: String,
       required: false,
-      default:""
+      default: "",
     },
     language: {
       type: String,
