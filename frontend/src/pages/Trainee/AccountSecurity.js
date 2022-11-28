@@ -14,7 +14,7 @@ const AccountSecurity = () => {
   const [isloading, setIsLoading] = useState(false);
   const id = cookie.get("currentUser");
   const [currentEmail ,setCurrentEmail] = useState("");
-  const [fullname,setFull] = useState("");
+  const [fullname,setFullname] = useState("");
   const [email , setEmail] = useState("email..");
   const [data, setData] = useState("");
   const [oldPass , setOldPass] = useState("Enter current password");
@@ -31,6 +31,7 @@ const AccountSecurity = () => {
       const res = await axios.get(fetchUrl, { params: { id: id } });
       setData(res.data);
       setCurrentEmail(res.data.email)
+      setFullname(res.data.firstname + " "+res.data.lastname)
     } catch (err) {
       console.log(err);
     }
@@ -109,7 +110,7 @@ const passwordUpdate = async (event) => {
       ) : (<>
         
         <section className={style['main']}>
-          <ProfileSideBar fullname ={fullname} email={currentEmail}/>
+          <ProfileSideBar fullname ={fullname} state={'security'}/>
           <section className={style["security"]}>
             <section className={style["security-top"]}>
               <div>

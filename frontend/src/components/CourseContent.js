@@ -4,13 +4,13 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Accordion from "react-bootstrap/Accordion";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie"
-const cookies = new Cookies();
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import LoadingScreen from "react-loading-screen";
 import spinner from "../static/download.gif";
 import RegCourse from "../pages/Course/RegCourse";
 import axios from "axios";
+const cookies = new Cookies();
 const CoursContent = () => {
   const location = useLocation();
   const progress =location.state.progress;
@@ -26,7 +26,7 @@ const CoursContent = () => {
         pathname: "/subtitleView",
         search: e.target.id,
        },
-      { state: { currentState: e.target.name, data: subtitles , courseId:props.course._id} }
+      { state: { currentState: e.target.name, data: subtitles , courseId:course_id} }
     );
   };
   const fetchdata = async () => {
@@ -48,7 +48,7 @@ const CoursContent = () => {
     navigate(
       {
         pathname: "/courseExam",
-        search: "?subtitleId=" + e.target.id+ "&studentId="+cookies.get("currentUser")+ "&courseId=" +props.course._id ,
+        search: "?subtitleId=" + e.target.id+ "&studentId="+cookies.get("currentUser")+ "&courseId=" +course_id ,
       })
     }
   return (

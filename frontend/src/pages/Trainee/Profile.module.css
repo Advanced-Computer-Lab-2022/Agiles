@@ -34,9 +34,16 @@
   margin-bottom: 0.5rem;
   cursor: pointer;
 }
-.side-bar-bottom li:hover {
+.side-bar-bottomClicked {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
   color: white;
   background-color: rgb(78, 77, 77);
+}
+.side-bar-bottom li:hover {
+  color: white;
+  background-color: rgb(162, 160, 160);
 }
 .side-bar-bottom li span {
   margin-left: 1rem;

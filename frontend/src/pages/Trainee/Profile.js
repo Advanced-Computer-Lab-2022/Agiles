@@ -57,7 +57,7 @@ const Profile = () => {
         <LoadingScreen loading={true} logoSrc={spinner} />
       ) : (
         <section className={style["main"]}>
-          <ProfileSideBar fullname ={data.firstname + " "+data.lastname} email={data.email}/>
+          <ProfileSideBar fullname ={data.firstname + " "+data.lastname} state={'profile'}/>
           <section className={style["profile"]}>
             <section className={style["profile-top"]}>
               <div>

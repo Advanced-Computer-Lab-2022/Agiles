@@ -114,9 +114,9 @@ const CoursePreview = () => {
           ratings)</span>
         </h3>
         <Button
-            variant="light"
+            variant="dark"
             onClick={handleShow}
-            style={{ border: "1px solid black" ,width:'13%'}}
+            style={{ borderRadius:0 ,width:'13%'}}
           >
             show all reviews
           </Button>
