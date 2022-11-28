@@ -146,7 +146,8 @@ const updateInstructorBio = async (req, res) => {
   }
 };
 const rateInstructor = async (req, res) => {
-  const { instId, userId, userRating, userReview ,username} = req.body;
+  // const { instId, userId, userRating, userReview ,username} = req.body;
+  const { instId, userId, userRating, userReview } = req.body;
   if (!instId || !userId || !userRating || !userReview) {
     return res.status(400).json({ error: "Empty" });
   }
@@ -157,7 +158,7 @@ const rateInstructor = async (req, res) => {
     const newRating = (oldRating + userRating) / (oldCount + 1);
     const Review = {
       userId: userId,
-      username : username,
+      // username : username,
       userRating: userRating,
       userReview: userReview,
     };

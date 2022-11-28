@@ -259,7 +259,7 @@ const rateCourse = async (req, res) => {
     const newRating = (oldRating + userRating) / (oldCount + 1);
     const Review = {
       userId: userId,
-      username : username,
+      // username : username,
       userRating: userRating,
       userReview: userReview,
     };
