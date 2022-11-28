@@ -1,9 +1,13 @@
 const IndividualTrainee = require("../models/IndividualTrainee");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
 const ExamResult = require("../models/ExamResult");
 const Exam = require("../models/Exam");
+const Instructor = require("../models/Instructor");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+var nodemailer = require("nodemailer");
+const resetPassword = require ( "./ResetPassword")  ; 
+require("dotenv").config();
+
 function verifyItraineeJWT(authHeader) {
   //const authHeader = req.headers['authorization'];
   if (!authHeader) return true;
@@ -62,7 +66,6 @@ const submitExam = async (req, res) => {
       });
       
   }
-
 
   else{
       ExamResult.create({
@@ -136,8 +139,63 @@ const compareAnswers = async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
+}
+const forgetPassword = async (req,res)=>{
+  const {email} = req.body;
+  if (!email){
+    return res.status(500).json("bad request");
+  }
+  const oldUser = await IndividualTrainee.findOne({email:email});
+  const oldInstructor = await Instructor.findOne({email:email});
+  if (!oldUser && !oldInstructor){
+    return res.status(406).json ("user not exists!!")
+  }
+  let randomCode = Math.floor((Math.random() * 899999) + 100000);
+  if (oldUser){
+        const update = await IndividualTrainee.findByIdAndUpdate(oldUser._id,{verficationCode:randomCode});
+  }
+  else{
+    const update = await Instructor.findByIdAndUpdate(oldInstructor._id,{verficationCode:randomCode});
+  }
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.mailtrap.io',
+    Port:2525,
+    auth: {
+      user: 'ffa86d69ed128e',
+      pass: '08062f79ed76dc',
+    }
+  });
+  const mailOptions = {
+    from:'CanidianChamber@gmail.com',
+    to: email,
+    subject: 'Reset password',
+    html: `${resetPassword(randomCode)}`
+  };
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) return res.status(403).json("operation not supported");
+    else return res.status(200).json("emailSet");})
 };
-
+const verifyCode = async(req,res)=>{
+  const {email , code} = req.body;
+  const oldUser = await IndividualTrainee.findOne({email:email});
+  const oldInstructor = await Instructor.findOne({email:email});
+  if (oldUser){
+    if (oldUser.verficationCode ==code){
+      return res.status(200).json("success")
+    }
+    else{
+      return res.status(403).json("forbidden");
+    }
+  }
+  else{
+    if (oldInstructor.verficationCode ==code){
+      return res.status(200).json("success")
+    }
+    else{
+      return res.status(403).json("forbidden");
+    }
+  }
+}
 
 const updateITraineePassword = async (req, res) => {
   const { oldPass, newPass } = req.body;
@@ -172,5 +230,7 @@ module.exports = {
   updateITraineePassword,
   submitExam,
   updateFieldUser,
-  updateEmail
+  updateEmail,
+  forgetPassword,
+  verifyCode
 };

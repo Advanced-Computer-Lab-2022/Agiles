@@ -48,7 +48,7 @@ const CoursePreview = () => {
       <div className={regStyles["mainreg"]}>
         <RegCourse course_id={course_id} course_img={course.imgUrl} progress={progress} course_title={course.title} course_inst={course.instructorname} name={'preview'}/>
     <div className={style["mainRight"]}>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} size="lg" onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Course Reviews
           </Modal.Title>

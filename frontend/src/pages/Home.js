@@ -55,7 +55,7 @@ const Home = () => {
           <section className="mainSection">
             <h2>Welcome Back !</h2>
 
-            <img src={a} alt="mainImage" className="mainImage"></img>
+            <img src={a} alt="canidan chamber of commerce" className="mainImage"></img>
           </section>
           {/*sub nav*/}
           <nav className={NavbarStyles["navbar"]}>
@@ -87,7 +87,7 @@ const Home = () => {
             <div>
               <h2>Welcome Back !</h2>
             </div>
-            <img src={a} alt="mainImage" className="mainImage"></img>
+            <img src={a} alt="canidan chamber of commerce" className="mainImage"></img>
           </section>
           <nav className={NavbarStyles["navbar"]}>
             <div>
@@ -130,7 +130,7 @@ const Home = () => {
           <div>
           <Button variant="light" onClick={handleClick}>Register now</Button>
           </div>
-          <img src={a} alt="mainImage" className="mainImage"></img>
+          <img src={a} alt="canidan chamber of commerce" className="mainImage"></img>
         </section>
         <nav className={NavbarStyles["navbar"]}>
         <button className="Inprogress"   >

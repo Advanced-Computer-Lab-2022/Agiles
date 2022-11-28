@@ -1,6 +1,7 @@
 import "./Login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useRef, useState, useEffect } from "react";
+import Swal from "sweetalert2";
 import {
   faCheck,
   faTimes,
@@ -8,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 //validation
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -15,7 +17,7 @@ const SIGNUP_URL ="/admin/signUp";
 const SignUp = () => {
   const userRef = useRef();
   const errRef = useRef();
-
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
@@ -31,7 +33,6 @@ const SignUp = () => {
   const [lastname, setLastname] = useState("");
 
   const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     setValidName(USER_REGEX.test(username));
@@ -65,7 +66,23 @@ const SignUp = () => {
     };
     try {
        await axios.post(SIGNUP_URL, user, config);
-      setSuccess(true);
+       const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      
+      Toast.fire({
+        icon: 'success',
+        title: 'Signed in successfully'
+      })
+      navigate('/login');
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response');
@@ -80,14 +97,6 @@ const SignUp = () => {
   };
 
   return (
-    <>{success ? (
-      <section>
-          <h1>Success!</h1>
-          <p>
-              <a href="/logIn">Log In</a>
-          </p>
-      </section>
-  ) : (
     <div className="Auth-form-container">
       <form className="Auth-form" onSubmit={handleSumbit}>
         <div className="Auth-form-content">
@@ -236,9 +245,7 @@ const SignUp = () => {
           </div>
         </div>
       </form>
-    </div>)}
-  </>
-  );
+    </div>)
 };
 
 export default SignUp;

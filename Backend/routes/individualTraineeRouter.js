@@ -12,7 +12,9 @@ const {
   updateITraineePassword,
   submitExam,
   updateFieldUser,
-  updateEmail
+  updateEmail,
+  forgetPassword,
+  verifyCode
 } = require("../controllers/IndividualTraineeController");
 IndividualTraineeRouter.get("/getIndividualTraineebyId", getTraineebyID);
 IndividualTraineeRouter.get("/inprogress/:id", InprogressCourses);
@@ -22,7 +24,8 @@ IndividualTraineeRouter.patch("/updateBasics", updateFieldUser);
 IndividualTraineeRouter.patch("/updateEmail", updateEmail);
 IndividualTraineeRouter.patch("/updatePassword", updateITraineePassword);
 IndividualTraineeRouter.post("/submitExam", submitExam)
+IndividualTraineeRouter.post("/forgotpassword",forgetPassword)
+IndividualTraineeRouter.post("/verifyCode",verifyCode)
 IndividualTraineeRouter.get("/courseExam", courseExam);
 IndividualTraineeRouter.get("/courseFinalExam", courseFinalExam);
-updateFieldUser
 module.exports = IndividualTraineeRouter;

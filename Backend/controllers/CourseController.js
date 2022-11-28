@@ -3,6 +3,7 @@ const Exam = require("../models/Exam");
 const FinalExam = require("../models/FinalExam");
 const Link = require("../models/Link");
 const jwt = require("jsonwebtoken");
+const Instructor = require("../models/Instructor");
 require("dotenv").config();
 const filterCourses = async (req, res) => {
   const lowerBound = req.query["lowerBound"];
@@ -135,6 +136,7 @@ const createCourse = async (req, res) => {
   });
   try {
     const course = await Course.create(newCourse);
+    const update = await Instructor.updateOne({_id:instructor},{$push:{courseList:course._id}});
     res.status(200).json(course);
   } catch (error) {
     res.status(400).json({ error: error.message });

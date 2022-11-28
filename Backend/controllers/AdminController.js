@@ -47,7 +47,6 @@ const logIn = async (req, res) => {
       bcrypt.compare(password, user.password, (err, data) => {
         if (err) throw err;
         if (data) {
-          console.log(process.env.ACCESS_TOKEN_SECRET_ITRAINEE);
           const accessToken = jwt.sign(
             { username: user.username },
             process.env.ACCESS_TOKEN_SECRET_ITRAINEE,

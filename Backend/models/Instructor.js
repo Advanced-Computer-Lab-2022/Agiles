@@ -32,11 +32,12 @@ const instructorSchema = new Schema(
       type: Number,
       required: false,
     },
-    courseList: {
-      type: Array,
-      required: false,
-      default: [],
+    verficationCode :{
+      type:String,
+      min:10000,
+      max:99999
     },
+    courseList: [{ type: Schema.Types.ObjectId, ref: "Course" }],
     money: {
       type: Number,
       required: false,

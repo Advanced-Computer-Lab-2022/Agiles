@@ -17,6 +17,7 @@
   .Auth-form-content {
     padding-left: 12%;
     padding-right: 12%;
+    display: grid;
   }
   
   .Auth-form-title {
@@ -35,9 +36,7 @@
     font-size: 14px;
     font-weight: 600;
     color: rgb(34, 34, 34);
-    padding-top: 10px;
     padding-left: 5px;
-    margin-top: 5px;
 }
 .last {
     display:inline-flex;    
@@ -82,4 +81,10 @@
   margin-bottom: 0.5rem;
   margin-top: 0.5rem;
 
+}
+.footforget{
+  font-size: 13px;
+  font-weight: 600;
+  color: rgb(34, 34, 34);
+  padding-left: 5px;
 }
