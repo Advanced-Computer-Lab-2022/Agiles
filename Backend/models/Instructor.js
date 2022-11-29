@@ -7,7 +7,7 @@ const instructorSchema = new Schema(
       type: String,
       required: true,
     },
-    secondename: {
+    lastname: {
       type: String,
       required: false,
     },
@@ -32,11 +32,12 @@ const instructorSchema = new Schema(
       type: Number,
       required: false,
     },
-    courseList: {
-      type: Array,
-      required: false,
-      default: [],
+    verficationCode: {
+      type: String,
+      min: 10000,
+      max: 99999,
     },
+    courseList: [{ type: Schema.Types.ObjectId, ref: "Course" }],
     money: {
       type: Number,
       required: false,
@@ -54,8 +55,19 @@ const instructorSchema = new Schema(
     },
     reviews: [
       {
-        userId: { type: mongoose.SchemaTypes.ObjectId, ref:'IndividualTrainee' , required:true },
-        userRating: { type: Number, required: true, default: 0 , min : 0 , max :5 },
+        userId: {
+          type: mongoose.SchemaTypes.ObjectId,
+          ref: "IndividualTrainee",
+          required: true,
+        },
+        // username: { type: String, required: true }
+        userRating: {
+          type: Number,
+          required: true,
+          default: 0,
+          min: 0,
+          max: 5,
+        },
         userReview: { type: String, default: "" },
       },
     ],

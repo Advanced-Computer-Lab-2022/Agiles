@@ -55,7 +55,7 @@ const CoursePreview = () => {
             name={"preview"}
           />
           <div className={style["mainRight"]}>
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} size="lg" onHide={handleClose}>
               <Modal.Header closeButton>
                 <Modal.Title>Course Reviews</Modal.Title>
               </Modal.Header>

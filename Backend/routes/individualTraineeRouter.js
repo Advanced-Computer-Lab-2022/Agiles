@@ -13,6 +13,8 @@ const {
   submitExam,
   updateFieldUser,
   updateEmail,
+  forgetPassword,
+  verifyCode,
   getFinalExamGrade
 } = require("../controllers/IndividualTraineeController");
 IndividualTraineeRouter.get("/getIndividualTraineebyId", getTraineebyID);
@@ -23,6 +25,8 @@ IndividualTraineeRouter.patch("/updateBasics", updateFieldUser);
 IndividualTraineeRouter.patch("/updateEmail", updateEmail);
 IndividualTraineeRouter.patch("/updatePassword", updateITraineePassword);
 IndividualTraineeRouter.post("/submitExam", submitExam)
+IndividualTraineeRouter.post("/forgotpassword",forgetPassword)
+IndividualTraineeRouter.post("/verifyCode",verifyCode)
 IndividualTraineeRouter.get("/courseExam", courseExam);
 IndividualTraineeRouter.get("/courseFinalExam", courseFinalExam);
 IndividualTraineeRouter.get("/getFinalExamGrade", getFinalExamGrade);

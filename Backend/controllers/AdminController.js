@@ -1,6 +1,5 @@
 const Admin = require("../models/Admin");
 const IndividualTrainee = require("..//models/IndividualTrainee");
-const CorporateTrainee = require("../models/CorporateTrainee");
 const Instructor = require("../models/Instructor");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -14,10 +13,15 @@ function verifyAdminJWT(authHeader) {
     if (err) return err;
   });
 }
+
 //create admin
 const createAdmin = async (req, res) => {
   const { username, password } = req.body;
   let verficationerror = verifyAdminJWT(req.headers["authorization"]);
+  const exists = await Admin.findOne ({username : username});
+  if (exists){
+    return res.status(409).json({msg : "username already exists"});
+  }
   if (!username || !password) {
     return res.status(500).json({ msg: "bad request" });
   } else if (verficationerror) {
@@ -37,6 +41,56 @@ const createAdmin = async (req, res) => {
     }
   }
 };
+//create Instructor
+const createInstructor = async (req, res) => {
+  const { firstname,lastname, username, password, email, gender } = req.body;
+  const userTrainee = await IndividualTrainee.findOne({ username: username });
+  const userInstructor = await Instructor.findOne({ username: username });
+  if (userTrainee || userInstructor) {
+    return res.status(409).json({ msg: "username already exists" });}
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+  const newInstructor = new Instructor({
+    firstname: firstname,
+    lastname: lastname,
+    username: username,
+    password: hashedPassword,
+    email: email,
+    gender: gender,
+  });
+  try {
+    const instructor = await Instructor.create(newInstructor);
+    res.status(200).json(instructor);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+//create Corporate
+const createCorporate = async (req, res) => {
+  const { firstname,lastname , username, password,email,gender} = req.body;
+  const userTrainee = await IndividualTrainee.findOne({ username: username });
+  const userInstructor = await Instructor.findOne({ username: username });
+  if (userTrainee || userInstructor) {
+    return res.status(409).json({ msg: "username already exists" });}
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+  const newCorporate = new IndividualTrainee({
+    firstname :firstname,
+    lastname:lastname,
+    username: username,
+    state : true,
+    password: hashedPassword,
+    email : email,
+    gender: gender,
+  });
+  try {
+    const corporate = await IndividualTrainee.create(newCorporate);
+    res.status(200).json(corporate);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+//Login
 const logIn = async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password)
@@ -47,7 +101,6 @@ const logIn = async (req, res) => {
       bcrypt.compare(password, user.password, (err, data) => {
         if (err) throw err;
         if (data) {
-          console.log(process.env.ACCESS_TOKEN_SECRET_ITRAINEE);
           const accessToken = jwt.sign(
             { username: user.username },
             process.env.ACCESS_TOKEN_SECRET_ITRAINEE,
@@ -60,7 +113,8 @@ const logIn = async (req, res) => {
             process.env.REFRESH_TOKEN_SECRET,
             { expiresIn: "1d" }
           );
-          const status = 0;
+          let status =0;
+          if (data.state){status = 2;}
           res.cookie("username", user.firstname, {
             httpsOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
@@ -132,15 +186,15 @@ const logIn = async (req, res) => {
     });
   }
 };
+
+//signUp
 const signUp = async (req, res) => {
   const { username, email, password, firstname, lastname } = req.body;
   if (!username || !password || !email || !password || !firstname || !lastname)
     return res.status(400).json({ msg: "bad request" });
-
-  const user = await CorporateTrainee.findOne({ username: username });
   const userTrainee = await IndividualTrainee.findOne({ username: username });
   const userInstructor = await Instructor.findOne({ username: username });
-  if (user || userTrainee || userInstructor) {
+  if (userTrainee || userInstructor) {
     return res.status(409).json({ msg: "username already exists" });
   } else {
     const salt = await bcrypt.genSalt(10);
@@ -148,6 +202,7 @@ const signUp = async (req, res) => {
     const newUser = new IndividualTrainee({
       username: username,
       password: hashedPassword,
+      state : false,
       email: email,
       firstname: firstname,
       lastname: lastname,
@@ -160,6 +215,8 @@ const signUp = async (req, res) => {
     }
   }
 };
+
+// logOut
 const logOut = async (req, res) => {
   res.clearCookie("logged");
   res.clearCookie("currentUser");
@@ -168,4 +225,4 @@ const logOut = async (req, res) => {
   res.status(200).json({ msg: "logged out" });
 };
 
-module.exports = { createAdmin, logIn, signUp, logOut };
+module.exports = { createAdmin,createInstructor,logIn,createCorporate,signUp, logOut };

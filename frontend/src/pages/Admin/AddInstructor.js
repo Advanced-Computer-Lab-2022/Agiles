@@ -6,7 +6,8 @@ import AdminSidebar from "./adminComponents/AdminSidebar";
 import Instimg from "../../static/Instructor.png"
 
 const AddInstructor = (props) => {
-  const [fullname, setFullname] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -14,7 +15,8 @@ const AddInstructor = (props) => {
   props.funcNav(false);
   const handleSumbit = async (event) => {
     const instructor = {
-      fullname: fullname,
+      firstname: firstname,
+      lastname :lastname,
       username: username,
       password: password,
       email: email,
@@ -54,17 +56,30 @@ const AddInstructor = (props) => {
           <div className="right">
       <form  className = "formClass" onSubmit={handleSumbit}>
       <div className="formInput">
-        <label className="labelClass">
-          Fullname <span className="required">*</span>
-        </label>
-        <input
-          type="text"
-          name="fullname"
-          placeholder="name.."
-          required
-          className="inputClass"
-          onChange={(e) => setFullname(e.target.value)}
-        />
+                <label className="labelClass">
+                  First name <span className="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="firstname"
+                  required
+                  placeholder="first name.."
+                  className="inputClass"
+                  onChange={(e) => setFirstname(e.target.value)}
+                />
+              </div>
+              <div className="formInput">
+                <label className="labelClass">
+                  Last name <span className="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="last name"
+                  required
+                  placeholder="last name.."
+                  className="inputClass"
+                  onChange={(e) => setLastname(e.target.value)}
+                />
         </div>
         <div className="formInput">
         <label  className="labelClass">

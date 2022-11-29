@@ -18,7 +18,7 @@ export const CourseCard = (props) => {
       <img
         src={props.data.imgUrl}
         onClick={handleClick}
-        alt="courseImage"
+        alt={props.data.title}
       ></img>
       <div className={style["cardheader"]}>{props.data.title}</div>
       <div className={style["cardfooter"]}>{props.data.instructorname}</div>

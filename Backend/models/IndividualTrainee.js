@@ -28,6 +28,11 @@ const individualTraineeSchema = new Schema(
       type: String,
       required: false,
     },
+    state:{
+      type: Boolean,
+      default: false,
+      required : true
+    },
     registered_courses: [
       {
         courseId: {
@@ -41,6 +46,11 @@ const individualTraineeSchema = new Schema(
         }
       },
     ],
+    verficationCode :{
+      type:String,
+      min:10000,
+      max:99999
+    },
     mini_bio: {
       type: String,
       required: false,

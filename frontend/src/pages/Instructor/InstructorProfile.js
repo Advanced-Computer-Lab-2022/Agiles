@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 import "../Login.css";
 import Cookies from "universal-cookie";
+import { AiFillStar } from "react-icons/ai";
 const cookies = new Cookies();
 
 function InstructorProfile() {
@@ -17,6 +18,8 @@ function InstructorProfile() {
   const [bio, setBio] = useState("");
   const [instructor, setInstructor] = useState({});
   const [change, setChange] = useState(false);
+  const [stars, setStars] = useState([]);
+  const [reviews, setReviews] = useState([]);
   // const instructorid = "635fba2f99f3f855c075eb6d";
   const instructorid = cookies.get("currentUser");
 
@@ -100,8 +103,22 @@ function InstructorProfile() {
     const fetchData = async () => {
       const res = await fetch(`/instructor/instructorbyid?id=${instructorid}`);
       let jsondata = await res.json();
+      console.log(jsondata);
       if (res.ok) {
-        setInstructor(jsondata);
+        setInstructor({
+          username: jsondata.username,
+          firstname: jsondata.firstname,
+          lastname: jsondata.lastname,
+          lastname: jsondata.lastname,
+          bio: jsondata.mini_bio,
+        });
+        setReviews(jsondata.reviews);
+        let newStars = [];
+        console.log(instructor.rating);
+        for (let i = 0; i < jsondata.rating; i++) {
+          newStars.push(<AiFillStar />);
+        }
+        setStars(newStars);
       }
     };
     fetchData();
@@ -120,6 +137,24 @@ function InstructorProfile() {
               </div>
 
               <hr />
+            </div>
+          );
+        })}
+      </div>
+      <div>
+        <h3>Rating: </h3>
+        <div>{stars}</div>
+        <h3>Reviews: </h3>
+        {reviews.map((el) => {
+          let ur = [];
+          for (let i = 0; i < el.userRating; i++) {
+            ur.push(<AiFillStar />);
+          }
+          return (
+            <div>
+              <div>{el.username}</div>
+              <div>{ur}</div>
+              <div>{el.userReview}</div>
             </div>
           );
         })}

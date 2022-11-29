@@ -12,7 +12,6 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import ListGroup from "react-bootstrap/ListGroup";
 import Accordion from "react-bootstrap/Accordion";
-import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
 import axios from "axios";
 const Course = () => {
   const [course, setCourse] = useState([]);
@@ -49,7 +48,7 @@ const Course = () => {
               <h2>{course.description}</h2>
               <div className={styled["mainSection-left-rating"]}>
                 <Rating name="rating" readOnly value={course.rating} />
-                <label>({course.ratingCount} ratings)</label>
+                <label>({course.ratingCount-1} ratings)</label>
               </div>
               <label className={styled["instlabel"]}>
                 Created by {course.instructorname}
