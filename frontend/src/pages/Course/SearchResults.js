@@ -14,7 +14,7 @@ const SearchResults = () => {
   const [error, setError] = useState(false);
   const [courses, setCourses] = useState([]);
   const [loading, setIsLoading] = useState(false);
-  const status = cookies.get('status');
+  const status = cookies.get("status");
   const fetchData = async () => {
     setIsLoading(true);
     const { data } = await axios.get(
@@ -45,7 +45,7 @@ const SearchResults = () => {
               <section className={style["wrapper-right"]}>
                 <h1>Search Resutls</h1>
                 <h2>{courses.length} serach results</h2>
-                
+
                 <hr></hr>
                 {courses.length > 0 && (
                   <div className={style["course-list"]}>

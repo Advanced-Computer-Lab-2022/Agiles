@@ -39,18 +39,35 @@ function InstructorRating() {
 
   const setRating = async (event) => {
     event.preventDefault();
-    const body = {
-      instId: isnstID,
-      userId: userId,
-      userRating: value,
-      userReview: review,
-    };
-    //check if he already done it before
-    try {
-      const res = axios.post("/instructor/setRating", body);
-      // window.location.reload();
-    } catch (err) {
-      console.log(err);
+    if (oldReview) {
+      const bodyUpdate = {
+        instId: isnstID,
+        userId: userId,
+        userRating: value,
+        userReview: review,
+        currentRating: oldReview.userRating,
+      };
+      //check if he already done it before
+      try {
+        const res = axios.patch("/instructor/updateRating", bodyUpdate);
+        // window.location.reload();
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      const body = {
+        instId: isnstID,
+        userId: userId,
+        userRating: value,
+        userReview: review,
+      };
+      //check if he already done it before
+      try {
+        const res = axios.post("/instructor/setRating", body);
+        // window.location.reload();
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -60,6 +77,12 @@ function InstructorRating() {
       try {
         let res = await axios.get("/course/" + course_id);
         courseData = res.data.instructor;
+        res.data.reviews.map((review) => {
+          if (review.userId == userId) {
+            setOldReview(review);
+          }
+        });
+
         console.log("instructorid" + courseData);
         // window.location.reload();
       } catch (err) {
