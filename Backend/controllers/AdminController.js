@@ -113,7 +113,8 @@ const logIn = async (req, res) => {
             process.env.REFRESH_TOKEN_SECRET,
             { expiresIn: "1d" }
           );
-          const status = 0;
+          let status =0;
+          if (data.state){status = 2;}
           res.cookie("username", user.firstname, {
             httpsOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
