@@ -98,11 +98,6 @@ const CourseExam = () => {
     console.log(answers);
   };
 
-  const handleBack = () => {
-    //navigate to course page
-    navigate(`/preReg?courseId=${courseId}`);
-  };
-
   return (
     <div>
       <h1>Exam</h1>
@@ -257,9 +252,6 @@ const CourseExam = () => {
                 <h1>
                   Grade: {grade} / {answers.length}
                 </h1>
-                <Button variant="primary" onClick={handleBack} size="lg">
-                  Back
-                </Button>
               </>
             )}
           </div>

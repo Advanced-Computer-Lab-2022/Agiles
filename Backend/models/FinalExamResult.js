@@ -8,15 +8,17 @@ const examResultSchema = new Schema(
       required: true,
     },
     courseId: {
-      type: mongoose.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Course",
       required: true,
     },
     result: {
       type: Number,
+      required: true,
     },
     studentChoices: {
       type: Array,
+      required: true,
     },
   },
   { timestamps: true }

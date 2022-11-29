@@ -65,8 +65,9 @@ const CoursContent = () => {
           "currentUser"
         )}&courseId=${course_id}`
       );
+      console.log(exam.data);
 
-      if (exam.data.result == null) {
+      if (exam.data == null) {
         navigate(
           {
             pathname: "/courseExam",
@@ -97,7 +98,7 @@ const CoursContent = () => {
         )}&subtitleId=${e.target.id}`
       );
 
-      if (!exam.data.result) {
+      if (exam.data == null) {
         navigate(
           {
             pathname: "/courseExam",
