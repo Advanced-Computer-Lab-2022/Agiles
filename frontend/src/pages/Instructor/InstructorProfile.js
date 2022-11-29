@@ -103,7 +103,6 @@ function InstructorProfile() {
     const fetchData = async () => {
       const res = await fetch(`/instructor/instructorbyid?id=${instructorid}`);
       let jsondata = await res.json();
-      console.log(jsondata);
       if (res.ok) {
         setInstructor({
           username: jsondata.username,
@@ -114,7 +113,6 @@ function InstructorProfile() {
         });
         setReviews(jsondata.reviews);
         let newStars = [];
-        console.log(instructor.rating);
         for (let i = 0; i < jsondata.rating; i++) {
           newStars.push(<AiFillStar />);
         }

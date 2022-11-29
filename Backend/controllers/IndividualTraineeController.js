@@ -5,6 +5,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 var nodemailer = require("nodemailer");
 const resetPassword = require("./ResetPassword");
+const FinalExamResult = require("../models/FinalExamResult");
+const FinalExam = require("../models/FinalExam");
 require("dotenv").config();
 const Exam = require("../models/Exam");
 function verifyItraineeJWT(authHeader) {
@@ -46,7 +48,7 @@ const submitExam = async (req, res) => {
   let resultno = 0;
   const { studentId, subtitleId, courseId } = req.query;
   let exerciseAnswers = {};
-  if (!final) {
+  if (final == "false") {
     exerciseAnswers = await Exam.findOne(
       { subtitleId: subtitleId },
       { questions: 1 }
@@ -65,13 +67,13 @@ const submitExam = async (req, res) => {
       result.push("-" + question.answer);
     }
   });
-  if (!final) {
+  if (final == "false") {
     const test = await ExamResult.findOne({
       studentId: studentId,
       subtitleId: subtitleId,
       courseId: courseId,
     });
-    if (test.studentChoices.length > 0) {
+    if (test) {
       ExamResult.findOneAndUpdate(
         { studentId: studentId, subtitleId: subtitleId, courseId: courseId },
         { $set: { studentChoices: answers, result: resultno } },
@@ -95,15 +97,16 @@ const submitExam = async (req, res) => {
       studentId: studentId,
       courseId: courseId,
     });
-    if (test.studentChoices.length > 0) {
+    console.log(test);
+    if (test !== null) {
       FinalExamResult.findOneAndUpdate(
         { studentId: studentId, courseId: courseId },
         { $set: { studentChoices: answers, result: resultno } },
-        { new: true },
+        { new: true, upsert: true },
         function (err, docs) {
+          console.log(docs);
           if (err) console.log(err);
           else console.log("Updated User : ", docs);
-          console.log(test);
         }
       );
     } else {
@@ -127,14 +130,31 @@ const submitExam = async (req, res) => {
 
 const getFinalExamGrade = async (req, res) => {
   const { studentId, courseId } = req.query;
+  const finalExam = await FinalExamResult.findOne(
+    { studentId: studentId, courseId: courseId },
+    { result: 1, studentChoices: 1 }
+  );
+
   try {
-    const finalExam = await FinalExamResult.findOne(
-      { studentId: studentId, courseId: courseId },
-      { result: 1, studentChoices: 1 }
-    );
-    if (finalExam.studentChoices.length > 0) res.status(200).json(finalExam);
-    else res.status(200).json({ result: null, studentChoices: 0 });
-    console.log(finalExam);
+    res.status(200).json(finalExam);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const getExerciseGrade = async (req, res) => {
+  const studentId = req.query["id"];
+  const subtitleId = req.query["subtitleId"];
+  const exercise = await ExamResult.findOne(
+    {
+      studentId: studentId,
+      subtitleId: subtitleId,
+    },
+    { result: 1, studentChoices: 1 }
+  ).exec();
+
+  try {
+    res.status(200).json(exercise);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -162,23 +182,6 @@ const updateEmail = async (req, res) => {
     res.status(200).json("updated succ");
   } catch (err) {
     res.status(500).json(err);
-  }
-};
-const getExerciseGrade = async (req, res) => {
-  const studentId = req.query["id"];
-  const subtitleId = req.query["subtitleId"];
-  const exercise = await ExamResult.findOne(
-    {
-      studentId: studentId,
-      subtitleId: subtitleId,
-    },
-    { result: 1, studentChoices: 1 }
-  ).exec();
-
-  try {
-    res.status(200).json(exercise);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
   }
 };
 

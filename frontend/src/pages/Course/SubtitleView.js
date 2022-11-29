@@ -30,7 +30,13 @@ const Subtitle = () => {
         pathname: "/subtitleView",
         search: e.target.id,
       },
-      { state: { currentState: e.target.name, data: subtitles } }
+      {
+        state: {
+          currentState: e.target.name,
+          data: subtitles,
+          courseId: location.state.courseId,
+        },
+      }
     );
     window.location.reload();
   };
@@ -46,16 +52,19 @@ const Subtitle = () => {
       );
       console.log(exam.data);
       if (exam.data == null) {
-        navigate({
-          pathname: "/courseExam",
-          search:
-            "?subtitleId=" +
-            e.target.id +
-            "&studentId=" +
-            cookies.get("currentUser") +
-            "&courseId=" +
-            location.state.courseId,
-        });
+        navigate(
+          {
+            pathname: "/courseExam",
+            search:
+              "?subtitleId=" +
+              e.target.id +
+              "&studentId=" +
+              cookies.get("currentUser") +
+              "&courseId=" +
+              location.state.courseId,
+          },
+          { state: { final: "false" } }
+        );
       } else {
         setShow(true);
         setGrade(exam.data.result);
@@ -74,7 +83,7 @@ const Subtitle = () => {
         )}&courseId=${location.state.courseId}`
       );
 
-      if (exam.data.result == null) {
+      if (exam.data === null) {
         navigate(
           {
             pathname: "/courseExam",
