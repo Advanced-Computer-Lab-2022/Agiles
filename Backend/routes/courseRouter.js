@@ -7,8 +7,10 @@ const {
   filterCourses,
   courseSearch,
   getCourseById,
-  getLink  ,rateCourse,updateRateCourse
-
+  getLink,
+  rateCourse,
+  updateRateCourse,
+  findCourseById,
 } = require("../controllers/CourseController");
 
 //get all the titles of the courses available including the total hours of the course and course rating
@@ -22,9 +24,10 @@ courserouter.get("/:id", getCourseById);
 courserouter.get("/listCourses/filter", filterCourses);
 
 courserouter.get("/listCourses/search", courseSearch);
+courserouter.get("/findCourseById", findCourseById);
 courserouter.patch("/addPromotion", addCoursePromotion);
 // courserouter.patch("/updateRating", updateRating);
-courserouter.get("/link/view",getLink)
+courserouter.get("/link/view", getLink);
 
 courserouter.post("/setRating", rateCourse);
 

@@ -189,11 +189,21 @@ const coursesDetails = async (req, res) => {
 
 const oneCoursesDetails = async (req, res) => {
   const cid = req.query["id"];
+
   try {
     const courseAttr = await Course.findOne(
       { _id: cid },
       { title: 1, totalHoursOfCourse: 1, rating: 1, _id: 1 }
     );
+    res.status(200).send(courseAttr);
+  } catch (err) {
+    res.status(500).json({ mssg: "can't find courses" });
+  }
+};
+const findCourseById = async (req, res) => {
+  const cid = req.query["id"];
+  try {
+    const courseAttr = await Course.findById(cid);
     res.status(200).send(courseAttr);
   } catch (err) {
     res.status(500).json({ mssg: "can't find courses" });
@@ -214,8 +224,12 @@ const coursePrice = async (req, res) => {
 
 const getCourseById = async (req, res) => {
   const id = req.params["id"];
+
   try {
-    const course = await Course.findById(id).populate("subtitles.link").populate("reviews.userId").exec();
+    const course = await Course.findById(id)
+      .populate("subtitles.link")
+      .populate("reviews.userId")
+      .exec();
     res.status(200).send(course);
   } catch (err) {
     res.status(500).json({ mssg: "no such Id" });
@@ -251,7 +265,7 @@ const getLink = async (req, res) => {
 };
 const rateCourse = async (req, res) => {
   const { courseId, userId, userRating, userReview } = req.body;
-  if ( !courseId|| !userId || !userRating || !userReview) {
+  if (!courseId || !userId || !userRating || !userReview) {
     return res.status(400).json({ error: "Empty" });
   }
   try {
@@ -265,16 +279,16 @@ const rateCourse = async (req, res) => {
       userRating: userRating,
       userReview: userReview,
     };
-    const UpdatedRating = await  Course.updateOne(
+    const UpdatedRating = await Course.updateOne(
       { _id: courseId },
       {
         $push: {
           reviews: Review,
         },
-        $set :{
+        $set: {
           rating: newRating,
           ratingCount: oldCount + 1,
-        }
+        },
       }
     ).exec();
     res.status(200).json(UpdatedRating);
@@ -284,7 +298,7 @@ const rateCourse = async (req, res) => {
 };
 
 const updateRateCourse = async (req, res) => {
-  const { courseId, userId, userRating, userReview,currentRating } = req.body;
+  const { courseId, userId, userRating, userReview, currentRating } = req.body;
   if (!courseId || !userId || !userRating || !userReview) {
     return res.status(400).json({ error: "Empty" });
   }
@@ -292,10 +306,17 @@ const updateRateCourse = async (req, res) => {
     const data = await Course.findById(courseId).exec();
     const oldRating = data.rating;
     const oldCount = data.ratingCount;
-    const newRating = (((oldRating * oldCount)-currentRating)+ userRating )/ oldCount;
+    const newRating =
+      (oldRating * oldCount - currentRating + userRating) / oldCount;
     const UpdatedRating = await Course.updateOne(
-      { _id: courseId , "reviews.userId": userId},
-      { $set :{"reviews.$.userRating": userRating,"reviews.$.userReview": userReview,rating: newRating}}
+      { _id: courseId, "reviews.userId": userId },
+      {
+        $set: {
+          "reviews.$.userRating": userRating,
+          "reviews.$.userReview": userReview,
+          rating: newRating,
+        },
+      }
     ).exec();
     res.status(200).json(UpdatedRating);
   } catch (err) {
@@ -318,4 +339,5 @@ module.exports = {
   updateRateCourse,
   setFinalExam,
   courseFinalExam,
+  findCourseById,
 };
