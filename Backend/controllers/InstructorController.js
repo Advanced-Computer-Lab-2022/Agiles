@@ -2,6 +2,8 @@ const Instructor = require("../models/Instructor");
 const bcrypt = require("bcrypt");
 const Course = require("../models/Course");
 const Link = require("../models/Link");
+const Rating = require("../models/Rating");
+const IndividualTrainee = require("../models/IndividualTrainee");
 function verifyInstructorJWT(authHeader) {
   if (!authHeader) return true;
   const token = authHeader.split(" ")[1];
@@ -102,7 +104,7 @@ const courseSearchByInstructor = async (req, res) => {
 
 const getInstructorbyId = async (req, res) => {
   try {
-    const instructor = await Instructor.findById(req.query["id"]).exec();
+    const instructor = await Instructor.findById(req.query["id"]).populate("reviews").exec();
     res.status(200).send(instructor);
   } catch (err) {
     res.status(500).json({ mssg: "can't find Instructor" });
@@ -128,61 +130,63 @@ const updateInstructorBio = async (req, res) => {
   }
 };
 const rateInstructor = async (req, res) => {
-  // const { instId, userId, userRating, userReview ,username} = req.body;
-  const { instId, userId, userRating, userReview } = req.body;
-  if (!instId || !userId || !userRating || !userReview) {
+  const { instId,courseId, userId, userRating, userReview } = req.body;
+  if (!instId || !userId || !courseId || !userRating || !userReview) {
     return res.status(400).json({ error: "Empty" });
   }
   try {
     const data = await Instructor.findById(instId).exec();
-    const oldRating = data.rating;
-    const oldCount = data.ratingCount;
-    const newRating = (oldRating + userRating) / (oldCount + 1);
+    var oldRating = data.rating;
+    console.log(userRating);
+    var newCount = (data.ratingCount)+1;
+    var x = parseInt(userRating);
+    let newRating = oldRating+x;
     const Review = {
       userId: userId,
-      // username : username,
       userRating: userRating,
       userReview: userReview,
     };
+    const r = await Rating.create(Review);
+    const updateIndvidual = await IndividualTrainee.updateOne(
+      { _id: userId ,"registered_courses.courseId": courseId },
+      {$set :{"registered_courses.$.instRating": userRating}})
     const UpdatedRating = await Instructor.updateOne(
-      { _id: instId },
+      { _id: instId},
       {
         $push: {
-          reviews: Review,
+          "reviews": r._id,
         },
         $set: {
           rating: newRating,
-          ratingCount: oldCount + 1,
-        },
+          ratingCount: newCount
+        }
       }
     ).exec();
-    res.status(200).json(UpdatedRating);
+    res.status(200).json(r);
   } catch (err) {
     res.status(500).json({ msg: "can't update rating" });
   }
 };
 const updateRateIns = async (req, res) => {
-  const { instId, userId, userRating, userReview, currentRating } = req.body;
-  if (!instId || !userId || !userRating || !userReview || !currentRating) {
+  const { instId, userId, courseId,userRating, userReview, currentRating } = req.body;
+  if (!instId || !userId || !courseId|| !userRating || !userReview || !currentRating) {
     return res.status(400).json({ error: "Empty" });
   }
   try {
     const data = await Instructor.findById(instId).exec();
-    const oldRating = data.rating;
-    const oldCount = data.ratingCount;
-    const newRating =
-      (oldRating * oldCount - currentRating + userRating) / oldCount;
-    const UpdatedRating = await Instructor.updateOne(
-      { _id: instId, "reviews.userId": userId },
-      {
-        $set: {
-          "reviews.$.userRating": userRating,
-          "reviews.$.userReview": userReview,
-          rating: newRating,
-        },
-      }
-    ).exec();
-    res.status(200).json(UpdatedRating);
+    var oldRating = parseInt(data.rating);
+    var y = parseInt(currentRating);
+    var x = parseInt(userRating);
+    let newRating = oldRating - y + x;
+    const updateRating = await Rating.findOneAndUpdate({userId:userId},{userRating:userRating,userReview:userReview});
+    const updateIndvidual = await IndividualTrainee.updateOne(
+      { _id: userId ,"registered_courses.courseId": courseId },
+      {$set :{"registered_courses.$.instRating": userRating}})
+    const updateInstructor = await Instructor.updateOne(
+        { _id: instId},
+        {$set: {rating: newRating}}
+      ).exec();
+    res.status(200).json(updateRating);
   } catch (err) {
     res.status(500).json({ msg: "can't update rating" });
   }

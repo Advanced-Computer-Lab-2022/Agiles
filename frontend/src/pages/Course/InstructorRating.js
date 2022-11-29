@@ -26,83 +26,54 @@ function getLabelText(value) {
   return `${value} Star${value !== 1 ? "s" : ""}, ${labels[value]}`;
 }
 
-function InstructorRating() {
+function InstructorRating(props) {
+  const userId = cookies.get("currentUser");
+  const instId = props.instId;
+  const [instRating,setInstRating]=useState(props.instRating); 
   const location = useLocation();
   const course_id = new URLSearchParams(location.search).get("courseId");
-  const userId = cookies.get("currentUser");
-
-  const [value, setValue] = React.useState(2);
+  const [value, setValue] = useState(instRating===-1?0:instRating);
   const [hover, setHover] = React.useState(-1);
-  const [review, setReview] = useState("");
-  const [isnstID, setIsnstID] = useState("");
-  const [oldReview, setOldReview] = useState([]);
+  const [review, setReview] = useState(" ");
 
   const setRating = async (event) => {
     event.preventDefault();
-    if (oldReview) {
+    event.target.reset();
+    console.log(value);
+    if (instRating != -1) {
       const bodyUpdate = {
-        instId: isnstID,
+        instId: instId,
+        courseId : course_id,
         userId: userId,
         userRating: value,
         userReview: review,
-        currentRating: oldReview.userRating,
+        currentRating: instRating,
       };
       //check if he already done it before
       try {
         const res = axios.patch("/instructor/updateRating", bodyUpdate);
-        // window.location.reload();
+        setInstRating(value);
       } catch (err) {
         console.log(err);
       }
     } else {
       const body = {
-        instId: isnstID,
+        instId: instId,
+        courseId :course_id,
         userId: userId,
         userRating: value,
         userReview: review,
       };
-      //check if he already done it before
       try {
         const res = axios.post("/instructor/setRating", body);
-        // window.location.reload();
+        setInstRating(value);
       } catch (err) {
         console.log(err);
       }
     }
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      let courseData;
-      try {
-        let res = await axios.get("/course/" + course_id);
-        courseData = res.data.instructor;
-        res.data.reviews.map((review) => {
-          if (review.userId == userId) {
-            setOldReview(review);
-          }
-        });
-
-        console.log("instructorid" + courseData);
-        // window.location.reload();
-      } catch (err) {
-        console.log(err);
-      }
-
-      try {
-        const res = await axios.get(
-          "/instructor/instructorbyid?id=" + courseData
-        );
-
-        setIsnstID(res.data._id);
-        console.log(isnstID);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchData();
-  }, [course_id, isnstID]);
-
+  useEffect(()=>{
+  },[instRating]);
   return (
     <div className={InstructorRatingStyles["ratingStars"]}>
       <Box
@@ -138,7 +109,6 @@ function InstructorRating() {
             setReview(event.target.value);
           }}
         />
-        {/* <br></br> */}
         <button type="submit">submit Review</button>
       </form>
     </div>

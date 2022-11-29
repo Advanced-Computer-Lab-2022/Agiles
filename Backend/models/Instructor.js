@@ -53,24 +53,7 @@ const instructorSchema = new Schema(
       required: false,
       default: 1,
     },
-    reviews: [
-      {
-        userId: {
-          type: mongoose.SchemaTypes.ObjectId,
-          ref: "IndividualTrainee",
-          required: true,
-        },
-        // username: { type: String, required: true }
-        userRating: {
-          type: Number,
-          required: true,
-          default: 0,
-          min: 0,
-          max: 5,
-        },
-        userReview: { type: String, default: "" },
-      },
-    ],
+    reviews: [{type : mongoose.SchemaTypes.ObjectId , ref :'Rating'}],
     mini_bio: {
       type: String,
       required: false,

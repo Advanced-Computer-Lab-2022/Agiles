@@ -34,7 +34,7 @@ const RegCourseCard = (props) => {
         pathname: "/preReg",
         search: `courseId=${props.data._id}`,
       },
-      { state: { progress: props.progress } }
+      { state: { progress: props.progress ,instRating : props.instRating} }
     );
   };
 
@@ -53,7 +53,6 @@ const RegCourseCard = (props) => {
       };
       try {
         const res = axios.patch("/course/updateRating", bodyUpdate);
-        window.location.reload();
       } catch (err) {
         console.log(err);
       }
@@ -66,7 +65,6 @@ const RegCourseCard = (props) => {
       };
       try {
         const res = axios.post("/course/setRating", body);
-        window.location.reload();
       } catch (err) {
         console.log(err);
       }

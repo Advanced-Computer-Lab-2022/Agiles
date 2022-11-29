@@ -43,7 +43,10 @@ const individualTraineeSchema = new Schema(
           type: Number,
           min: 0,
           max: 100,
-        }
+          default: 0,
+        },
+        myRating :{type : Number , default : -1},
+        instRating:{type :Number ,default : -1}
       },
     ],
     verficationCode :{

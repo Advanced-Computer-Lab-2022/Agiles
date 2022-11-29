@@ -228,6 +228,7 @@ const getCourseById = async (req, res) => {
   try {
     const course = await Course.findById(id)
       .populate("subtitles.link")
+      .populate("reviews")
       .populate("reviews.userId")
       .exec();
     res.status(200).send(course);
@@ -275,7 +276,6 @@ const rateCourse = async (req, res) => {
     const newRating = (oldRating + userRating) / (oldCount + 1);
     const Review = {
       userId: userId,
-      // username : username,
       userRating: userRating,
       userReview: userReview,
     };

@@ -29,8 +29,8 @@ export const CourseCard = (props) => {
         </label>
       </div>
       <div className={style['rating']}>
-      <Rating name="rating" readOnly value={props.data.rating} />
-      <label >({props.data.ratingCount} ratings)</label>
+      <Rating name="rating" readOnly value={props.data.rating/props.data.ratingCount} />
+      <label >({props.data.ratingCount-1} ratings)</label>
        </div>
        { status != 2 &&<div className={style['price']}>
       {props.data.price === 0 ? (

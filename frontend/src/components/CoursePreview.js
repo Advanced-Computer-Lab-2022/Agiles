@@ -18,8 +18,10 @@ const CoursePreview = () => {
   const location = useLocation();
   const course_id = new URLSearchParams(location.search).get("courseId");
   const progress = location.state.progress;
+  const instRating = location.state.instRating;
   const [isloading, setIsLoading] = useState(false);
   const [course, setCourse] = useState([]);
+  const [inst , setInst]= useState(0);
   const [show, setShow] = useState(false);
   const [reviews, setReviews] = useState([]);
   const handleClose = () => setShow(false);
@@ -32,6 +34,7 @@ const CoursePreview = () => {
     try {
       const res = await axios.get(`/course/${course_id}`);
       setCourse(res.data);
+      setInst(res.data.instructor);
     } catch (e) {
       console.log(e);
     }
@@ -112,18 +115,18 @@ const CoursePreview = () => {
             <p>{course.subject}</p>
             <hr className={style["mainRight-hr"]}></hr>
             <h3>Rate Instructor</h3>
-            <InstructorRating />
+            <InstructorRating instId={inst} instRating={instRating} />
             <hr className={style["mainRight-hr"]}></hr>
             <div className={style["mainRight-rating"]}>
               <h3>
                 <Rating
                   name="rating"
                   readOnly
-                  value={!course.rating ? 0 : course.rating}
+                  value={!course.rating ? 0 : course.rating/course.ratingCount}
                   className={style["rating"]}
                 />{" "}
                 <span>
-                  {course.rating} course rating{" "}
+                  {course.rating/course.ratingCount} course rating{" "}
                   <CircleIcon style={{ fontSize: "0.5rem" }} /> (
                   {course.ratingCount - 1} ratings)
                 </span>
