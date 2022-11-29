@@ -1,5 +1,5 @@
 import "./Home.css";
-import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
 import NavbarStyles from "../components/Navbar.module.css";
 import React from "react";
 import Cookies from "universal-cookie";
@@ -18,9 +18,9 @@ const Home = () => {
   const status = cookies.get("status");
   const [choice, setChoice] = useState(0);
   const [chosen, setChosen] = useState(3);
-  const handleClick = ()=>{
+  const handleClick = () => {
     navigate("/signUp");
-  }
+  };
   const project = () => {
     switch (chosen) {
       case 0:
@@ -29,7 +29,7 @@ const Home = () => {
         return <CreateCourse />;
       case 2:
         return <InstructorProfile />;
-        case 3:
+      case 3:
         return <Explore />;
       default:
         return <h1>error</h1>;
@@ -41,6 +41,7 @@ const Home = () => {
         return <Explore />;
       case 1:
         return <Inprogress />;
+
       default:
         return <h1>error</h1>;
     }
@@ -59,7 +60,7 @@ const Home = () => {
           </section>
           {/*sub nav*/}
           <nav className={NavbarStyles["navbar"]}>
-            <div >
+            <div>
               <button
                 onClick={() => setChoice(0)}
                 className={choice == 0 ? "Inprogress" : "notPressed"}
@@ -91,13 +92,13 @@ const Home = () => {
           </section>
           <nav className={NavbarStyles["navbar"]}>
             <div>
-            <button
+              <button
                 onClick={() => setChosen(3)}
                 className={chosen == 3 ? "Inprogress" : "notPressed"}
               >
                 Explore
               </button>
-            <button
+              <button
                 onClick={() => setChosen(0)}
                 className={chosen == 0 ? "Inprogress" : "notPressed"}
               >
@@ -115,7 +116,6 @@ const Home = () => {
               >
                 My Profile
               </button>
-             
             </div>
           </nav>
           <div className="middle">{project()}</div>
@@ -128,14 +128,14 @@ const Home = () => {
       <div className="home">
         <section className="mainSection">
           <div>
-          <Button variant="light" onClick={handleClick}>Register now</Button>
+            <Button variant="light" onClick={handleClick}>
+              Register now
+            </Button>
           </div>
           <img src={a} alt="mainImage" className="mainImage"></img>
         </section>
         <nav className={NavbarStyles["navbar"]}>
-        <button className="Inprogress"   >
-                Explore
-              </button>
+          <button className="Inprogress">Explore</button>
         </nav>
         <footer></footer>
       </div>

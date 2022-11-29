@@ -1,14 +1,14 @@
 import RegCourseCardStyles from "./RegCourseCard.module.css";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Rating from "@mui/material/Rating";
-import Form from 'react-bootstrap/Form';
+import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 
 import Modal from "react-bootstrap/Modal";
-import Cookies from "universal-cookie"
+import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const RegCourseCard = (props) => {
   const userId = cookies.get("currentUser");
@@ -16,75 +16,72 @@ const RegCourseCard = (props) => {
   const [show, setShow] = useState(false);
   const [value, setValue] = useState(0);
   const [review, setReview] = useState("");
-  const [oldReview , setOldReview] = useState([]);
+  const [oldReview, setOldReview] = useState([]);
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setValue(oldReview.userRating);
+
     setReview(oldReview.userReview);
     setShow(true);
-  }
+  };
   const handleChangeRating = async (event) => {
     setValue(event.target.value);
   };
- 
+
   const handelClick = () => {
     navigate(
       {
         pathname: "/preReg",
         search: `courseId=${props.data._id}`,
-      },{state :{progress : props.progress}});
+      },
+      { state: { progress: props.progress } }
+    );
   };
 
   //------------------
   const setRating = async (event) => {
     event.preventDefault();
-       
-       //check if he already done it before
-       if(oldReview){
-        const bodyUpdate = {
-          courseId :props.data._id, 
-          userId:userId,
-           userRating:value ,
-           userReview:review,
-           currentRating:oldReview.userRating
-  
-         }
-        try{
-          const res = axios.patch("/course/updateRating",bodyUpdate)
-          window.location.reload();
-         }
-         catch(err){
-          console.log(err);
-         }}
-       else{
-        const body = {
-          courseId :props.data._id, 
-          userId:userId,
-           userRating:value ,
-           userReview:review
-  
-         }
-        try{
-          const res = axios.post("/course/setRating",body)
-          window.location.reload();
-         }
-         catch(err){
-          console.log(err);
-         }};
-  
 
-       }
-         useEffect(()=>{
-      props.data.reviews.map(review=>{
-        if(review.userId==userId){
-          setOldReview(review);
-        }
-       
-      })
-  },[])
+    //check if he already done it before
+    if (oldReview) {
+      const bodyUpdate = {
+        courseId: props.data._id,
+        userId: userId,
+        userRating: value,
+        userReview: review,
+        currentRating: oldReview.userRating,
+      };
+      try {
+        const res = axios.patch("/course/updateRating", bodyUpdate);
+        window.location.reload();
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      const body = {
+        courseId: props.data._id,
+        userId: userId,
+        userRating: value,
+        userReview: review,
+      };
+      try {
+        const res = axios.post("/course/setRating", body);
+        window.location.reload();
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+  useEffect(() => {
+    props.data.reviews.map((review) => {
+      if (review.userId == userId) {
+        setOldReview(review);
+      }
+    });
+  }, []);
   return (
     <div className={RegCourseCardStyles["regcard"]}>
-      <Modal show={show} onHide={handleClose} >
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Rating</Modal.Title>
         </Modal.Header>
