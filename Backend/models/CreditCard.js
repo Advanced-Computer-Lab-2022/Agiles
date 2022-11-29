@@ -2,11 +2,6 @@ const mongoose = require ("mongoose");
 const Schema = mongoose.Schema;
 
 const creditCardSchema = new Schema({
-    userId:{
-       type: mongoose.Types.ObjectId,
-       ref:'IndividualTrainee',
-       required: true
-    },
     cardholderName: {
         type: String,
         required: false,
