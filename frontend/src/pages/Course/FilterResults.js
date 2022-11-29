@@ -16,9 +16,9 @@ const FilterResults = (props) => {
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const [loading, setIsLoading] = useState(false);
-  const handleClear=()=>{
-     navigate("/courses");
-  }
+  const handleClear = () => {
+    navigate("/courses");
+  };
   const fetchData = async () => {
     setIsLoading(true);
     let url = "/course/listCourses/filter" + location.search;
@@ -43,10 +43,13 @@ const FilterResults = (props) => {
           />
           <section className={style["wrapper-right"]}>
             <h1>Filtered Courses</h1>
-            <h2>{courses.length} filter results <button className={style["edit"]} onClick={handleClear}>
-              clear filters
-            </button></h2>
-            
+            <h2>
+              {courses.length} filter results{" "}
+              <button className={style["edit"]} onClick={handleClear}>
+                clear filters
+              </button>
+            </h2>
+
             <hr></hr>
             {courses.length > 0 && (
               <div className={style["course-list"]}>

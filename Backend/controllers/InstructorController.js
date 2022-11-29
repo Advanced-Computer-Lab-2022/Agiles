@@ -15,7 +15,6 @@ function verifyInstructorJWT(authHeader) {
 }
 //create Instructor
 
-
 const listAllInstructorCoursesTitles = async (req, res) => {
   const id = req.params["id"];
   try {
@@ -151,10 +150,10 @@ const rateInstructor = async (req, res) => {
         $push: {
           reviews: Review,
         },
-        $set :{
+        $set: {
           rating: newRating,
           ratingCount: oldCount + 1,
-        }
+        },
       }
     ).exec();
     res.status(200).json(UpdatedRating);
@@ -163,18 +162,25 @@ const rateInstructor = async (req, res) => {
   }
 };
 const updateRateIns = async (req, res) => {
-  const { instId, userId, userRating, userReview,currentRating } = req.body;
-  if (!instId || !userId || !userRating || !userReview) {
+  const { instId, userId, userRating, userReview, currentRating } = req.body;
+  if (!instId || !userId || !userRating || !userReview || !currentRating) {
     return res.status(400).json({ error: "Empty" });
   }
   try {
     const data = await Instructor.findById(instId).exec();
     const oldRating = data.rating;
     const oldCount = data.ratingCount;
-    const newRating = (((oldRating * oldCount)-currentRating)+ userRating )/ oldCount;
+    const newRating =
+      (oldRating * oldCount - currentRating + userRating) / oldCount;
     const UpdatedRating = await Instructor.updateOne(
-      { _id: instId , "reviews.userId": userId},
-      { $set :{"reviews.$.userRating": userRating,"reviews.$.userReview": userReview,rating: newRating}}
+      { _id: instId, "reviews.userId": userId },
+      {
+        $set: {
+          "reviews.$.userRating": userRating,
+          "reviews.$.userReview": userReview,
+          rating: newRating,
+        },
+      }
     ).exec();
     res.status(200).json(UpdatedRating);
   } catch (err) {
@@ -290,5 +296,5 @@ module.exports = {
   uploadPreLink,
   deletLink,
   rateInstructor,
-  updateRateIns
+  updateRateIns,
 };
