@@ -7,8 +7,6 @@ const jwt = require("jsonwebtoken");
 var nodemailer = require("nodemailer");
 const resetPassword = require ( "./ResetPassword")  ; 
 require("dotenv").config();
-const ExamResult = require("../models/ExamResult");
-const Exam = require("../models/Exam");
 function verifyItraineeJWT(authHeader) {
   //const authHeader = req.headers['authorization'];
   if (!authHeader) return true;

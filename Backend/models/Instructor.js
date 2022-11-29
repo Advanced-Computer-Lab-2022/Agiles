@@ -7,7 +7,7 @@ const instructorSchema = new Schema(
       type: String,
       required: true,
     },
-    secondename: {
+    lastname: {
       type: String,
       required: false,
     },

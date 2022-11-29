@@ -14,24 +14,7 @@ function verifyInstructorJWT(authHeader) {
   );
 }
 //create Instructor
-const createInstructor = async (req, res) => {
-  const { fullname, username, password, email, gender } = req.body;
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
-  const newInstructor = new Instructor({
-    fullname: fullname,
-    username: username,
-    password: hashedPassword,
-    email: email,
-    gender: gender,
-  });
-  try {
-    const instructor = await Instructor.create(newInstructor);
-    res.status(200).json(instructor);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
+
 
 const listAllInstructorCoursesTitles = async (req, res) => {
   const id = req.params["id"];
@@ -296,7 +279,6 @@ const updateInstructorPassword = async (req, res) => {
 //---------------
 
 module.exports = {
-  createInstructor,
   listAllInstructorCoursesTitles,
   courseSearchByInstructor,
   filterCoursesByInstructor,

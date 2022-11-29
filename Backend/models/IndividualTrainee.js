@@ -28,6 +28,11 @@ const individualTraineeSchema = new Schema(
       type: String,
       required: false,
     },
+    state:{
+      type: Boolean,
+      default: false,
+      required : true
+    },
     registered_courses: [
       {
         courseId: {
