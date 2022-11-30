@@ -59,6 +59,9 @@ const instructorSchema = new Schema(
       required: false,
       default: "",
     },
+    imgUrl: {
+      type: String,
+    }
   },
   { timestamps: true }
 );

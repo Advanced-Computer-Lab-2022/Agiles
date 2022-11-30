@@ -105,7 +105,7 @@ const courseSearchByInstructor = async (req, res) => {
 const getInstructorbyId = async (req, res) => {
   try {
     const instructor = await Instructor.findById(req.query["id"]).populate("reviews").exec();
-    const reviews = await Rating.find({state : false}).populate('userId');
+    const reviews = await Rating.find({state : false,instId:req.query["id"]}).populate('userId');
     const result = {
       firstField: instructor,
       secondField: reviews,
@@ -158,7 +158,7 @@ const rateInstructor = async (req, res) => {
     else{
       let newRating = oldRating+x;
       let newCount = oldCount+1;
-      const newRatingObj = await  Rating.create({userId:userId,userRating:userRating,userReview:userReview});
+      const newRatingObj = await  Rating.create({userId:userId,userRating:userRating,userReview:userReview,instId:instId});
       const UpdatedRating = await Instructor.updateOne(
         { _id: instId},
         {

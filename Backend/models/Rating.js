@@ -16,7 +16,9 @@ const ratingSchema = new Schema(
           max: 5,
         },
         userReview: { type: String, default: "" },
-        state :{type :Boolean , default : false,required:true}
+        state :{type :Boolean , default : false,required:true},
+        courseId :{type : mongoose.Types.ObjectId , ref : "Course"},
+        instId :{type : mongoose.Types.ObjectId , ref : "Instructor"},
       }
 );
 

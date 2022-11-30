@@ -24,7 +24,6 @@ const CreateCourse = () => {
       sumOfHours += Number(sub["time"]);
     }
     const course = {
-      instructorname: instructorname,
       instructor : instructorId,
       title: title,
       imgUrl : imgUrl,

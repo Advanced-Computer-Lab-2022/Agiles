@@ -6,6 +6,9 @@ import spinner from "../../static/download.gif";
 import Rating from "@mui/material/Rating";
 import Button from "react-bootstrap/Button";
 import CircleIcon from "@mui/icons-material/Circle";
+import StarsIcon from '@mui/icons-material/Stars';
+import ReviewsIcon from '@mui/icons-material/Reviews';
+import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
 import Modal from "react-bootstrap/Modal";
 import LanguageIcon from "@mui/icons-material/Language";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
@@ -18,6 +21,7 @@ import axios from "axios";
 const Course = () => {
   const [course, setCourse] = useState([]);
   const [reviews,setReviews]= useState([]);
+  const [instructor,setInstructor]=useState([]);
   const [show, setShow] = useState(false);
   const [isloading, setIsLoading] = useState(false);
   const location = useLocation();
@@ -32,6 +36,8 @@ const Course = () => {
         const res = await axios.get(`/course/${courseId}`);
         setCourse(res.data.firstField);
         setReviews(res.data.secondField);
+        setInstructor(res.data.firstField.instructor);
+        console.log(instructor)
         setIsLoading(false);
       } catch (e) {
         console.log(e);
@@ -55,7 +61,7 @@ const Course = () => {
                 <label>({course.ratingCount-1} ratings)</label>
               </div>
               <label className={styled["instlabel"]}>
-                Created by {course.instructorname}
+                Created by {instructor.firstname} {instructor.lastname}
               </label>
 
               <div className={styled["mainSection-left-language"]}>
@@ -185,6 +191,28 @@ const Course = () => {
                 ))}
               </Accordion>
             )}
+          </section>
+          <section className={styled["middle-bottom"]}>
+            <label>Instructors</label>
+            <p className={styled["middle-bottom-content-label1"]} ><a href="previewProfile">{instructor.firstname} {instructor.lastname}</a></p>
+            <div className={styled["middle-bottom-content"]}>
+              <div>
+              <img src = {instructor.imgUrl} alt ={instructor.username}></img>
+              </div>
+              
+              <div className={styled["middle-bottom-content-right"]}>
+                <div> <StarsIcon></StarsIcon>
+                <label>{instructor.rating/instructor.ratingCount} Instructor Rating</label>
+                </div>
+                <div> <ReviewsIcon></ReviewsIcon>
+                <label>{instructor.reviews?instructor.reviews.length :0} Reviews</label>
+                </div>
+                <div> <PlayCircleFilledWhiteIcon/>
+                <label>{instructor.courseList?instructor.courseList.length:0} Courses</label>
+                </div>
+              </div>
+            </div>
+              <p className={styled["middle-bottom-content-labe2"]}>{instructor.mini_bio}</p>
           </section>
           {/* <h3>
           <Rating

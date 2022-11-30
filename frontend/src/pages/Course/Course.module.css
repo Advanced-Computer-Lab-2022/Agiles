@@ -123,19 +123,20 @@
   margin-left: 5rem;
   align-items: center;
   background-position:center ;
+  margin-bottom: 2rem;
+
 }
 .middle-top label{
   font-size: 1.5rem;
   font-weight: bold;
   font-family: Tahoma, sans-serif;
   color: rgb(33, 32, 32);
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 .middle-top h2{
   font-size: 1rem;
   font-weight: 100;
   font-family: 'Open Sans', sans-serif;
-  margin-bottom: 2rem;
 }
 .middle-bottom{
   width: 60%;
@@ -143,13 +144,14 @@
   margin-left: 5rem;
   align-items: center;
   background-position:center ;
+  margin-bottom: 2rem;
 }
 .middle-bottom label{
   font-size: 1.5rem;
   font-weight: bold;
   font-family: Tahoma, sans-serif;
   color: rgb(33, 32, 32);
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 .isDisabled {
   color: currentColor;
@@ -164,5 +166,36 @@
 .rating-box{
   display: grid;
   gap: 2rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+}
+.middle-bottom-content{
+  display:  flex;
+  gap: 2rem;
+}
+.middle-bottom-content img {
+  width: 8rem;
+  height: 8rem;
+  margin-left: 0.25rem;
+  border-radius: 50%;
+}
+.middle-bottom-content-right{
+  margin-bottom: 1rem;
+  
+}
+.middle-bottom-content-right label{
+  font-size: 0.9rem;
+  margin-left: 0.25rem;
+  color: rgb(121, 121, 121);
+}
+.middle-bottom-content-label2{
+  font-size: 1rem;
+  margin-left: 0.25rem;
+  color: rgb(121, 121, 121);
+}
+.middle-bottom-content-label1{
+  font-size: 1.3rem;
+  margin-left: 0.25rem;
+  font-weight: bold;
+  font-family: Tahoma, sans-serif;
+  color: rgb(121, 121, 121);
 }

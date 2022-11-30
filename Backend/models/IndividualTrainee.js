@@ -59,6 +59,9 @@ const individualTraineeSchema = new Schema(
       required: false,
       default: "",
     },
+    imgUrl: {
+      type: String,
+    },
     accessToken: { type: String },
     refreshToken: { type: String },
   },
