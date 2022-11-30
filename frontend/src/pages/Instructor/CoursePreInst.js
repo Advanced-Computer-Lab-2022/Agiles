@@ -30,7 +30,7 @@ const CoursePreInst = () => {
   const handleClose = () => setShow(false);
   const handleCloseRatings = () => setShowRating(false);
   const handleShow = () => setShow(true);
-  const handleShowRatings = () => {setReviews(course.reviews);setShowRating(true);};
+  const handleShowRatings = () => {setReviews(reviews);setShowRating(true);};
   const handleSave = async () => {
     let config = {
       headers: {
@@ -52,11 +52,12 @@ const CoursePreInst = () => {
         setIsLoading(true);
         try {
           const res = await axios.get(`/course/${course_id}`);
-          setCourse(res.data);
+          setCourse(res.data.firstField);
+          setReviews(res.data.secondField);
+          setIsLoading(false);
         } catch (e) {
           console.log(e);
         }
-        setIsLoading(false);
       };
       useEffect(()=>{
         fetchdata();
@@ -74,19 +75,19 @@ const CoursePreInst = () => {
           <Modal.Title>Course Reviews</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className={style["rating-box"]}>
-            {reviews
-              .filter((review, idx) => idx < 5)
-              .map((review) => {
-                return (
-                  <ReviewCard
-                    userId={review.userId}
-                    rating={review.userRating}
-                    review={review.userReview}
-                  ></ReviewCard>
-                );
-              })}
-          </div>
+        <div className={style["rating-box"]}>
+                  {reviews.filter((review, idx) => idx < 5)
+                    .map((review,index) => {
+                      return (
+                        <ReviewCard
+                          index = {index}
+                          username={review.userId.username}
+                          rating={review.userRating}
+                          review={review.userReview}
+                        ></ReviewCard>
+                      );
+                    })}
+                </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseRatings}>
@@ -194,13 +195,26 @@ const CoursePreInst = () => {
           <Rating
             name="rating"
             readOnly
-            value={!course.rating ? 0 : course.rating}
+            value={!course.rating ? 0 : course.rating/course.ratingCount}
             className={style["rating"]}
           />{" "}
-          {course.rating} course rating{" "}
+          {course.rating/course.ratingCount} course rating{" "}
           <CircleIcon style={{ fontSize: "0.5rem" }} /> ({course.ratingCount-1}{" "}
           ratings)
         </h3>
+        <div className={style["rating-box"]}>
+                  {reviews.filter((review, idx) => idx < 5)
+                    .map((review,index) => {
+                      return (
+                        <ReviewCard
+                          index = {index}
+                          username={review.userId.username}
+                          rating={review.userRating}
+                          review={review.userReview}
+                        ></ReviewCard>
+                      );
+                    })}
+                </div>
         <Button
            variant="dark"
           onClick={handleShowRatings}

@@ -233,7 +233,12 @@ const getCourseById = async (req, res) => {
       .populate("reviews")
       .populate("reviews.userId")
       .exec();
-    res.status(200).send(course);
+    const reviews = await Rating.find({state : true}).populate('userId');
+    const result = {
+      firstField : course,
+      secondField  :reviews
+    }
+    res.status(200).send(result);
   } catch (err) {
     res.status(500).json({ mssg: "no such Id" });
   }

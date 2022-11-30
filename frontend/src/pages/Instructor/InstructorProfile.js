@@ -105,15 +105,15 @@ function InstructorProfile() {
       let jsondata = await res.json();
       if (res.ok) {
         setInstructor({
-          username: jsondata.username,
-          firstname: jsondata.firstname,
-          lastname: jsondata.lastname,
-          lastname: jsondata.lastname,
-          bio: jsondata.mini_bio,
+          username: jsondata.firstField.username,
+          firstname: jsondata.firstField.firstname,
+          lastname: jsondata.firstField.lastname,
+          lastname: jsondata.firstField.lastname,
+          bio: jsondata.firstField.mini_bio,
         });
-        setReviews(jsondata.reviews);
+        setReviews(jsondata.secondField);
         let newStars = [];
-        for (let i = 0; i < jsondata.rating/jsondata.ratingCount; i++) {
+        for (let i = 0; i < jsondata.firstField.rating/jsondata.firstField.ratingCount; i++) {
           newStars.push(<AiFillStar />);
         }
         setStars(newStars);
@@ -150,7 +150,7 @@ function InstructorProfile() {
           }
           return (
             <div>
-              <div>{el.username}</div>
+              <div>{el.userId.username}</div>
               <div>{ur}</div>
               <div>{el.userReview}</div>
             </div>

@@ -25,7 +25,7 @@ const RegCourseInst = (props) => {
           <Rating
             name="rating"
             readOnly
-            value={props.data.rating}
+            value={props.data.rating/props.data.ratingCount}
             className={RegCourseCardStyles["rating"]}
           />
         </div>

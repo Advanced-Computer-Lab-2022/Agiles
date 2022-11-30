@@ -1,6 +1,7 @@
 const IndividualTrainee = require("../models/IndividualTrainee");
 const ExamResult = require("../models/ExamResult");
 const Instructor = require("../models/Instructor");
+const Rating = require("../models/Rating");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 var nodemailer = require("nodemailer");
@@ -51,7 +52,12 @@ const InprogressCoursebyId = async (req, res) => {
     const courses = await IndividualTrainee.findOne({_id :id , "registered_courses.courseId":courseId}, {
       registered_courses: 1,
     }).populate("registered_courses.courseId").populate("registered_courses.instRating");
-    return res.status(200).json(courses);
+    const reviews = await Rating.find({state : true}).populate('userId');
+    const result = {
+      firstField : courses,
+      secondField  :reviews
+    }
+    return res.status(200).json(result);
   }
 };
 

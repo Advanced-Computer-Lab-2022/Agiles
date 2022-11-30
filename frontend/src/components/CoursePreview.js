@@ -32,7 +32,7 @@ const CoursePreview = () => {
   const [reviews, setReviews] = useState([]);
   const handleClose = () => setShow(false);
   const handleShow = () => {
-    setReviews(course.reviews);
+    setReviews(data.secondField);
     setShow(true);
   };
   const fetchdata = async () => {
@@ -41,20 +41,20 @@ const CoursePreview = () => {
       const res = await axios.post('individualtrainee/inprogressCourse',{id:id,courseId:course_id},{
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log(res.data);
-      setData(res.data)
-      setProgress(res.data.registered_courses[0].progress);
-      setCourse(res.data.registered_courses[0].courseId);
-      setInstId(res.data.registered_courses[0].courseId.instructor)
-      if (res.data.registered_courses[0].instRating){
-        setInstRating(res.data.registered_courses[0].instRating.userRating);
-        setInstReview(res.data.registered_courses[0].instRating.userReview);
+      setData(res.data);
+      setReviews(res.data.secondField);
+      setProgress(res.data.firstField.registered_courses[0].progress);
+      setCourse(res.data.firstField.registered_courses[0].courseId);
+      setInstId(res.data.firstField.registered_courses[0].courseId.instructor)
+      if (res.data.firstField.registered_courses[0].instRating){
+        setInstRating(res.data.firstField.registered_courses[0].instRating.userRating);
+        setInstReview(res.data.firstField.registered_courses[0].instRating.userReview);
   
       }
+      setIsLoading(false);
     } catch (e) {
       console.log(e);
     }
-    setIsLoading(false);
   };
   useEffect(() => {
     fetchdata();
@@ -80,12 +80,12 @@ const CoursePreview = () => {
               </Modal.Header>
               <Modal.Body>
                 <div className={style["rating-box"]}>
-                  {reviews
-                    .filter((review, idx) => idx < 5)
-                    .map((review) => {
+                  {reviews.filter((review, idx) => idx < 5)
+                    .map((review,index) => {
                       return (
                         <ReviewCard
-                          userId={review.userId}
+                          index = {index}
+                          username={review.userId.username}
                           rating={review.userRating}
                           review={review.userReview}
                         ></ReviewCard>
@@ -147,6 +147,19 @@ const CoursePreview = () => {
                   {course.ratingCount - 1} ratings)
                 </span>
               </h3>
+              <div className={style["rating-box"]}>
+                  {reviews.filter((review, idx) => idx < 5)
+                    .map((review,index) => {
+                      return (
+                        <ReviewCard
+                          index = {index}
+                          username={review.userId.username}
+                          rating={review.userRating}
+                          review={review.userReview}
+                        ></ReviewCard>
+                      );
+                    })}
+                </div>
               <Button
                 variant="dark"
                 onClick={handleShow}

@@ -5,6 +5,7 @@ import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif";
 import Rating from "@mui/material/Rating";
 import Button from "react-bootstrap/Button";
+import CircleIcon from "@mui/icons-material/Circle";
 import Modal from "react-bootstrap/Modal";
 import LanguageIcon from "@mui/icons-material/Language";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
@@ -12,9 +13,11 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import ListGroup from "react-bootstrap/ListGroup";
 import Accordion from "react-bootstrap/Accordion";
+import ReviewCard from "../../components/ReviewCard";
 import axios from "axios";
 const Course = () => {
   const [course, setCourse] = useState([]);
+  const [reviews,setReviews]= useState([]);
   const [show, setShow] = useState(false);
   const [isloading, setIsLoading] = useState(false);
   const location = useLocation();
@@ -27,11 +30,12 @@ const Course = () => {
       setIsLoading(true);
       try {
         const res = await axios.get(`/course/${courseId}`);
-        setCourse(res.data);
+        setCourse(res.data.firstField);
+        setReviews(res.data.secondField);
+        setIsLoading(false);
       } catch (e) {
         console.log(e);
       }
-      setIsLoading(false);
     };
     fetchData();
   }, []);
@@ -182,6 +186,30 @@ const Course = () => {
               </Accordion>
             )}
           </section>
+          {/* <h3>
+          <Rating
+            name="rating"
+            readOnly
+            value={!course.rating ? 0 : course.rating/course.ratingCount}
+            className={styled["rating"]}
+          />{" "}
+          {course.rating/course.ratingCount} course rating{" "}
+          <CircleIcon style={{ fontSize: "0.5rem" }} /> ({course.ratingCount-1}{" "}
+          ratings)
+        </h3> */}
+        {/* <div className={styled["rating-box"]}>
+                  {reviews.filter((review, idx) => idx < 5)
+                    .map((review,index) => {
+                      return (
+                        <ReviewCard
+                          index = {index}
+                          username={review.userId.username}
+                          rating={review.userRating}
+                          review={review.userReview}
+                        ></ReviewCard>
+                      );
+                    })}
+                </div> */}
         </div>
       )}
       ;

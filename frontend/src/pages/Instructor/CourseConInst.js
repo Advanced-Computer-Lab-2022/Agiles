@@ -73,8 +73,8 @@ const CourseConInst = () => {
     setIsLoading(true);
     try {
       const res = await axios.get(`/course/${course_id}`);
-      setCourse(res.data)
-      setSubtitles(res.data.subtitles);
+      setCourse(res.data.firstField)
+      setSubtitles(res.data.firstField.subtitles);
     } catch (e) {
       console.log(e);
     }

@@ -105,7 +105,12 @@ const courseSearchByInstructor = async (req, res) => {
 const getInstructorbyId = async (req, res) => {
   try {
     const instructor = await Instructor.findById(req.query["id"]).populate("reviews").exec();
-    res.status(200).send(instructor);
+    const reviews = await Rating.find({state : false}).populate('userId');
+    const result = {
+      firstField: instructor,
+      secondField: reviews,
+    };
+    res.status(200).send(result);
   } catch (err) {
     res.status(500).json({ mssg: "can't find Instructor" });
   }
@@ -201,7 +206,6 @@ const uploadSubLink = async (req, res) => {
     linkDesc: linkDesc,
     allowed: allowed,
   });
-  console.log(newlink);
 
   try {
     const data = await Link.create(newlink);

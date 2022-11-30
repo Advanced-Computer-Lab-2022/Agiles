@@ -27,8 +27,6 @@ const Home = () => {
         return <InstructorOwnCourses />;
       case 1:
         return <CreateCourse />;
-      case 2:
-        return <InstructorProfile />;
       case 3:
         return <Explore />;
       default:
@@ -109,12 +107,6 @@ const Home = () => {
                 className={chosen == 1 ? "Inprogress" : "notPressed"}
               >
                 CreateCourse
-              </button>
-              <button
-                onClick={() => setChosen(2)}
-                className={chosen == 2 ? "Inprogress" : "notPressed"}
-              >
-                My Profile
               </button>
             </div>
           </nav>
