@@ -130,63 +130,45 @@ const updateInstructorBio = async (req, res) => {
   }
 };
 const rateInstructor = async (req, res) => {
-  const { instId,courseId, userId, userRating, userReview } = req.body;
-  if (!instId || !userId || !courseId || !userRating || !userReview) {
+  const { instId, userId, courseId ,userRating, userReview } = req.body;
+  if (!instId || !userId ){
     return res.status(400).json({ error: "Empty" });
   }
   try {
     const data = await Instructor.findById(instId).exec();
-    var oldRating = data.rating;
-    console.log(userRating);
-    var newCount = (data.ratingCount)+1;
-    var x = parseInt(userRating);
-    let newRating = oldRating+x;
-    const Review = {
-      userId: userId,
-      userRating: userRating,
-      userReview: userReview,
-    };
-    const r = await Rating.create(Review);
-    const updateIndvidual = await IndividualTrainee.updateOne(
-      { _id: userId ,"registered_courses.courseId": courseId },
-      {$set :{"registered_courses.$.instRating": userRating}})
-    const UpdatedRating = await Instructor.updateOne(
-      { _id: instId},
-      {
-        $push: {
-          "reviews": r._id,
-        },
-        $set: {
-          rating: newRating,
-          ratingCount: newCount
-        }
-      }
-    ).exec();
-    res.status(200).json(r);
-  } catch (err) {
-    res.status(500).json({ msg: "can't update rating" });
-  }
-};
-const updateRateIns = async (req, res) => {
-  const { instId, userId, courseId,userRating, userReview, currentRating } = req.body;
-  if (!instId || !userId || !courseId|| !userRating || !userReview || !currentRating) {
-    return res.status(400).json({ error: "Empty" });
-  }
-  try {
-    const data = await Instructor.findById(instId).exec();
-    var oldRating = parseInt(data.rating);
-    var y = parseInt(currentRating);
-    var x = parseInt(userRating);
-    let newRating = oldRating - y + x;
-    const updateRating = await Rating.findOneAndUpdate({userId:userId},{userRating:userRating,userReview:userReview});
-    const updateIndvidual = await IndividualTrainee.updateOne(
-      { _id: userId ,"registered_courses.courseId": courseId },
-      {$set :{"registered_courses.$.instRating": userRating}})
-    const updateInstructor = await Instructor.updateOne(
+    let oldRating = parseInt(data.rating);
+    let oldCount = parseInt(data.ratingCount);
+    let x = parseInt(userRating);
+    const exists = await Rating.findOne({userId: userId}).exec();
+    if (exists){
+      let currentRating = parseInt(exists.userRating);
+      let newRating = oldRating - currentRating + x;
+      const updateRating = await Rating.findOneAndUpdate({userId:userId},{userRating:userRating,userReview:userReview},{new:true}).exec();
+      const updateInstructor = await Instructor.updateOne(
         { _id: instId},
         {$set: {rating: newRating}}
       ).exec();
-    res.status(200).json(updateRating);
+      return res.status(200).json({ msg: "Rating updated" });
+    }
+    else{
+      let newRating = oldRating+x;
+      let newCount = oldCount+1;
+      const newRatingObj = await  Rating.create({userId:userId,userRating:userRating,userReview:userReview});
+      const UpdatedRating = await Instructor.updateOne(
+        { _id: instId},
+        {
+          $push: {
+            "reviews": newRatingObj._id,
+          },
+          $set: {
+            rating: newRating,
+            ratingCount: newCount
+          }
+        }
+      ).exec();
+      const updateIndvidual =  await IndividualTrainee.updateOne({_id:userId,"registered_courses.courseId":courseId},{$set:{"registered_courses.$.instRating":newRatingObj._id}}).exec();
+      res.status(200).json({ msg: "Rating added" });
+    } 
   } catch (err) {
     res.status(500).json({ msg: "can't update rating" });
   }
@@ -299,6 +281,5 @@ module.exports = {
   uploadSubLink,
   uploadPreLink,
   deletLink,
-  rateInstructor,
-  updateRateIns,
+  rateInstructor
 };

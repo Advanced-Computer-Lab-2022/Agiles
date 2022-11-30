@@ -4,9 +4,11 @@ import Box from "@mui/material/Box";
 import StarIcon from "@mui/icons-material/Star";
 import InstructorRatingStyles from "./InstructorRating.module.css";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import Button from "react-bootstrap/Button";
+import Swal from "sweetalert2";
+
 const cookies = new Cookies();
 
 const labels = {
@@ -26,59 +28,66 @@ function getLabelText(value) {
   return `${value} Star${value !== 1 ? "s" : ""}, ${labels[value]}`;
 }
 
-function InstructorRating(props) {
+function InstructorRating({id,instRating,instReview}) {
   const userId = cookies.get("currentUser");
-  const instId = props.instId;
-  const [instRating,setInstRating]=useState(props.instRating); 
-  const location = useLocation();
-  const course_id = new URLSearchParams(location.search).get("courseId");
-  const [value, setValue] = useState(instRating===-1?0:instRating);
+  const [value, setValue] = useState(instRating);
   const [hover, setHover] = React.useState(-1);
-  const [review, setReview] = useState(" ");
+  const [review, setReview] = useState("");
 
   const setRating = async (event) => {
     event.preventDefault();
     event.target.reset();
     console.log(value);
-    if (instRating != -1) {
-      const bodyUpdate = {
-        instId: instId,
-        courseId : course_id,
-        userId: userId,
-        userRating: value,
-        userReview: review,
-        currentRating: instRating,
-      };
-      //check if he already done it before
-      try {
-        const res = axios.patch("/instructor/updateRating", bodyUpdate);
-        setInstRating(value);
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      const body = {
-        instId: instId,
-        courseId :course_id,
+    const body = {
+        instId: id,
         userId: userId,
         userRating: value,
         userReview: review,
       };
-      try {
+    try {
         const res = axios.post("/instructor/setRating", body);
-        setInstRating(value);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        
+        Toast.fire({
+          icon: 'success',
+          title: 'saved successfully'
+        })
       } catch (err) {
-        console.log(err);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        
+        Toast.fire({
+          icon: 'error',
+          title: 'some error Happened'
+        })
       }
     }
-  };
   useEffect(()=>{
-  },[instRating]);
+  },[]);
   return (
     <div className={InstructorRatingStyles["ratingStars"]}>
       <Box
         sx={{
-          width: 200,
+          
           display: "flex",
           alignItems: "center",
         }}
@@ -100,16 +109,15 @@ function InstructorRating(props) {
           <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
         )}
       </Box>
-      <br></br>
       <form onSubmit={setRating}>
         <input
           type="text"
-          value={review}
-          onChange={(event) => {
-            setReview(event.target.value);
+          placeholder="Write a review"
+          onChange={(e) => {
+            setReview(e.target.value);
           }}
         />
-        <button type="submit">submit Review</button>
+         <Button variant="dark" type="submit" >  save</Button>
       </form>
     </div>
   );

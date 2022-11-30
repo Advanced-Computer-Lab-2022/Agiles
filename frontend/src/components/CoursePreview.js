@@ -14,14 +14,20 @@ import axios from "axios";
 import ReviewCard from "./ReviewCard";
 import RegCourse from "../pages/Course/RegCourse";
 import InstructorRating from "../pages/Course/InstructorRating";
+import Cookies  from "universal-cookie";
+const cookies = new Cookies();
 const CoursePreview = () => {
   const location = useLocation();
+  const id = cookies.get("currentUser");
   const course_id = new URLSearchParams(location.search).get("courseId");
-  const progress = location.state.progress;
-  const instRating = location.state.instRating;
   const [isloading, setIsLoading] = useState(false);
+  const token = cookies.get("jwt");
+  const [data , setData] = useState([]);
   const [course, setCourse] = useState([]);
-  const [inst , setInst]= useState(0);
+  const [instId , setInstId]= useState(0);
+  const [instRating , setInstRating]= useState(0);
+  const [instReview , setInstReview]= useState("");
+  const [progress,setProgress] = useState(0);
   const [show, setShow] = useState(false);
   const [reviews, setReviews] = useState([]);
   const handleClose = () => setShow(false);
@@ -32,9 +38,19 @@ const CoursePreview = () => {
   const fetchdata = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.get(`/course/${course_id}`);
-      setCourse(res.data);
-      setInst(res.data.instructor);
+      const res = await axios.post('individualtrainee/inprogressCourse',{id:id,courseId:course_id},{
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log(res.data);
+      setData(res.data)
+      setProgress(res.data.registered_courses[0].progress);
+      setCourse(res.data.registered_courses[0].courseId);
+      setInstId(res.data.registered_courses[0].courseId.instructor)
+      if (res.data.registered_courses[0].instRating){
+        setInstRating(res.data.registered_courses[0].instRating.userRating);
+        setInstReview(res.data.registered_courses[0].instRating.userReview);
+  
+      }
     } catch (e) {
       console.log(e);
     }
@@ -115,7 +131,7 @@ const CoursePreview = () => {
             <p>{course.subject}</p>
             <hr className={style["mainRight-hr"]}></hr>
             <h3>Rate Instructor</h3>
-            <InstructorRating instId={inst} instRating={instRating} />
+            <InstructorRating id={instId} instRating={instRating} instReview={instReview}/>
             <hr className={style["mainRight-hr"]}></hr>
             <div className={style["mainRight-rating"]}>
               <h3>

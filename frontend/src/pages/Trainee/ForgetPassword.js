@@ -27,7 +27,6 @@ const ForgetPassword = () => {
     }
     try{
       const res = await axios.post(VERIFY_URL,body);
-      console.log(res.data)
       const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -45,7 +44,7 @@ const ForgetPassword = () => {
         title: 'correct code'
       })
       setShow(false);
-      navigate("/forgotpassword/update")
+      navigate("/updateforgotpassword",{state:{email:email}});
     }
     catch(err){
       if (!err?.response) {

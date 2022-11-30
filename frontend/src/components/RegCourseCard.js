@@ -33,8 +33,7 @@ const RegCourseCard = (props) => {
       {
         pathname: "/preReg",
         search: `courseId=${props.data._id}`,
-      },
-      { state: { progress: props.progress ,instRating : props.instRating} }
+      }, 
     );
   };
 

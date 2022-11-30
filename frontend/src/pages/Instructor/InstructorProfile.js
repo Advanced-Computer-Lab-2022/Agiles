@@ -113,7 +113,7 @@ function InstructorProfile() {
         });
         setReviews(jsondata.reviews);
         let newStars = [];
-        for (let i = 0; i < jsondata.rating; i++) {
+        for (let i = 0; i < jsondata.rating/jsondata.ratingCount; i++) {
           newStars.push(<AiFillStar />);
         }
         setStars(newStars);

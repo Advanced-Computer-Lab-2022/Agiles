@@ -63,7 +63,7 @@ const CoursePromo = (props) => {
             onChange={handleEnddate}
           ></input>
         </div>
-        <Button variant="dark" type="submit" style={{width:'17rem'}}>Sumbit
+        <Button variant="dark" type="submit" style={{width:'17rem',borderRadius:0}}>Sumbit
           </Button>
       </form>
     </div>

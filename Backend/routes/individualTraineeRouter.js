@@ -15,15 +15,19 @@ const {
   updateEmail,
   forgetPassword,
   verifyCode,
-  getFinalExamGrade
+  getFinalExamGrade,
+  InprogressCoursebyId,
+  changePassword
 } = require("../controllers/IndividualTraineeController");
 IndividualTraineeRouter.get("/getIndividualTraineebyId", getTraineebyID);
 IndividualTraineeRouter.get("/inprogress/:id", InprogressCourses);
+IndividualTraineeRouter.post("/inprogressCourse", InprogressCoursebyId);
 IndividualTraineeRouter.get("/getIndividualExerciseGrade", getExerciseGrade);
 IndividualTraineeRouter.get("/getIndividualAnswers", compareAnswers);
 IndividualTraineeRouter.patch("/updateBasics", updateFieldUser);
 IndividualTraineeRouter.patch("/updateEmail", updateEmail);
 IndividualTraineeRouter.patch("/updatePassword", updateITraineePassword);
+IndividualTraineeRouter.patch("/changePassword", changePassword);
 IndividualTraineeRouter.post("/submitExam", submitExam)
 IndividualTraineeRouter.post("/forgotpassword",forgetPassword)
 IndividualTraineeRouter.post("/verifyCode",verifyCode)

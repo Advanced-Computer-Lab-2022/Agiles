@@ -108,7 +108,7 @@ const CoursePreInst = () => {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
-            <Button variant="dark" onClick={handleShow}>
+            <Button variant="dark" onClick={handleShow} style={{borderRadius:'0'}}>
               <EditIcon /> Edit Course Preview Video
             </Button>
             <Modal show={show} onHide={handleClose}>
@@ -176,13 +176,13 @@ const CoursePreInst = () => {
       <hr className={style["mainRight-hr"]}></hr>
       <h3>About this course</h3>
       <p>{course.description}</p>
-      <Button variant="dark">
+      <Button variant="dark" style={{borderRadius:'0'}}>
         <EditIcon /> Edit Course Description
       </Button>
       <hr className={style["mainRight-hr"]}></hr>
       <h3>Subject</h3>
       <p>{course.subject}</p>
-      <Button variant="dark">
+      <Button variant="dark" style={{borderRadius:'0'} }>
         <EditIcon /> Edit Subject
       </Button>
       <hr className={style["mainRight-hr"]}></hr>
@@ -202,9 +202,9 @@ const CoursePreInst = () => {
           ratings)
         </h3>
         <Button
-          variant="light"
+           variant="dark"
           onClick={handleShowRatings}
-          style={{ border: "1px solid black", width: "13%" }}
+          style={{ border: "1px solid black", width: "13%",borderRadius:'0' }}
         >
           show all reviews
         </Button>

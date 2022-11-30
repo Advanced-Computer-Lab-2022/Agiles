@@ -45,8 +45,8 @@ const individualTraineeSchema = new Schema(
           max: 100,
           default: 0,
         },
-        myRating :{type : Number , default : -1},
-        instRating:{type :Number ,default : -1}
+        courseRating :{type:mongoose.Schema.Types.ObjectId,ref:"Rating"},
+        instRating:{type:mongoose.Schema.Types.ObjectId,ref:"Rating"}
       },
     ],
     verficationCode :{

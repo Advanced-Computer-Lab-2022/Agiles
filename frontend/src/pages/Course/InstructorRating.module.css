@@ -1,7 +1,18 @@
 .ratingStars{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: inline-block;
   text-align: center;
-  min-height: 152pt;
   }
+.ratingStars form input{
+  padding: 1.5rem;
+  align-items: center;
+  border: 1px solid black;
+}
+.ratingStars form{
+  display: grid;
+  margin-top: 1rem;
+  width: 70%;
+  gap: 2rem;
+}
+.ratingStars form button{
+  border-radius: 0;
+}

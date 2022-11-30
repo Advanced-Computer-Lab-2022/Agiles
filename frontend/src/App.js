@@ -47,7 +47,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgotpassword" element={<ForgetPassword/>} />
-            <Route path="/forgotpassword/update" element={<UpdateForgottenPassword/>} />
+            <Route path="/updateforgotpassword" element={<UpdateForgottenPassword/>} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/admin" element={<Admin funcNav={setShowNav} />} />
             <Route

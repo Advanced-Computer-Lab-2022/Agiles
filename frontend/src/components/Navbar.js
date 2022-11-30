@@ -92,9 +92,6 @@ const Navbar = () => {
               expand="lg"
             >
               <NavDropdown.Item onClick = {navigatetoProfile}>profile</NavDropdown.Item>
-              <NavDropdown.Item href="#action4">
-                Another action
-              </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={handleLogOut}>Log Out</NavDropdown.Item>
             </NavDropdown>
