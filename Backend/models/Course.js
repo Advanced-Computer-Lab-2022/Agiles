@@ -28,13 +28,7 @@ const courseSchema = new Schema(
       required: false,
       default: 1,
     },
-    reviews: [
-      {
-        userId: { type: mongoose.SchemaTypes.ObjectId ,ref:'IndividualTrainee', required: true },
-        userRating: {type: Number,required: true,  min: 0,  max: 5,default: 0,},
-        userReview: { type: String, default: "" },
-      },
-    ],
+    reviews: [{type : mongoose.SchemaTypes.ObjectId , ref :'Rating'}],
     description: {
       type: String,
       required: false,

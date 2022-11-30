@@ -4,7 +4,7 @@ const Schema = require("mongoose").Schema;
 const ratingSchema = new Schema(
     {
         userId: {
-          type: mongoose.SchemaTypes.ObjectId,
+          type: mongoose.Types.ObjectId,
           ref: "IndividualTrainee",
           required: true,
         },
@@ -16,6 +16,7 @@ const ratingSchema = new Schema(
           max: 5,
         },
         userReview: { type: String, default: "" },
+        state :{type :Boolean , default : false,required:true}
       }
 );
 

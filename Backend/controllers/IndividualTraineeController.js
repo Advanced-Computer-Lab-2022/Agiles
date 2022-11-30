@@ -36,13 +36,13 @@ const InprogressCourses = async (req, res) => {
     if (!id) return res.status(400).json({ msg: "bad request" });
     const courses = await IndividualTrainee.findById(id, {
       registered_courses: 1,
-    }).populate("registered_courses.courseId");
+    }).populate("registered_courses.courseId").populate("registered_courses.courseRating");
     return res.status(200).json(courses);
   }
 };
 const InprogressCoursebyId = async (req, res) => {
   let verficationerror = verifyItraineeJWT(req.headers["authorization"]);
-  if (false) {
+  if (verficationerror) {
     return res.status(401).json({ msg: "Invalid Token" });
   } else {
     const id = req.body.id;
@@ -50,7 +50,7 @@ const InprogressCoursebyId = async (req, res) => {
     if (!id) return res.status(400).json({ msg: "bad request" });
     const courses = await IndividualTrainee.findOne({_id :id , "registered_courses.courseId":courseId}, {
       registered_courses: 1,
-    }).populate("registered_courses.courseId").populate("registered_courses.instRating").populate("registered_courses.courseId.instructor");
+    }).populate("registered_courses.courseId").populate("registered_courses.instRating");
     return res.status(200).json(courses);
   }
 };
@@ -280,7 +280,6 @@ const verifyCode = async (req, res) => {
 const changePassword = async(req,res)=>{
   const {password,email} = req.body;
   if (!email || !password) {
-    console.log("ff")
     return res.status(500).json("bad request");
   }
   const salt = await bcrypt.genSalt(10);

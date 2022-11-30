@@ -57,7 +57,6 @@ const UpdateForgottenPassword = () => {
         });
         navigate ('/logIn');
       } catch (err) {
-        console.log(err.msg);
         Swal.fire({
           icon: "error",
           title: "Oops...",

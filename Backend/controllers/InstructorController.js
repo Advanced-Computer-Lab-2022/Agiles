@@ -139,7 +139,7 @@ const rateInstructor = async (req, res) => {
     let oldRating = parseInt(data.rating);
     let oldCount = parseInt(data.ratingCount);
     let x = parseInt(userRating);
-    const exists = await Rating.findOne({userId: userId}).exec();
+    const exists = await Rating.findOne({userId: userId,state:false}).exec();
     if (exists){
       let currentRating = parseInt(exists.userRating);
       let newRating = oldRating - currentRating + x;

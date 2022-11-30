@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
-
+import Swal from "sweetalert2";
 import Modal from "react-bootstrap/Modal";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
@@ -14,14 +14,13 @@ const RegCourseCard = (props) => {
   const userId = cookies.get("currentUser");
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
-  const [value, setValue] = useState(0);
   const [review, setReview] = useState("");
   const [oldReview, setOldReview] = useState([]);
+  const [courseRating,setCourseRating] = useState(props.courseRating);
+  const [value, setValue] = useState(courseRating);
   const handleClose = () => setShow(false);
   const handleShow = () => {
-    setValue(oldReview.userRating);
-
-    setReview(oldReview.userReview);
+    setValue(courseRating);
     setShow(true);
   };
   const handleChangeRating = async (event) => {
@@ -40,22 +39,6 @@ const RegCourseCard = (props) => {
   //------------------
   const setRating = async (event) => {
     event.preventDefault();
-
-    //check if he already done it before
-    if (oldReview) {
-      const bodyUpdate = {
-        courseId: props.data._id,
-        userId: userId,
-        userRating: value,
-        userReview: review,
-        currentRating: oldReview.userRating,
-      };
-      try {
-        const res = axios.patch("/course/updateRating", bodyUpdate);
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
       const body = {
         courseId: props.data._id,
         userId: userId,
@@ -64,18 +47,35 @@ const RegCourseCard = (props) => {
       };
       try {
         const res = axios.post("/course/setRating", body);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+
+        Toast.fire({
+          icon: "success",
+          title: "updated succesfully",
+        });
+        setCourseRating(value);
+        setShow(false)
       } catch (err) {
-        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Server error!",
+        });
       }
     }
-  };
-  useEffect(() => {
-    props.data.reviews.map((review) => {
-      if (review.userId == userId) {
-        setOldReview(review);
-      }
-    });
-  }, []);
+    useEffect(()=>{
+
+    },[courseRating])
   return (
     <div className={RegCourseCardStyles["regcard"]}>
       <Modal show={show} onHide={handleClose}>
@@ -127,7 +127,7 @@ const RegCourseCard = (props) => {
         <Rating
           name="rating"
           readOnly
-          value={props.courserating}
+          value={courseRating?courseRating:0}
           className={RegCourseCardStyles["rating"]}
         />
         <button className={RegCourseCardStyles["edit"]} onClick={handleShow}>

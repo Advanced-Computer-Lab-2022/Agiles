@@ -2,6 +2,8 @@ const Course = require("../models/Course");
 const Exam = require("../models/Exam");
 const FinalExam = require("../models/FinalExam");
 const Link = require("../models/Link");
+const IndividualTrainee = require("../models/IndividualTrainee")
+const Rating = require("../models/Rating");
 const jwt = require("jsonwebtoken");
 const Instructor = require("../models/Instructor");
 require("dotenv").config();
@@ -266,61 +268,47 @@ const getLink = async (req, res) => {
 };
 const rateCourse = async (req, res) => {
   const { courseId, userId, userRating, userReview } = req.body;
-  if (!courseId || !userId || !userRating || !userReview) {
+  if (!courseId || !userId ) {
     return res.status(400).json({ error: "Empty" });
   }
   try {
     const data = await Course.findById(courseId).exec();
-    const oldRating = data.rating;
-    const oldCount = data.ratingCount;
-    const newRating = (oldRating + userRating) / (oldCount + 1);
-    const Review = {
-      userId: userId,
-      userRating: userRating,
-      userReview: userReview,
-    };
-    const UpdatedRating = await Course.updateOne(
-      { _id: courseId },
-      {
-        $push: {
-          reviews: Review,
-        },
-        $set: {
-          rating: newRating,
-          ratingCount: oldCount + 1,
-        },
-      }
-    ).exec();
-    res.status(200).json(UpdatedRating);
-  } catch (err) {
-    res.status(500).json({ msg: "can't update rating" });
+    let oldRating = parseInt(data.rating);
+    let oldCount = parseInt(data.ratingCount);
+    let x = parseInt(userRating);
+    const exists = await Rating.findOne({userId: userId,state:true}).exec();
+    if (exists){
+      let currentRating = parseInt(exists.userRating);
+      let newRating = oldRating - currentRating + x;
+      const updateRating = await Rating.findOneAndUpdate({userId:userId,state:true},{userRating:userRating,userReview:userReview},{new:true}).exec();
+      const updateCourse = await Course.updateOne(
+        { _id: courseId},
+        {$set: {rating: newRating}}
+      ).exec();
+      return res.status(200).json({ msg: "Rating updated" });
+    }
+    else{
+      let newRating = oldRating+x;
+      let newCount = oldCount+1;
+      const newRatingObj = await  Rating.create({userId:userId,userRating:userRating,userReview:userReview,state:true});
+      const UpdatedRating = await Course.updateOne(
+        { _id: courseId},
+        {
+          $push: {
+            reviews: newRatingObj._id,
+          },
+          $set: {
+            rating: newRating,
+            ratingCount: newCount
+          }
+        }
+      ).exec();
+      const updateIndvidual =  await IndividualTrainee.updateOne({_id:userId,"registered_courses.courseId":courseId},{$set:{"registered_courses.$.courseRating":newRatingObj._id}}).exec();
+      res.status(200).json({ msg: "Rating added" });
+    }
   }
-};
-
-const updateRateCourse = async (req, res) => {
-  const { courseId, userId, userRating, userReview, currentRating } = req.body;
-  if (!courseId || !userId || !userRating || !userReview) {
-    return res.status(400).json({ error: "Empty" });
-  }
-  try {
-    const data = await Course.findById(courseId).exec();
-    const oldRating = data.rating;
-    const oldCount = data.ratingCount;
-    const newRating =
-      (oldRating * oldCount - currentRating + userRating) / oldCount;
-    const UpdatedRating = await Course.updateOne(
-      { _id: courseId, "reviews.userId": userId },
-      {
-        $set: {
-          "reviews.$.userRating": userRating,
-          "reviews.$.userReview": userReview,
-          rating: newRating,
-        },
-      }
-    ).exec();
-    res.status(200).json(UpdatedRating);
-  } catch (err) {
-    res.status(500).json({ msg: "can't update rating" });
+  catch(err){
+    res.status(500).json(err.message);
   }
 };
 module.exports = {
@@ -336,7 +324,6 @@ module.exports = {
   courseExam,
   getLink,
   rateCourse,
-  updateRateCourse,
   setFinalExam,
   courseFinalExam,
   findCourseById,

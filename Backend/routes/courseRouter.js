@@ -9,7 +9,6 @@ const {
   getCourseById,
   getLink,
   rateCourse,
-  updateRateCourse,
   findCourseById,
 } = require("../controllers/CourseController");
 
@@ -28,9 +27,7 @@ courserouter.get("/findCourseById", findCourseById);
 courserouter.patch("/addPromotion", addCoursePromotion);
 // courserouter.patch("/updateRating", updateRating);
 courserouter.get("/link/view", getLink);
-
 courserouter.post("/setRating", rateCourse);
 
-courserouter.patch("/updateRating", updateRateCourse);
 
 module.exports = courserouter;
