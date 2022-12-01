@@ -18,6 +18,10 @@ const courseSchema = new Schema(
       type: String,
       required: false,
     },
+    average_rating: {
+      type: Number,
+      default: 1,
+    },
     rating: {
       type: Number,
       required: false,
@@ -28,7 +32,7 @@ const courseSchema = new Schema(
       required: false,
       default: 1,
     },
-    reviews: [{type : mongoose.SchemaTypes.ObjectId , ref :'Rating'}],
+    reviews: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Rating" }],
     description: {
       type: String,
       required: false,
@@ -81,6 +85,14 @@ const courseSchema = new Schema(
   },
   { timestamps: true }
 );
+
+courseSchema.pre("save", function () {
+  if (this.ratingCount == 0) {
+    this.average_rating = 0;
+  } else {
+    this.average_rating = (this.rating / this.ratingCount) % 1;
+  }
+});
 
 const Course = mongoose.model("Course", courseSchema);
 module.exports = Course;

@@ -2,7 +2,7 @@ const Course = require("../models/Course");
 const Exam = require("../models/Exam");
 const FinalExam = require("../models/FinalExam");
 const Link = require("../models/Link");
-const IndividualTrainee = require("../models/IndividualTrainee")
+const IndividualTrainee = require("../models/IndividualTrainee");
 const Rating = require("../models/Rating");
 const jwt = require("jsonwebtoken");
 const Instructor = require("../models/Instructor");
@@ -121,7 +121,10 @@ const createCourse = async (req, res) => {
     totalHoursOfSubtitles,
     language,
   } = req.body;
-  const data = await Instructor.findById(instructor,{firstname:1,lastname:1});
+  const data = await Instructor.findById(instructor, {
+    firstname: 1,
+    lastname: 1,
+  });
   const instructorname = data.firstname + " " + data.lastname;
   const newCourse = new Course({
     instructor: instructor,
@@ -139,7 +142,10 @@ const createCourse = async (req, res) => {
   });
   try {
     const course = await Course.create(newCourse);
-    const update = await Instructor.updateOne({_id:instructor},{$push:{courseList:course._id}});
+    const update = await Instructor.updateOne(
+      { _id: instructor },
+      { $push: { courseList: course._id } }
+    );
     res.status(200).json(course);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -183,7 +189,7 @@ const setFinalExam = async (req, res) => {
 
 const coursesDetails = async (req, res) => {
   try {
-    const courseAttr = await Course.find({}).populate('instructor');
+    const courseAttr = await Course.find({}).populate("instructor");
     res.status(200).send(courseAttr);
   } catch (err) {
     res.status(500).json({ mssg: "can't find courses" });
@@ -235,11 +241,13 @@ const getCourseById = async (req, res) => {
       .populate("reviews")
       .populate("reviews.userId")
       .exec();
-    const reviews = await Rating.find({state : true,courseId:id}).populate('userId');
+    const reviews = await Rating.find({ state: true, courseId: id }).populate(
+      "userId"
+    );
     const result = {
-      firstField : course,
-      secondField  :reviews
-    }
+      firstField: course,
+      secondField: reviews,
+    };
     res.status(200).send(result);
   } catch (err) {
     res.status(500).json({ mssg: "no such Id" });
@@ -275,7 +283,7 @@ const getLink = async (req, res) => {
 };
 const rateCourse = async (req, res) => {
   const { courseId, userId, userRating, userReview } = req.body;
-  if (!courseId || !userId ) {
+  if (!courseId || !userId) {
     return res.status(400).json({ error: "Empty" });
   }
   try {
@@ -283,41 +291,57 @@ const rateCourse = async (req, res) => {
     let oldRating = parseInt(data.rating);
     let oldCount = parseInt(data.ratingCount);
     let x = parseInt(userRating);
-    const exists = await Rating.findOne({userId: userId,courseId,state:true}).exec();
-    if (exists){
+    const exists = await Rating.findOne({
+      userId: userId,
+      courseId,
+      state: true,
+    }).exec();
+    if (exists) {
       let currentRating = parseInt(exists.userRating);
       let newRating = oldRating - currentRating + x;
-      const updateRating = await Rating.findOneAndUpdate({userId:userId,courseId,state:true},{userRating:userRating,userReview:userReview},{new:true}).exec();
+      const updateRating = await Rating.findOneAndUpdate(
+        { userId: userId, courseId, state: true },
+        { userRating: userRating, userReview: userReview },
+        { new: true }
+      ).exec();
       const updateCourse = await Course.updateOne(
-        { _id: courseId},
-        {$set: {rating: newRating}}
+        { _id: courseId },
+        { $set: { rating: newRating } }
       ).exec();
       return res.status(200).json({ msg: "Rating updated" });
-    }
-    else{
-      let newRating = oldRating+x;
-      let newCount = oldCount+1;
-      const newRatingObj = await  Rating.create({userId:userId,userRating:userRating,userReview:userReview,state:true,courseId:courseId});
+    } else {
+      let newRating = oldRating + x;
+      let newCount = oldCount + 1;
+      const newRatingObj = await Rating.create({
+        userId: userId,
+        userRating: userRating,
+        userReview: userReview,
+        state: true,
+        courseId: courseId,
+      });
       const UpdatedRating = await Course.updateOne(
-        { _id: courseId},
+        { _id: courseId },
         {
           $push: {
             reviews: newRatingObj._id,
           },
           $set: {
             rating: newRating,
-            ratingCount: newCount
-          }
+            ratingCount: newCount,
+          },
         }
       ).exec();
-      const updateIndvidual =  await IndividualTrainee.updateOne({_id:userId,"registered_courses.courseId":courseId},{$set:{"registered_courses.$.courseRating":newRatingObj._id}}).exec();
+      const updateIndvidual = await IndividualTrainee.updateOne(
+        { _id: userId, "registered_courses.courseId": courseId },
+        { $set: { "registered_courses.$.courseRating": newRatingObj._id } }
+      ).exec();
       res.status(200).json({ msg: "Rating added" });
     }
-  }
-  catch(err){
+  } catch (err) {
     res.status(500).json(err.message);
   }
 };
+
 module.exports = {
   addCoursePromotion,
   createCourse,

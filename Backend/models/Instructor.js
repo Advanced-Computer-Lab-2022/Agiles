@@ -53,7 +53,11 @@ const instructorSchema = new Schema(
       required: false,
       default: 1,
     },
-    reviews: [{type : mongoose.SchemaTypes.ObjectId , ref :'Rating'}],
+    averageRating: {
+      type: Number,
+      default: 1,
+    },
+    reviews: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Rating" }],
     mini_bio: {
       type: String,
       required: false,
@@ -61,10 +65,18 @@ const instructorSchema = new Schema(
     },
     imgUrl: {
       type: String,
-    }
+    },
   },
   { timestamps: true }
 );
+
+instructorSchema.pre("save", function () {
+  if (this.ratingCount == 0) {
+    this.average_rating = 0;
+  } else {
+    this.average_rating = (this.rating / this.ratingCount) % 1;
+  }
+});
 
 const Instructor = mongoose.model("Instructor", instructorSchema);
 module.exports = Instructor;
