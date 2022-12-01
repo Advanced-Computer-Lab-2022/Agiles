@@ -195,10 +195,10 @@ const CoursePreInst = () => {
           <Rating
             name="rating"
             readOnly
-            value={!course.rating ? 0 : Math.ceil(course.rating/course.ratingCount)}
+            value={!course.rating ? 0 : Math.round(course.rating/course.ratingCount)}
             className={style["rating"]}
           />{" "}
-          {Math.ceil(course.rating/course.ratingCount)} course rating{" "}
+          {Math.round(course.rating/course.ratingCount)} course rating{" "}
           <CircleIcon style={{ fontSize: "0.5rem" }} /> ({course.ratingCount-1}{" "}
           ratings)
         </h3>

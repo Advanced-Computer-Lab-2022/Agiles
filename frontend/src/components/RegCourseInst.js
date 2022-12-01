@@ -25,7 +25,7 @@ const RegCourseInst = (props) => {
           <Rating
             name="rating"
             readOnly
-            value={Math.ciel(props.data.rating/props.data.ratingCount)}
+            value={Math.round(props.data.rating/props.data.ratingCount)}
             className={RegCourseCardStyles["rating"]}
           />
         </div>
