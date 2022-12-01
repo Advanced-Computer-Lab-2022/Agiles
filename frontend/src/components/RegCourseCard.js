@@ -12,6 +12,7 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const RegCourseCard = (props) => {
   const userId = cookies.get("currentUser");
+  const index=props.index;
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [review, setReview] = useState("");
@@ -32,7 +33,7 @@ const RegCourseCard = (props) => {
       {
         pathname: "/preReg",
         search: `courseId=${props.data._id}`,
-      }, 
+      }, {state: {index: index}}
     );
   };
 

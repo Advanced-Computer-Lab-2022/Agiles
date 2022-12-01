@@ -52,7 +52,7 @@ const InprogressCoursebyId = async (req, res) => {
     const courses = await IndividualTrainee.findOne({_id :id , "registered_courses.courseId":courseId}, {
       registered_courses: 1,
     }).populate("registered_courses.courseId").populate("registered_courses.instRating");
-    const reviews = await Rating.find({state : true}).populate('userId');
+    const reviews = await Rating.find({state : true,courseId:courseId}).populate('userId');
     const result = {
       firstField : courses,
       secondField  :reviews

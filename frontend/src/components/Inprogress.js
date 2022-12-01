@@ -40,7 +40,7 @@ const Inprogress = () => {
           <h2 className={InprogressStyles["Wrapper_h2"]}>My Learning</h2>
           <div className={RegCourseCardStyles["cardgrid"]}>
             {courses.map((el, index) => {
-              return <RegCourseCard  data={el.courseId} progress={el.progress} courseRating = {el.courseRating.userRating} key={index} />;
+              return <RegCourseCard  data={el.courseId} progress={el.progress} courseRating = {el.courseRating?el.courseRating.userRating:0}index={index} key={index} />;
             })}
           </div> 
         </section>

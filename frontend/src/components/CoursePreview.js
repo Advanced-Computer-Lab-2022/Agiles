@@ -20,6 +20,7 @@ const CoursePreview = () => {
   const location = useLocation();
   const id = cookies.get("currentUser");
   const course_id = new URLSearchParams(location.search).get("courseId");
+  const index = location.state.index;
   const [isloading, setIsLoading] = useState(false);
   const token = cookies.get("jwt");
   const [data , setData] = useState([]);
@@ -40,15 +41,15 @@ const CoursePreview = () => {
     try {
       const res = await axios.post('individualtrainee/inprogressCourse',{id:id,courseId:course_id},{
         headers: { Authorization: `Bearer ${token}` },
-      });
+      })
       setData(res.data);
       setReviews(res.data.secondField);
-      setProgress(res.data.firstField.registered_courses[0].progress);
-      setCourse(res.data.firstField.registered_courses[0].courseId);
-      setInstId(res.data.firstField.registered_courses[0].courseId.instructor)
-      if (res.data.firstField.registered_courses[0].instRating){
-        setInstRating(res.data.firstField.registered_courses[0].instRating.userRating);
-        setInstReview(res.data.firstField.registered_courses[0].instRating.userReview);
+      setProgress(res.data.firstField.registered_courses[index].progress);
+      setCourse(res.data.firstField.registered_courses[index].courseId);
+      setInstId(res.data.firstField.registered_courses[index].courseId.instructor)
+      if (res.data.firstField.registered_courses[index].instRating){
+        setInstRating(res.data.firstField.registered_courses[index].instRating.userRating);
+        setInstReview(res.data.firstField.registered_courses[index].instRating.userReview);
   
       }
       setIsLoading(false);
