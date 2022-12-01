@@ -141,6 +141,7 @@ const CourseExam = () => {
                               value={1}
                               name={`Choices${index}`}
                               onChange={handleRadioChange}
+                              defaultChecked
                             />
                             <Form.Label>- {exam["firstChoice"]} </Form.Label>
                           </InputGroup>

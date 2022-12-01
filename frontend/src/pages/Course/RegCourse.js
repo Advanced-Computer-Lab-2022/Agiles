@@ -71,15 +71,6 @@ const RegCourse = ({
           >
             Grades
           </li>
-          <li
-            id="/finalexam"
-            className={
-              name == "exams" ? regStyles["leftsection-liclicked"] : ""
-            }
-            onClick={name === "exam" ? () => {} : handleClick}
-          >
-            Course Final Exam
-          </li>
         </ul>
       </div>
     </section>
