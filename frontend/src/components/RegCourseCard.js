@@ -89,6 +89,7 @@ const RegCourseCard = (props) => {
             placeholder="write review for the course.."
             type="text"
             name="review"
+            style = {{height:'5rem'}}
             onChange={(e) => setReview(e.target.value)}
           />
         </Modal.Body>

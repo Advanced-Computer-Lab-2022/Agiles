@@ -57,7 +57,7 @@ const Course = () => {
               <h1>{course.title}</h1>
               <h2>{course.description}</h2>
               <div className={styled["mainSection-left-rating"]}>
-                <Rating name="rating" readOnly value={course.rating/course.ratingCount} />
+                <Rating name="rating" readOnly value={Math.ceil(course.rating/course.ratingCount)} />
                 <label>({course.ratingCount-1} ratings)</label>
               </div>
               <label className={styled["instlabel"]}>

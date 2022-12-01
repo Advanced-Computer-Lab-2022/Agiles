@@ -29,7 +29,7 @@ export const CourseCard = (props) => {
         </label>
       </div>
       <div className={style['rating']}>
-      <Rating name="rating" readOnly value={props.data.rating/props.data.ratingCount} />
+      <Rating name="rating" readOnly value={Math.ceil(props.data.rating/props.data.ratingCount)} />
       <label >({props.data.ratingCount-1} ratings)</label>
        </div>
        { status != 2 &&<div className={style['price']}>
