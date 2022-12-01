@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
 const SetFinalExam = () => {
-  const [courseId, setCourseId] = useState("");
+  // const [courseId, setCourseId] = useState("");
   const [questions, setQuestions] = useState([
     {
       content: "",
@@ -20,6 +20,9 @@ const SetFinalExam = () => {
   ]);
 
   const handleSubmit = async (event) => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const courseId = urlParams.get("courseId");
     const exam = {
       courseId: courseId,
       questions: questions,
@@ -69,16 +72,6 @@ const SetFinalExam = () => {
     <div className={styled["course"]}>
       <Form onSubmit={handleSubmit}>
         <h1>Add Final Exam</h1>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Form.Label>Course ID</Form.Label>
-          <Form.Control
-            required
-            placeholder="write the course ID"
-            type="text"
-            name="courseId"
-            onChange={(e) => setCourseId(e.target.value)}
-          />
-        </Form.Group>
 
         {questions.map((element, index) => (
           <div>

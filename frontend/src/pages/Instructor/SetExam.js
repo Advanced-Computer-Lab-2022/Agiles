@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
 const SetExam = () => {
-  const [subtitleId, setSubtitleId] = useState("");
-  const [courseId, setCourseId] = useState("");
+  // const [subtitleId, setSubtitleId] = useState("");
+  //const [courseId, setCourseId] = useState("");
   const [questions, setQuestions] = useState([
     {
       content: "",
@@ -21,6 +21,11 @@ const SetExam = () => {
   ]);
 
   const handleSubmit = async (event) => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const subtitleId = urlParams.get("subtitleId");
+    const courseId = urlParams.get("courseId");
+
     const exam = {
       subtitleId: subtitleId,
       courseId: courseId,
@@ -66,12 +71,8 @@ const SetExam = () => {
     newFormValues[i][e.target.name] = e.target.value;
     setQuestions(newFormValues);
   };
-
-  return (
-    <div className={styled["course"]}>
-      <Form onSubmit={handleSubmit}>
-        <h1>Add an Exam for This Subtitle</h1>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+  /*
+ <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>Subtitle ID</Form.Label>
           <Form.Control
             required
@@ -91,6 +92,12 @@ const SetExam = () => {
             onChange={(e) => setCourseId(e.target.value)}
           />
         </Form.Group>
+*/
+
+  return (
+    <div className={styled["course"]}>
+      <Form onSubmit={handleSubmit}>
+        <h1>Add an Exam for This Subtitle</h1>
 
         {questions.map((element, index) => (
           <div>
