@@ -20,7 +20,7 @@ const CoursePreview = () => {
   const location = useLocation();
   const id = cookies.get("currentUser");
   const course_id = new URLSearchParams(location.search).get("courseId");
-  const index = location.state.index;
+  const index = new URLSearchParams(location.search).get("idx");
   const [isloading, setIsLoading] = useState(false);
   const token = cookies.get("jwt");
   const [data , setData] = useState([]);

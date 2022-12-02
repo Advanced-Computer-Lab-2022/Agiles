@@ -32,8 +32,8 @@ const RegCourseCard = (props) => {
     navigate(
       {
         pathname: "/preReg",
-        search: `courseId=${props.data._id}`,
-      }, {state: {index: index}}
+        search: `courseId=${props.data._id}&idx=${index}`,
+      }
     );
   };
 
