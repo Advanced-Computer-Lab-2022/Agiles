@@ -25,7 +25,7 @@ const Course = () => {
   const [show, setShow] = useState(false);
   const [isloading, setIsLoading] = useState(false);
   const location = useLocation();
-  const courseId = location.state.id;
+  const courseId = new URLSearchParams(location.search).get("cid");
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 

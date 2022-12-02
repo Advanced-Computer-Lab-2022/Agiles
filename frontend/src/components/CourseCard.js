@@ -10,7 +10,7 @@ export const CourseCard = (props) => {
   const status = cookies.get("status");
   const courseId = props.data._id;
   const handleClick = () => {
-    navigate("/course", { state: { id: courseId } });
+    navigate({pathname:'/course',search :`cid=${courseId}`} );
   };
   return (
     <div className={style["card"]}>
