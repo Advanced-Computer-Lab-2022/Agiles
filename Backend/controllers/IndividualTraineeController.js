@@ -247,15 +247,14 @@ const forgetPassword = async (req, res) => {
     });
   }
   const transporter = nodemailer.createTransport({
-    host: "smtp.mailtrap.io",
-    Port: 2525,
+    service: "gmail",
     auth: {
-      user: "ffa86d69ed128e",
-      pass: "08062f79ed76dc",
+      user: process.env.NO_REPLY_EMAIL,
+      pass: process.env.EMAIL_PASSWORD,
     },
   });
   const mailOptions = {
-    from: "CanidianChamber@gmail.com",
+    from: "canadian_chamber_of_commerce@gmail.com",
     to: email,
     subject: "Reset password",
     html: `${resetPassword(randomCode)}`,
