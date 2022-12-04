@@ -16,25 +16,24 @@ const {
   updateInstructorPassword,
   uploadSubLink,
   uploadPreLink,
-  deletLink,
-  rateInstructor,
+  deletLink
 } = require("../controllers/InstructorController");
+const {verifyInstructorJWT} = require("../middleware/authMiddleware");
+instructorRouter.post("/addCourse",verifyInstructorJWT, createCourse);
+instructorRouter.post("/setExam",verifyInstructorJWT, setExam);
+instructorRouter.post("/setFinalExam",verifyInstructorJWT, setFinalExam);
+instructorRouter.get("/listCourseTitles",verifyInstructorJWT, listAllInstructorCoursesTitles);
+instructorRouter.get("/listCourseTitles/:id",verifyInstructorJWT, listAllInstructorCoursesTitles);
+instructorRouter.get("/filterCourses",verifyInstructorJWT, filterCoursesByInstructor);
+instructorRouter.get("/searchCourses",verifyInstructorJWT, courseSearchByInstructor);
+instructorRouter.get("/instructorbyid",verifyInstructorJWT, getInstructorbyId);
+instructorRouter.patch("/updateBio",verifyInstructorJWT, updateInstructorBio);
+instructorRouter.patch("/updateEmail",verifyInstructorJWT, updateInstructorEmail);
+instructorRouter.patch("/updatePassword",verifyInstructorJWT, updateInstructorPassword);
+instructorRouter.patch("/updateSubtitle",verifyInstructorJWT, uploadSubLink);
+instructorRouter.patch("/deletSubtitle",verifyInstructorJWT, uploadSubLink);
+instructorRouter.delete("/deletSubtitle",verifyInstructorJWT, deletLink);
+instructorRouter.patch("/updatePreview",verifyInstructorJWT, uploadPreLink);
 
-instructorRouter.post("/addCourse", createCourse);
-instructorRouter.post("/setExam", setExam);
-instructorRouter.post("/setFinalExam", setFinalExam);
-instructorRouter.get("/listCourseTitles", listAllInstructorCoursesTitles);
-instructorRouter.get("/listCourseTitles/:id", listAllInstructorCoursesTitles);
-instructorRouter.get("/filterCourses", filterCoursesByInstructor);
-instructorRouter.get("/searchCourses", courseSearchByInstructor);
-instructorRouter.get("/instructorbyid", getInstructorbyId);
-instructorRouter.patch("/updateBio", updateInstructorBio);
-instructorRouter.patch("/updateEmail", updateInstructorEmail);
-instructorRouter.patch("/updatePassword", updateInstructorPassword);
-instructorRouter.patch("/updateSubtitle", uploadSubLink);
-instructorRouter.patch("/deletSubtitle", uploadSubLink);
-instructorRouter.delete("/deletSubtitle", deletLink);
-instructorRouter.patch("/updatePreview", uploadPreLink);
-instructorRouter.post("/setRating", rateInstructor);
 
 module.exports = instructorRouter;

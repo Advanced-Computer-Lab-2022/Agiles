@@ -38,4 +38,4 @@ const IndividualTraineeRouter = require("./routes/IndividualTraineeRouter");
 app.use("/course/", courseRoutes);
 app.use("/admin/", adminRoutes);
 app.use("/instructor/", instructorRoutes);
-app.use("/individualtrainee/", IndividualTraineeRouter);
+app.use("/individualtrainee/",IndividualTraineeRouter);

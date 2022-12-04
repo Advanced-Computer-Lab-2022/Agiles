@@ -3,7 +3,6 @@ import userimage from "../../static/user.png"
 import { useNavigate } from 'react-router-dom';
 const ProfileSideBar = ({fullname,state}) => {
     const navigate = useNavigate();
-    console.log(state);
     const handleNavigate = (e)=>{
             navigate(e.target.id)
     }  

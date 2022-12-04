@@ -43,7 +43,6 @@ const CoursePreInst = () => {
     };
     await axios.patch(UPLOAD_URL, data, config).then(
       (response) => {
-        console.log(response);
         window.location.reload();
       },
       (error) => {

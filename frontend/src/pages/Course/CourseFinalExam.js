@@ -44,7 +44,6 @@ const CourseFinalExam = () => {
 
   const handleRadioChange = (e) => {
     setAnswers((oldArray) => [...oldArray, e.target.value]);
-    console.log(answers);
   };
   return (
     <>

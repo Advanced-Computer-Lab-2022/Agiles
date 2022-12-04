@@ -275,6 +275,65 @@ const changePassword = async(req,res)=>{
     return res.status(406).json(err);
   }
 }
+
+const rateInstructor = async (req, res) => {
+  const { instId, userId, courseId, userRating, userReview } = req.body;
+  if (!instId || !userId) {
+    return res.status(400).json({ error: "Empty" });
+  }
+  try {
+    const data = await Instructor.findById(instId).exec();
+    let oldRating = parseInt(data.rating);
+    let oldCount = parseInt(data.ratingCount);
+    let x = parseInt(userRating);
+    const exists = await Rating.findOne({
+      userId: userId,
+      state: false,
+    }).exec();
+    if (exists) {
+      let currentRating = parseInt(exists.userRating);
+      let newRating = oldRating - currentRating + x;
+      const updateRating = await Rating.findOneAndUpdate(
+        { userId: userId },
+        { userRating: userRating, userReview: userReview },
+        { new: true }
+      ).exec();
+      const updateInstructor = await Instructor.updateOne(
+        { _id: instId },
+        { $set: { rating: newRating } }
+      ).exec();
+      return res.status(200).json({ msg: "Rating updated" });
+    } else {
+      let newRating = oldRating + x;
+      let newCount = oldCount + 1;
+      const newRatingObj = await Rating.create({
+        userId: userId,
+        userRating: userRating,
+        userReview: userReview,
+        instId: instId,
+      });
+      const UpdatedRating = await Instructor.updateOne(
+        { _id: instId },
+        {
+          $push: {
+            reviews: newRatingObj._id,
+          },
+          $set: {
+            rating: newRating,
+            ratingCount: newCount,
+          },
+        }
+      ).exec();
+      const updateIndvidual = await IndividualTrainee.updateOne(
+        { _id: userId, "registered_courses.courseId": courseId },
+        { $set: { "registered_courses.$.instRating": newRatingObj._id } }
+      ).exec();
+      res.status(200).json({ msg: "Rating added" });
+    }
+  } catch (err) {
+    res.status(500).json({ msg: "can't update rating" });
+  }
+};
 const updateITraineePassword = async (req, res) => {
   const { oldPass, newPass } = req.body;
 
@@ -314,4 +373,5 @@ module.exports = {
   forgetPassword,
   verifyCode,
   getFinalExamGrade,
+  rateInstructor
 };

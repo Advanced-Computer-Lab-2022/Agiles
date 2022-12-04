@@ -30,7 +30,6 @@ const CourseExam = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(location.state.final);
     const fetchData = async () => {
       setIsLoading(true);
       let res = {};
@@ -59,7 +58,6 @@ const CourseExam = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("submitted");
     let res = {};
     if (!corporate) {
       res = await axios.post(
@@ -94,7 +92,6 @@ const CourseExam = () => {
     } else if (event.target.checked) {
       setAnswers((oldArray) => [...oldArray, event.target.value]);
     }
-    console.log(answers);
   };
 
   return (

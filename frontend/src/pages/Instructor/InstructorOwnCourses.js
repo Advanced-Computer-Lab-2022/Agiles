@@ -143,8 +143,6 @@ function InstructorOwnCourses() {
                   type="checkbox"
                   checked={free}
                   onChange={(event) => {
-                    console.log("checked: " + event.target.checked);
-                    console.log("free: " + free);
                     setFree(event.target.checked);
                     setLowerBound(0);
                     setUpperBound(0);

@@ -37,7 +37,6 @@ const Course = () => {
         setCourse(res.data.firstField);
         setReviews(res.data.secondField);
         setInstructor(res.data.firstField.instructor);
-        console.log(instructor)
         setIsLoading(false);
       } catch (e) {
         console.log(e);

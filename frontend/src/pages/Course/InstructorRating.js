@@ -37,7 +37,6 @@ function InstructorRating({id,instRating,instReview}) {
   const setRating = async (event) => {
     event.preventDefault();
     event.target.reset();
-    console.log(value);
     const body = {
         instId: id,
         userId: userId,
@@ -45,7 +44,7 @@ function InstructorRating({id,instRating,instReview}) {
         userReview: review,
       };
     try {
-        const res = axios.post("/instructor/setRating", body);
+        const res = axios.post("/individualtrainee/setRating", body);
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-end',

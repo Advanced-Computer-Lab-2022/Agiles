@@ -107,9 +107,10 @@ const Filter = ({ chooseMessage ,currentMessage }) => {
             <Accordion.Item eventKey="0">
               <Accordion.Header>Subject</Accordion.Header>
               <Accordion.Body style={{ display: "grid" }}>
-                {subjectList.map((subject) => (
+                {subjectList.map((subject,index) => (
                   <Form.Check
                     name="subject"
+                    key ={index}
                     type="radio"
                     id={`default-${subject}`}
                     value={subject}

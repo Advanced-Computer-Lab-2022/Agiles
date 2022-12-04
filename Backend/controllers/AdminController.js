@@ -5,8 +5,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config;
 
-
-
 //create admin
 const createAdmin = async (req, res) => {
   const { username, password } = req.body;

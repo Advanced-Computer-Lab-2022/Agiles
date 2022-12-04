@@ -50,7 +50,6 @@ const Subtitle = () => {
           "currentUser"
         )}&subtitleId=${e.target.id}`
       );
-      console.log(exam.data);
       if (exam.data == null) {
         navigate(
           {
@@ -96,7 +95,6 @@ const Subtitle = () => {
           { state: { final: "true" } }
         );
       } else {
-        console.log(exam.data);
         setShow(true);
         setGrade(exam.data.result);
         setQuestions(exam.data.studentChoices.length);

@@ -39,9 +39,7 @@ const CoursePreview = () => {
   const fetchdata = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.post('individualtrainee/inprogressCourse',{id:id,courseId:course_id},{
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      const res = await axios.post('individualtrainee/inprogressCourse',{id:id,courseId:course_id})
       setData(res.data);
       setReviews(res.data.secondField);
       setProgress(res.data.firstField.registered_courses[index].progress);

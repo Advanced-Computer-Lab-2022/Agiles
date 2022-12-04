@@ -68,7 +68,6 @@ const CourseConInst = () => {
     };
     await axios.patch(UPLOAD_URL, data, config).then(
       (res) => {
-        console.log(res);
         window.location.reload();
       },
       (error) => {
