@@ -87,7 +87,6 @@ const CourseExam = () => {
 
   const handleRadioChange = (event) => {
     const indexname = event.target.name;
-    console.log("lol");
     //get last char from name
     let index = indexname.charAt(indexname.length - 1);
     if (answers[index] !== null && event.target.checked) {

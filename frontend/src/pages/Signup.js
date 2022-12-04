@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 //validation
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -102,7 +102,7 @@ const SignUp = () => {
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Sign Up</h3>
           <div className="text-center">
-            Already registered? <a href="/Login">Log In</a>
+            Already registered? <Link to="/Login">Log In</Link>
           </div>
           <p
             ref={errRef}
@@ -240,7 +240,7 @@ const SignUp = () => {
           <div className="last">
             <input type="checkbox" required />
             <p className="footForm">
-              I agree to <a href="terms-conditions">terms & conditions </a>
+              I agree to <Link to="terms-conditions">terms & conditions </Link>
             </p>
           </div>
         </div>

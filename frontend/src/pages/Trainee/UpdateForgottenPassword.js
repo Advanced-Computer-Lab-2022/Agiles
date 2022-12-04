@@ -8,7 +8,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { useLocation,useNavigate } from "react-router-dom";
+import { Link, useLocation,useNavigate } from "react-router-dom";
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const CHANGE_PASSWORD = "individualtrainee/changePassword";
 const UpdateForgottenPassword = () => {
@@ -133,7 +133,7 @@ const UpdateForgottenPassword = () => {
             </button>
           </div>
           <p className="footForm">
-            <a href="/logIn">Back to Login?</a>
+            <Link to="/logIn">Back to Login?</Link>
           </p>
         </div>
       </form>

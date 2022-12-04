@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styled from "./Course.module.css";
 import LoadingScreen from "react-loading-screen";
@@ -194,7 +194,7 @@ const Course = () => {
           </section>
           <section className={styled["middle-bottom"]}>
             <label>Instructors</label>
-            <p className={styled["middle-bottom-content-label1"]} ><a href="previewProfile">{instructor.firstname} {instructor.lastname}</a></p>
+            <p className={styled["middle-bottom-content-label1"]} ><Link to="previewProfile">{instructor.firstname} {instructor.lastname}</Link></p>
             <div className={styled["middle-bottom-content"]}>
               <div>
               <img src = {instructor.imgUrl} alt ={instructor.username}></img>

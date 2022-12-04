@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../Login.css";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -179,7 +179,7 @@ const ForgetPassword = () => {
             Send Code
           </button>
           <p className="footForm">
-            Back to Log In? <a href="/logIn">Log In</a>
+            Back to Log In? <Link to="/logIn">Log In</Link>
           </p>
       </form>
         </Modal.Body>
@@ -206,7 +206,7 @@ const ForgetPassword = () => {
           </button>
 
           <p className="footForm">
-            Back to Log In? <a href="/logIn">Log In</a>
+            Back to Log In? <Link to="/logIn">Log In</Link>
           </p>
         </div>
       </form>

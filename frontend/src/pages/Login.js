@@ -1,7 +1,7 @@
 import "./Login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 const LOGIN_URL = "/admin/logIn";
 const Login = () => {
@@ -79,10 +79,10 @@ const Login = () => {
             </button>
           </div>
           <p className="footforget">
-             <a href="/forgotpassword">Forgotten password?</a>
+             <Link to="/forgotpassword">Forgotten password?</Link>
           </p>
           <p className="footForm">
-            Don't have account? <a href="/signUp">Sign up</a>
+            Don't have account? <Link to="/signUp">Sign up</Link>
           </p>
         </div>
       </form>
