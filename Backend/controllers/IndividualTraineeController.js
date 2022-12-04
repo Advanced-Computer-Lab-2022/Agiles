@@ -2,14 +2,15 @@ const IndividualTrainee = require("../models/IndividualTrainee");
 const ExamResult = require("../models/ExamResult");
 const Instructor = require("../models/Instructor");
 const Rating = require("../models/Rating");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-var nodemailer = require("nodemailer");
-const resetPassword = require("./ResetPassword");
 const FinalExamResult = require("../models/FinalExamResult");
 const FinalExam = require("../models/FinalExam");
-require("dotenv").config();
 const Exam = require("../models/Exam");
+const OTP = require("../models/OTP.js");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const resetPassword = require("./ResetPassword");
+require("dotenv").config();
+var nodemailer = require("nodemailer");
 
 
 const getTraineebyID = async (req, res) => {
@@ -215,16 +216,17 @@ const forgetPassword = async (req, res) => {
   if (!oldUser && !oldInstructor) {
     return res.status(406).json("user not exists!!");
   }
-  let randomCode = Math.floor(Math.random() * 899999 + 100000);
-  if (oldUser) {
-    const update = await IndividualTrainee.findByIdAndUpdate(oldUser._id, {
-      verficationCode: randomCode,
-    });
-  } else {
-    const update = await Instructor.findByIdAndUpdate(oldInstructor._id, {
-      verficationCode: randomCode,
-    });
-  }
+  const randomCode = Math.floor(Math.random() * 899999 + 100000)+"";
+  const salt = await bcrypt.genSalt(10);
+  const hashedCode =  await bcrypt.hash(randomCode,salt);
+  await OTP.deleteMany({email:email});
+  const otp = new OTP({
+    email : email,
+    otp : hashedCode,
+    createdAt : Date.now(),
+    expiresAt : Date.now()+ 60000
+  });
+  const data = await OTP.create(otp);
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -245,21 +247,19 @@ const forgetPassword = async (req, res) => {
 };
 const verifyCode = async (req, res) => {
   const { email, code } = req.body;
-  const oldUser = await IndividualTrainee.findOne({ email: email });
-  const oldInstructor = await Instructor.findOne({ email: email });
-  if (oldUser) {
-    if (oldUser.verficationCode == code) {
-      return res.status(200).json("success");
-    } else {
-      return res.status(403).json("forbidden");
-    }
-  } else {
-    if (oldInstructor.verficationCode == code) {
-      return res.status(200).json("success");
-    } else {
-      return res.status(403).json("forbidden");
-    }
+  const data = await OTP.findOne({email : email});
+  if (!data) return res.status(498).json("expired");
+  const expiresAt = data.expiresAt;
+  if (expiresAt < Date.now()){
+    await OTP.deleteMany({email:email});
+    return res.status(498).json("expired");
   }
+  const isValid = await bcrypt.compare(code,data.otp)
+   if (!isValid) return res.status(406).json("inCorrect code");
+    else{
+      await OTP.deleteMany({email:email});
+      return res.status(200).json("sucess");
+    }
 };
 const changePassword = async(req,res)=>{
   const {password,email} = req.body;

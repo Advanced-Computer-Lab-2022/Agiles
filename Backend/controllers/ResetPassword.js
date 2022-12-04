@@ -107,7 +107,7 @@ function resetPassword(verificationCode){
 															<td>
 																<div style="font-family: sans-serif">
 																	<div style="font-size: 14px; mso-line-height-alt: 16.8px; color: #40507a; line-height: 1.2; font-family: Helvetica Neue, Helvetica, Arial, sans-serif;">
-																		<p style="margin: 0; font-size: 14px;"><span style="font-size:16px;">Here's the Verification Code</span></p>
+																		<p style="margin: 0; font-size: 14px;"><span style="font-size:16px;">Here's the Verification Code (code expires in 15 minutes)</span></p>
 																	</div>
 																</div>
 															</td>

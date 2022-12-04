@@ -3,6 +3,7 @@ const IndividualTrainee = require("..//models/IndividualTrainee");
 const Instructor = require("../models/Instructor");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const {generateTraineeAccessToken,generateInstructorAccessToken,generateAdminAccessToken} = require("./authContext");
 require("dotenv").config;
 
 //create admin
@@ -92,11 +93,7 @@ const logIn = async (req, res) => {
       bcrypt.compare(password, user.password, (err, data) => {
         if (err) throw err;
         if (data) {
-          const accessToken = jwt.sign(
-            { username: user.username },
-            process.env.ACCESS_TOKEN_SECRET_ITRAINEE,
-            { expiresIn: "3000000s" }
-          );
+          const accessToken = generateTraineeAccessToken({id:user._id,username:user.username});
 
           const refreshToken = jwt.sign(
             { username: user.username },
@@ -133,11 +130,7 @@ const logIn = async (req, res) => {
       bcrypt.compare(password, user.password, (err, data) => {
         if (err) throw err;
         if (data) {
-          const accessToken = jwt.sign(
-            { username: user.username },
-            process.env.ACCESS_TOKEN_SECRET_INSTRUCTOR,
-            { expiresIn: "3000000s" }
-          );
+          const accessToken = generateInstructorAccessToken({id:user._id,username:user.username});
           const refreshToken = jwt.sign(
             { username: user.username },
             process.env.REFRESH_TOKEN_SECRET,

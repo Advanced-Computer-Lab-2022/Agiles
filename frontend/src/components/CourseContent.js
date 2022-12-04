@@ -65,8 +65,7 @@ const CoursContent = () => {
           "currentUser"
         )}&courseId=${course_id}`
       );
-      console.log(exam.data);
-
+  
       if (exam.data == null) {
         navigate(
           {
@@ -80,7 +79,6 @@ const CoursContent = () => {
           { state: { final: "true" } }
         );
       } else {
-        console.log(exam.data);
         setShow(true);
         setGrade(exam.data.result);
         setQuestions(exam.data.studentChoices.length);

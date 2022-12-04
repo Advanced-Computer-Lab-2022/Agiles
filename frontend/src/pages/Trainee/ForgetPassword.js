@@ -53,7 +53,7 @@ const ForgetPassword = () => {
           title: "Oops...",
           text: "Server error!",
         });
-      } else  {
+      } else if (err.response?.status === 406) {
         Swal.fire({
           icon: "error",
           title: "incorrect Code !..",
@@ -61,6 +61,21 @@ const ForgetPassword = () => {
           
         });
     }
+    else if (err.response?.status === 498) {
+      Swal.fire({
+        icon: "error",
+        title: "Code Expired !..",
+        text: "try again",
+        
+      });
+  }
+  else{
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Something went wrong!",
+    });
+  }
   }
 }
   const handleSumbit = async (event) => {
@@ -87,7 +102,7 @@ const ForgetPassword = () => {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Operation is forbidden!",
+          text: "email does not exist!",
         });
       } else {
         Swal.fire({
@@ -107,6 +122,7 @@ const ForgetPassword = () => {
         <Modal.Body>
         <form style={{display:'grid' ,justifyContent:'center'}}>
         <div style={{display:'grid' , gridTemplateColumns:'3rem 3rem 3rem 3rem 3rem 3rem' ,gap:'0.5rem' ,marginBottom:'1rem'}}>
+        
         <input
             type='text'
             inputMode="numeric"
@@ -181,6 +197,7 @@ const ForgetPassword = () => {
           <p className="footForm">
             Back to Log In? <Link to="/logIn">Log In</Link>
           </p>
+          <p className="footForm">code expires in 15 min</p>
       </form>
         </Modal.Body>
       </Modal>
