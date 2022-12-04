@@ -20,9 +20,7 @@ const {
   rateInstructor,
 } = require("../controllers/InstructorController");
 
-//create Course
 instructorRouter.post("/addCourse", createCourse);
-//set Exam
 instructorRouter.post("/setExam", setExam);
 instructorRouter.post("/setFinalExam", setFinalExam);
 instructorRouter.get("/listCourseTitles", listAllInstructorCoursesTitles);

@@ -5,14 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config;
 
-//authAdmin
-function verifyAdminJWT(authHeader) {
-  if (!authHeader) return res.sendStatus(401);
-  const token = authHeader.split(" ")[1];
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_ADMIN, (err, decoded) => {
-    if (err) return err;
-  });
-}
+
 
 //create admin
 const createAdmin = async (req, res) => {
@@ -104,8 +97,7 @@ const logIn = async (req, res) => {
           const accessToken = jwt.sign(
             { username: user.username },
             process.env.ACCESS_TOKEN_SECRET_ITRAINEE,
-
-            { expiresIn: "900s" }
+            { expiresIn: "3000000s" }
           );
 
           const refreshToken = jwt.sign(
@@ -116,23 +108,19 @@ const logIn = async (req, res) => {
           let status =0;
           if (data.state){status = 2;}
           res.cookie("username", user.firstname, {
-            httpsOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
           });
           res.cookie("logged", true, {
-            httpsOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
           });
           res.cookie("currentUser", user._id, {
-            httpsOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
           });
           res.cookie("status", status, {
-            httpsOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
           });
-          res.cookie("jwt", refreshToken, {
-            httpsOnly: true,
+          res.cookie("jwt", accessToken, {
+            httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
           });
           res.status(200).json({ accessToken });
@@ -150,7 +138,7 @@ const logIn = async (req, res) => {
           const accessToken = jwt.sign(
             { username: user.username },
             process.env.ACCESS_TOKEN_SECRET_INSTRUCTOR,
-            { expiresIn: "300000s" }
+            { expiresIn: "3000000s" }
           );
           const refreshToken = jwt.sign(
             { username: user.username },
@@ -159,23 +147,19 @@ const logIn = async (req, res) => {
           );
           const status = 1;
           res.cookie("username", user.firstname, {
-            httpsOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
           });
           res.cookie("logged", true, {
-            httpsOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
           });
           res.cookie("currentUser", user._id, {
-            httpsOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
           });
           res.cookie("status", status, {
-            httpsOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
           });
-          res.cookie("jwt", refreshToken, {
-            httpsOnly: true,
+          res.cookie("jwt", accessToken, {
+            httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
           });
           res.status(200).json({ accessToken });

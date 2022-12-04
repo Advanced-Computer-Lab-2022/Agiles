@@ -4,17 +4,7 @@ const Course = require("../models/Course");
 const Link = require("../models/Link");
 const Rating = require("../models/Rating");
 const IndividualTrainee = require("../models/IndividualTrainee");
-function verifyInstructorJWT(authHeader) {
-  if (!authHeader) return true;
-  const token = authHeader.split(" ")[1];
-  jwt.verify(
-    token,
-    process.env.ACCESS_TOKEN_SECRET_INSTRUCTOR,
-    (err, decoded) => {
-      if (err) return err; //invalid token
-    }
-  );
-}
+
 //create Instructor
 
 const listAllInstructorCoursesTitles = async (req, res) => {

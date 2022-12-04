@@ -19,6 +19,7 @@ const {
   InprogressCoursebyId,
   changePassword
 } = require("../controllers/IndividualTraineeController");
+
 IndividualTraineeRouter.get("/getIndividualTraineebyId", getTraineebyID);
 IndividualTraineeRouter.get("/inprogress/:id", InprogressCourses);
 IndividualTraineeRouter.post("/inprogressCourse", InprogressCoursebyId);
@@ -34,5 +35,5 @@ IndividualTraineeRouter.post("/verifyCode",verifyCode)
 IndividualTraineeRouter.get("/courseExam", courseExam);
 IndividualTraineeRouter.get("/courseFinalExam", courseFinalExam);
 IndividualTraineeRouter.get("/getFinalExamGrade", getFinalExamGrade);
-//updateFieldUser
+
 module.exports = IndividualTraineeRouter;

@@ -2,7 +2,10 @@ require("dotenv").config();
 //express app
 const express = require("express");
 const port = process.env.PORT;
-const cors = require('cors');
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+//App variables
+const app = express();
 
 //mongoose database
 const mongoose = require("mongoose");
@@ -17,12 +20,10 @@ mongoose
   })
   .catch((err) => console.log(err));
 
-//App variables
-const app = express();
-
 // middleware
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(cookieParser());
 app.use(express.json());
 app.use((req, res, next) => {
   console.log(req.path, req.method);

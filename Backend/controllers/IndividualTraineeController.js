@@ -10,18 +10,7 @@ const FinalExamResult = require("../models/FinalExamResult");
 const FinalExam = require("../models/FinalExam");
 require("dotenv").config();
 const Exam = require("../models/Exam");
-function verifyItraineeJWT(authHeader) {
-  //const authHeader = req.headers['authorization'];
-  if (!authHeader) return true;
-  const token = authHeader.split(" ")[1];
-  jwt.verify(
-    token,
-    process.env.ACCESS_TOKEN_SECRET_ITRAINEE,
-    (err, decoded) => {
-      if (err) return err;
-    }
-  );
-}
+
 
 const getTraineebyID = async (req, res) => {
   const id = req.query.id;
@@ -29,23 +18,14 @@ const getTraineebyID = async (req, res) => {
   return res.status(200).json(Itrainee);
 };
 const InprogressCourses = async (req, res) => {
-  let verficationerror = verifyItraineeJWT(req.headers["authorization"]);
-  if (verficationerror) {
-    return res.status(401).json({ msg: "Invalid Token" });
-  } else {
     const id = req.params["id"];
     if (!id) return res.status(400).json({ msg: "bad request" });
     const courses = await IndividualTrainee.findById(id, {
       registered_courses: 1,
     }).populate("registered_courses.courseId").populate("registered_courses.courseRating");
     return res.status(200).json(courses);
-  }
 };
 const InprogressCoursebyId = async (req, res) => {
-  let verficationerror = verifyItraineeJWT(req.headers["authorization"]);
-  if (verficationerror) {
-    return res.status(401).json({ msg: "Invalid Token" });
-  } else {
     const id = req.body.id;
     const courseId = req.body.courseId;
     if (!id) return res.status(400).json({ msg: "bad request" });
@@ -58,7 +38,6 @@ const InprogressCoursebyId = async (req, res) => {
       secondField  :reviews
     }
     return res.status(200).json(result);
-  }
 };
 
 const submitExam = async (req, res) => {
