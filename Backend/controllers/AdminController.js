@@ -102,9 +102,6 @@ const logIn = async (req, res) => {
           );
           let status =0;
           if (data.state){status = 2;}
-          res.cookie("username", user.firstname, {
-            maxAge: 24 * 60 * 60 * 1000,
-          });
           res.cookie("logged", true, {
             maxAge: 24 * 60 * 60 * 1000,
           });
@@ -118,7 +115,7 @@ const logIn = async (req, res) => {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
           });
-          res.status(200).json({ accessToken });
+          res.status(200).json(user);
         } else {
           return res.status(401).json({ msg: "invalid credencial" });
         }
@@ -137,9 +134,6 @@ const logIn = async (req, res) => {
             { expiresIn: "1d" }
           );
           const status = 1;
-          res.cookie("username", user.firstname, {
-            maxAge: 24 * 60 * 60 * 1000,
-          });
           res.cookie("logged", true, {
             maxAge: 24 * 60 * 60 * 1000,
           });
@@ -153,7 +147,7 @@ const logIn = async (req, res) => {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
           });
-          res.status(200).json({ accessToken });
+          res.status(200).json(user);
         } else {
           return res.status(401).json({ msg: "invalid credencial" });
         }
@@ -196,7 +190,7 @@ const logOut = async (req, res) => {
   res.clearCookie("logged");
   res.clearCookie("currentUser");
   res.clearCookie("jwt");
-  res.cookie("status", -1);
+  res.clearCookie("status");
   res.status(200).json({ msg: "logged out" });
 };
 

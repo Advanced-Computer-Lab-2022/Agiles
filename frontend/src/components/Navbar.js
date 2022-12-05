@@ -10,12 +10,12 @@ const cookies = new Cookies();
 const LOGOUT_URL = "/admin/logOut";
 const Navbar = () => {
   const navigate = useNavigate();
-  const username = cookies.get("username");
-  const status = cookies.get("status");
+  const username = localStorage.getItem("username");
+  const role = cookies.get("status");
   const logged = cookies.get("logged");
   const [searchString, setSearchString] = useState("");
-  const isInstructor = ()=>{ return status==1;}
-  const isTrainee = ()=>{ return (status==0 || status ==2);}
+  const isInstructor = ()=>{ return role==1;}
+  const isTrainee = ()=>{ return (role==0 || role ==2);}
   const navigatetoProfile =()=>{
       if (isTrainee()){
           navigate({pathname:'/user/profile'})
@@ -32,6 +32,7 @@ const Navbar = () => {
     };
     try {
       const res = await axios.post(LOGOUT_URL, { username: 4 }, config);
+      localStorage.removeItem("username");
       navigate("/");
     } catch (err) {
       console.log(err);

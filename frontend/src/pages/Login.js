@@ -26,6 +26,7 @@ const Login = () => {
     };
     try {
       const res = await axios.post(LOGIN_URL, user, config);
+      localStorage.setItem("username", res.data.username);
       navigate("/");
     } catch (err) {
       if (!err?.response) {

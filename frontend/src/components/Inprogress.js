@@ -1,5 +1,6 @@
 import Cookies from "universal-cookie";
 import axios from "axios";
+import unAuth from "../clearAuth";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import NavbarStyles from "../components/Navbar.module.css";
@@ -22,14 +23,14 @@ const Inprogress = () => {
   const getCourses = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.get(INPROGRESS_URL + "/" + currentUser, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(INPROGRESS_URL + "/" + currentUser);
       result = res.data.registered_courses
       setCourses(result);
       setIsLoading(false);
     } catch (err) {
-      console.log(err);
+       if (err.response?.status == 401){
+          unAuth();
+       }
     }
   };
   useEffect(() => {
