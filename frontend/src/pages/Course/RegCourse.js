@@ -7,13 +7,14 @@ const RegCourse = ({
   course_inst,
   name,
   progress,
+  idx
 }) => {
   const navigate = useNavigate();
   const handleClick = (e) => {
     navigate(
       {
         pathname: e.target.id,
-        search: `?courseId=${course_id}`,
+        search: `?courseId=${course_id}&idx=${idx}`,
       },
       {
         state: {

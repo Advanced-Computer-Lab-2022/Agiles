@@ -4,6 +4,8 @@ import axios from "axios";
 import InprogressStyles from "../../components/Inprogress.module.css";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
+import a from "../../static/logo.png";
+import NavbarStyles from "../../components/Navbar.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 const cookies = new Cookies();
 const CreateCourse = () => {
@@ -67,6 +69,20 @@ const CreateCourse = () => {
     setSubtitles(newFormValues);
   };
   return (
+    <div>
+    <section className="mainSection">
+    <div>
+      <h2>Welcome Back !</h2>
+    </div>
+    <img src={a} alt="canidan chamber of commerce" className="mainImage"></img>
+  </section>
+  <nav className={NavbarStyles["navbar"]}>
+    <div>
+      <Link to ="/"><button className={"notPressed" } >Explore </button></Link>
+      <Link to = "/mycourses"><button className={"notPressed"} >My Courses </button></Link>
+      <Link to = "/createcourse"><button className={"Inprogress"}>CreateCourse </button></Link>
+    </div>
+  </nav>
     <section className={InprogressStyles["Wrapper"]}>
     <h2 className={InprogressStyles["Wrapper_h2"]}>Create Course</h2>
       <form onSubmit={handleSubmit}style = {{width :'30%'}}>
@@ -294,6 +310,7 @@ const CreateCourse = () => {
         <input type="submit" className="btn btn-primary" value="create Course" />
       </form>
     </section>
+    </div>
   );
 };
 

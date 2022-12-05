@@ -71,6 +71,7 @@ const CoursePreview = () => {
             course_title={course.title}
             course_inst={course.instructorname}
             name={"preview"}
+            idx = {index}
           />
           <div className={style["mainRight"]}>
             <Modal show={show} size="lg" onHide={handleClose}>

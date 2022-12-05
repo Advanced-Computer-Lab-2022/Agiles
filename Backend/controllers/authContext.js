@@ -3,18 +3,18 @@ const jwt = require("jsonwebtoken");
 //generate access tokens
 const generateTraineeAccessToken = (trainee) => {
     return jwt.sign(trainee, process.env.ACCESS_TOKEN_SECRET_ITRAINEE, {
-        expiresIn: "15m",
+        expiresIn: "30m",
     });
 }
 const generateInstructorAccessToken = (instructor) =>{
     return jwt.sign(instructor, process.env.ACCESS_TOKEN_SECRET_INSTRUCTOR, {
-        expiresIn: "15m",
+        expiresIn: "30m",
     });
 }
 
 const generateAdminAccessToken = (admin) =>{
     return jwt.sign(admin, process.env.ACCESS_TOKEN_SECRET_ADMIN, {
-        expiresIn: "20m",
+        expiresIn: "30m",
     });
 }
 //generate refresh tokens

@@ -32,6 +32,8 @@ import AccountSecurity from "./pages/Trainee/AccountSecurity"
 import PaymentMethods from "./pages/Trainee/PaymentMethods"
 import ForgetPassword from "./pages/Trainee/ForgetPassword"
 import UpdateForgottenPassword from "./pages/Trainee/UpdateForgottenPassword";
+import Inprogress from "./components/Inprogress";
+import InstructorOwnCourses from "./pages/Instructor/InstructorOwnCourses";
 function App() {
   const [showNav, setShowNav] = useState(true);
   return (
@@ -44,27 +46,28 @@ function App() {
         )}
         <div className="pages">
           <Routes>
-            <Route index element={<Home />} />
+            <Route index element={<Home />} >
+            </Route>
+            <Route path="/mylearning" element={<Inprogress/>}></Route>
+            <Route path="/createcourse" element={<CreateCourse />} />
+            <Route path="/mycourses" element={<InstructorOwnCourses />} >
+              
+              </Route>
+            
+
             <Route path="/login" element={<Login />} />
             <Route path="/forgotpassword" element={<ForgetPassword/>} />
             <Route path="/updateforgotpassword" element={<UpdateForgottenPassword/>} />
             <Route path="/signup" element={<SignUp />} />
+
+
             <Route path="/admin" element={<Admin funcNav={setShowNav} />} />
-            <Route
-              path="/addInstructor"
-              element={<AddInstructor funcNav={setShowNav} />}
-            />
-            <Route
-              path="/addAdmin"
-              element={<AddAdmin funcNav={setShowNav} />}
-            />
-            <Route
-              path="/addCorporate"
-              element={<AddCorporate funcNav={setShowNav} />}
+            <Route path="/addInstructor"element={<AddInstructor funcNav={setShowNav} />}  />
+            <Route path="/addAdmin"element={<AddAdmin funcNav={setShowNav} />}/>
+            <Route path="/addCorporate" element={<AddCorporate funcNav={setShowNav} />}
             />
             <Route path="/courses" element={<Courses />} />
             <Route path="/course" element={<Course />} />
-            <Route path="/createCourse" element={<CreateCourse />} />
             <Route path="/preReg" element={<CoursePreview />} />
             <Route path="/conReg" element={<CourseContent/>} />
             <Route path="/grades" element={<CourseContent/>} />

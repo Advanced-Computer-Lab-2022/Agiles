@@ -18,6 +18,7 @@ const CoursContent = () => {
   const location = useLocation();
   const progress = location.state.progress;
   const course_id = new URLSearchParams(location.search).get("courseId");
+  const index = new URLSearchParams(location.search).get("idx");
   const [course, setCourse] = useState([]);
   const [subtitles, setSubtitles] = useState([]);
   const [isloading, setIsLoading] = useState(false);
@@ -133,6 +134,7 @@ const CoursContent = () => {
             course_title={course.title}
             course_inst={course.instructorname}
             name={"content"}
+            idx = {index}
           />
           <div className={style["mainRight"]}>
             <label className={style["mainlabel"]}>Course Content</label>

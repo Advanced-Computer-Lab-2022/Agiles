@@ -5,22 +5,22 @@
 .navbarSub {
   display: flex;
   align-items: center;
+  justify-content: center;
   margin: 0 auto;
   padding: 10px 200px;
   border-bottom: 1px solid #f2f2f2;
 }
 .mainSection{
-  padding: 100px 200px;
-  width: 100%;
-  min-height: 45vh;
+  padding: 50px 200px;
   margin-top: 10px;
   display: flex;
   align-items: center;
+  justify-content: center;
   background-color:#1c1d1f;
   background-position:center ;
 }
 .mainImage{
-  width: 200px;
+  width: 160px;
   margin-left: 50%;
 }
 .mainSection h2{

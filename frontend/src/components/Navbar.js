@@ -4,30 +4,26 @@ import { BsSearch } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import SelectCountry from "./SelectCountry";
 import Cookies from "universal-cookie";
-import a from "../static/logo.png";
 import NavDropdown from "react-bootstrap/NavDropdown";
-
-
 import axios from "axios";
 const cookies = new Cookies();
 const LOGOUT_URL = "/admin/logOut";
 const Navbar = () => {
+  const navigate = useNavigate();
   const username = cookies.get("username");
   const status = cookies.get("status");
-  const [searchString, setSearchString] = useState("");
   const logged = cookies.get("logged");
+  const [searchString, setSearchString] = useState("");
+  const isInstructor = ()=>{ return status==1;}
+  const isTrainee = ()=>{ return (status==0 || status ==2);}
   const navigatetoProfile =()=>{
-      if (status == 0 || status ==2){
+      if (isTrainee()){
           navigate({pathname:'/user/profile'})
       }
       else{
         navigate({pathname:'/instructor/profile'})
       }
   }
-  const handleChange = (event) => {
-    setSearchString(event.target.value);
-  };
-  const navigate = useNavigate();
   const handleLogOut = async () => {
     let config = {
       headers: {
@@ -37,7 +33,6 @@ const Navbar = () => {
     try {
       const res = await axios.post(LOGOUT_URL, { username: 4 }, config);
       navigate("/");
-      window.location.reload(false);
     } catch (err) {
       console.log(err);
     }
@@ -52,15 +47,6 @@ const Navbar = () => {
 
   return (
     <nav className={NavbarStyles["navbar"]}>
-      {/* <h1 className={NavbarStyles["headerTitle"]}>
-        <Link to="/">
-          <img
-            src={a}
-            alt="mainImage"
-            className={NavbarStyles["headerTitle"]}
-          ></img>
-        </Link>
-      </h1> */}
       <form onSubmit={handleSearch} className={NavbarStyles["search-bar"]}>
         <BsSearch
           className={NavbarStyles["search-icon"]}
@@ -71,7 +57,7 @@ const Navbar = () => {
           placeholder="search for anything"
           value={searchString}
           required
-          onChange={handleChange}
+          onChange={(event)=>setSearchString(event.target.value)}
         ></input>
       </form>
       <div className={NavbarStyles["linkContainer"]}>
@@ -92,6 +78,12 @@ const Navbar = () => {
               expand="lg"
             >
               <NavDropdown.Item onClick = {navigatetoProfile}>profile</NavDropdown.Item>
+              {isTrainee ()&& <NavDropdown.Item href="/mylearning">My Learning</NavDropdown.Item>}
+              {isInstructor()&& 
+              <>
+              <NavDropdown.Item href="/mycourses">My Courses</NavDropdown.Item>
+              <NavDropdown.Item href="/createcourse">Create Course</NavDropdown.Item>
+              </>}
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={handleLogOut}>Log Out</NavDropdown.Item>
             </NavDropdown>
