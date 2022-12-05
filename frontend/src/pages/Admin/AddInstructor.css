@@ -1,3 +1,5 @@
+.newContainer{
+background-color:rgb(246, 247, 251)}
 .inputClass{
   width: 100%;
   padding: 5px;
@@ -10,10 +12,9 @@
   gap: 10px;
 }
 
-.top,
+
 .bottom {
-  -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
-  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+ background-color: white;
   padding: 10px;
   margin: 20px;
   display: flex;
@@ -60,9 +61,8 @@
 
 .buttonClass {
   width: 150px;
-  padding: 10px;
   border: none;
-  background-color: teal;
+  background-color:rgb(66, 104, 246);
   color: white;
   font-weight: bold;
   cursor: pointer;

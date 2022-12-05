@@ -13,7 +13,6 @@ const AdminSidebar = () => {
     return ( 
         <div className={style['sidebar']}>
             <div className={style['top']}><Link to = "/admin" style={{textDecoration:"none"}}><span className={style["logo"]}>Agiles Admin</span></Link></div>
-            <hr></hr>
             <div className={style['center']}>
                 <ul>
                     <p className={style["main"]}>Main</p>
@@ -21,9 +20,9 @@ const AdminSidebar = () => {
                         <DashboardIcon />
                         <span>dashboard</span></li>
                    <p className={style["main"]}>AddUsers</p>
-                   <Link to = "/addAdmin" style={{textDecoration:"none" , color:'black'}}><li><SupervisorAccountIcon/><span>Admin</span></li></Link>
-                   <Link to = "/addCorporate" style={{textDecoration:"none" , color:'black'}}> <li><CorporateFareIcon /><span>CorporateTrainee</span></li></Link>
-                   <Link to = "/addInstructor" style={{textDecoration:"none" , color:'black'}}> <li><PersonAddAltIcon/><span>Instructor</span></li></Link>
+                   <Link to = "addAdmin" style={{textDecoration:"none" , color:'black'}}><li><SupervisorAccountIcon/><span>Admin</span></li></Link>
+                   <Link to = "addCorporate" style={{textDecoration:"none" , color:'black'}}> <li><CorporateFareIcon /><span>CorporateTrainee</span></li></Link>
+                   <Link to = "addInstructor" style={{textDecoration:"none" , color:'black'}}> <li><PersonAddAltIcon/><span>Instructor</span></li></Link>
                     <p className={style["main"]}>Services</p>
                     <li><NotificationsNoneIcon className={style['icon']}></NotificationsNoneIcon><span>Notfications</span></li>
                     <li><SettingsApplicationsIcon className={style['icon']}></SettingsApplicationsIcon><span>Settings</span></li>

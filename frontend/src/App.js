@@ -49,19 +49,14 @@ function App() {
             <Route path="/forgotpassword" element={<ForgetPassword/>} />
             <Route path="/updateforgotpassword" element={<UpdateForgottenPassword/>} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/admin" element={<Admin funcNav={setShowNav} />} />
-            <Route
-              path="/addInstructor"
-              element={<AddInstructor funcNav={setShowNav} />}
-            />
-            <Route
-              path="/addAdmin"
-              element={<AddAdmin funcNav={setShowNav} />}
-            />
-            <Route
-              path="/addCorporate"
-              element={<AddCorporate funcNav={setShowNav} />}
-            />
+
+            <Route path="/admin" element={<Admin funcNav={setShowNav} />} >
+                 <Route path="dashboard" />
+                 <Route path="addInstructor"element={<AddInstructor />}/>
+                 <Route path="addAdmin" element={<AddAdmin />}/>
+                 <Route path="addCorporate" element={<AddCorporate/>}/>
+            </Route>
+
             <Route path="/courses" element={<Courses />} />
             <Route path="/course" element={<Course />} />
             <Route path="/createCourse" element={<CreateCourse />} />

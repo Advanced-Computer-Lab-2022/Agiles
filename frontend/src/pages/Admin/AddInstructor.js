@@ -1,18 +1,15 @@
 import { useState } from "react";
 import axios from "axios";
 import "./AddInstructor.css";
-import AdminNavbar from "./adminComponents/AdminNavbar";
-import AdminSidebar from "./adminComponents/AdminSidebar";
 import Instimg from "../../static/Instructor.png"
 
-const AddInstructor = (props) => {
+const AddInstructor = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
-  props.funcNav(false);
   const handleSumbit = async (event) => {
     const instructor = {
       firstname: firstname,
@@ -38,21 +35,11 @@ const AddInstructor = (props) => {
   };
   return (
     <div className="new">
-      <AdminSidebar></AdminSidebar>
       <div className="newContainer">
-        <AdminNavbar></AdminNavbar>
         <div className="top">
           <h1 className="h1Class">Add new Instructor</h1>
         </div>
         <div className="bottom">
-          <div className="left">
-            <img
-            className="imgClass"
-              src={Instimg
-              }
-              alt="adminImg"
-            />
-          </div>
           <div className="right">
       <form  className = "formClass" onSubmit={handleSumbit}>
       <div className="formInput">

@@ -1,17 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
 import "./AddInstructor.css";
-import AdminNavbar from "./adminComponents/AdminNavbar";
-import AdminSidebar from "./adminComponents/AdminSidebar";
 import AdminImg from "../../static/Admin.png";
-const AddCorporate = (props) => {
+const AddCorporate = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
-  props.funcNav(false);
   const handleSumbit = async (event) => {
     const corporate = {
       firstname: firstname,
@@ -37,9 +34,8 @@ const AddCorporate = (props) => {
   };
   return (
     <div className="new">
-      <AdminSidebar></AdminSidebar>
+   
       <div className="newContainer">
-        <AdminNavbar></AdminNavbar>
         <div className="top">
           <h1 className="h1Class">Add New Corporate Trainee</h1>
         </div>
