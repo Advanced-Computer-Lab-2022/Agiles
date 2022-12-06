@@ -8,6 +8,7 @@ function verifyAdminJWT(req,res,next) {
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_ADMIN, (err, decoded) => {
       if (err) return res.status(401).json({msg:"Unauthorized"});
       else{
+        req.user = decoded;
         next();
       }
     });
@@ -22,6 +23,7 @@ function verifyInstructorJWT(req,res,next) {
       (err, decoded) => {
         if (err) return res.status(401).json({msg:"Unauthorized"}); //invalid token
         else{
+            req.user = decoded;
             next();
         }
       }
@@ -36,6 +38,7 @@ function verifyInstructorJWT(req,res,next) {
       (err, decoded) => {
         if (err) return res.status(401).json({msg:err});
         else{
+            req.user = decoded;
             next();
         }
       }
