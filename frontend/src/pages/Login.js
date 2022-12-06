@@ -82,9 +82,10 @@ const Login = () => {
           <p className="footforget">
              <Link to="/forgotpassword">Forgotten password?</Link>
           </p>
-          <p className="footForm">
-            Don't have account? <Link to="/signUp">Sign up</Link>
-          </p>
+          <p className="NoAccount">
+            Don't have account? <Link to="/signUp">Sign up</Link> </p>
+      
+          
         </div>
       </form>
     </div>

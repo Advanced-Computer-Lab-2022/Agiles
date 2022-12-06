@@ -41,6 +41,10 @@
   color: white;
   background-color: rgb(78, 77, 77);
 }
+.side-bar-bottom ul {
+  list-style: none;
+  padding: 0;
+}
 .side-bar-bottom li:hover {
   color: white;
   background-color: rgb(162, 160, 160);

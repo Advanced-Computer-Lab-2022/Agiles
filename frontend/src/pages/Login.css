@@ -33,13 +33,19 @@
     color: rgb(34, 34, 34);
   }
 .footForm{
-    font-size: 14px;
-    font-weight: 600;
-    color: rgb(34, 34, 34);
-    padding-left: 5px;
+    display: flex;
 }
-.last {
-    display:inline-flex;    
+.footForm p{
+  color: rgb(34, 34, 34);
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 0.5rem;
+  margin-top: 1rem;
+}
+.NoAccount{
+  color: rgb(34, 34, 34);
+  font-size: 14px;
+  font-weight: 600;
 }
 .instructions {
   font-size: 0.75rem;

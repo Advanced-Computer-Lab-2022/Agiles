@@ -232,14 +232,14 @@ const SignUp = () => {
             <span aria-label="percent">%</span>
           </p>
 
-          <div className="d-grid gap-2 mt-2 ">
+          <div className="d-grid gap-2 mt-3 ">
             <button disabled={!validName || !validPwd || !firstname ||!lastname ||!email? true : false} className="btn btn-primary">
               Submit
             </button>
           </div>
-          <div className="last">
+          <div className="footForm">
             <input type="checkbox" required />
-            <p className="footForm">
+            <p>
               I agree to <Link to="terms-conditions">terms & conditions </Link>
             </p>
           </div>
