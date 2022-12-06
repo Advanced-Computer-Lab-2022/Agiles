@@ -1,6 +1,9 @@
-import './AdminNavbar.css'
+import style from './AdminNavbar.module.css'
 const AdminNavbar = () => {
-    return ( <></> );
+    return ( <nav className={style['admin-navbar']}>
+        <p>Hossam@test.com</p>
+        </nav>
+         );
 }
  
 export default AdminNavbar;

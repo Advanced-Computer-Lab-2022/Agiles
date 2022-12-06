@@ -1,7 +1,10 @@
 .admin{
     display: flex;
+    font-family: 'tahoma';
+
 } 
- .adminContainer {
-    flex: 6;}
-
-
+.admin-content{
+    display: grid;
+    grid-template-rows: 5rem;
+    flex: 6
+}

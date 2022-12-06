@@ -1,13 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 import "./AddInstructor.css";
-import AdminNavbar from "./adminComponents/AdminNavbar";
-import AdminSidebar from "./adminComponents/AdminSidebar";
 import AdminImg from "../../static/Admin.png";
 const AddAdmin = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  props.funcNav(false);
   const handleSumbit = async (event) => {
     const admin = { username: username, password: password };
     event.preventDefault();
@@ -28,9 +25,7 @@ const AddAdmin = (props) => {
   };
   return (
     <div className="new">
-      <AdminSidebar></AdminSidebar>
       <div className="newContainer">
-        <AdminNavbar></AdminNavbar>
         <div className="top">
           <h1 className="h1Class">Add New Admin</h1>
         </div>

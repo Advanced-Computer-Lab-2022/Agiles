@@ -1,20 +1,21 @@
 .sidebar {
-  flex: 1;
+  flex: 1.3;
   border-right: 0.5px solid rgb(230, 227, 227);
+  align-items: center;
   min-height: 100vh;
   background-color: white;
 }
 .top {
   height: 50px;
+  margin-top: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .logo {
-  font-size: 20px;
+  font-size: 2rem;
   font-weight: bold;
-  margin-right: 8px;
-  color: teal;
+  color: rgb(0, 0, 0);
 }
 
 hr {
@@ -22,36 +23,40 @@ hr {
   border: 0.5px solid rgb(230, 227, 227);
 }
 .center {
-  padding-left: 10px;
+  margin-top: 2rem;
+  display: grid;
+  justify-items: center;
+  width: 80%;
 }
 ul {
   list-style: none;
-  margin: 0;
-  padding: 0;
+  width: 100%;
 }
 .main {
   font-size: 15px;
-  font-weight: bold;
-  color: #999;
-  margin-top: 15px;
-  margin-bottom: 5px;
+  color: rgb(0, 0, 0);
+  padding: 0.5rem;
+  background-color:rgb(241, 241, 249);
 }
 .center li {
   display: flex;
+  width: 100%;
   align-items: center;
   padding: 5px;
   cursor: pointer;
   
 }
 .center li:hover{
-    background-color: #ece8ff;
+   color: rgb(66, 104, 246);
 }
  .center li span{
     font-size: 13px;
-    font-weight: 600;
-    color: #888;
+    color: rgb(0, 0, 0);
     margin-left: 10px;
     margin-bottom: 2px;
+}
+.center li span:hover{
+  color: rgb(66, 104, 246);
 }
 .spam{
     font-size: 13px;

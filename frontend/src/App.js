@@ -60,12 +60,13 @@ function App() {
             <Route path="/updateforgotpassword" element={<UpdateForgottenPassword/>} />
             <Route path="/signup" element={<SignUp />} />
 
+            <Route path="/admin" element={<Admin funcNav={setShowNav} />} >
+                 <Route path="dashboard" />
+                 <Route path="addInstructor"element={<AddInstructor />}/>
+                 <Route path="addAdmin" element={<AddAdmin />}/>
+                 <Route path="addCorporate" element={<AddCorporate/>}/>
+            </Route>
 
-            <Route path="/admin" element={<Admin funcNav={setShowNav} />} />
-            <Route path="/addInstructor"element={<AddInstructor funcNav={setShowNav} />}  />
-            <Route path="/addAdmin"element={<AddAdmin funcNav={setShowNav} />}/>
-            <Route path="/addCorporate" element={<AddCorporate funcNav={setShowNav} />}
-            />
             <Route path="/courses" element={<Courses />} />
             <Route path="/course" element={<Course />} />
             <Route path="/preReg" element={<CoursePreview />} />
