@@ -6,6 +6,7 @@ const IndividualTrainee = require("../models/IndividualTrainee");
 const Rating = require("../models/Rating");
 const jwt = require("jsonwebtoken");
 const Instructor = require("../models/Instructor");
+const Report = require("../models/Report");
 require("dotenv").config();
 const filterCourses = async (req, res) => {
   const lowerBound = req.query["lowerBound"];
@@ -342,6 +343,23 @@ const rateCourse = async (req, res) => {
   }
 };
 
+const reportProblem = async (req, res) => {
+  const { courseId, reportType, description } = req.body;
+  const userId = req.user.id;
+  const newProblem = new Report({
+    userId: userId,
+    courseId: courseId,
+    reportType: reportType,
+    description: description,
+  });
+  try {
+    const problem = await Report.create(newProblem);
+    res.status(200).json(problem);
+  } catch (error) {
+    res.status(400).json({ error: "can't create a problem" });
+  }
+};
+
 module.exports = {
   addCoursePromotion,
   createCourse,
@@ -358,4 +376,5 @@ module.exports = {
   setFinalExam,
   courseFinalExam,
   findCourseById,
+  reportProblem,
 };
