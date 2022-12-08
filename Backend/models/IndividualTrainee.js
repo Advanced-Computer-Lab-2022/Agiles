@@ -28,10 +28,10 @@ const individualTraineeSchema = new Schema(
       type: String,
       required: false,
     },
-    state:{
+    state: {
       type: Boolean,
       default: false,
-      required : true
+      required: true,
     },
     registered_courses: [
       {
@@ -45,14 +45,14 @@ const individualTraineeSchema = new Schema(
           max: 100,
           default: 0,
         },
-        courseRating :{type:mongoose.Schema.Types.ObjectId,ref:"Rating"},
-        instRating:{type:mongoose.Schema.Types.ObjectId,ref:"Rating"}
+        courseRating: { type: mongoose.Schema.Types.ObjectId, ref: "Rating" },
+        instRating: { type: mongoose.Schema.Types.ObjectId, ref: "Rating" },
       },
     ],
-    verficationCode :{
-      type:String,
-      min:10000,
-      max:99999
+    verficationCode: {
+      type: String,
+      min: 10000,
+      max: 99999,
     },
     mini_bio: {
       type: String,
@@ -64,7 +64,12 @@ const individualTraineeSchema = new Schema(
     },
     accessToken: { type: String },
     refreshToken: { type: String },
+    wallet: {
+      type: Number,
+      default: 0,
+    },
   },
+
   { timestamps: true }
 );
 
