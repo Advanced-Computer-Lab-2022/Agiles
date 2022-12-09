@@ -77,7 +77,11 @@ IndividualTraineeRouter.get(
   getFinalExamGrade
 );
 IndividualTraineeRouter.post("/setRating", verifyItraineeJWT, rateInstructor);
-instructorRouter.post("/reportProblem", verifyItraineeJWT, reportProblem);
+IndividualTraineeRouter.post(
+  "/reportProblem",
+  verifyItraineeJWT,
+  reportProblem
+);
 //no auth
 IndividualTraineeRouter.post("/forgotpassword", forgetPassword);
 IndividualTraineeRouter.post("/verifyCode", verifyCode);
