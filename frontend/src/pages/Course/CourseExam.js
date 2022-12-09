@@ -21,7 +21,7 @@ const CourseExam = () => {
   const [CourseExam, setCourseExam] = useState([]);
   const [isloading, setIsLoading] = useState(false);
   const [examState, setExam] = useState(false);
-  const [answers, setAnswers] = useState([]);
+  const [answers, setAnswers] = useState(["1"]);
   const [result, setResult] = useState([]);
   const [grade, setGrade] = useState(0);
   const final = location.state.final;
