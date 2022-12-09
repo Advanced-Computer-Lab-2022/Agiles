@@ -66,7 +66,7 @@ const CoursContent = () => {
           "currentUser"
         )}&courseId=${course_id}`
       );
-  
+
       if (exam.data == null) {
         navigate(
           {
@@ -134,7 +134,7 @@ const CoursContent = () => {
             course_title={course.title}
             course_inst={course.instructorname}
             name={"content"}
-            idx = {index}
+            idx={index}
           />
           <div className={style["mainRight"]}>
             <label className={style["mainlabel"]}>Course Content</label>
@@ -173,7 +173,7 @@ const CoursContent = () => {
                             onClick={handleExamClick}
                             className={style["subtitleView"]}
                           >
-                            Exam
+                            Quiz
                           </button>
                           <Modal
                             backdrop={false}

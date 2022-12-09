@@ -97,7 +97,7 @@ const SetExam = () => {
   return (
     <div className={styled["course"]}>
       <Form onSubmit={handleSubmit}>
-        <h1>Add an Exam for This Subtitle</h1>
+        <h1>Add Quiz</h1>
 
         {questions.map((element, index) => (
           <div>

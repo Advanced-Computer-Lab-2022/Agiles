@@ -4,6 +4,7 @@ const {
   courseExam,
   courseFinalExam,
   reportProblem,
+  viewReportedProblems,
 } = require("../controllers/CourseController");
 const {
   getTraineebyID,
@@ -77,7 +78,8 @@ IndividualTraineeRouter.get(
   getFinalExamGrade
 );
 IndividualTraineeRouter.post("/setRating", verifyItraineeJWT, rateInstructor);
-instructorRouter.post("/reportProblem", verifyItraineeJWT, reportProblem);
+IndividualTraineeRouter.post("/reportProblem",verifyItraineeJWT,reportProblem);
+IndividualTraineeRouter.get("/viewReportedProblems",verifyItraineeJWT,viewReportedProblems);
 //no auth
 IndividualTraineeRouter.post("/forgotpassword", forgetPassword);
 IndividualTraineeRouter.post("/verifyCode", verifyCode);

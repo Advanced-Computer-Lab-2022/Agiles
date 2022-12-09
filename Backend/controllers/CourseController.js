@@ -360,6 +360,19 @@ const reportProblem = async (req, res) => {
   }
 };
 
+const viewReportedProblems = async(req,res) =>{
+
+  const userId = req.user.id;
+  try{
+    const reportedProblems = await Report.find({userId: userId });
+    res.status(200).json(reportedProblems);
+  }catch{
+    res.status(404).json({error : "Data Not Found"});
+  }
+
+
+};
+
 module.exports = {
   addCoursePromotion,
   createCourse,
@@ -377,4 +390,5 @@ module.exports = {
   courseFinalExam,
   findCourseById,
   reportProblem,
+  viewReportedProblems,
 };

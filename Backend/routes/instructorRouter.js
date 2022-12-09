@@ -6,6 +6,7 @@ const {
   setExam,
   setFinalExam,
   reportProblem,
+  viewReportedProblems,
 } = require("../controllers/CourseController");
 const {
   filterCoursesByInstructor,
@@ -60,5 +61,6 @@ instructorRouter.patch("/deletSubtitle", verifyInstructorJWT, uploadSubLink);
 instructorRouter.delete("/deletSubtitle", verifyInstructorJWT, deletLink);
 instructorRouter.patch("/updatePreview", verifyInstructorJWT, uploadPreLink);
 instructorRouter.post("/reportProblem", verifyInstructorJWT, reportProblem);
+instructorRouter.get("/viewReportedProblems",verifyInstructorJWT,viewReportedProblems);
 
 module.exports = instructorRouter;

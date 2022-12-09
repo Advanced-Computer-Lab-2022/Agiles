@@ -7,7 +7,7 @@ const RegCourse = ({
   course_inst,
   name,
   progress,
-  idx
+  idx,
 }) => {
   const navigate = useNavigate();
   const handleClick = (e) => {
@@ -71,6 +71,17 @@ const RegCourse = ({
             onClick={name === "grade" ? () => {} : handleClick}
           >
             Grades
+          </li>
+          <li
+            id="/reportproblemtrainee"
+            className={
+              name == "reportproblemtrainee"
+                ? regStyles["leftsection-liclicked"]
+                : ""
+            }
+            onClick={name === "reportproblemtrainee" ? () => {} : handleClick}
+          >
+            Report Problem
           </li>
         </ul>
       </div>

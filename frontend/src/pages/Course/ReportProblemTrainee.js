@@ -7,7 +7,9 @@ import Button from "react-bootstrap/Button";
 import style from "./ReportProblem.module.css";
 
 
-const ReportProblem = () => {
+
+
+const ReportProblemTrainee = () => {
   const [reportType, setReportType] = useState("");
   const [description, setDescription] = useState("");
 
@@ -33,7 +35,7 @@ const ReportProblem = () => {
     };
     try {
       const res = await axios.post(
-        "/instructor/reportProblem",
+        "/individualtrainee/reportProblem",
         problem,
         config
       );
@@ -53,67 +55,15 @@ const ReportProblem = () => {
         timer: 1500,
       });
     }
-    /*
-    <FormControl>
-          <FormLabel id="demo-radio-buttons-group-label">
-            Type Of Your Problem
-          </FormLabel>
-          <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="Technical"
-            name="radio-buttons-group"
-          >
-            <FormControlLabel
-              value="Technical"
-              control={<Radio />}
-              label="Technical"
-              onClick={() => setReportType("Technical")}
-            />
-            <FormControlLabel
-              value="Financial"
-              control={<Radio />}
-              label="Financial"
-              onClick={() => setReportType("Financial")}
-            />
-            <FormControlLabel
-              value="Other"
-              control={<Radio />}
-              label="Other"
-              onClick={() => setReportType("Other")}
-            />
-          </RadioGroup>
-        </FormControl>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Select aria-label="Default select example">
-            <option>What is the type of your problem</option>
-            <option
-              value="Technical"
-              onClick={(e) => setReportType(e.target.value)}
-            >
-              Technical
-            </option>
-            <option
-              value="Financial"
-              onClick={(e) => setReportType(e.target.value)}
-            >
-              Financial
-            </option>
-            <option
-              value="Other"
-              onClick={(e) => setReportType(e.target.value)}
-            >
-              Other
-            </option>
-          </Form.Select>
-        </Form.Group>
-    */
+ 
   };
 
   return (
     <>
       <h1>Welcome to the canadian chamber of commerce Support Center</h1>
-      <div className={style["card"]}>
+          
 
+      <div className={style["card"]}>
       <Form onSubmit={handleSubmit}>
         <Form.Check
           name="subject"
@@ -123,7 +73,7 @@ const ReportProblem = () => {
           onChange={handleChangeSubject}
           label={"Technical"}
           required
-          />
+        />
         <Form.Check
           name="subject"
           type="radio"
@@ -141,9 +91,9 @@ const ReportProblem = () => {
           onChange={handleChangeSubject}
           label={"Other"}
           required
-          />
+        />
 
-<Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Whats Is Your Problem</Form.Label>
         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"  type="txt"
             placeholder="descripe your problem"
@@ -154,8 +104,9 @@ const ReportProblem = () => {
           Send
         </Button>
       </Form>
-            </div>
+      </div>
+
     </>
   );
 };
-export default ReportProblem;
+export default ReportProblemTrainee;

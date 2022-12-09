@@ -56,6 +56,15 @@ const MyCourseInst = ({
           >
             Set Final Exam
           </li>
+          <li
+            id="/reportProblem"
+            className={
+              name == "reportproblem" ? regStyles["leftsection-liclicked"] : ""
+            }
+            onClick={name === "reportproblem" ? () => {} : handleClick}
+          >
+            Report Problem
+          </li>
         </ul>
       </div>
     </section>
