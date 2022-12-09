@@ -4,9 +4,9 @@ import style from './Profile.module.css'
 import Button from "react-bootstrap/Button";
 import ProfileSideBar from "./ProfileSidebar";
 import Cookie from "universal-cookie";
-import Alert from 'react-bootstrap/Alert';
 import axios from "axios";
 import { useState,useEffect } from "react";
+import Swal from "sweetalert2";
 const fetchUrl = "/individualtrainee/getIndividualTraineebyId";
 const updateEmailUrl = "/individualtrainee/updateEmail"
 const cookie = new Cookie();
@@ -20,11 +20,6 @@ const AccountSecurity = () => {
   const [oldPass , setOldPass] = useState("Enter current password");
   const [newPass , setNewPass] = useState("Enter new password");
   const [newPassConfirm,setNewPassConfirm] = useState("");
-  const [success , setSuccess] = useState(false);
-  const [fail , setFail] = useState(false);
-  const [successPass , setSuccessPass] = useState(false);
-  const [failPass , setFailPass] = useState(false);
-  const [errMsg,setErrMsg]= useState("");
   const fetchData = async () => {
     setIsLoading(true);
     try {
@@ -49,39 +44,62 @@ const passwordUpdate = async (event) => {
       newPass: newPass,
     };
     if (newPass!= newPassConfirm){
-      setSuccess(false);
-      setFailPass(true);
-      setErrMsg("passwords do not match")
+      Swal.fire({
+        icon: "error",
+        title: "please make sure your passwords match !..",
+      });
     }
     else{
     try {
       const res = await axios.patch(`/individualtrainee/updatePassword?id=${id}`,pass);
-      setSuccessPass(true);
-      setFailPass(false);
-      setErrMsg("updated successfully")
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      
+      Toast.fire({
+        icon: 'success',
+        title: 'password updated successfully'
+      })
       event.target.reset();
     
     } catch (err) {
-      setSuccess(false);
-      setFailPass(true);
       if (!err?.response) {
-        setErrMsg("No Server Response");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Server error!",
+        });
       } else if (err.response?.status === 400) {
-        setErrMsg("wrong username fetched not exist");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Server error!",
+        });
       } else if (err.response?.status === 401) {
-        setErrMsg("old Password incorrect");
+        Swal.fire({
+          icon: "error",
+          title: "old password not correct...",
+          text: "try again!",
+        });
       } else if (err.response?.status === 500) {
-        setErrMsg("please Fill all fields");
+        Swal.fire({
+          icon: "error",
+          title: "please fill all the details...",
+          text: "try again!",
+        })
       }
     }
   }
   };
-  useEffect(() => {
-    setSuccess(false);
-    setFail(false);
-    setSuccessPass(false);
-    setFailPass(false);
-    setErrMsg("");},[email,oldPass,newPass,newPassConfirm])
+
 
   const emailUpdate = async (event) => {
     event.preventDefault();
@@ -91,15 +109,30 @@ const passwordUpdate = async (event) => {
     }
     try {
       const res = await axios.patch(updateEmailUrl,body);
-      setSuccess(true);
-      setFail(false);
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      
+      Toast.fire({
+        icon: 'success',
+        title: 'email updated successfully'
+      })
       setCurrentEmail(email)
-      setErrMsg("Email updated successfully")
       event.target.reset();
     } catch (e) {
-      setSuccess(false);
-      setSuccess(true);
-      setErrMsg("update Failed")
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Server error!",
+      });
     }
   };
   
@@ -118,10 +151,7 @@ const passwordUpdate = async (event) => {
                 <label>Edit your account settings and change your password here.</label>
               </div>
             </section>
-            <section >
-        {fail && <Alert key='danger' variant='danger'>{errMsg}</Alert>}
-       {success && <Alert key='success' variant='success'> {errMsg}</Alert>}
-        </section>
+     
             <section className={style["security-bottom"]}>
               <form onSubmit={emailUpdate} >
                 <label>Email :</label>
@@ -129,9 +159,8 @@ const passwordUpdate = async (event) => {
                 <Button variant="dark" type="submit" >save</Button>
               </form>
             </section>
+
             <section >
-        {failPass && <Alert key='danger' variant='danger'>{errMsg}</Alert>}
-       {successPass && <Alert key='success' variant='success'> {errMsg}</Alert>}
         </section>
             <section className={style["security-bottom-bottom"]}>
               <form onSubmit={passwordUpdate} >

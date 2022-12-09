@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../Login.css";
 import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
 import Swal from "sweetalert2";
 const FORGOT_URL = "/individualtrainee/forgotpassword";
 const VERIFY_URL = "/individualtrainee/verifyCode";

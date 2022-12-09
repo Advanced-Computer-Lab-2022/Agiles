@@ -20,7 +20,6 @@ const LOGOUT_URL = "/admin/logOut";
 const Navbar = () => {
   const username =localStorage.getItem("username");
   const role  = cookies.get("status");
-  const logged = cookies.get("logged");
   const navigate = useNavigate();
   const [searchString, setSearchString] = useState("");
   const isInstructor = ()=>{ return role==1;}
@@ -66,6 +65,8 @@ const Navbar = () => {
   const hanldleMycourses = ()=>navigate('/mycourses');
   const handleCreateCourse = () => navigate('createcourse');
   const navigateMyLearning = () => navigate('/mylearning');
+  const navigateAccountSettings = () => navigate('/user/accountsettings');
+  const navigatePaymentMethods = () => navigate('/user/paymentmethods');
   return (
     <nav className={NavbarStyles["navbar"]}>
       {/* <h1 className={NavbarStyles["headerTitle"]}>
@@ -93,14 +94,14 @@ const Navbar = () => {
       <div className={NavbarStyles["linkContainer"]}>
         <Link to="/" className={NavbarStyles["links"]}>Home</Link>
         <Link to="/courses" className={NavbarStyles["links"]}>Courses</Link>
-        {!logged && (
+        {!role && (
           <>
             <Link to="/login" className={NavbarStyles["links"]}>Log in</Link>
             <Link to="/signup" className={NavbarStyles["links"]}>Sign up</Link>
           </>
         )}
       </div>
-      {logged && (
+      {role && (
         <div className={NavbarStyles["dropUser"]}>
         <IconButton
             onClick={handleClick}
@@ -119,17 +120,26 @@ const Navbar = () => {
         onClick={handleClose}
       >
         <MenuItem onClick = {navigatetoProfile}>
-          Profile
+          Public profile
         </MenuItem>
         {isTrainee ()&&  <MenuItem onClick = {navigateMyLearning}>
-          My Learning
+          My learning
         </MenuItem>}
         {isInstructor()&& 
         <>
-          <MenuItem onClick = {hanldleMycourses}> My Courses </MenuItem>
-          <MenuItem onClick = {handleCreateCourse}>Create Course</MenuItem>
+          <MenuItem onClick = {hanldleMycourses}> My courses </MenuItem>
+          <MenuItem onClick = {handleCreateCourse}>Create course</MenuItem>
           </>
           }
+        <Divider />
+        {isTrainee ()&&  <MenuItem onClick = {navigateAccountSettings}>
+          Account settings
+        </MenuItem>}
+        {isTrainee ()&&  <MenuItem onClick = {navigatePaymentMethods}>
+          Payment methods
+        </MenuItem>}
+        <Divider />
+        <MenuItem >Terms & conditions</MenuItem>
         <Divider />
         <MenuItem onClick={handleLogOut}>
           <ListItemIcon>

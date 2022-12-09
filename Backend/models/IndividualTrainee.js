@@ -38,6 +38,7 @@ const individualTraineeSchema = new Schema(
         courseId: {
           type: Schema.ObjectId,
           ref: "Course",
+          required: true,
         },
         progress: {
           type: Number,
@@ -62,8 +63,10 @@ const individualTraineeSchema = new Schema(
     imgUrl: {
       type: String,
     },
-    accessToken: { type: String },
-    refreshToken: { type: String },
+    creditCard : [{
+      type : mongoose.SchemaTypes.ObjectId,
+      ref : 'creditCard'
+    }]
   },
   { timestamps: true }
 );

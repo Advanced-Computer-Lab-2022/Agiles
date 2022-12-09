@@ -1,11 +1,10 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styled from "./Course.module.css";
 import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif";
 import Rating from "@mui/material/Rating";
 import Button from "react-bootstrap/Button";
-import CircleIcon from "@mui/icons-material/Circle";
 import StarsIcon from '@mui/icons-material/Stars';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
@@ -23,12 +22,18 @@ const Course = () => {
   const [reviews,setReviews]= useState([]);
   const [instructor,setInstructor]=useState([]);
   const [show, setShow] = useState(false);
+  const navigate = useNavigate();
   const [isloading, setIsLoading] = useState(false);
   const location = useLocation();
   const courseId = new URLSearchParams(location.search).get("cid");
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  const navigateCheckout = ()=>{
+    navigate({
+      pathname: "/checkout",
+      search: `?cid=${course._id}&price=${course.price}&discount=${course.discount}`,
+    });
+  }
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -114,7 +119,7 @@ const Course = () => {
                     <div>
                       <label className={styled["price"]}>
                         {" "}
-                        {course.price} USD{" "}
+                        {course.price-course.price*course.discount/100} USD{" "}
                       </label>
                       <label className={styled["discount"]}>
                         &nbsp;
@@ -146,7 +151,7 @@ const Course = () => {
                   </label>
                 </div>
               )}
-              <button className={styled["buyme"]}>Buy now</button>
+           <button className={styled["buyme"] } onClick={navigateCheckout}>Buy now</button>
             </section>
           </section>
           <section className={styled["middle-top"]}>

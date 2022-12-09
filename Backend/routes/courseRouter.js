@@ -3,7 +3,6 @@ const courserouter = express.Router();
 const {
   addCoursePromotion,
   coursesDetails,
-  coursePrice,
   filterCourses,
   courseSearch,
   getCourseById,
@@ -13,7 +12,6 @@ const {
 } = require("../controllers/CourseController");
 
 courserouter.get("/listCourses/details", coursesDetails);
-courserouter.get("/listCourses/prices", coursePrice);
 courserouter.get("/:id", getCourseById);
 courserouter.get("/listCourses/filter", filterCourses);
 courserouter.get("/listCourses/search", courseSearch);

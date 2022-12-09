@@ -41,7 +41,7 @@ export const CourseCard = (props) => {
         <>
           {!window.sessionStorage.getItem("factor") ? (
             <div>
-              <label className={style["time"]}> {props.data.price} USD </label>
+              <label className={style["time"]}> {props.data.price-props.data.price*props.data.discount/100} USD </label>
             </div>
           ) : (
             <div>

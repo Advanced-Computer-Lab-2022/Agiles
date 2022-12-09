@@ -2,21 +2,26 @@ const mongoose = require ("mongoose");
 const Schema = mongoose.Schema;
 
 const creditCardSchema = new Schema({
-    cardholderName: {
+    userId :{
+        type:mongoose.Schema.Types.ObjectId,
+        ref : 'IndividualTrainee',
+        required: true,
+    },
+    cardName: {
         type: String,
         required: false,
       },
-      pan: {
+      cardNumber: {
         type: String,
-        required: false,
+        required: true,
       },
       cardExpiryDate: {
         type: String,
-        required: false,
+        required: true,
       },
-      walletAmount: {
+      CVV: {
         type: Number,
-        required: false,
+        required: true,
       }
 });
 

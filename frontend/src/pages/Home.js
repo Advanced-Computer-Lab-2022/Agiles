@@ -9,12 +9,11 @@ import Explore from "../components/Explore";
 const cookies = new Cookies();
 const Home = () => {
   const navigate = useNavigate();
-  const logged = cookies.get("logged");
   const status = cookies.get("status");
   const handleClick = () => {
     navigate("/signUp");
   };
-  if (logged) {
+  if (status) {
     // status 0 > Itrainee status 1 > Instructor status 3 > Ctrainee
     if (status == 0 || status == 2) {
       return (
