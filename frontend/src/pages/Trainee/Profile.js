@@ -92,6 +92,7 @@ const Profile = () => {
                 </Button>
               </form>
             </section>
+            {wallet}
           </section>
         </section>
       )}
