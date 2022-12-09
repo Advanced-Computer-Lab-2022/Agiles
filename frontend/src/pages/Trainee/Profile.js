@@ -14,9 +14,10 @@ const Profile = () => {
   const [isloading, setIsLoading] = useState(false);
   const id = cookie.get("currentUser");
   const [data, setData] = useState("");
-  const [firstname,setFirstname]= useState("");
-  const [lastname,setLastname] = useState("");
-  const [minibio,setMiniBio]= useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [minibio, setMiniBio] = useState("");
+  const [wallet, setWallet] = useState(<div></div>);
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -26,30 +27,32 @@ const Profile = () => {
       setFirstname(res.data.firstname);
       setLastname(res.data.lastname);
       setMiniBio(res.data.mini_bio);
+      if (!data.state) {
+        setWallet(<div>Wallet : {data.wallet == null ? "" : data.wallet}</div>);
+      }
     } catch (err) {
       console.log(err);
     }
     setIsLoading(false);
   };
 
-  useEffect(()=>{
-      fetchData();
-  },[])
+  useEffect(() => {
+    fetchData();
+  }, []);
   const handleSumbit = (event) => {
-       event.preventDefault();
-       const body = {
-        userId :id ,
-        firstname : firstname,
-        lastname : lastname,
-        minibio :minibio
-       }
-       try{
-        const res = axios.patch(updateUrl,body)
-        window.location.reload();
-       }
-       catch(err){
-        console.log(err);
-       }
+    event.preventDefault();
+    const body = {
+      userId: id,
+      firstname: firstname,
+      lastname: lastname,
+      minibio: minibio,
+    };
+    try {
+      const res = axios.patch(updateUrl, body);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <>
@@ -57,7 +60,10 @@ const Profile = () => {
         <LoadingScreen loading={true} logoSrc={spinner} />
       ) : (
         <section className={style["main"]}>
-          <ProfileSideBar fullname ={data.firstname + " "+data.lastname} state={'profile'}/>
+          <ProfileSideBar
+            fullname={data.firstname + " " + data.lastname}
+            state={"profile"}
+          />
           <section className={style["profile"]}>
             <section className={style["profile-top"]}>
               <div>
@@ -68,12 +74,25 @@ const Profile = () => {
             <section className={style["profile-bottom"]}>
               <form onSubmit={handleSumbit}>
                 <label>Basics :</label>
-                <input  placeholder={firstname} onChange={(e)=>setFirstname(e.target.value)}></input>
-                <input placeholder={lastname} onChange={(e)=>setLastname(e.target.value)}></input>
-                <input placeholder={minibio==""?"write your mini bio":minibio} onChange={(e)=>setMiniBio(e.target.value)}></input>
-                <Button variant="dark" type="submit" >  save</Button>
+                <input
+                  placeholder={firstname}
+                  onChange={(e) => setFirstname(e.target.value)}
+                ></input>
+                <input
+                  placeholder={lastname}
+                  onChange={(e) => setLastname(e.target.value)}
+                ></input>
+                <input
+                  placeholder={minibio == "" ? "write your mini bio" : minibio}
+                  onChange={(e) => setMiniBio(e.target.value)}
+                ></input>
+                <Button variant="dark" type="submit">
+                  {" "}
+                  save
+                </Button>
               </form>
             </section>
+            {wallet}
           </section>
         </section>
       )}

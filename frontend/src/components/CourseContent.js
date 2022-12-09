@@ -66,7 +66,7 @@ const CoursContent = () => {
           "currentUser"
         )}&courseId=${course_id}`
       );
-  
+
       if (exam.data == null) {
         navigate(
           {
@@ -134,7 +134,7 @@ const CoursContent = () => {
             course_title={course.title}
             course_inst={course.instructorname}
             name={"content"}
-            idx = {index}
+            idx={index}
           />
           <div className={style["mainRight"]}>
             <label className={style["mainlabel"]}>Course Content</label>
@@ -223,7 +223,9 @@ const CoursContent = () => {
                         {grade == null ? (
                           <h3>Not Graded Yet</h3>
                         ) : (
-                          <h3>Grade: {grade}</h3>
+                          <h3>
+                            Grade: {grade} / {questions}
+                          </h3>
                         )}
                       </div>
                     </Modal.Body>

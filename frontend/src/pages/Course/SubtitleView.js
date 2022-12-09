@@ -224,7 +224,9 @@ const Subtitle = () => {
                         {grade == null ? (
                           <h3>Not Graded Yet</h3>
                         ) : (
-                          <h3>Grade: {grade}</h3>
+                          <h3>
+                            Grade: {grade} / {questions}
+                          </h3>
                         )}
                       </div>
                     </Modal.Body>
