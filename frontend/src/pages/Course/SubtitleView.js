@@ -181,7 +181,7 @@ const Subtitle = () => {
                   onChange={handleNotesChange}
                 ></textarea>
                 <div>
-                  <button onClick={downloadPDFFile}>Download txt</button>
+                  <button onClick={downloadPDFFile}>Download Notes</button>
                 </div>
               </div>
             </section>
