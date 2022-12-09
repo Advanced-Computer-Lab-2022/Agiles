@@ -11,6 +11,25 @@ import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
 import Cookies from "universal-cookie";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import * as React from "react";
+import Box from "@mui/material/Box";
+import { Content, ContextualHelp, Heading } from "@adobe/react-spectrum";
+
+// import Textarea from "@mui/joy/Textarea";
+// import FormControl from "@mui/material/FormControl";
+
+// import FormLabel from "@mui/joy/FormLabel";
+// import IconButton from "@mui/joy/IconButton";
+// import Menu from "@mui/joy/Menu";
+// import MenuItem from "@mui/joy/MenuItem";
+// import ListItemDecorator from "@mui/joy/ListItemDecorator";
+// import FormatBold from "@mui/icons-material/FormatBold";
+// import FormatItalic from "@mui/icons-material/FormatItalic";
+// import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
+// import Check from "@mui/icons-material/Check";
+
+import TextField from "@mui/material/TextField";
+
 const LINK_URL = "/course/link/view";
 const cookies = new Cookies();
 const Subtitle = () => {
@@ -23,7 +42,15 @@ const Subtitle = () => {
   const [grade, setGrade] = useState([]);
   const [questions, setQuestions] = useState(0);
   const [show, setShow] = useState(false);
-
+  const [notes, setNotes] = useState("Blank");
+  const [italic, setItalic] = React.useState(false);
+  const [fontWeight, setFontWeight] = React.useState("normal");
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleNotesChange = (event) => {
+    // 👇️ access textarea value
+    setNotes(event.target.value);
+    console.log(event.target.value);
+  };
   const handleClick = (e) => {
     navigate(
       {
@@ -116,6 +143,7 @@ const Subtitle = () => {
     setIsLoading(false);
   };
   useEffect(() => {
+    console.log(notes);
     FetchData();
   }, []);
   return (
@@ -138,8 +166,24 @@ const Subtitle = () => {
             </section>
             <section className={style["main-section-left-bottom"]}>
               <h3>Short Summary</h3>
+
               <p>{link.linkDesc}</p>
               <hr className={style["mainRight-hr"]}></hr>
+            </section>
+            <section className={style["main-section-left-bottom"]}>
+              <h3>Notes</h3>
+              <div class="form-group">
+                <label for="exampleFormControlTextarea1">
+                  Write Your Notes Here
+                </label>
+                <textarea
+                  class="form-control"
+                  id="exampleFormControlTextarea1"
+                  rows="8"
+                  value={notes}
+                  onChange={handleNotesChange}
+                ></textarea>
+              </div>
             </section>
           </section>
           <section className={style["main-section-right"]}>
