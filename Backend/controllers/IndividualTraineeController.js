@@ -6,8 +6,8 @@ const FinalExamResult = require("../models/FinalExamResult");
 const FinalExam = require("../models/FinalExam");
 const Exam = require("../models/Exam");
 const OTP = require("../models/OTP.js");
+const CreditCard = require("../models/CreditCard");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const resetPassword = require("./ResetPassword");
 require("dotenv").config();
 var nodemailer = require("nodemailer");
@@ -15,7 +15,7 @@ var nodemailer = require("nodemailer");
 
 const getTraineebyID = async (req, res) => {
   const id = req.query.id;
-  const Itrainee = await IndividualTrainee.findById(id);
+  const Itrainee = await IndividualTrainee.findById(id).populate("creditCard");
   return res.status(200).json(Itrainee);
 };
 const InprogressCourses = async (req, res) => {
@@ -97,7 +97,6 @@ const submitExam = async (req, res) => {
       studentId: studentId,
       courseId: courseId,
     });
-    console.log(test);
     if (test !== null) {
       FinalExamResult.findOneAndUpdate(
         { studentId: studentId, courseId: courseId },
@@ -116,13 +115,11 @@ const submitExam = async (req, res) => {
         studentChoices: answers,
         result: resultno,
       });
-      console.log("created");
     }
   }
 
   try {
     res.status(200).json({ result: result, resultno: resultno });
-    console.log(resultno);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -358,7 +355,84 @@ const updateITraineePassword = async (req, res) => {
     });
   }
 };
-
+const createCredit = async(req,res)=>{
+  const user = req.user;
+  const id = user.id ;
+  const {cardName , cardNumber , cardExpiryDate , CVV} = req.body;
+  if (!cardNumber || !cardExpiryDate || !CVV) {
+    return res.status(500).json("bad request");
+  }
+  const exists = await CreditCard.findOne({cardNumber:cardNumber});
+  if (exists){
+    return res.status(406).json("card already exists");
+  }
+  const data = {
+    userId : id,
+    cardName : cardName,
+    cardNumber : cardNumber,
+    cardExpiryDate : cardExpiryDate,
+    CVV : CVV,
+  };
+    try{
+      const cretidCard = await CreditCard.create(data);
+      const update =await IndividualTrainee.updateOne({_id:id},{$push:{creditCard:cretidCard._id}});
+      return res.status(200).json("Credit Card added");
+}
+     catch(err){
+         return res.status(406).json("server error");
+}
+}
+const deleteCredit = async(req,res)=>{
+  const id = req.params["id"];
+  const user = req.user;
+  try{
+  const deleted = await CreditCard.deleteOne({_id:id});
+  const ans = await IndividualTrainee.updateOne({_id:user.id},{$pull:{creditCard:id}});
+  return res.status(200).json(ans);
+  }
+  catch(err){
+    return res.status(406).json("server error");
+  }
+}
+const payForCourse = async(req,res)=>{
+      const user = req.user;
+      const {courseId ,create} = req.body;
+      if (!courseId){
+        return res.status(500).json("bad request");
+      }
+      if (create){
+        const id = user.id ;
+        const {cardName , cardNumber , cardExpiryDate , CVV} = req.body;
+        if (!cardNumber || !cardExpiryDate || !CVV) {
+          return res.status(500).json("bad request");
+        }
+        const exists = await CreditCard.findOne({cardNumber:cardNumber});
+        if (exists){
+          return res.status(406).json("card already exists");
+        }
+        const data = {
+          userId : id,
+          cardName : cardName,
+          cardNumber : cardNumber,
+          cardExpiryDate : cardExpiryDate,
+          CVV : CVV,
+        };
+          try{
+            const cretidCard = await CreditCard.create(data);
+            await IndividualTrainee.updateOne({_id:id},{$push:{creditCard:cretidCard._id}});
+      }
+           catch(error){
+               return res.status(406).json(error);
+      }
+      }
+      try {
+        await IndividualTrainee.findByIdAndUpdate(user.id,{$push:{registered_courses:{courseId:courseId}}});
+        return res.status(200).json("payment completed");
+        
+      } catch (error) {
+        return res.status(406).json(error);
+      }
+}
 module.exports = {
   getTraineebyID,
   InprogressCourses,
@@ -373,5 +447,8 @@ module.exports = {
   forgetPassword,
   verifyCode,
   getFinalExamGrade,
-  rateInstructor
+  rateInstructor,
+  createCredit,
+  deleteCredit,
+  payForCourse
 };

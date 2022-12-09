@@ -34,6 +34,7 @@ import ForgetPassword from "./pages/Trainee/ForgetPassword";
 import UpdateForgottenPassword from "./pages/Trainee/UpdateForgottenPassword";
 import Inprogress from "./components/Inprogress";
 import InstructorOwnCourses from "./pages/Instructor/InstructorOwnCourses";
+import Checkout from "./pages/Course/Checkout";
 import ReportProblem from "./pages/Course/ReportProblem";
 import PrevReports from "./pages/Course/PrevReports";
 import ReportProblemTrainee from "./pages/Course/ReportProblemTrainee";
@@ -73,6 +74,7 @@ function App() {
 
             <Route path="/courses" element={<Courses />} />
             <Route path="/course" element={<Course />} />
+            <Route path="/checkout" element={<Checkout />} />
             <Route path="/preReg" element={<CoursePreview />} />
             <Route path="/conReg" element={<CourseContent />} />
             <Route path="/grades" element={<CourseContent />} />

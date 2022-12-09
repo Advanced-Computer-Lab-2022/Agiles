@@ -4,7 +4,6 @@ const FinalExam = require("../models/FinalExam");
 const Link = require("../models/Link");
 const IndividualTrainee = require("../models/IndividualTrainee");
 const Rating = require("../models/Rating");
-const jwt = require("jsonwebtoken");
 const Instructor = require("../models/Instructor");
 const Report = require("../models/Report");
 require("dotenv").config();
@@ -220,17 +219,6 @@ const findCourseById = async (req, res) => {
   }
 };
 
-const coursePrice = async (req, res) => {
-  try {
-    const coursePrice = await Course.find(
-      {},
-      { title: 1, price: 1, _id: 0 }
-    ).exec();
-    res.status(200).send(coursePrice);
-  } catch (err) {
-    res.status(500).json({ mssg: "can't find prices of courses" });
-  }
-};
 
 const getCourseById = async (req, res) => {
   const id = req.params["id"];
@@ -376,7 +364,6 @@ const viewReportedProblems = async(req,res) =>{
 module.exports = {
   addCoursePromotion,
   createCourse,
-  coursePrice,
   coursesDetails,
   oneCoursesDetails,
   filterCourses,

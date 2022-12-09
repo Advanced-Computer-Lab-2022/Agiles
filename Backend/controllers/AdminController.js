@@ -102,9 +102,6 @@ const logIn = async (req, res) => {
           );
           let status =0;
           if (data.state){status = 2;}
-          res.cookie("logged", true, {
-            maxAge: 24 * 60 * 60 * 1000,
-          });
           res.cookie("currentUser", user._id, {
             maxAge: 24 * 60 * 60 * 1000,
           });
@@ -134,9 +131,6 @@ const logIn = async (req, res) => {
             { expiresIn: "1d" }
           );
           const status = 1;
-          res.cookie("logged", true, {
-            maxAge: 24 * 60 * 60 * 1000,
-          });
           res.cookie("currentUser", user._id, {
             maxAge: 24 * 60 * 60 * 1000,
           });
@@ -187,7 +181,6 @@ const signUp = async (req, res) => {
 
 // logOut
 const logOut = async (req, res) => {
-  res.clearCookie("logged");
   res.clearCookie("currentUser");
   res.clearCookie("jwt");
   res.clearCookie("status");

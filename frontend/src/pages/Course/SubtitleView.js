@@ -11,6 +11,9 @@ import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
 import Cookies from "universal-cookie";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import jsPDF from "jspdf";
+import * as React from "react";
+
 const LINK_URL = "/course/link/view";
 const cookies = new Cookies();
 const Subtitle = () => {
@@ -23,7 +26,28 @@ const Subtitle = () => {
   const [grade, setGrade] = useState([]);
   const [questions, setQuestions] = useState(0);
   const [show, setShow] = useState(false);
+  const [notes, setNotes] = useState("");
 
+  const downloadPDFFile = () => {
+    var doc = new jsPDF("landscape", "px", "a4", "false");
+    doc.text(20, 20, notes);
+    doc.save("myNotes.pdf");
+  };
+  const downloadTxtFile = () => {
+    const element = document.createElement("a");
+    const file = new Blob([notes], {
+      type: "application/pdf",
+    });
+    element.href = URL.createObjectURL(file);
+    element.download = "MyNotes.pdf";
+    document.body.appendChild(element);
+    element.click();
+  };
+  const handleNotesChange = (event) => {
+    // 👇️ access textarea value
+    setNotes(event.target.value);
+    console.log(event.target.value);
+  };
   const handleClick = (e) => {
     navigate(
       {
@@ -116,6 +140,7 @@ const Subtitle = () => {
     setIsLoading(false);
   };
   useEffect(() => {
+    console.log(notes);
     FetchData();
   }, []);
   return (
@@ -138,8 +163,27 @@ const Subtitle = () => {
             </section>
             <section className={style["main-section-left-bottom"]}>
               <h3>Short Summary</h3>
+
               <p>{link.linkDesc}</p>
               <hr className={style["mainRight-hr"]}></hr>
+            </section>
+            <section className={style["main-section-left-bottom"]}>
+              <h3>Notes</h3>
+              <div class="form-group">
+                <label for="exampleFormControlTextarea1">
+                  Write Your Notes Here
+                </label>
+                <textarea
+                  class="form-control"
+                  id="exampleFormControlTextarea1"
+                  rows="8"
+                  value={notes}
+                  onChange={handleNotesChange}
+                ></textarea>
+                <div>
+                  <button onClick={downloadPDFFile}>Download Notes</button>
+                </div>
+              </div>
             </section>
           </section>
           <section className={style["main-section-right"]}>
@@ -224,7 +268,9 @@ const Subtitle = () => {
                         {grade == null ? (
                           <h3>Not Graded Yet</h3>
                         ) : (
-                          <h3>Grade: {grade}</h3>
+                          <h3>
+                            Grade: {grade} / {questions}
+                          </h3>
                         )}
                       </div>
                     </Modal.Body>

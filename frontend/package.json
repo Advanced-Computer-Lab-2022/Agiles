@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@adobe/react-spectrum": "^3.23.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
@@ -19,6 +20,7 @@
     "bootstrap": "^5.2.3",
     "country-dropdown-with-flags-for-react": "^1.1.4",
     "framer-motion": "^7.6.7",
+    "jspdf": "^2.5.1",
     "react": "^18.2.0",
     "react-auth-code-input": "^3.2.1",
     "react-bootstrap": "^2.6.0",

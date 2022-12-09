@@ -93,6 +93,7 @@
 }
 .security {
   display: grid;
+  min-height: 110vh;
 }
 .security-top {
   padding: 1rem;
@@ -117,6 +118,10 @@
   display: grid;
   width: 70%;
   gap: 2rem;
+}
+.security-bottom form label{
+  font-size: 1rem;
+  font-weight: bold;
 }
 .security-bottom form input {
   height: 2.5rem;
@@ -150,3 +155,56 @@
   width: 30%;
   border-radius: 0;
 }
+.security-bottom-bottom form label {
+  font-size: 1rem;
+  font-weight: bold;
+}
+.payment-top {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+.payment{
+  display: inline-block;
+  width: 100%;
+  min-height: 100vh;
+}
+.payment-top h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-left: 8rem;
+}
+.payment-bottom {
+  display: inline-block;
+  padding: 1rem;
+  width: 100%;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+.payment-bottom label{
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+.payment-bottom form {
+  margin-left: 8rem;
+  display: grid;
+  width: 70%;
+  gap : 0.5rem
+  }
+  .payment-bottom form label{
+    margin-bottom: 0.1rem;
+    font-size: 1rem;
+  }
+ .payment-bottom form input{
+    height: 2.5rem;
+    padding: 1.5rem;
+    align-items: center;
+    border: 1px solid black;
+  }
+  .payment-bottom form button {
+    width: 30%;
+    border-radius: 0;
+  }
