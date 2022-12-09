@@ -11,24 +11,8 @@ import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
 import Cookies from "universal-cookie";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import jsPDF from "jspdf";
 import * as React from "react";
-import Box from "@mui/material/Box";
-import { Content, ContextualHelp, Heading } from "@adobe/react-spectrum";
-
-// import Textarea from "@mui/joy/Textarea";
-// import FormControl from "@mui/material/FormControl";
-
-// import FormLabel from "@mui/joy/FormLabel";
-// import IconButton from "@mui/joy/IconButton";
-// import Menu from "@mui/joy/Menu";
-// import MenuItem from "@mui/joy/MenuItem";
-// import ListItemDecorator from "@mui/joy/ListItemDecorator";
-// import FormatBold from "@mui/icons-material/FormatBold";
-// import FormatItalic from "@mui/icons-material/FormatItalic";
-// import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
-// import Check from "@mui/icons-material/Check";
-
-import TextField from "@mui/material/TextField";
 
 const LINK_URL = "/course/link/view";
 const cookies = new Cookies();
@@ -42,10 +26,23 @@ const Subtitle = () => {
   const [grade, setGrade] = useState([]);
   const [questions, setQuestions] = useState(0);
   const [show, setShow] = useState(false);
-  const [notes, setNotes] = useState("Blank");
-  const [italic, setItalic] = React.useState(false);
-  const [fontWeight, setFontWeight] = React.useState("normal");
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [notes, setNotes] = useState("");
+
+  const downloadPDFFile = () => {
+    var doc = new jsPDF("landscape", "px", "a4", "false");
+    doc.text(20, 20, notes);
+    doc.save("myNotes.pdf");
+  };
+  const downloadTxtFile = () => {
+    const element = document.createElement("a");
+    const file = new Blob([notes], {
+      type: "application/pdf",
+    });
+    element.href = URL.createObjectURL(file);
+    element.download = "MyNotes.pdf";
+    document.body.appendChild(element);
+    element.click();
+  };
   const handleNotesChange = (event) => {
     // 👇️ access textarea value
     setNotes(event.target.value);
@@ -183,6 +180,9 @@ const Subtitle = () => {
                   value={notes}
                   onChange={handleNotesChange}
                 ></textarea>
+                <div>
+                  <button onClick={downloadPDFFile}>Download txt</button>
+                </div>
               </div>
             </section>
           </section>
