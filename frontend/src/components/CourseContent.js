@@ -173,7 +173,7 @@ const CoursContent = () => {
                             onClick={handleExamClick}
                             className={style["subtitleView"]}
                           >
-                            Exam
+                            Quiz
                           </button>
                           <Modal
                             backdrop={false}

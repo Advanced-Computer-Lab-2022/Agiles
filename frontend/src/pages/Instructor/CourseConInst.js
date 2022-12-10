@@ -188,7 +188,7 @@ const CourseConInst = () => {
                             }}
                             className={style["subtitleView"]}
                           >
-                            Set Subtitle Exam
+                            Set Quiz
                           </button>
                         </ListGroup.Item>
                       </ListGroup>

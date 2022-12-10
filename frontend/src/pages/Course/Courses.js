@@ -30,19 +30,23 @@ const Courses = () => {
       {isloading ? (
         <LoadingScreen loading={true} logoSrc={spinner} />
       ) : (
-        <div className={style['wrapper']}>
-          <Filter className={style['wrapper-left']} chooseMessage={chooseMessage} currentMessage={message}/>
+        <div className={style["wrapper"]}>
+          <Filter
+            className={style["wrapper-left"]}
+            chooseMessage={chooseMessage}
+            currentMessage={message}
+          />
           <section className={style["wrapper-right"]}>
             <h1>Courses</h1>
             <h2>courses to get you started</h2>
             <hr></hr>
-          <div className={style["course-list"]}>
-            {courses.map((el, index) => {
-              return <CourseCard  data={el} key={index} />;
-            })}
-          </div>
+            <div className={style["course-list"]}>
+              {courses.map((el, index) => {
+                return <CourseCard data={el} key={index} />;
+              })}
+            </div>
           </section>
-          </div>
+        </div>
       )}
     </>
   );

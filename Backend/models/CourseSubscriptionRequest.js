@@ -1,37 +1,40 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const reportSchema = new Schema(
+const CourseRequestSchema = new Schema(
   {
-    userId: {
+    traineeId: {
       type: mongoose.Types.ObjectId,
-      ref: "IndvidualTrainee",
       required: true,
+      ref: "IndividualTrainee",
     },
     courseId: {
       type: mongoose.Types.ObjectId,
-      ref: "Course",
       required: true,
+      ref: "Course",
     },
-    reportType: {
+    email: {
       type: String,
       required: true,
     },
-    description: {
+    firstname: {
+      type: String,
+      required: true,
+    },
+    lastname: {
       type: String,
       required: true,
     },
     status: {
-      type: String, //pending/resolved
+      type: String,
       default: "pending",
-    },
-    isSeen: {
-      type: Boolean,
-      default: true,
     },
   },
   { timestamps: true }
 );
 
-const Report = mongoose.model("Report", reportSchema);
-module.exports = Report;
+const CourseRequestSubscription = mongoose.model(
+  "CourseRequestSubscription",
+  CourseRequestSchema
+);
+module.exports = CourseRequestSubscription;

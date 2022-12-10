@@ -5,9 +5,9 @@ import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif";
 import Rating from "@mui/material/Rating";
 import Button from "react-bootstrap/Button";
-import StarsIcon from '@mui/icons-material/Stars';
-import ReviewsIcon from '@mui/icons-material/Reviews';
-import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
+import StarsIcon from "@mui/icons-material/Stars";
+import ReviewsIcon from "@mui/icons-material/Reviews";
+import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
 import Modal from "react-bootstrap/Modal";
 import LanguageIcon from "@mui/icons-material/Language";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
@@ -21,27 +21,83 @@ import axios from "axios";
 const cookies = new Cookies();
 const Course = () => {
   const [course, setCourse] = useState([]);
-  const [reviews,setReviews]= useState([]);
-  const [instructor,setInstructor]=useState([]);
+  const [reviews, setReviews] = useState([]);
+  const [instructor, setInstructor] = useState([]);
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const state = cookies.get("status");
+  const traineeId = cookies.get("currentUser");
   const [isloading, setIsLoading] = useState(false);
   const location = useLocation();
   const courseId = new URLSearchParams(location.search).get("cid");
+
+  const price =
+    course.price === 0 ? (
+      <div className={styled["price"]}>
+        <label className={styled["time"]}>Free</label>
+      </div>
+    ) : (
+      <>
+        {!window.sessionStorage.getItem("factor") ? (
+          <div>
+            <label className={styled["price"]}>
+              {" "}
+              {course.price - (course.price * course.discount) / 100} USD{" "}
+            </label>
+            <label className={styled["discount"]}>
+              &nbsp;
+              {course.discount > 0 ? `${course.discount}% off` : ""}
+            </label>
+          </div>
+        ) : (
+          <div className={styled["price"]}>
+            <label className={styled["time"]}>
+              {Math.floor(
+                course.price * window.sessionStorage.getItem("factor")
+              )}{" "}
+              {window.sessionStorage.getItem("currency").toUpperCase()}
+            </label>
+          </div>
+        )}
+      </>
+    );
+  const discountElement = course.discount > 0 && (
+    <div>
+      <AccessAlarmIcon style={{ color: "red" }} className={styled["enddate"]} />{" "}
+      <label className={styled["enddatelabel"]}>
+        Discount ends at {course.discount_enddate.split("T")[0]}
+      </label>
+    </div>
+  );
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const navigateCheckout = ()=>{
+  const navigateCheckout = () => {
     if (state==0){
     navigate({
       pathname: "/checkout",
       search: `?cid=${course._id}&price=${course.price}&discount=${course.discount}`,
     });
-  }
-  else{
+  }else{
     navigate("/signUp");
   }
-  }
+  };
+  const navigateRequestAccess = async () => {
+    const url = "/individualtrainee/requestAccess";
+    const body = {
+      traineeId: traineeId,
+      courseId: courseId,
+    };
+    let config = {
+      headers: {
+        header1: "Access-Control-Allow-Origin",
+      },
+    };
+    try {
+      const res = await axios.post(url, body, config);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -69,8 +125,12 @@ const Course = () => {
               <h1>{course.title}</h1>
               <h2>{course.description}</h2>
               <div className={styled["mainSection-left-rating"]}>
-                <Rating name="rating" readOnly value={Math.round(course.rating/course.ratingCount)} />
-                <label>({course.ratingCount-1} ratings) {course.studentCount} students </label>
+                <Rating
+                  name="rating"
+                  readOnly
+                  value={Math.round(course.rating / course.ratingCount)}
+                />
+                <label>({course.ratingCount - 1} ratings) {course.studentCount} students </label>
                
               </div>
               <label className={styled["instlabel"]}>
@@ -117,50 +177,15 @@ const Course = () => {
                   </Button>
                 </Modal.Footer>
               </Modal>
-
-              {course.price === 0 ? (
-                <div className={styled["price"]}>
-                  <label className={styled["time"]}>Free</label>
-                </div>
-              ) : (
-                <>
-                  {!window.sessionStorage.getItem("factor") ? (
-                    <div>
-                      <label className={styled["price"]}>
-                        {" "}
-                        {course.price-course.price*course.discount/100} USD{" "}
-                      </label>
-                      <label className={styled["discount"]}>
-                        &nbsp;
-                        {course.discount > 0 ? `${course.discount}% off` : ""}
-                      </label>
-                    </div>
-                  ) : (
-                    <div className={styled["price"]}>
-                      <label className={styled["time"]}>
-                        {Math.floor(
-                          course.price * window.sessionStorage.getItem("factor")
-                        )}{" "}
-                        {window.sessionStorage
-                          .getItem("currency")
-                          .toUpperCase()}
-                      </label>
-                    </div>
-                  )}
-                </>
-              )}
-              {course.discount > 0 && (
-                <div>
-                  <AccessAlarmIcon
-                    style={{ color: "red" }}
-                    className={styled["enddate"]}
-                  />{" "}
-                  <label className={styled["enddatelabel"]}>
-                    Discount ends at {course.discount_enddate.split("T")[0]}
-                  </label>
-                </div>
-              )}
-           <button className={styled["buyme"] } onClick={navigateCheckout}>Buy now</button>
+              {state ? "" : { price }}
+              {state ? "" : { discountElement }}
+              {}
+              <button
+                className={styled["buyme"]}
+                onClick={state ? navigateRequestAccess : navigateCheckout}
+              >
+                {state ? "request access" : "Buy now"}
+              </button>
             </section>
           </section>
           <section className={styled["middle-top"]}>
@@ -207,25 +232,45 @@ const Course = () => {
           </section>
           <section className={styled["middle-bottom"]}>
             <label>Instructors</label>
-            <p className={styled["middle-bottom-content-label1"]} ><Link to="previewProfile">{instructor.firstname} {instructor.lastname}</Link></p>
+            <p className={styled["middle-bottom-content-label1"]}>
+              <Link to="previewProfile">
+                {instructor.firstname} {instructor.lastname}
+              </Link>
+            </p>
             <div className={styled["middle-bottom-content"]}>
               <div>
-              <img src = {instructor.imgUrl} alt ={instructor.username}></img>
+                <img src={instructor.imgUrl} alt={instructor.username}></img>
               </div>
-              
+
               <div className={styled["middle-bottom-content-right"]}>
-                <div> <StarsIcon></StarsIcon>
-                <label>{instructor.rating/instructor.ratingCount} Instructor Rating</label>
+                <div>
+                  {" "}
+                  <StarsIcon></StarsIcon>
+                  <label>
+                    {instructor.rating / instructor.ratingCount} Instructor
+                    Rating
+                  </label>
                 </div>
-                <div> <ReviewsIcon></ReviewsIcon>
-                <label>{instructor.reviews?instructor.reviews.length :0} Reviews</label>
+                <div>
+                  {" "}
+                  <ReviewsIcon></ReviewsIcon>
+                  <label>
+                    {instructor.reviews ? instructor.reviews.length : 0} Reviews
+                  </label>
                 </div>
-                <div> <PlayCircleFilledWhiteIcon/>
-                <label>{instructor.courseList?instructor.courseList.length:0} Courses</label>
+                <div>
+                  {" "}
+                  <PlayCircleFilledWhiteIcon />
+                  <label>
+                    {instructor.courseList ? instructor.courseList.length : 0}{" "}
+                    Courses
+                  </label>
                 </div>
               </div>
             </div>
-              <p className={styled["middle-bottom-content-labe2"]}>{instructor.mini_bio}</p>
+            <p className={styled["middle-bottom-content-labe2"]}>
+              {instructor.mini_bio}
+            </p>
           </section>
           {/* <h3>
           <Rating
@@ -238,7 +283,7 @@ const Course = () => {
           <CircleIcon style={{ fontSize: "0.5rem" }} /> ({course.ratingCount-1}{" "}
           ratings)
         </h3> */}
-        {/* <div className={styled["rating-box"]}>
+          {/* <div className={styled["rating-box"]}>
                   {reviews.filter((review, idx) => idx < 5)
                     .map((review,index) => {
                       return (

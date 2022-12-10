@@ -65,8 +65,11 @@ const Navbar = () => {
   const hanldleMycourses = ()=>navigate('/mycourses');
   const handleCreateCourse = () => navigate('createcourse');
   const navigateMyLearning = () => navigate('/mylearning');
+  const handlePrevReports = () => navigate('/PrevReports');
+  const navigateprevReportsTrainee = () => navigate('/PrevReportsTrainee');
   const navigateAccountSettings = () => navigate('/user/accountsettings');
   const navigatePaymentMethods = () => navigate('/user/paymentmethods');
+
   return (
     <nav className={NavbarStyles["navbar"]}>
       {/* <h1 className={NavbarStyles["headerTitle"]}>
@@ -125,10 +128,14 @@ const Navbar = () => {
         {isTrainee ()&&  <MenuItem onClick = {navigateMyLearning}>
           My learning
         </MenuItem>}
+        {isTrainee ()&&  <MenuItem onClick = {navigateprevReportsTrainee}>
+        My Previous Reports
+        </MenuItem>}
         {isInstructor()&& 
         <>
-          <MenuItem onClick = {hanldleMycourses}> My courses </MenuItem>
-          <MenuItem onClick = {handleCreateCourse}>Create course</MenuItem>
+          <MenuItem onClick = {hanldleMycourses}> My Courses </MenuItem>
+          <MenuItem onClick = {handleCreateCourse}>Create Course</MenuItem>
+          <MenuItem onClick = {handlePrevReports}>My Previous Reports</MenuItem>
           </>
           }
         <Divider />
