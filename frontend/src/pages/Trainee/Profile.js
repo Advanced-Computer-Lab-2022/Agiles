@@ -17,8 +17,8 @@ const Profile = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [minibio, setMiniBio] = useState("");
-  const [wallet, setWallet] = useState(<div></div>);
-
+  const [wallet, setWallet] = useState(0);
+  const [state, setState] = useState(false);
   const fetchData = async () => {
     setIsLoading(true);
     try {
@@ -27,9 +27,8 @@ const Profile = () => {
       setFirstname(res.data.firstname);
       setLastname(res.data.lastname);
       setMiniBio(res.data.mini_bio);
-      if (!data.state) {
-        setWallet(<div>Wallet : {data.wallet == null ? "" : data.wallet}</div>);
-      }
+      setState(data.state);
+      setWallet(data.wallet == null ? 0 : data.wallet);
     } catch (err) {
       console.log(err);
     }
@@ -92,7 +91,7 @@ const Profile = () => {
                 </Button>
               </form>
             </section>
-            {wallet}
+            {!state ? <div>{wallet}</div> : ""}
           </section>
         </section>
       )}
