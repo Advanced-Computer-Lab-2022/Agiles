@@ -14,7 +14,7 @@ const Home = () => {
     navigate("/signUp");
   };
   if (status) {
-    // status 0 > Itrainee status 1 > Instructor status 3 > Ctrainee
+    // status 0 > Itrainee status 1 > Instructor status 2 > Ctrainee
     if (status == 0 || status == 2) {
       return (
         <div className="home">

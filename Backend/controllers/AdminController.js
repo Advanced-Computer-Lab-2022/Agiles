@@ -110,7 +110,7 @@ const logIn = async (req, res) => {
             { expiresIn: "1d" }
           );
           let status = 0;
-          if (data.state) {
+          if (user.state) {
             status = 2;
           }
           res.cookie("currentUser", user._id, {
@@ -121,9 +121,6 @@ const logIn = async (req, res) => {
           });
           res.cookie("jwt", accessToken, {
             httpOnly: true,
-            maxAge: 24 * 60 * 60 * 1000,
-          });
-          res.cookie("state", user.state, {
             maxAge: 24 * 60 * 60 * 1000,
           });
           res.status(200).json(user);

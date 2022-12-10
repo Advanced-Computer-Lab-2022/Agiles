@@ -384,6 +384,6 @@ module.exports = {
   courseFinalExam,
   findCourseById,
   reportProblem,
-  popularCourses
+  popularCourses,
   viewReportedProblems,
 };

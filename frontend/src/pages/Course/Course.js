@@ -31,55 +31,17 @@ const Course = () => {
   const location = useLocation();
   const courseId = new URLSearchParams(location.search).get("cid");
 
-  const price =
-    course.price === 0 ? (
-      <div className={styled["price"]}>
-        <label className={styled["time"]}>Free</label>
-      </div>
-    ) : (
-      <>
-        {!window.sessionStorage.getItem("factor") ? (
-          <div>
-            <label className={styled["price"]}>
-              {" "}
-              {course.price - (course.price * course.discount) / 100} USD{" "}
-            </label>
-            <label className={styled["discount"]}>
-              &nbsp;
-              {course.discount > 0 ? `${course.discount}% off` : ""}
-            </label>
-          </div>
-        ) : (
-          <div className={styled["price"]}>
-            <label className={styled["time"]}>
-              {Math.floor(
-                course.price * window.sessionStorage.getItem("factor")
-              )}{" "}
-              {window.sessionStorage.getItem("currency").toUpperCase()}
-            </label>
-          </div>
-        )}
-      </>
-    );
-  const discountElement = course.discount > 0 && (
-    <div>
-      <AccessAlarmIcon style={{ color: "red" }} className={styled["enddate"]} />{" "}
-      <label className={styled["enddatelabel"]}>
-        Discount ends at {course.discount_enddate.split("T")[0]}
-      </label>
-    </div>
-  );
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navigateCheckout = () => {
-    if (state==0){
-    navigate({
-      pathname: "/checkout",
-      search: `?cid=${course._id}&price=${course.price}&discount=${course.discount}`,
-    });
-  }else{
-    navigate("/signUp");
-  }
+    if (state == 0) {
+      navigate({
+        pathname: "/checkout",
+        search: `?cid=${course._id}&price=${course.price}&discount=${course.discount}`,
+      });
+    } else {
+      navigate("/signUp");
+    }
   };
   const navigateRequestAccess = async () => {
     const url = "/individualtrainee/requestAccess";
@@ -130,8 +92,10 @@ const Course = () => {
                   readOnly
                   value={Math.round(course.rating / course.ratingCount)}
                 />
-                <label>({course.ratingCount - 1} ratings) {course.studentCount} students </label>
-               
+                <label>
+                  ({course.ratingCount - 1} ratings) {course.studentCount}{" "}
+                  students{" "}
+                </label>
               </div>
               <label className={styled["instlabel"]}>
                 Created by {instructor.firstname} {instructor.lastname}
@@ -177,14 +141,57 @@ const Course = () => {
                   </Button>
                 </Modal.Footer>
               </Modal>
-              {state ? "" : { price }}
-              {state ? "" : { discountElement }}
-              {}
+              {course.price === 0 ? (
+                state!=2&&
+                <div className={styled["price"]}>
+                  <label className={styled["time"]}>Free</label>
+                </div>
+              ) : (
+                state!=2&&
+                <>
+                  {!window.sessionStorage.getItem("factor") ? (
+                    <div>
+                      <label className={styled["price"]}>
+                        {" "}
+                        {course.price -
+                          (course.price * course.discount) / 100}{" "}
+                        USD{" "}
+                      </label>
+                      <label className={styled["discount"]}>
+                        &nbsp;
+                        {course.discount > 0 ? `${course.discount}% off` : ""}
+                      </label>
+                    </div>
+                  ) : (
+                    <div className={styled["price"]}>
+                      <label className={styled["time"]}>
+                        {Math.floor(
+                          course.price * window.sessionStorage.getItem("factor")
+                        )}{" "}
+                        {window.sessionStorage
+                          .getItem("currency")
+                          .toUpperCase()}
+                      </label>
+                    </div>
+                  )}
+                </>
+              )}
+              {course.discount > 0 && state!=2&& (
+                <div>
+                  <AccessAlarmIcon
+                    style={{ color: "red" }}
+                    className={styled["enddate"]}
+                  />{" "}
+                  <label className={styled["enddatelabel"]}>
+                    Discount ends at {course.discount_enddate.split("T")[0]}
+                  </label>
+                </div>
+              )}
               <button
                 className={styled["buyme"]}
                 onClick={state ? navigateRequestAccess : navigateCheckout}
               >
-                {state ? "request access" : "Buy now"}
+                {state == 2 ? "request access" : "Buy now"}
               </button>
             </section>
           </section>
