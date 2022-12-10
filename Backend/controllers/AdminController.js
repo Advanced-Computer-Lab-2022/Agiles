@@ -3,16 +3,20 @@ const IndividualTrainee = require("..//models/IndividualTrainee");
 const Instructor = require("../models/Instructor");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const {generateTraineeAccessToken,generateInstructorAccessToken,generateAdminAccessToken} = require("./authContext");
+const {
+  generateTraineeAccessToken,
+  generateInstructorAccessToken,
+  generateAdminAccessToken,
+} = require("./authContext");
 require("dotenv").config;
 
 //create admin
 const createAdmin = async (req, res) => {
   const { username, password } = req.body;
   let verficationerror = verifyAdminJWT(req.headers["authorization"]);
-  const exists = await Admin.findOne ({username : username});
-  if (exists){
-    return res.status(409).json({msg : "username already exists"});
+  const exists = await Admin.findOne({ username: username });
+  if (exists) {
+    return res.status(409).json({ msg: "username already exists" });
   }
   if (!username || !password) {
     return res.status(500).json({ msg: "bad request" });
@@ -35,11 +39,12 @@ const createAdmin = async (req, res) => {
 };
 //create Instructor
 const createInstructor = async (req, res) => {
-  const { firstname,lastname, username, password, email, gender } = req.body;
+  const { firstname, lastname, username, password, email, gender } = req.body;
   const userTrainee = await IndividualTrainee.findOne({ username: username });
   const userInstructor = await Instructor.findOne({ username: username });
   if (userTrainee || userInstructor) {
-    return res.status(409).json({ msg: "username already exists" });}
+    return res.status(409).json({ msg: "username already exists" });
+  }
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
   const newInstructor = new Instructor({
@@ -59,20 +64,21 @@ const createInstructor = async (req, res) => {
 };
 //create Corporate
 const createCorporate = async (req, res) => {
-  const { firstname,lastname , username, password,email,gender} = req.body;
+  const { firstname, lastname, username, password, email, gender } = req.body;
   const userTrainee = await IndividualTrainee.findOne({ username: username });
   const userInstructor = await Instructor.findOne({ username: username });
   if (userTrainee || userInstructor) {
-    return res.status(409).json({ msg: "username already exists" });}
+    return res.status(409).json({ msg: "username already exists" });
+  }
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
   const newCorporate = new IndividualTrainee({
-    firstname :firstname,
-    lastname:lastname,
+    firstname: firstname,
+    lastname: lastname,
     username: username,
-    state : true,
+    state: true,
     password: hashedPassword,
-    email : email,
+    email: email,
     gender: gender,
   });
   try {
@@ -93,15 +99,20 @@ const logIn = async (req, res) => {
       bcrypt.compare(password, user.password, (err, data) => {
         if (err) throw err;
         if (data) {
-          const accessToken = generateTraineeAccessToken({id:user._id,username:user.username});
+          const accessToken = generateTraineeAccessToken({
+            id: user._id,
+            username: user.username,
+          });
 
           const refreshToken = jwt.sign(
             { username: user.username },
             process.env.REFRESH_TOKEN_SECRET,
             { expiresIn: "1d" }
           );
-          let status =0;
-          if (data.state){status = 2;}
+          let status = 0;
+          if (data.state) {
+            status = 2;
+          }
           res.cookie("currentUser", user._id, {
             maxAge: 24 * 60 * 60 * 1000,
           });
@@ -110,6 +121,9 @@ const logIn = async (req, res) => {
           });
           res.cookie("jwt", accessToken, {
             httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000,
+          });
+          res.cookie("state", user.state, {
             maxAge: 24 * 60 * 60 * 1000,
           });
           res.status(200).json(user);
@@ -124,7 +138,10 @@ const logIn = async (req, res) => {
       bcrypt.compare(password, user.password, (err, data) => {
         if (err) throw err;
         if (data) {
-          const accessToken = generateInstructorAccessToken({id:user._id,username:user.username});
+          const accessToken = generateInstructorAccessToken({
+            id: user._id,
+            username: user.username,
+          });
           const refreshToken = jwt.sign(
             { username: user.username },
             process.env.REFRESH_TOKEN_SECRET,
@@ -165,7 +182,7 @@ const signUp = async (req, res) => {
     const newUser = new IndividualTrainee({
       username: username,
       password: hashedPassword,
-      state : false,
+      state: false,
       email: email,
       firstname: firstname,
       lastname: lastname,
@@ -187,4 +204,11 @@ const logOut = async (req, res) => {
   res.status(200).json({ msg: "logged out" });
 };
 
-module.exports = { createAdmin,createInstructor,logIn,createCorporate,signUp, logOut };
+module.exports = {
+  createAdmin,
+  createInstructor,
+  logIn,
+  createCorporate,
+  signUp,
+  logOut,
+};
