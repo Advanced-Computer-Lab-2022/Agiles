@@ -126,7 +126,6 @@ function InstructorOwnCourses() {
           </nav>
     
     <div className={InprogressStyles["Wrapper"]}>
-      <h2 className={InprogressStyles["Wrapper_h2"]}>My Courses</h2>
       <div className={InstructorOwnCoursesStyles["Wrapper-top"]}>
         <div>
           <label>Filter by</label>

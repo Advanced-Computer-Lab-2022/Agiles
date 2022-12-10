@@ -223,6 +223,11 @@ const updateInstructorPassword = async (req, res) => {
     });
   }
 };
+const profit = async(req,res)=>{
+   const user = req.user;
+   const instructor = await Instructor.findById(user.id);
+   res.status(200).json(instructor.wallet);
+}
 
 //---------------
 
@@ -236,5 +241,6 @@ module.exports = {
   updateInstructorPassword,
   uploadSubLink,
   uploadPreLink,
-  deletLink
+  deletLink,
+  profit
 };

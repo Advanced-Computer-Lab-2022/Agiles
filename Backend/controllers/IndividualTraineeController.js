@@ -11,6 +11,7 @@ const bcrypt = require("bcrypt");
 const resetPassword = require("./ResetPassword");
 require("dotenv").config();
 var nodemailer = require("nodemailer");
+const Course = require("../models/Course");
 
 
 const getTraineebyID = async (req, res) => {
@@ -400,6 +401,9 @@ const payForCourse = async(req,res)=>{
       if (!courseId){
         return res.status(500).json("bad request");
       }
+      const course = await Course.findById(courseId);
+      const instructor = await Instructor.findById(course.instructor);
+      const profit = parseInt(course.price) - parseInt(course.price)*parseInt(course.discount)/100;
       if (create){
         const id = user.id ;
         const {cardName , cardNumber , cardExpiryDate , CVV} = req.body;
@@ -427,6 +431,8 @@ const payForCourse = async(req,res)=>{
       }
       try {
         await IndividualTrainee.findByIdAndUpdate(user.id,{$push:{registered_courses:{courseId:courseId}}});
+        await Instructor.updateOne({_id:course.instructor},{wallet : instructor.wallet+profit});
+        await Course.updateOne({_id:courseId},{studentCount : course.studentCount+1});
         return res.status(200).json("payment completed");
         
       } catch (error) {

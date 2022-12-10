@@ -82,6 +82,10 @@ const courseSchema = new Schema(
     imgUrl: {
       type: String,
     },
+    studentCount :{
+      type: Number,
+      default:0
+    }
   },
   { timestamps: true }
 );

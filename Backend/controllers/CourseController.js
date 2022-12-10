@@ -64,7 +64,14 @@ const filterCourses = async (req, res) => {
     res.status(200).json(courses);
   }
 };
-
+const popularCourses = async (req, res) => {
+  const courses = await Course.find().sort({ studentCount: -1 }).limit(8);
+  if (!courses) {
+    res.status(400).json({ error: "Empty" });
+  } else {
+    res.status(200).json(courses);
+  }
+}
 const courseSearch = async (req, res) => {
   const search = req.query["search"];
   const courses = await Course.find({
@@ -364,4 +371,5 @@ module.exports = {
   courseFinalExam,
   findCourseById,
   reportProblem,
+  popularCourses
 };

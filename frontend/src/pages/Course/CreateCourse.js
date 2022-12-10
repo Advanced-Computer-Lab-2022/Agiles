@@ -84,7 +84,6 @@ const CreateCourse = () => {
     </div>
   </nav>
     <section className={InprogressStyles["Wrapper"]}>
-    <h2 className={InprogressStyles["Wrapper_h2"]}>Create Course</h2>
       <form onSubmit={handleSubmit}style = {{width :'30%'}}>
         <div className="form-group mt-3">
           <label className="Auth-label">

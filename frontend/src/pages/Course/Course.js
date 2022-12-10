@@ -16,23 +16,31 @@ import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import ListGroup from "react-bootstrap/ListGroup";
 import Accordion from "react-bootstrap/Accordion";
 import ReviewCard from "../../components/ReviewCard";
+import Cookies from "universal-cookie";
 import axios from "axios";
+const cookies = new Cookies();
 const Course = () => {
   const [course, setCourse] = useState([]);
   const [reviews,setReviews]= useState([]);
   const [instructor,setInstructor]=useState([]);
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
+  const state = cookies.get("status");
   const [isloading, setIsLoading] = useState(false);
   const location = useLocation();
   const courseId = new URLSearchParams(location.search).get("cid");
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navigateCheckout = ()=>{
+    if (state==0){
     navigate({
       pathname: "/checkout",
       search: `?cid=${course._id}&price=${course.price}&discount=${course.discount}`,
     });
+  }
+  else{
+    navigate("/signUp");
+  }
   }
   useEffect(() => {
     const fetchData = async () => {
@@ -62,7 +70,8 @@ const Course = () => {
               <h2>{course.description}</h2>
               <div className={styled["mainSection-left-rating"]}>
                 <Rating name="rating" readOnly value={Math.round(course.rating/course.ratingCount)} />
-                <label>({course.ratingCount-1} ratings)</label>
+                <label>({course.ratingCount-1} ratings) {course.studentCount} students </label>
+               
               </div>
               <label className={styled["instlabel"]}>
                 Created by {instructor.firstname} {instructor.lastname}
