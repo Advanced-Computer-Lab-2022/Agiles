@@ -9,6 +9,7 @@ const {
   logOut,
   accessRequests,
   grantAccess,
+  acceptRefund,
 } = require("..//controllers/AdminController");
 const { verifyAdminJWT } = require("../middleware/authMiddleware");
 adminrouter.post("/addAdmin", verifyAdminJWT, createAdmin);
@@ -19,5 +20,6 @@ adminrouter.post("/logout", logOut);
 adminrouter.post("/signUp", signUp);
 adminrouter.get("/accessRequests", accessRequests);
 adminrouter.post("/grantAccess", grantAccess);
+adminrouter.post("/acceptRefund", acceptRefund);
 
 module.exports = adminrouter;

@@ -25,6 +25,7 @@ const {
   createCredit,
   deleteCredit,
   payForCourse,
+  requestRefund,
 } = require("../controllers/IndividualTraineeController");
 const { verifyItraineeJWT } = require("../middleware/authMiddleware");
 
@@ -103,4 +104,6 @@ IndividualTraineeRouter.get(
 IndividualTraineeRouter.post("/forgotpassword", forgetPassword);
 IndividualTraineeRouter.post("/verifyCode", verifyCode);
 IndividualTraineeRouter.post("/requestAccess", requestAccess);
+IndividualTraineeRouter.post("/requestRefund", requestRefund);
+
 module.exports = IndividualTraineeRouter;

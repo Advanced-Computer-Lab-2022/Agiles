@@ -11,6 +11,7 @@ const {
   generateInstructorAccessToken,
   generateAdminAccessToken,
 } = require("./authContext");
+const CourseRefundRequest = require("../models/CourseRefundRequest");
 require("dotenv").config;
 
 //create admin
@@ -244,6 +245,36 @@ const grantAccess = async (req, res) => {
     return res.status(406).json(error);
   }
 };
+
+const acceptRefund = async (req, res) => {
+  const { traineeId, courseId } = req.body;
+  const course = await Course.findById(courseId);
+  const instructor = await Instructor.findById(course.instructor);
+  const refundAmount =
+    parseInt(course.price) -
+    (parseInt(course.price) * parseInt(course.discount)) / 100;
+  try {
+    await IndividualTrainee.findByIdAndUpdate(traineeId, {
+      $pull: { registered_courses: { courseId: courseId } },
+    });
+    await Instructor.updateOne(
+      { _id: course.instructor },
+      { wallet: instructor.wallet - refundAmount }
+    );
+    await Course.updateOne(
+      { _id: courseId },
+      { studentCount: course.studentCount - 1 }
+    );
+    await CourseRefundRequest.findOneAndUpdate(
+      { traineeId: traineeId, courseId: courseId },
+      { status: "approved" }
+    );
+    return res.status(200).json("refund done");
+  } catch (error) {
+    console.log(error);
+    return res.status(406).json(error);
+  }
+};
 module.exports = {
   accessRequests,
   createAdmin,
@@ -253,4 +284,5 @@ module.exports = {
   signUp,
   logOut,
   grantAccess,
+  acceptRefund,
 };

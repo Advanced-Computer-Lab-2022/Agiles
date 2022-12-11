@@ -13,7 +13,7 @@ const resetPassword = require("./ResetPassword");
 require("dotenv").config();
 var nodemailer = require("nodemailer");
 const Course = require("../models/Course");
-
+const CourseRefundRequest = require("../models/CourseRefundRequest");
 
 const getTraineebyID = async (req, res) => {
   const id = req.query.id;
@@ -418,9 +418,11 @@ const payForCourse = async (req, res) => {
   if (!courseId) {
     return res.status(500).json("bad request");
   }
-      const course = await Course.findById(courseId);
-      const instructor = await Instructor.findById(course.instructor);
-      const profit = parseInt(course.price) - parseInt(course.price)*parseInt(course.discount)/100;
+  const course = await Course.findById(courseId);
+  const instructor = await Instructor.findById(course.instructor);
+  const profit =
+    parseInt(course.price) -
+    (parseInt(course.price) * parseInt(course.discount)) / 100;
   if (create) {
     const id = user.id;
     const { cardName, cardNumber, cardExpiryDate, CVV } = req.body;
@@ -452,8 +454,14 @@ const payForCourse = async (req, res) => {
     await IndividualTrainee.findByIdAndUpdate(user.id, {
       $push: { registered_courses: { courseId: courseId } },
     });
-        await Instructor.updateOne({_id:course.instructor},{wallet : instructor.wallet+profit});
-        await Course.updateOne({_id:courseId},{studentCount : course.studentCount+1});
+    await Instructor.updateOne(
+      { _id: course.instructor },
+      { wallet: instructor.wallet + profit }
+    );
+    await Course.updateOne(
+      { _id: courseId },
+      { studentCount: course.studentCount + 1 }
+    );
     return res.status(200).json("payment completed");
   } catch (error) {
     return res.status(406).json(error);
@@ -481,6 +489,23 @@ const requestAccess = async (req, res) => {
   }
 };
 
+const requestRefund = async (req, res) => {
+  const { courseId, traineeId } = req.body;
+  if (!courseId || !traineeId) {
+    return res.status(500).json("bad request");
+  }
+  const trainee = await IndividualTrainee.findById(traineeId);
+  const newRequest = {
+    traineeId: trainee._id,
+    courseId: courseId,
+  };
+  try {
+    await CourseRefundRequest.create(newRequest);
+    return res.status(200).json("success");
+  } catch (err) {
+    return res.status(406).json(err);
+  }
+};
 module.exports = {
   requestAccess,
   getTraineebyID,
@@ -500,4 +525,5 @@ module.exports = {
   createCredit,
   deleteCredit,
   payForCourse,
+  requestRefund,
 };
