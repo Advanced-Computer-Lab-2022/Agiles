@@ -39,7 +39,7 @@ import ReportProblem from "./pages/Course/ReportProblem";
 import PrevReports from "./pages/Course/PrevReports";
 import ReportProblemTrainee from "./pages/Course/ReportProblemTrainee";
 import PrevReportsTrainee from "./pages/Course/PrevReportsTrainee";
-
+import ViewRequests from "./pages/Admin/adminComponents/ViewRequests";
 function App() {
   const [showNav, setShowNav] = useState(true);
   return (
@@ -70,6 +70,7 @@ function App() {
               <Route path="addInstructor" element={<AddInstructor />} />
               <Route path="addAdmin" element={<AddAdmin />} />
               <Route path="addCorporate" element={<AddCorporate />} />
+              <Route path="viewRequests" element={<ViewRequests />} />
             </Route>
 
             <Route path="/courses" element={<Courses />} />
@@ -98,9 +99,11 @@ function App() {
               path="/ReportProblemTrainee"
               element={<ReportProblemTrainee />}
             />
-           <Route path="/PrevReports" element={<PrevReports/>} />
-           <Route path="/PrevReportsTrainee" element={<PrevReportsTrainee/>} />
-
+            <Route path="/PrevReports" element={<PrevReports />} />
+            <Route
+              path="/PrevReportsTrainee"
+              element={<PrevReportsTrainee />}
+            />
           </Routes>
         </div>
       </BrowserRouter>

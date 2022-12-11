@@ -3,6 +3,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import CorporateFareIcon from "@mui/icons-material/CorporateFare";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
@@ -69,6 +70,17 @@ const AdminSidebar = () => {
             <li>
               <ReportIcon className={style["icon"]}></ReportIcon>
               <span>Reports</span>
+            </li>
+          </Link>
+          <Link
+            to="viewRequests"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <li>
+              <FormatListBulletedIcon
+                className={style["icon"]}
+              ></FormatListBulletedIcon>
+              <span> Requests</span>
             </li>
           </Link>
           <li>

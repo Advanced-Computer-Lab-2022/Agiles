@@ -1,6 +1,7 @@
 const Admin = require("../models/Admin");
 const IndividualTrainee = require("..//models/IndividualTrainee");
 const Instructor = require("../models/Instructor");
+const CourseSubscriptionRequest = require("../models/CourseSubscriptionRequest");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const {
@@ -200,8 +201,14 @@ const logOut = async (req, res) => {
   res.clearCookie("status");
   res.status(200).json({ msg: "logged out" });
 };
-
+const accessRequests = async (req, res) => {
+  requests = await CourseSubscriptionRequest.find({})
+    .populate("traineeId courseId")
+    .exec();
+  res.send(requests).status(200);
+};
 module.exports = {
+  accessRequests,
   createAdmin,
   createInstructor,
   logIn,
