@@ -51,7 +51,7 @@ const RegCourse = ({
             onClick={name === "preview" ? () => {} : handleClick}
           >
             {" "}
-            Course Preview
+            Overview 
           </li>
           <li
             id="/conReg"
@@ -62,15 +62,6 @@ const RegCourse = ({
           >
             {" "}
             Course Content{" "}
-          </li>
-          <li
-            id="/grades"
-            className={
-              name == "grades" ? regStyles["leftsection-liclicked"] : ""
-            }
-            onClick={name === "grade" ? () => {} : handleClick}
-          >
-            Grades
           </li>
           <li
             id="/reportproblemtrainee"

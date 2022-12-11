@@ -1,5 +1,3 @@
-.home {
-}
 .navbarSub {
   display: flex;
   align-items: center;
@@ -43,4 +41,15 @@
 }
 .notPressed:hover {
   border-bottom: 5px solid rgba(192,4,24,255); ;
+}
+.accordion-button:not(.collapsed) {
+  color: #ffffff;
+  background-color: #e2e2e2;
+  color: black;
+  box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+}
+.accordion-button.collapsed {
+  color: #ffffff;
+  color: black;
+  box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
 }

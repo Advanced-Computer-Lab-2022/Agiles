@@ -94,7 +94,7 @@ const CoursePreInst = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <label className={style["mainlabel"]}>Course Preview</label>
+      <label className={style["mainlabel"]}>Overview</label>
       <h1>Welcome to the {course.title} Course</h1>
       <div className={style["video"]}>
         {course.coursePreviewUrl != "" ? (

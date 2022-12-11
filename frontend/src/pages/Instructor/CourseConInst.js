@@ -144,7 +144,7 @@ const CourseConInst = () => {
                 </Button>
               </Modal.Footer>
             </Modal>
-            <Accordion defaultActiveKey="0" className={style["subtitles"]}>
+            <Accordion defaultActiveKey="0" className={style["subtitles"]} flush>
               {subtitles.length > 0 &&
                 subtitles.map((subtitle, index0) => (
                   <Accordion.Item eventKey={index0} key={index0}>

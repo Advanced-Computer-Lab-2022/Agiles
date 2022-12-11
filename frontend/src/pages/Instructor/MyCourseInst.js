@@ -36,7 +36,7 @@ const MyCourseInst = ({
             }
             onClick={name === "preview" ? () => {} : handleClick}
           >
-            Course Preview
+            Overview
           </li>
           <li
             id="/conInst"

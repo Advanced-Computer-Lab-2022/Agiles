@@ -12,7 +12,6 @@ import RegCourse from "../pages/Course/RegCourse";
 import axios from "axios";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-
 const cookies = new Cookies();
 const CoursContent = () => {
   const location = useLocation();
@@ -142,6 +141,7 @@ const CoursContent = () => {
               defaultActiveKey="0"
               className={style["subtitles"]}
               alwaysOpen
+              flush
             >
               {subtitles &&
                 subtitles.map((subtitle, index0) => (
@@ -210,7 +210,8 @@ const CoursContent = () => {
                     name={"finalexam"}
                     onClick={handleFinalExamClick}
                     size="lg"
-                    variant="light"
+                    style={{backgroundColor:'#a00407',borderRadius: 0 ,border: 'none' }}
+      
                   >
                     Final Exam
                   </Button>

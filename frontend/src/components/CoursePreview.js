@@ -99,11 +99,10 @@ const CoursePreview = () => {
                 </Button>
               </Modal.Footer>
             </Modal>
-            <label className={style["mainlabel"]}>Course Preview</label>
+            <label className={style["mainlabel"]}>Overview</label>
             <ProgressBar
               now={progress}
               className={style["progressbar"]}
-              label={`${progress}% completed`}
             ></ProgressBar>
             <h1>Welcome to the {course.title} Course</h1>
             <div className={style["video"]}>
@@ -113,7 +112,6 @@ const CoursePreview = () => {
                   height="500"
                   src={course.coursePreviewUrl}
                   title="YouTube video player"
-                  frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 ></iframe>
