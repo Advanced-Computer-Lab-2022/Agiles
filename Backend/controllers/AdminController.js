@@ -1,7 +1,9 @@
 const Admin = require("../models/Admin");
 const IndividualTrainee = require("..//models/IndividualTrainee");
-const Instructor = require("../models/Instructor");
 const CourseSubscriptionRequest = require("../models/CourseSubscriptionRequest");
+const Instructor = require("..//models/Instructor");
+const Course = require("../models/Course");
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const {
@@ -207,6 +209,35 @@ const accessRequests = async (req, res) => {
     .exec();
   res.send(requests).status(200);
 };
+const grantAccess = async (req, res) => {
+  const { traineeId, courseId } = req.body;
+  const course = await Course.findById(courseId);
+  const instructor = await Instructor.findById(course.instructor);
+  const profit =
+    parseInt(course.price) -
+    (parseInt(course.price) * parseInt(course.discount)) / 100;
+  try {
+    await IndividualTrainee.findByIdAndUpdate(traineeId, {
+      $push: { registered_courses: { courseId: courseId } },
+    });
+    await Instructor.updateOne(
+      { _id: course.instructor },
+      { wallet: instructor.wallet + profit }
+    );
+    await Course.updateOne(
+      { _id: courseId },
+      { studentCount: course.studentCount + 1 }
+    );
+    await CourseSubscriptionRequest.findOneAndUpdate(
+      { traineeId: traineeId, courseId: courseId },
+      { status: "approved" }
+    );
+    return res.status(200).json("access granted");
+  } catch (error) {
+    console.log(error);
+    return res.status(406).json(error);
+  }
+};
 module.exports = {
   accessRequests,
   createAdmin,
@@ -215,4 +246,5 @@ module.exports = {
   createCorporate,
   signUp,
   logOut,
+  grantAccess,
 };

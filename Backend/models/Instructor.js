@@ -63,7 +63,7 @@ const instructorSchema = new Schema(
       required: false,
       default: "",
     },
-    wallet:Number,
+    wallet: Number,
     imgUrl: {
       type: String,
     },
