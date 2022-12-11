@@ -7,6 +7,7 @@ const {
   logIn,
   signUp,
   logOut,
+  accessRequests,
 } = require("..//controllers/AdminController");
 const { verifyAdminJWT } = require("../middleware/authMiddleware");
 adminrouter.post("/addAdmin", verifyAdminJWT, createAdmin);
@@ -15,5 +16,6 @@ adminrouter.post("/addCorporate", createCorporate);
 adminrouter.post("/login", logIn);
 adminrouter.post("/logout", logOut);
 adminrouter.post("/signUp", signUp);
+adminrouter.get("/accessRequests", accessRequests);
 
 module.exports = adminrouter;
