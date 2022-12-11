@@ -156,10 +156,9 @@ const CourseConInst = () => {
                     <Accordion.Body>
                       <div className={style["accordation-body"]}>
                         <Button
-                          variant="dark"
                           id={subtitle._id}
                           size="sm"
-                          style={{ width: "20%" }}
+                          style={{backgroundColor:'#a00407',borderRadius: 0, width: '10rem' ,border: 'none' }}
                           onClick={handleUpload}
                         >
                           <UploadIcon /> Upload Video

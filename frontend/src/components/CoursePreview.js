@@ -161,9 +161,8 @@ const CoursePreview = () => {
                     })}
                 </div>
               <Button
-                variant="dark"
                 onClick={handleShow}
-                style={{ borderRadius: 0, width: "13%" }}
+                style={{backgroundColor:'#a00407',borderRadius: 0, width: '10rem' ,border: 'none' }}
               >
                 show all reviews
               </Button>

@@ -108,7 +108,7 @@ const CoursePreInst = () => {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
-            <Button variant="dark" onClick={handleShow} style={{borderRadius:'0'}}>
+            <Button  onClick={handleShow} style={{borderRadius:'0',border:'none',backgroundColor:'#a00407'}}>
               <EditIcon /> Edit Course Preview Video
             </Button>
             <Modal show={show} onHide={handleClose}>
@@ -165,7 +165,7 @@ const CoursePreInst = () => {
                 <Button variant="secondary" onClick={handleClose}>
                   close
                 </Button>
-                <Button variant="primary" onClick={handleSave}>
+                <Button  onClick={handleSave}>
                   save changes
                 </Button>
               </Modal.Footer>
@@ -176,15 +176,9 @@ const CoursePreInst = () => {
       <hr className={style["mainRight-hr"]}></hr>
       <h3>About this course</h3>
       <p>{course.description}</p>
-      <Button variant="dark" style={{borderRadius:'0'}}>
-        <EditIcon /> Edit Course Description
-      </Button>
       <hr className={style["mainRight-hr"]}></hr>
       <h3>Subject</h3>
       <p>{course.subject}</p>
-      <Button variant="dark" style={{borderRadius:'0'} }>
-        <EditIcon /> Edit Subject
-      </Button>
       <hr className={style["mainRight-hr"]}></hr>
       <h3>Define promotion</h3>
       <CoursePromo course_id={course_id}></CoursePromo>
@@ -215,10 +209,9 @@ const CoursePreInst = () => {
                     })}
                 </div>
         <Button
-           variant="dark"
           onClick={handleShowRatings}
-          style={{ border: "1px solid black", width: "13%",borderRadius:'0' }}
-        >
+          style={{backgroundColor:'#a00407',borderRadius: 0, width: '10rem' ,border: 'none' }}
+          >
           show all reviews
         </Button>
       </div>

@@ -10,7 +10,6 @@ import LoadingScreen from "react-loading-screen";
 import InprogressStyles from "./Inprogress.module.css"
 import spinner from "../static/download.gif";
 import RegCourseCard from "./RegCourseCard";
-import a from "../static/logo.png";
 
 const cookies = new Cookies();
 const INPROGRESS_URL = "/individualtrainee/inprogress";
@@ -44,8 +43,6 @@ const Inprogress = () => {
         <div>
         <section className="mainSection">
             <h2>Welcome Back !</h2>
-
-            <img src={a} alt="canidan chamber of commerce" className="mainImage"></img>
           </section>
 
       <nav className={NavbarStyles["navbar"]}>

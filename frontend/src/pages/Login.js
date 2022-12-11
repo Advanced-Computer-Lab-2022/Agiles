@@ -54,7 +54,8 @@ const Login = () => {
             <label className="Auth-label">username</label>
             <input
               type="username"
-              className="form-control mt-1"
+              className="form-control "
+              
               required
               placeholder="Enter username"
               onChange={(e) => setUsername(e.target.value)}
@@ -80,10 +81,10 @@ const Login = () => {
             </button>
           </div>
           <p className="footforget">
-             <Link to="/forgotpassword">Forgotten password?</Link>
+             <Link to="/forgotpassword" style={{color:'#a00407'}}>Forgotten password?</Link>
           </p>
           <p className="NoAccount">
-            Don't have account? <Link to="/signUp">Sign up</Link> </p>
+            Don't have account? <Link to="/signUp" style={{color:'#a00407'}}>Sign up</Link> </p>
       
           
         </div>

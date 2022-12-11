@@ -3,7 +3,6 @@ import Button from "react-bootstrap/Button";
 import NavbarStyles from "../components/Navbar.module.css";
 import React from "react";
 import Cookies from "universal-cookie";
-import a from "../static/logo.png";
 import { useNavigate,Link } from "react-router-dom";
 import Explore from "../components/Explore";
 const cookies = new Cookies();
@@ -20,7 +19,6 @@ const Home = () => {
         <div className="home">
           <section className="mainSection">
             <h2>Welcome Back !</h2>
-            <img src={a} alt="canidan chamber of commerce" className="mainImage"></img>
           </section>
           <nav className={NavbarStyles["navbar"]}>
             <div>
@@ -39,7 +37,6 @@ const Home = () => {
             <div>
               <h2>Welcome Back !</h2>
             </div>
-            <img src={a} alt="canidan chamber of commerce" className="mainImage"></img>
           </section>
           <nav className={NavbarStyles["navbar"]}>
             <div>
@@ -58,11 +55,10 @@ const Home = () => {
       <div className="home">
         <section className="mainSection">
           <div>
-            <Button variant="light" onClick={handleClick}>
+            <Button style={{backgroundColor:'#a00407',borderRadius:0 , border:'none'}} onClick={handleClick}>
               Register now
             </Button>
           </div>
-          <img src={a} alt="canidan chamber of commerce" className="mainImage"></img>
         </section>
         <nav className={NavbarStyles["navbar"]}>
           <button className="Inprogress">Explore</button>

@@ -230,7 +230,7 @@ const CoursContent = () => {
                       </div>
                     </Modal.Body>
                     <Modal.Footer>
-                      <Button variant="secondary" onClick={handleClose}>
+                      <Button onClick={handleClose}>
                         close
                       </Button>
                     </Modal.Footer>

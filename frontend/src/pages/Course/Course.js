@@ -124,12 +124,6 @@ const Course = () => {
               <button className={styled["preview"]} onClick={handleShow}>
                 &nbsp;preview this course
               </button>
-              <div className={styled["totalhours"]}>
-                <YouTubeIcon className={styled["icon"]} />
-                <label className={styled["time"]}>
-                  {course.totalHoursOfCourse}h 30m Video on demand
-                </label>
-              </div>
               <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                   <Modal.Title>Course Preview</Modal.Title>
@@ -240,7 +234,7 @@ const Course = () => {
           <section className={styled["middle-bottom"]}>
             <label>Instructors</label>
             <p className={styled["middle-bottom-content-label1"]}>
-              <Link to="previewProfile">
+              <Link to="previewProfile" style={{color:'#a00407'}}>
                 {instructor.firstname} {instructor.lastname}
               </Link>
             </p>
