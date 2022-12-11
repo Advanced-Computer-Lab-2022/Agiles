@@ -40,6 +40,9 @@ import PrevReports from "./pages/Course/PrevReports";
 import ReportProblemTrainee from "./pages/Course/ReportProblemTrainee";
 import PrevReportsTrainee from "./pages/Course/PrevReportsTrainee";
 import ViewRequests from "./pages/Admin/adminComponents/ViewRequests";
+import RefundRequests from "./pages/Admin/adminComponents/RefundRequests";
+import ViewReports from "./pages/Admin/adminComponents/ViewReports";
+
 function App() {
   const [showNav, setShowNav] = useState(true);
   return (
@@ -71,6 +74,8 @@ function App() {
               <Route path="addAdmin" element={<AddAdmin />} />
               <Route path="addCorporate" element={<AddCorporate />} />
               <Route path="viewRequests" element={<ViewRequests />} />
+              <Route path="RefundRequests" element={<RefundRequests />} />
+              <Route path="ViewReports" element={<ViewReports />} />
             </Route>
 
             <Route path="/courses" element={<Courses />} />

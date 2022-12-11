@@ -208,6 +208,13 @@ const accessRequests = async (req, res) => {
     .exec();
   res.send(requests).status(200);
 };
+
+const RefundRequests = async (req, res) => {
+  requests = await CourseSubscriptionRequest.find({})
+    .populate("traineeId courseId")
+    .exec();
+  res.send(requests).status(200);
+};
 const grantAccess = async (req, res) => {
   const { traineeId, courseId } = req.body;
   const course = await Course.findById(courseId);

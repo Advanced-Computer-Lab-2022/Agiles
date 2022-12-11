@@ -80,7 +80,18 @@ const AdminSidebar = () => {
               <FormatListBulletedIcon
                 className={style["icon"]}
               ></FormatListBulletedIcon>
-              <span> Requests</span>
+              <span>Enroll Requests</span>
+            </li>
+          </Link>
+          <Link
+            to="RefundRequests"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <li>
+              <FormatListBulletedIcon
+                className={style["icon"]}
+              ></FormatListBulletedIcon>
+              <span>Refund Requests</span>
             </li>
           </Link>
           <li>
