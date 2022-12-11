@@ -115,26 +115,15 @@ const getAllExams = async (req, res) => {
 };
 
 const createCourse = async (req, res) => {
-  const {
-    instructor,
-    title,
-    imgUrl,
-    coursePreviewUrl,
-    subtitles,
-    price,
-    description,
-    subject,
-    totalHoursOfCourse,
-    totalHoursOfSubtitles,
-    language,
-  } = req.body;
-  const data = await Instructor.findById(instructor, {
+  const user = req.user;
+  const { title,imgUrl, coursePreviewUrl, subtitles, price, description, subject, language, } = req.body;
+  const data = await Instructor.findById(user.id, {
     firstname: 1,
     lastname: 1,
   });
   const instructorname = data.firstname + " " + data.lastname;
   const newCourse = new Course({
-    instructor: instructor,
+    instructor: user.id,
     instructorname: instructorname,
     title: title,
     imgUrl: imgUrl,
@@ -143,14 +132,12 @@ const createCourse = async (req, res) => {
     price: price,
     description: description,
     subject: subject,
-    totalHoursOfCourse: totalHoursOfCourse,
-    totalHoursOfSubtitles: totalHoursOfSubtitles,
     language: language,
   });
   try {
     const course = await Course.create(newCourse);
     const update = await Instructor.updateOne(
-      { _id: instructor },
+      { _id: user.id },
       { $push: { courseList: course._id } }
     );
     res.status(200).json(course);

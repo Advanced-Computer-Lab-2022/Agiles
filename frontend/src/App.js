@@ -88,7 +88,7 @@ function App() {
             <Route path="/instructor/profile" element={<InstructorProfile />} />
             <Route path="/search" element={<SearchResults />} />
             <Route path="/courses/filter" element={<FilterResults />} />
-            <Route path="/instructor/contract" element={<InstructorTerms />} />
+            <Route path="/instructor/terms" element={<InstructorTerms />} />
             <Route path="/CourseExam" element={<CourseExam />} />
             <Route path="/setFinalExam" element={<SetFinalExam />} />
             <Route path="/rateInstructor" element={<InstructorRating />} />

@@ -1,6 +1,4 @@
 .home {
-  width: 100%;
-  display: inline-block;
 }
 .navbarSub {
   display: flex;
@@ -16,7 +14,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color:#1c1d1f;
+  background-color:#1c1d1f; 
   background-position:center ;
 }
 .mainImage{
