@@ -142,12 +142,12 @@ const Course = () => {
                 </Modal.Footer>
               </Modal>
               {course.price === 0 ? (
-                state!=2&&
+                state==0&&
                 <div className={styled["price"]}>
                   <label className={styled["time"]}>Free</label>
                 </div>
               ) : (
-                state!=2&&
+                state==0&&
                 <>
                   {!window.sessionStorage.getItem("factor") ? (
                     <div>
@@ -176,7 +176,7 @@ const Course = () => {
                   )}
                 </>
               )}
-              {course.discount > 0 && state!=2&& (
+              {course.discount > 0 && state==0&& (
                 <div>
                   <AccessAlarmIcon
                     style={{ color: "red" }}
@@ -189,7 +189,7 @@ const Course = () => {
               )}
               <button
                 className={styled["buyme"]}
-                onClick={state ? navigateRequestAccess : navigateCheckout}
+                onClick={state==2 ? navigateRequestAccess : navigateCheckout}
               >
                 {state == 2 ? "request access" : "Buy now"}
               </button>

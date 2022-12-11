@@ -1,16 +1,18 @@
 import Carousel from 'react-bootstrap/Carousel';
+import landing1 from "../static/Landing1.jpg"
+import style from './Explore.module.css'
 const Explore = () => {
   return (
-    <Carousel>
+    <Carousel className={style['main']}>
     <Carousel.Item>
       <img
         className="d-block w-100"
-        src="holder.js/800x400?text=First slide&bg=373940"
+        style= {{height:'25rem'}}
         alt="First slide"
       />
-      <Carousel.Caption>
-        <h3>First slide label</h3>
-        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+      <Carousel.Caption className={style['caption']}>
+        <h3>Learning that gets you</h3>
+        <p>Skills for your present (and your future). Get started with us.</p>
       </Carousel.Caption>
     </Carousel.Item>
     <Carousel.Item>

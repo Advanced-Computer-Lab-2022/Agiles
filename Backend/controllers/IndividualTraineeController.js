@@ -115,7 +115,6 @@ const submitExam = async (req, res) => {
         { $set: { studentChoices: answers, result: resultno } },
         { new: true, upsert: true },
         function (err, docs) {
-          console.log(docs);
           if (err) console.log(err);
           else console.log("Updated User : ", docs);
         }
@@ -467,7 +466,6 @@ const requestAccess = async (req, res) => {
     return res.status(500).json("bad request");
   }
   const trainee = await IndividualTrainee.findById(traineeId);
-  console.log(trainee.email);
   const newRequest = {
     traineeId: trainee._id,
     courseId: courseId,
