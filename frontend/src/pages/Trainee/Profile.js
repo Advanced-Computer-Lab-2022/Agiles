@@ -11,14 +11,12 @@ const cookie = new Cookie();
 const fetchUrl = "/individualtrainee/getIndividualTraineebyId";
 const updateUrl = "/individualtrainee/updateBasics";
 const Profile = () => {
-  const [isloading, setIsLoading] = useState(false);
   const id = cookie.get("currentUser");
+  const [isloading, setIsLoading] = useState(false);
   const [data, setData] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [minibio, setMiniBio] = useState("");
-  const [wallet, setWallet] = useState(0);
-  const [state, setState] = useState(false);
   const fetchData = async () => {
     setIsLoading(true);
     try {
@@ -27,8 +25,8 @@ const Profile = () => {
       setFirstname(res.data.firstname);
       setLastname(res.data.lastname);
       setMiniBio(res.data.mini_bio);
-      setState(data.state);
-      setWallet(data.wallet == null ? 0 : data.wallet);
+      //setState(data.state);
+      //setWallet(data.wallet == null ? 0 : data.wallet); make another Li under payment :(
     } catch (err) {
       console.log(err);
     }
@@ -91,7 +89,6 @@ const Profile = () => {
                 </Button>
               </form>
             </section>
-            {!state ? <div>{wallet}</div> : ""}
           </section>
         </section>
       )}

@@ -20,7 +20,6 @@ function InstructorProfile() {
   const [change, setChange] = useState(false);
   const [stars, setStars] = useState([]);
   const [reviews, setReviews] = useState([]);
-  // const instructorid = "635fba2f99f3f855c075eb6d";
   const instructorid = cookies.get("currentUser");
 
   const handleEmailChange = (e) => {
