@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const CourseRequestSchema = new Schema(
+const refundSchema = new Schema(
   {
     traineeId: {
       type: mongoose.Types.ObjectId,
@@ -22,7 +22,7 @@ const CourseRequestSchema = new Schema(
 );
 
 const CourseRefundRequest = mongoose.model(
-  "CourseRequestSubscription",
-  CourseRequestSchema
+  "CourseRefundRequest",
+  refundSchema
 );
 module.exports = CourseRefundRequest;
