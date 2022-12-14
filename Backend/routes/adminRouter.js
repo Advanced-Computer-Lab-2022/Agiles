@@ -10,6 +10,8 @@ const {
   accessRequests,
   grantAccess,
   acceptRefund,
+  getReports,
+  refundRequests,
 } = require("..//controllers/AdminController");
 const { verifyAdminJWT } = require("../middleware/authMiddleware");
 adminrouter.post("/addAdmin",verifyAdminJWT, createAdmin);
@@ -21,5 +23,7 @@ adminrouter.post("/signUp", signUp);
 adminrouter.get("/accessRequests", accessRequests);
 adminrouter.post("/grantAccess", grantAccess);
 adminrouter.post("/acceptRefund", acceptRefund);
+adminrouter.get("/getReports", getReports);
+adminrouter.get("/refundRequests", refundRequests);
 
 module.exports = adminrouter;
