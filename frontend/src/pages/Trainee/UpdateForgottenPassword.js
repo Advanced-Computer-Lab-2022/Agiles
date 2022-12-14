@@ -128,12 +128,13 @@ const UpdateForgottenPassword = () => {
                 !password || !confirmPassword || !validPwd ? true : false
               }
               className="btn btn-primary"
+              style={{backgroundColor:'#a00407',border:'none'}}
             >
               save
             </button>
           </div>
           <p className="footForm">
-            <Link to="/logIn">Back to Login?</Link>
+            <Link to="/logIn" style={{color:'#a00407 '}}>Back to Login?</Link>
           </p>
         </div>
       </form>

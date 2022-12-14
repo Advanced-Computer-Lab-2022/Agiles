@@ -1,8 +1,6 @@
 import style from "./AdminSidebar.module.css";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import CorporateFareIcon from "@mui/icons-material/CorporateFare";
@@ -10,7 +8,7 @@ import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import ReportIcon from "@mui/icons-material/Report";
 import { Link } from "react-router-dom";
-import { MdOutlineReport } from "react-icons/md";
+
 const AdminSidebar = () => {
   return (
     <div className={style["sidebar"]}>
@@ -100,17 +98,10 @@ const AdminSidebar = () => {
             ></SettingsApplicationsIcon>
             <span>Settings</span>
           </li>
-          <p className={style["main"]}>Acount</p>
-          <li>
-            <AccountCircleOutlinedIcon
-              className={style["icon"]}
-            ></AccountCircleOutlinedIcon>
-            <span>profile</span>
-          </li>
+
 
           <li>
-            <ExitToAppIcon className={style["icon"]}></ExitToAppIcon>
-            <span>Logout</span>
+           
           </li>
         </ul>
       </div>

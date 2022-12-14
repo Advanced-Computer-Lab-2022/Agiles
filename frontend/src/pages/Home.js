@@ -1,10 +1,10 @@
 import "./Home.css";
 import Button from "react-bootstrap/Button";
-import NavbarStyles from "../components/Navbar.module.css";
 import React from "react";
 import Cookies from "universal-cookie";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Explore from "../components/Explore";
+import Thumbnail from "../components/Thumbnail";
 const cookies = new Cookies();
 const Home = () => {
   const navigate = useNavigate();
@@ -17,15 +17,20 @@ const Home = () => {
     if (status == 0 || status == 2) {
       return (
         <div className="home">
-          <section className="mainSection">
-            <h2>Welcome Back !</h2>
-          </section>
-          <nav className={NavbarStyles["navbar"]}>
+      <div className="craousel">
+            <Thumbnail></Thumbnail>
+          </div>
+          <nav className="smallNav">
             <div>
-              <Link to ="/"><button  className={"Inprogress" }>Explore</button></Link>
-              <Link to ="/mylearning"><button className={"notPressed"}> My Learning</button></Link>
+              <Link to="/">
+                <button className={"Inprogress"}>Explore</button>
+              </Link>
+              <Link to="/mylearning">
+                <button className={"notPressed"}> My Learning</button>
+              </Link>
             </div>
           </nav>
+          
           <Explore></Explore>
           <footer></footer>
         </div>
@@ -33,19 +38,24 @@ const Home = () => {
     } else {
       return (
         <div className="home">
-          <section className="mainSection">
+           <div className="craousel">
+            <Thumbnail></Thumbnail>
+          </div>
+          <nav className="smallNav">
             <div>
-              <h2>Welcome Back !</h2>
-            </div>
-          </section>
-          <nav className={NavbarStyles["navbar"]}>
-            <div>
-              <Link to ="/"><button className={"Inprogress" } >Explore </button></Link>
-              <Link to = "/mycourses"><button className={"notPressed"} >My Courses </button></Link>
-              <Link to = "/createcourse"><button className={"notPressed"}>CreateCourse </button></Link>
+              <Link to="/">
+                <button className={"Inprogress"}>Explore </button>
+              </Link>
+              <Link to="/mycourses">
+                <button className={"notPressed"}>My Courses </button>
+              </Link>
+              <Link to="/createcourse">
+                <button className={"notPressed"}>CreateCourse </button>
+              </Link>
             </div>
           </nav>
-        <Explore></Explore>
+         
+          <Explore></Explore>
           <footer></footer>
         </div>
       );
@@ -53,16 +63,9 @@ const Home = () => {
   } else {
     return (
       <div className="home">
-        <section className="mainSection">
-          <div>
-            <Button style={{backgroundColor:'#a00407',borderRadius:0 , border:'none'}} onClick={handleClick}>
-              Register now
-            </Button>
-          </div>
-        </section>
-        <nav className={NavbarStyles["navbar"]}>
-          <button className="Inprogress">Explore</button>
-        </nav>
+        <div className="craousel">
+          <Thumbnail></Thumbnail>
+        </div>
         <footer></footer>
       </div>
     );

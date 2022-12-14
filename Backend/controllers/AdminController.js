@@ -3,6 +3,7 @@ const IndividualTrainee = require("..//models/IndividualTrainee");
 const CourseSubscriptionRequest = require("../models/CourseSubscriptionRequest");
 const Instructor = require("..//models/Instructor");
 const Course = require("../models/Course");
+const CourseRefundRequest = require("../models/CourseRefundRequest");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -11,21 +12,17 @@ const {
   generateInstructorAccessToken,
   generateAdminAccessToken,
 } = require("./authContext");
-const CourseRefundRequest = require("../models/CourseRefundRequest");
 require("dotenv").config;
 
 //create admin
 const createAdmin = async (req, res) => {
   const { username, password } = req.body;
-  let verficationerror = verifyAdminJWT(req.headers["authorization"]);
   const exists = await Admin.findOne({ username: username });
   if (exists) {
     return res.status(409).json({ msg: "username already exists" });
   }
   if (!username || !password) {
-    return res.status(500).json({ msg: "bad request" });
-  } else if (verficationerror) {
-    return res.status(401).json({ msg: "unauthorized" });
+    return res.status(500).json({ msg: "bad request" })
   } else {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -132,7 +129,8 @@ const logIn = async (req, res) => {
         }
       });
     });
-  } else {
+  } else if (await Instructor.exists({username:username}))
+  {
     await Instructor.findOne({ username: username }).then((user) => {
       if (!user) return res.status(400).json({ msg: "User not exist" });
       bcrypt.compare(password, user.password, (err, data) => {
@@ -151,6 +149,31 @@ const logIn = async (req, res) => {
           res.cookie("currentUser", user._id, {
             maxAge: 24 * 60 * 60 * 1000,
           });
+          res.cookie("status", status, {
+            maxAge: 24 * 60 * 60 * 1000,
+          });
+          res.cookie("jwt", accessToken, {
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000,
+          });
+          res.status(200).json(user);
+        } else {
+          return res.status(401).json({ msg: "invalid credencial" });
+        }
+      });
+    });
+  }
+  else{
+    await Admin.findOne({ username: username }).then((user) => {
+      if (!user) return res.status(400).json({ msg: "User not exist" });
+      bcrypt.compare(password, user.password, (err, data) => {
+        if (err) throw err;
+        if (data) {
+          const accessToken = generateAdminAccessToken({
+            id: user._id,
+            username: user.username,
+          });
+          const status = 3;
           res.cookie("status", status, {
             maxAge: 24 * 60 * 60 * 1000,
           });

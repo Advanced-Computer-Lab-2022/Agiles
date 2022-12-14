@@ -12,7 +12,7 @@ const {
   acceptRefund,
 } = require("..//controllers/AdminController");
 const { verifyAdminJWT } = require("../middleware/authMiddleware");
-adminrouter.post("/addAdmin", verifyAdminJWT, createAdmin);
+adminrouter.post("/addAdmin",verifyAdminJWT, createAdmin);
 adminrouter.post("/addInstructor", verifyAdminJWT, createInstructor);
 adminrouter.post("/addCorporate", createCorporate);
 adminrouter.post("/login", logIn);

@@ -27,7 +27,7 @@ function InstructorTerms() {
       </p>
       <p>You represent and warrant that:</p>
       <ul>
-        <li>you will provide and maintain accurate account information;</li>§
+        <li>you will provide and maintain accurate account information</li>
         <li>
           you own or have the necessary licenses, rights, consents, permissions,
           and authority to authorize canadian chamber of commerce to use your Submitted Content as

@@ -14,7 +14,6 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import Logout from '@mui/icons-material/Logout';
-
 const cookies = new Cookies();
 const LOGOUT_URL = "/admin/logOut";
 const Navbar = () => {
@@ -69,18 +68,25 @@ const Navbar = () => {
   const navigateprevReportsTrainee = () => navigate('/PrevReportsTrainee');
   const navigateAccountSettings = () => navigate('/user/accountsettings');
   const navigatePaymentMethods = () => navigate('/user/paymentmethods');
-
+  const navigateTerms = () =>{
+ 
+    if(isTrainee())
+    {navigate('/user/terms')}
+    else{navigate('/instructor/terms')}
+  }
   return (
     <nav className={NavbarStyles["navbar"]}>
-      {/* <h1 className={NavbarStyles["headerTitle"]}>
+       <h1 className={NavbarStyles["headerTitle"]}>
         <Link to="/">
           <img
             src={a}
+            width="auto"
+            height="50"
             alt="mainImage"
             className={NavbarStyles["headerTitle"]}
           ></img>
         </Link>
-      </h1> */}
+      </h1> 
       <form onSubmit={handleSearch} className={NavbarStyles["search-bar"]}>
         <BsSearch
           className={NavbarStyles["search-icon"]}
@@ -135,7 +141,7 @@ const Navbar = () => {
         <>
           <MenuItem onClick = {hanldleMycourses}> My Courses </MenuItem>
           <MenuItem onClick = {handleCreateCourse}>Create Course</MenuItem>
-          <MenuItem onClick = {handlePrevReports}>My Previous Reports</MenuItem>
+          <MenuItem onClick = {handlePrevReports}>Previous Reports</MenuItem>
           </>
           }
         <Divider />
@@ -146,7 +152,7 @@ const Navbar = () => {
           Payment methods
         </MenuItem>}
         <Divider />
-        <MenuItem >Terms & conditions</MenuItem>
+        <MenuItem onClick = {navigateTerms}>Terms & conditions</MenuItem>
         <Divider />
         <MenuItem onClick={handleLogOut}>
           <ListItemIcon>

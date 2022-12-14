@@ -167,7 +167,7 @@ const SignUp = () => {
             </label>
             <input
               className="form-control mt-1"
-              placeholder="e.g  hossamElfar41"
+              placeholder="username"
               required
               onChange={(e) => setUsername(e.target.value)}
               aria-invalid={validName ? "false" : "true"}
@@ -233,14 +233,14 @@ const SignUp = () => {
           </p>
 
           <div className="d-grid gap-2 mt-3 ">
-            <button disabled={!validName || !validPwd || !firstname ||!lastname ||!email? true : false} className="btn btn-primary">
+            <button disabled={!validName || !validPwd || !firstname ||!lastname ||!email? true : false} className="btn btn-primary"   style={{backgroundColor:'#a00407',border:'none'}}>
               Submit
             </button>
           </div>
           <div className="footForm">
             <input type="checkbox" required />
             <p>
-              I agree to <Link to="terms-conditions" style={{color:'#a00407'}}>terms & conditions </Link>
+              I agree to <Link to="/user/terms" style={{color:'#a00407'}}>terms & conditions </Link>
             </p>
           </div>
         </div>

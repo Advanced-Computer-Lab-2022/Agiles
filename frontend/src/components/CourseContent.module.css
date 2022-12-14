@@ -13,11 +13,6 @@
 .icon{
     font-size: small;
 }
-.accordion-button:not(.collapsed) {
-    color: #ffffff;
-    background-color: #29008a;
-    box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
-}
 .subtitleView{
     background-color: white;
     color: #a00407    ;

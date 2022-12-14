@@ -215,14 +215,14 @@ const ForgetPassword = () => {
           </div>
           <button
             disabled={!email ? true : false}
-            className="btn btn-primary"
-            style={{ marginTop: "1rem" }}
+            className="btn btn-primary mt-1"
+            style={{backgroundColor:'#a00407',border:'none'}}
           >
             sumbit
           </button>
 
           <p className="footForm">
-            Back to Log In? <Link to="/logIn">Log In</Link>
+            Back to Log In? <Link to="/logIn" style={{color:'#a00407 '}}>Log In</Link>
           </p>
         </div>
       </form>

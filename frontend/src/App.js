@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Courses from "./pages/Course/Courses";
 import Login from "./pages/Login";
@@ -18,7 +19,6 @@ import FilterResults from "./pages/Course/FilterResults";
 import InstructorTerms from "./pages/Instructor/InstructorTerms";
 import CourseExam from "./pages/Course/CourseExam";
 import InstructorRating from "./pages/Course/InstructorRating.js";
-import { useState } from "react";
 import Profile from "./pages/Trainee/Profile";
 import Subtitle from "./pages/Course/SubtitleView";
 import CoursePreInst from "./pages/Instructor/CoursePreInst";
@@ -41,7 +41,7 @@ import PrevReportsTrainee from "./pages/Course/PrevReportsTrainee";
 import ViewRequests from "./pages/Admin/adminComponents/ViewRequests";
 import RefundRequests from "./pages/Admin/adminComponents/RefundRequests";
 import ViewReports from "./pages/Admin/adminComponents/ViewReports";
-
+import UserTerms from "./pages/Trainee/UserTerms";
 function App() {
   const [showNav, setShowNav] = useState(true);
   return (
@@ -94,6 +94,7 @@ function App() {
             <Route path="/search" element={<SearchResults />} />
             <Route path="/courses/filter" element={<FilterResults />} />
             <Route path="/instructor/terms" element={<InstructorTerms />} />
+            <Route path="/user/terms" element={<UserTerms/>} />
             <Route path="/CourseExam" element={<CourseExam />} />
             <Route path="/setFinalExam" element={<SetFinalExam />} />
             <Route path="/rateInstructor" element={<InstructorRating />} />

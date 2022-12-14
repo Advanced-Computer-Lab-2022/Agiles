@@ -2,8 +2,6 @@ import Cookies from "universal-cookie";
 import axios from "axios";
 import unAuth from "../clearAuth";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import NavbarStyles from "../components/Navbar.module.css";
 import RegCourseCardStyles from "./RegCourseCard.module.css";
 import CourseStyles from "../pages/Course/Courses.module.css";
 import LoadingScreen from "react-loading-screen";
@@ -41,17 +39,6 @@ const Inprogress = () => {
         <LoadingScreen loading={true} logoSrc={spinner} />
       ) : (
         <div>
-        <section className="mainSection">
-            <h2>Welcome Back !</h2>
-          </section>
-
-      <nav className={NavbarStyles["navbar"]}>
-            <div>
-              <Link to ="/"><button  className={"notPressed" }>Explore</button></Link>
-              <Link to ="/mylearning"><button className={"Inprogress"}> My Learning</button></Link>
-            </div>
-          </nav>
-
         <section className={InprogressStyles["Wrapper"]}>
          
           <div className={RegCourseCardStyles["cardgrid"]}>

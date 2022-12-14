@@ -2,8 +2,10 @@ import "./Login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie";
 import axios from "axios";
 const LOGIN_URL = "/admin/logIn";
+const cookies = new Cookies();
 const Login = () => {
     const errRef = useRef();
     const [username,setUsername] = useState('');
@@ -27,7 +29,12 @@ const Login = () => {
     try {
       const res = await axios.post(LOGIN_URL, user, config);
       localStorage.setItem("username", res.data.username);
-      navigate("/");
+      if (cookies.get("status")==3){
+        navigate("/admin");
+      }
+      else{
+        navigate("/");
+      }
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
@@ -76,6 +83,7 @@ const Login = () => {
             <button
               disabled={!username || !password ? true : false}
               className="btn btn-primary"
+              style={{backgroundColor:'#a00407',border:'none'}}
             >
               Log In
             </button>
@@ -84,7 +92,7 @@ const Login = () => {
              <Link to="/forgotpassword" style={{color:'#a00407'}}>Forgotten password?</Link>
           </p>
           <p className="NoAccount">
-            Don't have account? <Link to="/signUp" style={{color:'#a00407'}}>Sign up</Link> </p>
+            Don't have account? <Link to="/signUp" style={{color:'#a00407 '}}>Sign up</Link> </p>
       
           
         </div>

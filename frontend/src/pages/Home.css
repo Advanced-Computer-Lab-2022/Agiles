@@ -6,26 +6,20 @@
   padding: 10px 200px;
   border-bottom: 1px solid #f2f2f2;
 }
-.mainSection{
-  padding: 60px 200px;
-  margin-top: 10px;
+.smallNav {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-color:#1c1d1f; 
-  background-position:center ;
-}
-.mainImage{
-  width: 160px;
-  margin-left: 50%;
-}
-.mainSection h2{
-  color: #fff;
-  font-size: 2em;
-  font-weight: 500;
-  font-family: 'Open Sans', sans-serif;
+  max-height: 70px;
+  width: 80%;
+  margin-left: 10%;
+  border-bottom: 1px solid #f2f2f2;
+  padding: 0.3rem 1rem;
 }
 
+.craousel{
+  width: 80%;
+  margin-left: 10%;
+}
 .Inprogress{
   background-color: white;
   color: black;
