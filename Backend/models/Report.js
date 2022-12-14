@@ -5,7 +5,7 @@ const reportSchema = new Schema(
   {
     userId: {
       type: mongoose.Types.ObjectId,
-      ref: "IndvidualTrainee",
+      ref: "IndividualTrainee",
       required: true,
     },
     courseId: {

@@ -3,6 +3,7 @@ const IndividualTrainee = require("..//models/IndividualTrainee");
 const CourseSubscriptionRequest = require("../models/CourseSubscriptionRequest");
 const Instructor = require("..//models/Instructor");
 const Course = require("../models/Course");
+const Report = require("../models/Report");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -210,8 +211,8 @@ const accessRequests = async (req, res) => {
   res.send(requests).status(200);
 };
 
-const RefundRequests = async (req, res) => {
-  requests = await CourseSubscriptionRequest.find({})
+const refundRequests = async (req, res) => {
+  requests = await CourseRefundRequest.find({})
     .populate("traineeId courseId")
     .exec();
   res.send(requests).status(200);
@@ -244,6 +245,11 @@ const grantAccess = async (req, res) => {
     console.log(error);
     return res.status(406).json(error);
   }
+};
+
+const getReports = async (req, res) => {
+  requests = await Report.find({}).populate("userId courseId").exec();
+  res.send(requests).status(200);
 };
 
 const acceptRefund = async (req, res) => {
@@ -285,4 +291,6 @@ module.exports = {
   logOut,
   grantAccess,
   acceptRefund,
+  refundRequests,
+  getReports,
 };
