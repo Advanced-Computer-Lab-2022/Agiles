@@ -13,8 +13,8 @@ const {
   courseSearchByInstructor,
   listAllInstructorCoursesTitles,
   getInstructorbyId,
-  updateInstructorBio,
-  updateInstructorEmail,
+  updateFieldUser,
+  updateEmail,
   updateInstructorPassword,
   uploadSubLink,
   uploadPreLink,
@@ -31,8 +31,8 @@ instructorRouter.get("/profit",verifyInstructorJWT,profit);
 instructorRouter.get("/filterCourses",verifyInstructorJWT,filterCoursesByInstructor);
 instructorRouter.get("/searchCourses",verifyInstructorJWT,courseSearchByInstructor);
 instructorRouter.get("/instructorbyid", verifyInstructorJWT, getInstructorbyId);
-instructorRouter.patch("/updateBio", verifyInstructorJWT, updateInstructorBio);
-instructorRouter.patch("/updateEmail",verifyInstructorJWT,updateInstructorEmail);
+instructorRouter.patch("/updateBasics", verifyInstructorJWT, updateFieldUser);
+instructorRouter.patch("/updateEmail",verifyInstructorJWT,updateEmail);
 instructorRouter.patch("/updatePassword",verifyInstructorJWT,updateInstructorPassword);
 instructorRouter.patch("/updateSubtitle", verifyInstructorJWT, uploadSubLink);
 instructorRouter.patch("/deletSubtitle", verifyInstructorJWT, uploadSubLink);

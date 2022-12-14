@@ -8,12 +8,12 @@ const Exam = require("../models/Exam");
 const OTP = require("../models/OTP.js");
 const CreditCard = require("../models/CreditCard");
 const CourseSubscriptionRequest = require("../models/CourseSubscriptionRequest");
+const Course = require("../models/Course");
+const CourseRefundRequest = require("../models/CourseRefundRequest");
 const bcrypt = require("bcrypt");
 const resetPassword = require("./ResetPassword");
 require("dotenv").config();
 var nodemailer = require("nodemailer");
-const Course = require("../models/Course");
-const CourseRefundRequest = require("../models/CourseRefundRequest");
 
 const getTraineebyID = async (req, res) => {
   const id = req.query.id;
@@ -169,9 +169,10 @@ const getExerciseGrade = async (req, res) => {
 };
 
 const updateFieldUser = async (req, res) => {
-  const { userId, firstname, lastname, minibio } = req.body;
+  const person = req.user;
+  const { firstname, lastname, minibio } = req.body;
   try {
-    const user = await IndividualTrainee.findByIdAndUpdate(userId, {
+    const user = await IndividualTrainee.findByIdAndUpdate(person.id, {
       firstname: firstname,
       lastname: lastname,
       mini_bio: minibio,
@@ -182,9 +183,9 @@ const updateFieldUser = async (req, res) => {
   }
 };
 const updateEmail = async (req, res) => {
-  const { userId, email } = req.body;
+  const {email } = req.body;
   try {
-    const user = await IndividualTrainee.findByIdAndUpdate(userId, {
+    const user = await IndividualTrainee.findByIdAndUpdate(req.user.id, {
       email: email,
     });
     res.status(200).json("updated succ");
@@ -347,14 +348,12 @@ const rateInstructor = async (req, res) => {
 };
 const updateITraineePassword = async (req, res) => {
   const { oldPass, newPass } = req.body;
-
-  const id = req.query["id"];
-  if (!oldPass || !newPass || !id) {
+  if (!oldPass || !newPass) {
     return res.status(500);
   } else {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPass, salt);
-    const user = await IndividualTrainee.findById(id);
+    const user = await IndividualTrainee.findById(req.user.id);
 
     if (!user) return res.status(400).json({ msg: "User not exist" });
     bcrypt.compare(oldPass, user.password, (err, data) => {
