@@ -31,14 +31,7 @@ const Navbar = () => {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   }
-  const navigatetoProfile =()=>{
-      if (role == 0 || role ==2){
-          navigate({pathname:'/user/profile'})
-      }
-      else{
-        navigate({pathname:'/instructor/profile'})
-      }
-  }
+  const navigatetoProfile =()=>{ navigate('/profile')}
   const handleLogOut = async () => {
     let config = {
       headers: {
@@ -66,8 +59,8 @@ const Navbar = () => {
   const navigateMyLearning = () => navigate('/mylearning');
   const handlePrevReports = () => navigate('/PrevReports');
   const navigateprevReportsTrainee = () => navigate('/PrevReportsTrainee');
-  const navigateAccountSettings = () => navigate('/user/accountsettings');
-  const navigatePaymentMethods = () => navigate('/user/paymentmethods');
+  const navigateAccountSettings = () => navigate('/accountsettings');
+  const navigatePaymentMethods = () => navigate('/paymentmethods');
   const navigateTerms = () =>{
  
     if(isTrainee())
@@ -131,11 +124,18 @@ const Navbar = () => {
         <MenuItem onClick = {navigatetoProfile}>
           Public profile
         </MenuItem>
+        <MenuItem onClick = {navigateAccountSettings}>
+          Account settings
+        </MenuItem>
+       {isTrainee()&&<MenuItem onClick = {navigatePaymentMethods}>
+          Payment methods
+        </MenuItem>}
+        <Divider/>
         {isTrainee ()&&  <MenuItem onClick = {navigateMyLearning}>
           My learning
         </MenuItem>}
         {isTrainee ()&&  <MenuItem onClick = {navigateprevReportsTrainee}>
-        My Previous Reports
+        Previous Reports
         </MenuItem>}
         {isInstructor()&& 
         <>
@@ -144,13 +144,6 @@ const Navbar = () => {
           <MenuItem onClick = {handlePrevReports}>Previous Reports</MenuItem>
           </>
           }
-        <Divider />
-        {isTrainee ()&&  <MenuItem onClick = {navigateAccountSettings}>
-          Account settings
-        </MenuItem>}
-        {isTrainee ()&&  <MenuItem onClick = {navigatePaymentMethods}>
-          Payment methods
-        </MenuItem>}
         <Divider />
         <MenuItem onClick = {navigateTerms}>Terms & conditions</MenuItem>
         <Divider />

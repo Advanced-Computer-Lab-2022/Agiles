@@ -26,7 +26,6 @@ import CourseConInst from "./pages/Instructor/CourseConInst";
 import CoursePreview from "./components/CoursePreview";
 import CourseContent from "./components/CourseContent";
 import CourseFinalExam from "./pages/Course/CourseFinalExam";
-import InstructorProfile from "./pages/Instructor/InstructorProfile";
 import AccountSecurity from "./pages/Trainee/AccountSecurity";
 import PaymentMethods from "./pages/Trainee/PaymentMethods";
 import ForgetPassword from "./pages/Trainee/ForgetPassword";
@@ -42,6 +41,8 @@ import ViewRequests from "./pages/Admin/adminComponents/ViewRequests";
 import RefundRequests from "./pages/Admin/adminComponents/RefundRequests";
 import ViewReports from "./pages/Admin/adminComponents/ViewReports";
 import UserTerms from "./pages/Trainee/UserTerms";
+import Reviews from "./pages/Trainee/Reviews";
+import Wallet from "./pages/Trainee/Wallet";
 function App() {
   const [showNav, setShowNav] = useState(true);
   return (
@@ -87,10 +88,11 @@ function App() {
             <Route path="/preInst" element={<CoursePreInst />} />
             <Route path="/conInst" element={<CourseConInst />} />
             <Route path="/setExam" element={<SetExam />} />
-            <Route path="/user/profile" element={<Profile />} />
-            <Route path="/user/accountsettings" element={<AccountSecurity />} />
-            <Route path="/user/paymentMethods" element={<PaymentMethods />} />
-            <Route path="/instructor/profile" element={<InstructorProfile />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/accountsettings" element={<AccountSecurity />} />
+            <Route path="/paymentMethods" element={<PaymentMethods />} />
+            <Route path="/reviews" element={<Reviews />} />
+            <Route path="/wallet" element={<Wallet />} />
             <Route path="/search" element={<SearchResults />} />
             <Route path="/courses/filter" element={<FilterResults />} />
             <Route path="/instructor/terms" element={<InstructorTerms />} />
