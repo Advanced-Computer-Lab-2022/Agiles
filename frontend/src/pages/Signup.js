@@ -80,7 +80,7 @@ const SignUp = () => {
       
       Toast.fire({
         icon: 'success',
-        title: 'Signed in successfully'
+        title: 'Signed up successfully'
       })
       navigate('/login');
     } catch (err) {
