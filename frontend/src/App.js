@@ -43,6 +43,7 @@ import ViewReports from "./pages/Admin/adminComponents/ViewReports";
 import UserTerms from "./pages/Trainee/UserTerms";
 import Reviews from "./pages/Trainee/Reviews";
 import Wallet from "./pages/Trainee/Wallet";
+import PreviewProfile from "./pages/Instructor/PreviewProfile";
 function App() {
   const [showNav, setShowNav] = useState(true);
   return (
@@ -93,6 +94,7 @@ function App() {
             <Route path="/paymentMethods" element={<PaymentMethods />} />
             <Route path="/reviews" element={<Reviews />} />
             <Route path="/wallet" element={<Wallet />} />
+            <Route path="/previewprofile" element={<PreviewProfile />} />
             <Route path="/search" element={<SearchResults />} />
             <Route path="/courses/filter" element={<FilterResults />} />
             <Route path="/instructor/terms" element={<InstructorTerms />} />

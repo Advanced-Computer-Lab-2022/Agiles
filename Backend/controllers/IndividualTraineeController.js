@@ -455,7 +455,7 @@ const payForCourse = async (req, res) => {
     });
     await Instructor.updateOne(
       { _id: course.instructor },
-      { wallet: instructor.wallet + profit*70/100 }
+      { wallet: instructor.wallet + profit*70/100 ,studentCount :instructor.studentCount+1}
     );
     await Course.updateOne(
       { _id: courseId },

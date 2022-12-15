@@ -234,7 +234,7 @@ const Course = () => {
           <section className={styled["middle-bottom"]}>
             <label>Instructors</label>
             <p className={styled["middle-bottom-content-label1"]}>
-              <Link to="previewProfile" style={{color:'#a00407'}}>
+              <Link to={`/previewProfile?id=${instructor._id}`} style={{color:'#a00407'}}>
                 {instructor.firstname} {instructor.lastname}
               </Link>
             </p>
