@@ -59,11 +59,11 @@ const MyCourseInst = ({
           <li
             id="/reportProblem"
             className={
-              name == "reportproblem" ? regStyles["leftsection-liclicked"] : ""
+              name == "supportCenter" ? regStyles["leftsection-liclicked"] : ""
             }
             onClick={name === "reportproblem" ? () => {} : handleClick}
           >
-            Report Problem
+            Support Center
           </li>
         </ul>
       </div>

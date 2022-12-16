@@ -34,7 +34,6 @@ import Inprogress from "./components/Inprogress";
 import InstructorOwnCourses from "./pages/Instructor/InstructorOwnCourses";
 import ReportProblem from "./pages/Course/ReportProblem";
 import PrevReports from "./pages/Course/PrevReports";
-import ReportProblemTrainee from "./pages/Course/ReportProblemTrainee";
 import PrevReportsTrainee from "./pages/Course/PrevReportsTrainee";
 import ViewRequests from "./pages/Admin/adminComponents/ViewRequests";
 import RefundRequests from "./pages/Admin/adminComponents/RefundRequests";
@@ -103,13 +102,8 @@ function App() {
             <Route path="/rateInstructor" element={<InstructorRating />} />
             <Route path="/subtitleView" element={<Subtitle />}></Route>
             <Route path="/ReportProblem" element={<ReportProblem />} />
-            <Route
-              path="/ReportProblemTrainee"
-              element={<ReportProblemTrainee />}
-            />
             <Route path="/PrevReports" element={<PrevReports />} />
-            <Route path="/PrevReportsTrainee" element={<PrevReportsTrainee />}
-            />
+            <Route path="/PrevReportsTrainee" element={<PrevReportsTrainee />}/>
             <Route path="/success" element={<Sucess />} />
             <Route path="/cancel" element={<Cancel />} />
 

@@ -69,6 +69,7 @@ const courseSchema = new Schema(
       required: false,
       min: 0,
       max: 100,
+      default : 0
     },
     discount_enddate: {
       type: Date,

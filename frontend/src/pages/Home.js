@@ -18,7 +18,7 @@ const Home = () => {
       return (
         <div className="home">
       <div className="craousel">
-            <Thumbnail></Thumbnail>
+           {/* <Thumbnail></Thumbnail>*/}
           </div>
           <nav className="smallNav">
             <div>
@@ -39,8 +39,8 @@ const Home = () => {
       return (
         <div className="home">
            <div className="craousel">
-            <Thumbnail></Thumbnail>
-          </div>
+           {/* <Thumbnail></Thumbnail>*/}
+           </div>
           <nav className="smallNav">
             <div>
               <Link to="/">
@@ -64,8 +64,8 @@ const Home = () => {
     return (
       <div className="home">
         <div className="craousel">
-          <Thumbnail></Thumbnail>
-        </div>
+           {/* <Thumbnail></Thumbnail>*/}
+           </div>
         <footer></footer>
       </div>
     );

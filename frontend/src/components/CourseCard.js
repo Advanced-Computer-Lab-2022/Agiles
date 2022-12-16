@@ -9,7 +9,7 @@ export const CourseCard = (props) => {
   const navigate = useNavigate();
   const status = cookies.get("status");
   const courseId = props.data._id;
-  const onCourses = window.location.href=='http://localhost:3000/courses';
+  const onCourses = window.location.href=='http://localhost:3000/courses'|| window.location.href=='http://localhost:3000/';
   const handleClick = () => {
     if (onCourses){
       navigate({pathname:'/course',search :`cid=${courseId}`});
