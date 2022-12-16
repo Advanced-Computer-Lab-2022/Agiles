@@ -22,9 +22,11 @@ const {
   InprogressCoursebyId,
   changePassword,
   rateInstructor,
+  updateLinkProgress,
   createCredit,
   deleteCredit,
   CreateCheckout,
+  getAllItemsCourse,
   requestRefund,
 } = require("../controllers/IndividualTraineeController");
 const { verifyItraineeJWT } = require("../middleware/authMiddleware");
@@ -100,6 +102,8 @@ IndividualTraineeRouter.get(
   verifyItraineeJWT,
   viewReportedProblems
 );
+IndividualTraineeRouter.post("/updateLinkProgress",verifyItraineeJWT,updateLinkProgress);
+IndividualTraineeRouter.post("/getAllItems",verifyItraineeJWT,getAllItemsCourse);
 //no auth
 IndividualTraineeRouter.post("/forgotpassword", forgetPassword);
 IndividualTraineeRouter.post("/verifyCode", verifyCode);

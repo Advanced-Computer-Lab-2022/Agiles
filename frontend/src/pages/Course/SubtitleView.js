@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState ,useRef} from "react";
 import { useLocation } from "react-router-dom";
 import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif";
@@ -8,15 +8,35 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Accordion from "react-bootstrap/Accordion";
 import { useNavigate } from "react-router-dom";
 import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
+import Youtube from 'react-youtube';
 import Cookies from "universal-cookie";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import jsPDF from "jspdf";
 import * as React from "react";
+import Box from "@mui/material/Box";
+import { Content, ContextualHelp, Heading } from "@adobe/react-spectrum";
+
+
+// import Textarea from "@mui/joy/Textarea";
+// import FormControl from "@mui/material/FormControl";
+
+// import FormLabel from "@mui/joy/FormLabel";
+// import IconButton from "@mui/joy/IconButton";
+// import Menu from "@mui/joy/Menu";
+// import MenuItem from "@mui/joy/MenuItem";
+// import ListItemDecorator from "@mui/joy/ListItemDecorator";
+// import FormatBold from "@mui/icons-material/FormatBold";
+// import FormatItalic from "@mui/icons-material/FormatItalic";
+// import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
+// import Check from "@mui/icons-material/Check";
+
+import TextField from "@mui/material/TextField";
 
 const LINK_URL = "/course/link/view";
 const cookies = new Cookies();
 const Subtitle = () => {
+  const progress = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
   const query = location.search;
@@ -26,29 +46,24 @@ const Subtitle = () => {
   const [grade, setGrade] = useState([]);
   const [questions, setQuestions] = useState(0);
   const [show, setShow] = useState(false);
-  const [notes, setNotes] = useState("");
-
-  const downloadPDFFile = () => {
-    var doc = new jsPDF("landscape", "px", "a4", "false");
-    doc.text(20, 20, notes);
-    doc.save("myNotes.pdf");
-  };
-  const downloadTxtFile = () => {
-    const element = document.createElement("a");
-    const file = new Blob([notes], {
-      type: "application/pdf",
-    });
-    element.href = URL.createObjectURL(file);
-    element.download = "MyNotes.pdf";
-    document.body.appendChild(element);
-    element.click();
-  };
+  const [notes, setNotes] = useState("Blank");
+  const [italic, setItalic] = React.useState(false);
+  const [fontWeight, setFontWeight] = React.useState("normal");
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  
   const handleNotesChange = (event) => {
     // 👇️ access textarea value
     setNotes(event.target.value);
     console.log(event.target.value);
   };
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
+
+    let res = await axios.post("/individualtrainee/updateLinkProgress", 
+        {
+          linkId: link._id,
+          courseId: location.state.courseId,
+          completedItems: progresser
+        });
     navigate(
       {
         pathname: "/subtitleView",
@@ -64,6 +79,8 @@ const Subtitle = () => {
     );
     window.location.reload();
   };
+
+  
 
   const handleClose = () => setShow(false);
 
@@ -128,6 +145,59 @@ const Subtitle = () => {
     }
   };
 
+
+
+  
+  
+  
+  const handleProgress = async (event) => {
+    //console.log(event.data);
+    let progresser = 0;
+    if(event.data == 1 ){
+      console.log("playing,paused,ended")
+      progress.current = setInterval (async () => {
+        const player = event.target;
+        const currentTime = player.getCurrentTime();
+        const duration = player.getDuration();
+        progresser = Math.floor((currentTime / duration) * 100);
+        if(progresser >= 80){
+          progresser = 100;
+        }
+        console.log(progresser)
+        let res = await axios.post("/individualtrainee/updateLinkProgress", 
+        {
+          linkId: link._id,
+          courseId: location.state.courseId,
+          completedItems: progresser
+        });
+        console.log(res);
+    }, 5000);
+    
+    }
+    else if( event.data == 2 || event.data == 0){
+      console.log("paused,buffering")
+      const player = event.target;
+        const currentTime = player.getCurrentTime();
+        const duration = player.getDuration();
+        progresser = Math.floor((currentTime / duration) * 100);
+        if(progresser >= 80){
+          progresser = 100;
+  
+        }
+        let res = await axios.post("/individualtrainee/updateLinkProgress", 
+        {
+          id: cookies.get("currentUser"),
+          courseId: location.state.courseId,
+          completedItems: progresser
+        });
+        console.log(res);
+    }
+    return () =>{
+      clearInterval(progress.current);
+      }
+    };
+  
+
   const FetchData = async () => {
     setIsLoading(true);
     try {
@@ -140,8 +210,13 @@ const Subtitle = () => {
     setIsLoading(false);
   };
   useEffect(() => {
-    console.log(notes);
+    
     FetchData();
+
+    return () => {
+      clearInterval(progress.current);
+    }
+    
   }, []);
   return (
     <>
@@ -151,15 +226,21 @@ const Subtitle = () => {
         <section className={style["main-section"]}>
           <section className={style["main-section-left"]}>
             <section className={style["main-section-left-top"]}>
-              <iframe
-                width="800"
-                height="450"
-                src={link.linkUrl}
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
+              <Youtube
+                videoId={link.linkUrl.substring(30,41)}
+                opts = {{
+                    width:"800",
+                    height:"450",
+                    title:"YouTube video player",
+                    frameBorder:"0",
+                    allow:"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+                    playerVars: {
+                    fs: 1,
+                    autoplay: 1,                 
+                    }
+                  }}
+                  onStateChange = {handleProgress}
+              />
             </section>
             <section className={style["main-section-left-bottom"]}>
               <h3>Short Summary</h3>

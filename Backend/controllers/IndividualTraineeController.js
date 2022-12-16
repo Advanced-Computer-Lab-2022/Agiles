@@ -10,6 +10,7 @@ const CreditCard = require("../models/CreditCard");
 const CourseSubscriptionRequest = require("../models/CourseSubscriptionRequest");
 const Course = require("../models/Course");
 const CourseRefundRequest = require("../models/CourseRefundRequest");
+const Link = require("../models/Link");
 const bcrypt = require("bcrypt");
 const resetPassword = require("./ResetPassword");
 require("dotenv").config();
@@ -52,6 +53,84 @@ const InprogressCoursebyId = async (req, res) => {
     secondField: reviews,
   };
   return res.status(200).json(result);
+};
+
+const getAllItemsCourse = async (req, res) => {
+  const courseId = req.body.courseId;
+  let numberOfItems = 0;
+  try {
+
+    const course = await Course.findOne({ _id: courseId },{subtitles:1});
+    if(course){
+      course.subtitles.forEach(subtitle => {
+        numberOfItems += subtitle.link.length});
+      numberOfItems += course.subtitles.length + 1;
+      res.status(200).json({numberOfItems : numberOfItems});
+    }
+    else{
+      return res.status(400).json({ msg: "bad request" });
+    }
+  }
+  catch (err) {
+    res.status(403).json({ msg: err.message});
+  }
+};
+
+const updateLinkProgress = async (req, res) => {
+  // const id = req.body.id;
+  const courseId = req.body.courseId;
+  const linkId = req.body.linkId;
+  const studentId = req.body.studentId;
+  const subtitle = req.body.subtitle;
+  
+  const completedItems = req.body.completedItems;
+  let numberOfItems = 0;
+  try {
+
+    const course = await Course.findOne({ _id: courseId },{subtitles:1});
+    if(course){
+      course.subtitles.forEach(subtitle => {
+        numberOfItems += subtitle.link.length});
+      numberOfItems += course.subtitles.length + 1;
+    }
+    else{
+      return res.status(400).json({ msg: "bad request" });
+    }
+
+    // const regcourse = await IndividualTrainee.findOne({ _id: id, "registered_courses.courseId": courseId }
+    // ,{"registered_courses": 1});
+
+    // const linkcourse = await Link.findOne({ _id: linkId },{progress:1});
+
+    // const progress = regcourse.registered_courses[0].progress;
+    // const progress = linkcourse.progress;
+
+    const link = await IndividualTrainee.findOneAndUpdate(
+      { _id: studentId , "registered_courses.courseId": courseId, "registered_courses.subtitles.subtitle": subtitle, "registered_courses.subtitles.link.linkId": linkId },
+      { $set: { "registered_courses.subtitles.$.link.$.progress": completedItems } },
+      { new: true, upsert: true }
+    );
+
+    // const regcourse1 = await IndividualTrainee.findOneAndUpdate(
+    //   { _id: id, "registered_courses.courseId": courseId },
+    //   { $set: { "registered_courses.$.progress": progress + completedItems } },
+    //   { new: true, upsert: true }
+    // );
+
+    if (link) {
+      return res.status(200).json({ progress: completedItems});
+    } else {
+      return res.status(400).json({ msg: "bad request" });
+    }
+  } catch (err) {
+    res.status(403).json({ msg: err.message});
+  }
+};
+
+const updateProgress = async (req, res) => {
+  const id = req.body.id;
+  const courseId = req.body.courseId;
+
 };
 
 const submitExam = async (req, res) => {
@@ -105,6 +184,7 @@ const submitExam = async (req, res) => {
         result: resultno,
       });
     }
+
   } else {
     const test = await FinalExamResult({
       studentId: studentId,
@@ -131,7 +211,15 @@ const submitExam = async (req, res) => {
   }
 
   try {
-    res.status(200).json({ result: result, resultno: resultno });
+    const regcourse = await IndividualTrainee.findOne({ _id: studentId, "registered_courses.courseId": courseId }
+    ,{"registered_courses": 1});
+    const progress = regcourse.registered_courses[0].progress;
+    const regcourse1 = await IndividualTrainee.findOneAndUpdate(
+      { _id: studentId, "registered_courses.courseId": courseId },
+      { $set: { "registered_courses.$.progress": progress + 1 } },
+      { new: true, upsert: true }
+    );
+    res.status(200).json({ result: result, resultno: resultno,progress: progress +1  });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -532,8 +620,10 @@ module.exports = {
   verifyCode,
   getFinalExamGrade,
   rateInstructor,
+  updateLinkProgress,
   createCredit,
   deleteCredit,
   CreateCheckout,
   requestRefund,
+  getAllItemsCourse
 };

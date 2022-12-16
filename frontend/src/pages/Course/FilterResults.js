@@ -44,9 +44,9 @@ const FilterResults = (props) => {
           <section className={style["wrapper-right"]}>
             <h1>Filtered Courses</h1>
             <h2>
-              {courses.length} filter results{" "}
+              {courses.length} Results{" "}
               <button className={style["edit"]} onClick={handleClear}>
-                clear filters
+                Clear filters
               </button>
             </h2>
 
