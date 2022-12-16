@@ -1,9 +1,5 @@
 {
   "dependencies": {
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
-    "@mui/material": "^5.10.15",
-    "@mui/styled-engine-sc": "^5.10.14",
     "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -13,6 +9,6 @@
     "mongoose": "^6.6.7",
     "nodemailer": "^6.8.0",
     "nodemon": "^2.0.20",
-    "styled-components": "^5.3.6"
+    "stripe": "^11.3.0"
   }
 }

@@ -2,15 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import a from "../../static/logo.png";
-import { BsSearch } from "react-icons/bs";
 import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif";
 import InprogressStyles from "../../components/Inprogress.module.css";
-import InstructorOwnCoursesStyles from "./InstructorOwnCourses.module.css";
 import RegCourseCardStyles from "../../components/RegCourseCard.module.css";
-import RegCourseInst from "../../components/RegCourseInst";
+import { CourseCard } from "../../components/CourseCard";
 const cookies = new Cookies();
 const FetchUrl = '/instructor/listCourseTitles';
 const Search_URL = '/instructor/searchCourses'
@@ -62,47 +58,6 @@ function InstructorOwnCourses() {
   useEffect(()=>{
     fetchData();
   },[]);
-  /*const handleFilterSubmit = async (event) => {
-    event.preventDefault();
-    let lb = lowerBound;
-    let ub = upperBound;
-    if (free) {
-      lb = "0";
-      ub = "0";
-    }
-    if (name == "") {
-      alert("please enter your name");
-      return;
-    } else if (subject == "" && lb == "" && ub == "") {
-      alert("please fill in at least one filter cell");
-      return;
-    } else {
-      setFirstLoad(false);
-
-      let url = "/instructor/filterCourses/?";
-      if (!(lb == "")) {
-        if (window.sessionStorage.getItem("factor")) {
-          lb = Math.floor(lb / window.sessionStorage.getItem("factor"));
-        }
-
-        url += "lowerBound=" + lb + "&";
-      }
-      if (!(ub == "")) {
-        if (window.sessionStorage.getItem("factor")) {
-          ub = Math.floor(ub / window.sessionStorage.getItem("factor"));
-        }
-        url += "upperBound=" + ub + "&";
-      }
-      if (subject != "") {
-        url += "subject=" + subject + "&";
-      }
-
-      url += `username=${name}`;
-      console.log(url);
-      let data = await axios.get(url);
-      SetCourses(data.data);
-    }
-  };*/
 
   return (
     <>
@@ -110,78 +65,20 @@ function InstructorOwnCourses() {
       <LoadingScreen loading={true} logoSrc={spinner} />
     ) : (
       <div>
-    <div className={InprogressStyles["Wrapper"]}>
-      <div className={InstructorOwnCoursesStyles["Wrapper-top"]}>
-        <div>
-          <label>Filter by</label>
-         
-          <form >
-          <div className={InstructorOwnCoursesStyles["Wrapper-filter"]}>
-            <div>
-              <input
-                type="text"
-                value={subject}
-                placeholder="subject filter"
-                onChange={handleSubjectChange}
-              />
-            </div>
-            <div>
-              <input
-                readOnly={free}
-                type="number"
-                value={lowerBound}
-                placeholder="price lower bound"
-                onChange={handleLowerBoundChange}
-              />
-              <input
-                readOnly={free}
-                type="number"
-                value={upperBound}
-                placeholder="price upper bound"
-                onChange={handleUpperBoundChange}
-              />
-              <label>
-                <input
-                  type="checkbox"
-                  checked={free}
-                  onChange={(event) => {
-                    setFree(event.target.checked);
-                    setLowerBound(0);
-                    setUpperBound(0);
-                  }}
-                  className={InstructorOwnCoursesStyles["checkbox"]}
-                />
-                <span className={InstructorOwnCoursesStyles["span"]}>free</span>
-              </label>
-            </div>
-            </div>
-            <input type="submit" value="Filter" />
-          </form>
         
-        </div>
-        <div>
-          <form onSubmit={handleSearch} className={InstructorOwnCoursesStyles['search-bar']}>
-           <div className={InstructorOwnCoursesStyles['searchIcon']}><BsSearch></BsSearch></div>
-            <input
-              required
-              type="text"
-              className={InstructorOwnCoursesStyles["inpt"]}
-              value={searchString}
-              placeholder="Search my courses"
-              onChange={handleSearchChange}
-            />
-          </form>
-          </div>
-      </div>
-      <div>
+    <section className={InprogressStyles["Wrapper"]}>
+           <section className={InprogressStyles["main-section"]}>
+              <h1>My Courses</h1>          
+           </section>
+       
+      <section className={InprogressStyles['courses']}>
       <div className={RegCourseCardStyles["cardgrid"]}>
         {courses.length>0 ?(<>{courses.map((el,index) => {
-          return <RegCourseInst data={el} key={index}></RegCourseInst>;
+          return <CourseCard data={el} key={index}></CourseCard>;
         })}</>):<h3>No courses found</h3>}
         </div>
-      </div>
-
-    </div>
+        </section>
+    </section>
     </div>)}</>
   );
 }

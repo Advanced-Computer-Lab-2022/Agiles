@@ -13,6 +13,7 @@ const CourseRefundRequest = require("../models/CourseRefundRequest");
 const bcrypt = require("bcrypt");
 const resetPassword = require("./ResetPassword");
 require("dotenv").config();
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 var nodemailer = require("nodemailer");
 
 const getTraineebyID = async (req, res) => {
@@ -411,46 +412,56 @@ const deleteCredit = async (req, res) => {
     return res.status(406).json("server error");
   }
 };
-const payForCourse = async (req, res) => {
-  const user = req.user;
-  const { courseId, create } = req.body;
-  if (!courseId) {
+const CreateCheckout = async(req,res)=>{
+  const {courseId} = req.body;
+  if(!courseId){
     return res.status(500).json("bad request");
+  }
+  const course = await Course.findById(courseId);
+  const price = parseInt(course.price) - (parseInt(course.price) * parseInt(course.discount)) / 100;
+  const title = course.title;
+  const desccription = course.description;
+  try{
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [{
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: title,
+            description: desccription,
+            images:[course.imgUrl]
+          },
+          unit_amount: price*100,
+        },
+        quantity: 1,
+      }],
+      mode: 'payment',
+      custom_text: {
+        submit: {message: '30-Day Money-Back Guarantee'},
+      },
+      success_url: 'http://localhost:3000/success',
+      cancel_url: 'http://localhost:3000/cancel',
+    });
+    payForCourse(courseId,req.user.id);
+    return res.status(200).json({url:session.url});
+  }
+  catch(err){
+    return res.status(500).json("server error");
+  }
+
+}
+const payForCourse =  async(courseId,userId) => {
+  if (!courseId) {
+    return;
   }
   const course = await Course.findById(courseId);
   const instructor = await Instructor.findById(course.instructor);
   const profit =
     parseInt(course.price) -
     (parseInt(course.price) * parseInt(course.discount)) / 100;
-  if (create) {
-    const id = user.id;
-    const { cardName, cardNumber, cardExpiryDate, CVV } = req.body;
-    if (!cardNumber || !cardExpiryDate || !CVV) {
-      return res.status(500).json("bad request");
-    }
-    const exists = await CreditCard.findOne({ cardNumber: cardNumber });
-    if (exists) {
-      return res.status(406).json("card already exists");
-    }
-    const data = {
-      userId: id,
-      cardName: cardName,
-      cardNumber: cardNumber,
-      cardExpiryDate: cardExpiryDate,
-      CVV: CVV,
-    };
-    try {
-      const cretidCard = await CreditCard.create(data);
-      await IndividualTrainee.updateOne(
-        { _id: id },
-        { $push: { creditCard: cretidCard._id } }
-      );
-    } catch (error) {
-      return res.status(406).json(error);
-    }
-  }
   try {
-    await IndividualTrainee.findByIdAndUpdate(user.id, {
+    await IndividualTrainee.findByIdAndUpdate(userId, {
       $push: { registered_courses: { courseId: courseId } },
     });
     await Instructor.updateOne(
@@ -461,9 +472,9 @@ const payForCourse = async (req, res) => {
       { _id: courseId },
       { studentCount: course.studentCount + 1 }
     );
-    return res.status(200).json("payment completed");
+    return ;
   } catch (error) {
-    return res.status(406).json(error);
+    return ;
   }
 };
 
@@ -523,6 +534,6 @@ module.exports = {
   rateInstructor,
   createCredit,
   deleteCredit,
-  payForCourse,
+  CreateCheckout,
   requestRefund,
 };

@@ -9,8 +9,14 @@ export const CourseCard = (props) => {
   const navigate = useNavigate();
   const status = cookies.get("status");
   const courseId = props.data._id;
+  const onCourses = window.location.href=='http://localhost:3000/courses';
   const handleClick = () => {
-    navigate({pathname:'/course',search :`cid=${courseId}`} );
+    if (onCourses){
+      navigate({pathname:'/course',search :`cid=${courseId}`});
+    }
+    else{
+      navigate({pathname:'/preInst',search :`courseId=${courseId}`})
+    }
   };
   return (
     <div className={style["card"]}>

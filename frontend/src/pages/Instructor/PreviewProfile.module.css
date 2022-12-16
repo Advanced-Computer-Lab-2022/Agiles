@@ -1,8 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
 .main {
     display: grid;
     grid-template-columns: 60% 40%;
-    min-height: 100vh;
   }
 .left {
     display: inline-block;
@@ -11,7 +10,7 @@
     width: 80%;
   }
 .left h1{
-    font-family: 'Lobster';
+    font-family: 'Abril Fatface';
 }
 .left h5 {
     font-weight: bold;
@@ -26,6 +25,7 @@
 .left p {
     font-weight: 500;
     width: 80%;
+    
 }
 .left-top{
  margin-top: 1rem;
@@ -34,6 +34,25 @@
  gap: 2rem;
 }
 .right {
-    background-color: #ededed;
     display: inline-block;
-  }
+    margin-left: 10%;
+    margin-top: 10%;
+}
+.right img{
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    
+}
+.right button{
+    background-color: #a00407;
+    color: white;
+    padding: 0.8rem;
+    width: 30%;
+    margin-top: 1.5rem;
+    border: none;
+}
+.right button:hover{
+    background-color: #4d0102;
+    color: white;
+}

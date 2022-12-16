@@ -15,13 +15,11 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import ListGroup from "react-bootstrap/ListGroup";
 import Accordion from "react-bootstrap/Accordion";
-import ReviewCard from "../../components/ReviewCard";
 import Cookies from "universal-cookie";
 import axios from "axios";
 const cookies = new Cookies();
 const Course = () => {
   const [course, setCourse] = useState([]);
-  const [reviews, setReviews] = useState([]);
   const [instructor, setInstructor] = useState([]);
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
@@ -33,12 +31,17 @@ const Course = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const navigateCheckout = () => {
+  const navigateCheckout = async() => {
     if (state == 0) {
-      navigate({
-        pathname: "/checkout",
-        search: `?cid=${course._id}&price=${course.price}&discount=${course.discount}`,
-      });
+      try{
+       const res = await axios.post("/individualtrainee/create-checkout-session", {courseId : courseId});
+       const url = res.data.url;
+       window.location.href=url;
+      }
+      catch(err){
+          console.log(err);
+      }
+
     } else {
       navigate("/signUp");
     }
@@ -66,7 +69,6 @@ const Course = () => {
       try {
         const res = await axios.get(`/course/${courseId}`);
         setCourse(res.data.firstField);
-        setReviews(res.data.secondField);
         setInstructor(res.data.firstField.instructor);
         setIsLoading(false);
       } catch (e) {
@@ -179,14 +181,15 @@ const Course = () => {
                   <label className={styled["enddatelabel"]}>
                     Discount ends at {course.discount_enddate.split("T")[0]}
                   </label>
-                </div>
+                </div> 
               )}
+              {state!=1&&
               <button
                 className={styled["buyme"]}
                 onClick={state==2 ? navigateRequestAccess : navigateCheckout}
               >
                 {state == 2 ? "request access" : "Buy now"}
-              </button>
+              </button>}
             </section>
           </section>
           <section className={styled["middle-top"]}>
@@ -234,7 +237,7 @@ const Course = () => {
           <section className={styled["middle-bottom"]}>
             <label>Instructors</label>
             <p className={styled["middle-bottom-content-label1"]}>
-              <Link to={`/previewProfile?id=${instructor._id}`} style={{color:'#a00407'}}>
+              <Link to={`/previewProfile?id=${instructor._id}`} style={{color:'#a00407',textDecoration:'none'}}>
                 {instructor.firstname} {instructor.lastname}
               </Link>
             </p>
@@ -273,30 +276,6 @@ const Course = () => {
               {instructor.mini_bio}
             </p>
           </section>
-          {/* <h3>
-          <Rating
-            name="rating"
-            readOnly
-            value={!course.rating ? 0 : course.rating/course.ratingCount}
-            className={styled["rating"]}
-          />{" "}
-          {course.rating/course.ratingCount} course rating{" "}
-          <CircleIcon style={{ fontSize: "0.5rem" }} /> ({course.ratingCount-1}{" "}
-          ratings)
-        </h3> */}
-          {/* <div className={styled["rating-box"]}>
-                  {reviews.filter((review, idx) => idx < 5)
-                    .map((review,index) => {
-                      return (
-                        <ReviewCard
-                          index = {index}
-                          username={review.userId.username}
-                          rating={review.userRating}
-                          review={review.userReview}
-                        ></ReviewCard>
-                      );
-                    })}
-                </div> */}
         </div>
       )}
       ;

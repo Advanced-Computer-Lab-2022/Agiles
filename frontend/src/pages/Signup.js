@@ -120,7 +120,7 @@ const SignUp = () => {
             </label>
             <input
               className="form-control mt-1"
-              placeholder="e.g Hossam "
+              placeholder="e.g hossam "
               required
               onChange={(e) => setFirstname(e.target.value)}
             />
@@ -133,7 +133,7 @@ const SignUp = () => {
               /></label>
             <input
               className="form-control mt-1"
-              placeholder="e.g  Elfar"
+              placeholder="e.g  elfar"
               required
               onChange={(e) => setLastname(e.target.value)}
             />
@@ -148,7 +148,7 @@ const SignUp = () => {
             <input
               type="email"
               className="form-control mt-1"
-              placeholder="Email Address"
+              placeholder="email address"
               required
               onChange={(e) => setEmail(e.target.value)}
             />

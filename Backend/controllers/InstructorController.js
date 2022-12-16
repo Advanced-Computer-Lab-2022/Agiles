@@ -4,7 +4,7 @@ const Course = require("../models/Course");
 const Link = require("../models/Link");
 const Rating = require("../models/Rating");
 
-const listAllInstructorCoursesTitles = async (req, res) => {
+const courseByinst = async (req, res) => {
   const id = req.params["id"];
   try {
     const courseAttr = await Course.where("instructor").equals(id);
@@ -216,7 +216,7 @@ const profit = async(req,res)=>{
 //---------------
 
 module.exports = {
-  listAllInstructorCoursesTitles,
+  courseByinst,
   courseSearchByInstructor,
   filterCoursesByInstructor,
   getInstructorbyId,
