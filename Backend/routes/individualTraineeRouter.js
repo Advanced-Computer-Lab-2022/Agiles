@@ -20,10 +20,11 @@ const {
   InprogressCoursebyId,
   changePassword,
   rateInstructor,
-  updateProgress,
+  updateLinkProgress,
   createCredit,
   deleteCredit,
   payForCourse,
+  getAllItemsCourse,
   
 } = require("../controllers/IndividualTraineeController");
 const { verifyItraineeJWT } = require("../middleware/authMiddleware");
@@ -46,11 +47,8 @@ IndividualTraineeRouter.post("/reportProblem", verifyItraineeJWT, reportProblem)
 IndividualTraineeRouter.post("/createCredit",verifyItraineeJWT, createCredit);
 IndividualTraineeRouter.delete("/deleteCredit/:id",verifyItraineeJWT, deleteCredit);
 IndividualTraineeRouter.post("/pay",verifyItraineeJWT, payForCourse);
-IndividualTraineeRouter.post(
-  "/updateProgress",
-  verifyItraineeJWT,
-  updateProgress
-);
+IndividualTraineeRouter.post("/updateLinkProgress",verifyItraineeJWT,updateLinkProgress);
+IndividualTraineeRouter.post("/getAllItems",verifyItraineeJWT,getAllItemsCourse);
 
 
 

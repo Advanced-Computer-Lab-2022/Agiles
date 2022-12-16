@@ -39,10 +39,13 @@ const CoursePreview = () => {
   const fetchdata = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.post('individualtrainee/inprogressCourse',{id:id,courseId:course_id})
+      const res = await axios.post('individualtrainee/inprogressCourse',{id:id,courseId:course_id});
+      const items = await axios.post('individualtrainee/getAllItems',{courseId:course_id});
+      console.log(items.data);
       setData(res.data);
       setReviews(res.data.secondField);
-      setProgress(res.data.firstField.registered_courses[index].progress);
+      setProgress(Math.floor((res.data.firstField.registered_courses[index].progress / items.data.numberOfItems) * 100));
+      console.log(progress);
       setCourse(res.data.firstField.registered_courses[index].courseId);
       setInstId(res.data.firstField.registered_courses[index].courseId.instructor)
       if (res.data.firstField.registered_courses[index].instRating){

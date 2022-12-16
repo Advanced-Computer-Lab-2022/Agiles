@@ -40,12 +40,20 @@ const individualTraineeSchema = new Schema(
           ref: "Course",
           required: true,
         },
-        progress: {
+        courseProgress: {
           type: Number,
           min: 0,
           max: 100,
           default: 0,
         },
+        subtitles: [
+          {
+            subtitle: { type: String, default: "" },
+            time: { type: String, default: "h::mm:ss" },
+            link: [{ linkId:{type: mongoose.Schema.Types.ObjectId, ref: "Link"},
+            progress:{type:Number,min:0,max:1,default:0} }],
+          },
+        ],
         courseRating :{type:mongoose.Schema.Types.ObjectId,ref:"Rating"},
         instRating:{type:mongoose.Schema.Types.ObjectId,ref:"Rating"}
       },
