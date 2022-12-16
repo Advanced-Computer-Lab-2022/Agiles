@@ -149,7 +149,7 @@ const uploadSubLink = async (req, res) => {
     const data = await Link.create(newlink);
     const dataFinal = await Course.updateOne(
       { _id: courseId, "subtitles._id": subId },
-      { $push: { "subtitles.$.link": data._id } },
+      { $push: { "subtitles.$.link": data._id } , $inc: {numberOfItems: 1} },
       { new: true }
     );
     res.status(200).json(dataFinal);

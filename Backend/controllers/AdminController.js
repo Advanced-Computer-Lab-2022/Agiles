@@ -5,6 +5,7 @@ const Instructor = require("..//models/Instructor");
 const Course = require("../models/Course");
 const Report = require("../models/Report");
 const CourseRefundRequest = require("../models/CourseRefundRequest");
+const TraineeCourse = require("../models/TraineeCourse");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -249,7 +250,7 @@ const grantAccess = async (req, res) => {
     (parseInt(course.price) * parseInt(course.discount)) / 100;
   try {
     await IndividualTrainee.findByIdAndUpdate(traineeId, {
-      $push: { registered_courses: { courseId: courseId } },
+      $push: { registered_courses: { courseId: courseId, } },
     });
     await Instructor.updateOne(
       { _id: course.instructor },

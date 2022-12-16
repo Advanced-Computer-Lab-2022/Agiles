@@ -14,6 +14,7 @@ const courseSchema = new Schema(
         link: [{ type: mongoose.Schema.Types.ObjectId, ref: "Link" }],
       },
     ],
+    numberOfItems: { type: Number, default: 1 },
     subject: {
       type: String,
       required: false,

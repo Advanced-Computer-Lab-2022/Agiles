@@ -45,7 +45,7 @@ const CoursePreview = () => {
       setData(res.data);
       setReviews(res.data.secondField);
       setProgress(Math.floor((res.data.firstField.registered_courses[index].progress / items.data.numberOfItems) * 100));
-      console.log(progress);
+      
       setCourse(res.data.firstField.registered_courses[index].courseId);
       setInstId(res.data.firstField.registered_courses[index].courseId.instructor)
       if (res.data.firstField.registered_courses[index].instRating){
@@ -60,6 +60,7 @@ const CoursePreview = () => {
   };
   useEffect(() => {
     fetchdata();
+    console.log(progress);
   }, []);
   return (
     <>
