@@ -50,6 +50,22 @@ const Subtitle = () => {
   const [italic, setItalic] = React.useState(false);
   const [fontWeight, setFontWeight] = React.useState("normal");
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const downloadPDFFile = () => {
+    var doc = new jsPDF("landscape", "px", "a4", "false");
+    doc.text(20, 20, notes);
+    doc.save("myNotes.pdf");
+  };
+  const downloadTxtFile = () => {
+    const element = document.createElement("a");
+    const file = new Blob([notes], {
+      type: "application/pdf",
+    });
+    element.href = URL.createObjectURL(file);
+    element.download = "MyNotes.pdf";
+    document.body.appendChild(element);
+    element.click();
+  };
   
   const handleNotesChange = (event) => {
     // 👇️ access textarea value
@@ -62,7 +78,7 @@ const Subtitle = () => {
         {
           linkId: link._id,
           courseId: location.state.courseId,
-          completedItems: progresser
+          completedItems: 1
         });
     navigate(
       {
