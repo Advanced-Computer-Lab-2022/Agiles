@@ -64,15 +64,15 @@ const RegCourse = ({
             Course Content{" "}
           </li>
           <li
-            id="/reportproblemtrainee"
+            id="/reportproblem"
             className={
-              name == "reportproblemtrainee"
+              name == "supportCenter"
                 ? regStyles["leftsection-liclicked"]
                 : ""
             }
             onClick={name === "reportproblemtrainee" ? () => {} : handleClick}
           >
-            Report Problem
+            Support Center
           </li>
         </ul>
       </div>
