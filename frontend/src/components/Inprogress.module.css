@@ -1,15 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
 .Wrapper{
-    padding-top: 2rem;
-    margin-left: 10rem;
-    min-height: 60rem;
+    min-height: 50rem;
 }
-.Wrapper_h2{
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+.courses{
+    margin-left: 10rem;
+    margin-top: 3rem;
+}
+.main-section{
+    background-color: rgb(111, 111, 111);
+    width: 100%;
+    display: flex;
+    padding: 3rem;
+}
+.main-section h1{
+    font-family: 'Abril Fatface';
+    font-size: 2.5rem;
     color: white;
-    background-color: #1c1d1f;
-    overflow: hidden;
-    padding: 0.6rem;
-    text-align: center;
-    max-width: 180px;
+    margin-left: 10rem;
+
 }

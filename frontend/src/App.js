@@ -32,7 +32,6 @@ import ForgetPassword from "./pages/Trainee/ForgetPassword";
 import UpdateForgottenPassword from "./pages/Trainee/UpdateForgottenPassword";
 import Inprogress from "./components/Inprogress";
 import InstructorOwnCourses from "./pages/Instructor/InstructorOwnCourses";
-import Checkout from "./pages/Course/Checkout";
 import ReportProblem from "./pages/Course/ReportProblem";
 import PrevReports from "./pages/Course/PrevReports";
 import ReportProblemTrainee from "./pages/Course/ReportProblemTrainee";
@@ -43,6 +42,9 @@ import ViewReports from "./pages/Admin/adminComponents/ViewReports";
 import UserTerms from "./pages/Trainee/UserTerms";
 import Reviews from "./pages/Trainee/Reviews";
 import Wallet from "./pages/Trainee/Wallet";
+import PreviewProfile from "./pages/Instructor/PreviewProfile";
+import Sucess from "./components/Sucess";
+import Cancel from "./components/Cancel";
 function App() {
   const [showNav, setShowNav] = useState(true);
   return (
@@ -77,10 +79,8 @@ function App() {
               <Route path="RefundRequests" element={<RefundRequests />} />
               <Route path="ViewReports" element={<ViewReports />} />
             </Route>
-
             <Route path="/courses" element={<Courses />} />
             <Route path="/course" element={<Course />} />
-            <Route path="/checkout" element={<Checkout />} />
             <Route path="/preReg" element={<CoursePreview />} />
             <Route path="/conReg" element={<CourseContent />} />
             <Route path="/grades" element={<CourseContent />} />
@@ -93,6 +93,7 @@ function App() {
             <Route path="/paymentMethods" element={<PaymentMethods />} />
             <Route path="/reviews" element={<Reviews />} />
             <Route path="/wallet" element={<Wallet />} />
+            <Route path="/previewprofile" element={<PreviewProfile />} />
             <Route path="/search" element={<SearchResults />} />
             <Route path="/courses/filter" element={<FilterResults />} />
             <Route path="/instructor/terms" element={<InstructorTerms />} />
@@ -107,10 +108,11 @@ function App() {
               element={<ReportProblemTrainee />}
             />
             <Route path="/PrevReports" element={<PrevReports />} />
-            <Route
-              path="/PrevReportsTrainee"
-              element={<PrevReportsTrainee />}
+            <Route path="/PrevReportsTrainee" element={<PrevReportsTrainee />}
             />
+            <Route path="/success" element={<Sucess />} />
+            <Route path="/cancel" element={<Cancel />} />
+
           </Routes>
         </div>
       </BrowserRouter>

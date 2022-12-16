@@ -25,7 +25,7 @@ const {
   updateLinkProgress,
   createCredit,
   deleteCredit,
-  payForCourse,
+  CreateCheckout,
   getAllItemsCourse,
   requestRefund,
 } = require("../controllers/IndividualTraineeController");
@@ -96,7 +96,7 @@ IndividualTraineeRouter.delete(
   verifyItraineeJWT,
   deleteCredit
 );
-IndividualTraineeRouter.post("/pay", verifyItraineeJWT, payForCourse);
+IndividualTraineeRouter.post("/create-checkout-session", verifyItraineeJWT, CreateCheckout);
 IndividualTraineeRouter.get(
   "/viewReportedProblems",
   verifyItraineeJWT,

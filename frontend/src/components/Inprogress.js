@@ -40,12 +40,16 @@ const Inprogress = () => {
       ) : (
         <div>
         <section className={InprogressStyles["Wrapper"]}>
-         
+           <section className={InprogressStyles["main-section"]}>
+              <h1>My Learning</h1>          
+           </section>
+           <section className={InprogressStyles['courses']}>
           <div className={RegCourseCardStyles["cardgrid"]}>
             {courses.map((el, index) => {
               return <RegCourseCard  data={el.courseId} progress={el.progress} courseRating = {el.courseRating?el.courseRating.userRating:0}index={index} key={index} />;
             })}
           </div> 
+          </section>
         </section>
         </div>
       )}

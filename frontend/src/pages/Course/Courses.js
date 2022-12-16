@@ -1,6 +1,5 @@
 import { CourseCard } from "../../components/CourseCard";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import style from "./Courses.module.css";
 import Filter from "../../components/Filter";
 import LoadingScreen from "react-loading-screen";

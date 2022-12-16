@@ -10,7 +10,7 @@
   display: grid;
   grid-template-columns: 70% 35%;
   align-items: center;
-  background-color:#1c1d1f;
+  background-color: rgb(70, 70, 70);
   background-position:center ;
 }
 .mainSection-left{

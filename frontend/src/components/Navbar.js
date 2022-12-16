@@ -125,7 +125,7 @@ const Navbar = () => {
           Public profile
         </MenuItem>
         <MenuItem onClick = {navigateAccountSettings}>
-          Account settings
+          Account security
         </MenuItem>
        {isTrainee()&&<MenuItem onClick = {navigatePaymentMethods}>
           Payment methods
