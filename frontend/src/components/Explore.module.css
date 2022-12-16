@@ -1,10 +1,23 @@
-.main{
-    width: 85%;
-    margin-left: 7.5%;
+.course-list {
+  display: grid;
+  grid-template-columns: 250px 250px 250px 250px 250px ; 
+  grid-gap: 20px 20px;
+  margin-left: 20px;
+
 }
-.caption{
-    background-color: white;
-    color: black;
-    width: 50%;
-    margin-left: 10%;
+.Explore{
+  margin-left:2rem;
+  margin-top: 5rem;
+}
+.Explore h1 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-left:5rem;
+}
+.item{
+  justify-content: center;
+}
+.carousel{
+  width: 1380px;
+  margin-left: 5rem;
 }

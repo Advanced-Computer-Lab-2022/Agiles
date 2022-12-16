@@ -65,7 +65,7 @@ const filterCourses = async (req, res) => {
   }
 };
 const popularCourses = async (req, res) => {
-  const courses = await Course.find().sort({ studentCount: -1 }).limit(8);
+  const courses = await Course.find().sort({ studentCount: -1 }).limit(10);
   if (!courses) {
     res.status(400).json({ error: "Empty" });
   } else {
