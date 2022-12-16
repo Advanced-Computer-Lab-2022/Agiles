@@ -6,7 +6,6 @@ const FinalExamResult = require("../models/FinalExamResult");
 const FinalExam = require("../models/FinalExam");
 const Exam = require("../models/Exam");
 const OTP = require("../models/OTP.js");
-const Course = require("../models/Course");
 const CreditCard = require("../models/CreditCard");
 const CourseSubscriptionRequest = require("../models/CourseSubscriptionRequest");
 const Course = require("../models/Course");
