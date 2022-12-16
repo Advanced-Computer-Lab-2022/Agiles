@@ -6,12 +6,12 @@ const FinalExamResult = require("../models/FinalExamResult");
 const FinalExam = require("../models/FinalExam");
 const Exam = require("../models/Exam");
 const OTP = require("../models/OTP.js");
+const Course = require("../models/Course");
 const CreditCard = require("../models/CreditCard");
 const bcrypt = require("bcrypt");
 const resetPassword = require("./ResetPassword");
 require("dotenv").config();
 var nodemailer = require("nodemailer");
-
 
 const getTraineebyID = async (req, res) => {
   const id = req.query.id;
@@ -19,26 +19,70 @@ const getTraineebyID = async (req, res) => {
   return res.status(200).json(Itrainee);
 };
 const InprogressCourses = async (req, res) => {
-    const id = req.params["id"];
-    if (!id) return res.status(400).json({ msg: "bad request" });
-    const courses = await IndividualTrainee.findById(id, {
-      registered_courses: 1,
-    }).populate("registered_courses.courseId").populate("registered_courses.courseRating");
-    return res.status(200).json(courses);
+  const id = req.params["id"];
+  if (!id) return res.status(400).json({ msg: "bad request" });
+  const courses = await IndividualTrainee.findById(id, {
+    registered_courses: 1,
+  })
+    .populate("registered_courses.courseId")
+    .populate("registered_courses.courseRating");
+  return res.status(200).json(courses);
 };
 const InprogressCoursebyId = async (req, res) => {
-    const id = req.body.id;
-    const courseId = req.body.courseId;
-    if (!id) return res.status(400).json({ msg: "bad request" });
-    const courses = await IndividualTrainee.findOne({_id :id , "registered_courses.courseId":courseId}, {
+  const id = req.body.id;
+  const courseId = req.body.courseId;
+  if (!id) return res.status(400).json({ msg: "bad request" });
+  const courses = await IndividualTrainee.findOne(
+    { _id: id, "registered_courses.courseId": courseId },
+    {
       registered_courses: 1,
-    }).populate("registered_courses.courseId").populate("registered_courses.instRating");
-    const reviews = await Rating.find({state : true,courseId:courseId}).populate('userId');
-    const result = {
-      firstField : courses,
-      secondField  :reviews
     }
-    return res.status(200).json(result);
+  )
+    .populate("registered_courses.courseId")
+    .populate("registered_courses.instRating");
+  const reviews = await Rating.find({
+    state: true,
+    courseId: courseId,
+  }).populate("userId");
+  const result = {
+    firstField: courses,
+    secondField: reviews,
+  };
+  return res.status(200).json(result);
+};
+
+const updateProgress = async (req, res) => {
+  const id = req.body.id;
+  const courseId = req.body.courseId;
+  const progress = req.body.progress;
+  const completedItems = req.body.completedItems;
+  let numberOfItems = 0;
+  try {
+
+    const course = await Course.findOne({ _id: courseId },{subtitles:1});
+    if(course){
+      course.subtitles.forEach(subtitle => {
+        numberOfItems += subtitle.link.length});
+      numberOfItems += course.subtitles.length + 1;
+    }
+    else{
+      return res.status(400).json({ msg: "bad request" });
+    }
+
+    const regcourse = await IndividualTrainee.findOneAndUpdate(
+      { _id: id, "registered_courses.courseId": courseId },
+      { $set: { "registered_courses.$.progress": progress + completedItems } },
+      { new: true, upsert: true }
+    );
+
+    if (regcourse) {
+      return res.status(200).json({ progress: Math.floor(((progress+completedItems) / numberOfItems) * 100)});
+    } else {
+      return res.status(400).json({ msg: "bad request" });
+    }
+  } catch (err) {
+    res.return(403).json({ msg: "error" });
+  }
 };
 
 const submitExam = async (req, res) => {
@@ -213,15 +257,15 @@ const forgetPassword = async (req, res) => {
   if (!oldUser && !oldInstructor) {
     return res.status(406).json("user not exists!!");
   }
-  const randomCode = Math.floor(Math.random() * 899999 + 100000)+"";
+  const randomCode = Math.floor(Math.random() * 899999 + 100000) + "";
   const salt = await bcrypt.genSalt(10);
-  const hashedCode =  await bcrypt.hash(randomCode,salt);
-  await OTP.deleteMany({email:email});
+  const hashedCode = await bcrypt.hash(randomCode, salt);
+  await OTP.deleteMany({ email: email });
   const otp = new OTP({
-    email : email,
-    otp : hashedCode,
-    createdAt : Date.now(),
-    expiresAt : Date.now()+ 60000
+    email: email,
+    otp: hashedCode,
+    createdAt: Date.now(),
+    expiresAt: Date.now() + 60000,
   });
   const data = await OTP.create(otp);
   const transporter = nodemailer.createTransport({
@@ -244,34 +288,37 @@ const forgetPassword = async (req, res) => {
 };
 const verifyCode = async (req, res) => {
   const { email, code } = req.body;
-  const data = await OTP.findOne({email : email});
+  const data = await OTP.findOne({ email: email });
   if (!data) return res.status(498).json("expired");
   const expiresAt = data.expiresAt;
-  if (expiresAt < Date.now()){
-    await OTP.deleteMany({email:email});
+  if (expiresAt < Date.now()) {
+    await OTP.deleteMany({ email: email });
     return res.status(498).json("expired");
   }
-  const isValid = await bcrypt.compare(code,data.otp)
-   if (!isValid) return res.status(406).json("inCorrect code");
-    else{
-      await OTP.deleteMany({email:email});
-      return res.status(200).json("sucess");
-    }
+  const isValid = await bcrypt.compare(code, data.otp);
+  if (!isValid) return res.status(406).json("inCorrect code");
+  else {
+    await OTP.deleteMany({ email: email });
+    return res.status(200).json("sucess");
+  }
 };
-const changePassword = async(req,res)=>{
-  const {password,email} = req.body;
+const changePassword = async (req, res) => {
+  const { password, email } = req.body;
   if (!email || !password) {
     return res.status(500).json("bad request");
   }
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
-  try{
-  const data = await IndividualTrainee.findOneAndUpdate({email:email},{password:hashedPassword});
-   return res.status(200).json("success");
-  }catch(err){
+  try {
+    const data = await IndividualTrainee.findOneAndUpdate(
+      { email: email },
+      { password: hashedPassword }
+    );
+    return res.status(200).json("success");
+  } catch (err) {
     return res.status(406).json(err);
   }
-}
+};
 
 const rateInstructor = async (req, res) => {
   const { instId, userId, courseId, userRating, userReview } = req.body;
@@ -448,6 +495,7 @@ module.exports = {
   verifyCode,
   getFinalExamGrade,
   rateInstructor,
+  updateProgress,,
   createCredit,
   deleteCredit,
   payForCourse

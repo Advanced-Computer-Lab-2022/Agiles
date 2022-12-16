@@ -20,6 +20,7 @@ const {
   InprogressCoursebyId,
   changePassword,
   rateInstructor,
+  updateProgress,
   createCredit,
   deleteCredit,
   payForCourse,
@@ -45,6 +46,11 @@ IndividualTraineeRouter.post("/reportProblem", verifyItraineeJWT, reportProblem)
 IndividualTraineeRouter.post("/createCredit",verifyItraineeJWT, createCredit);
 IndividualTraineeRouter.delete("/deleteCredit/:id",verifyItraineeJWT, deleteCredit);
 IndividualTraineeRouter.post("/pay",verifyItraineeJWT, payForCourse);
+IndividualTraineeRouter.post(
+  "/updateProgress",
+  verifyItraineeJWT,
+  updateProgress
+);
 
 
 
