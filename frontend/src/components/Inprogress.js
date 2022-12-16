@@ -2,15 +2,12 @@ import Cookies from "universal-cookie";
 import axios from "axios";
 import unAuth from "../clearAuth";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import NavbarStyles from "../components/Navbar.module.css";
 import RegCourseCardStyles from "./RegCourseCard.module.css";
 import CourseStyles from "../pages/Course/Courses.module.css";
 import LoadingScreen from "react-loading-screen";
 import InprogressStyles from "./Inprogress.module.css"
 import spinner from "../static/download.gif";
 import RegCourseCard from "./RegCourseCard";
-import a from "../static/logo.png";
 
 const cookies = new Cookies();
 const INPROGRESS_URL = "/individualtrainee/inprogress";
@@ -42,21 +39,8 @@ const Inprogress = () => {
         <LoadingScreen loading={true} logoSrc={spinner} />
       ) : (
         <div>
-        <section className="mainSection">
-            <h2>Welcome Back !</h2>
-
-            <img src={a} alt="canidan chamber of commerce" className="mainImage"></img>
-          </section>
-
-      <nav className={NavbarStyles["navbar"]}>
-            <div>
-              <Link to ="/"><button  className={"notPressed" }>Explore</button></Link>
-              <Link to ="/mylearning"><button className={"Inprogress"}> My Learning</button></Link>
-            </div>
-          </nav>
-
         <section className={InprogressStyles["Wrapper"]}>
-          <h2 className={InprogressStyles["Wrapper_h2"]}>My Learning</h2>
+         
           <div className={RegCourseCardStyles["cardgrid"]}>
             {courses.map((el, index) => {
               return <RegCourseCard  data={el.courseId} progress={el.progress} courseRating = {el.courseRating?el.courseRating.userRating:0}index={index} key={index} />;

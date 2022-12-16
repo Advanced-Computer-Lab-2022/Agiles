@@ -8,7 +8,11 @@ import axios from "axios";
 import { useState,useEffect } from "react";
 import Swal from "sweetalert2";
 const fetchUrl = "/individualtrainee/getIndividualTraineebyId";
+const fetchInstUrl = "/instructor/instructorbyid"
 const updateEmailUrl = "/individualtrainee/updateEmail"
+const updateEmailinstUrl = "/instructor/updateEmail"
+const updatePassword = '/individualtrainee/updatePassword'
+const updateInstructorPassword = '/instructor/updatePassword'
 const cookie = new Cookie();
 const AccountSecurity = () => {
   const [isloading, setIsLoading] = useState(false);
@@ -22,11 +26,20 @@ const AccountSecurity = () => {
   const [newPassConfirm,setNewPassConfirm] = useState("");
   const fetchData = async () => {
     setIsLoading(true);
+    const fetch = cookie.get("status")==1?fetchInstUrl:fetchUrl;
     try {
-      const res = await axios.get(fetchUrl, { params: { id: id } });
+      const res = await axios.get(fetch, { params: { id: id } });
+      if (cookie.get("status")==1){
+        setData(res.data.firstField);
+        setCurrentEmail(res.data.firstField.email)
+         setFullname(res.data.firstField.firstname + " "+res.data.firstField.lastname)
+      }
+      else{
       setData(res.data);
       setCurrentEmail(res.data.email)
       setFullname(res.data.firstname + " "+res.data.lastname)
+      }
+     
     } catch (err) {
       console.log(err);
     }
@@ -50,8 +63,9 @@ const passwordUpdate = async (event) => {
       });
     }
     else{
+      const update = cookie.get("status")==1?updateInstructorPassword:updatePassword;
     try {
-      const res = await axios.patch(`/individualtrainee/updatePassword?id=${id}`,pass);
+      const res = await axios.patch(update,pass);
       const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -104,11 +118,11 @@ const passwordUpdate = async (event) => {
   const emailUpdate = async (event) => {
     event.preventDefault();
     const body = {
-      userId : id ,
       email :email
     }
+    const update = cookie.get("status")==1?updateEmailinstUrl:updateEmailUrl;
     try {
-      const res = await axios.patch(updateEmailUrl,body);
+      const res = await axios.patch(update,body);
       const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',

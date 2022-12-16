@@ -1,0 +1,58 @@
+.main{
+    display: inline-block;
+    margin-left: 10%;
+    margin-top: 3%;
+    width: 80%;
+    min-height: 90vh;
+}
+.main h1{
+  font-size: 2rem;
+  font-weight: bold;
+  margin-left: 0.5rem;
+  margin-bottom: 2rem;
+}
+.main form{
+  display: grid;
+  grid-template-columns: 15% 50%;
+  gap : 0.5rem
+}
+
+.subtitle{
+    display: grid;
+    gap: 0.2rem;
+}
+.main form label{
+    margin-bottom: 0.1rem;
+    font-size: 1rem;
+    font-weight: bold;
+}
+.end{
+    font-size: 0.7rem;
+    margin-bottom: 0.1rem;
+}
+.main form textarea{
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+    align-items: center;
+    border: 1px solid black;
+}
+.main form select{
+    height: 2.5rem;
+    padding-left: 1rem;
+    align-items: center;
+    border: 1px solid black;
+}
+.main form input{
+    height: 2.5rem;
+    padding: 1.5rem;
+    align-items: center;
+    border: 1px solid black;
+}
+.subtitles{
+    display: grid;
+    grid-template-columns: 100%;
+    gap:0.5rem;
+}
+.price{
+    display: flex;
+}

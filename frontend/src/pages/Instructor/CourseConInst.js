@@ -144,7 +144,7 @@ const CourseConInst = () => {
                 </Button>
               </Modal.Footer>
             </Modal>
-            <Accordion defaultActiveKey="0" className={style["subtitles"]}>
+            <Accordion defaultActiveKey="0" className={style["subtitles"]} flush>
               {subtitles.length > 0 &&
                 subtitles.map((subtitle, index0) => (
                   <Accordion.Item eventKey={index0} key={index0}>
@@ -156,10 +156,9 @@ const CourseConInst = () => {
                     <Accordion.Body>
                       <div className={style["accordation-body"]}>
                         <Button
-                          variant="dark"
                           id={subtitle._id}
                           size="sm"
-                          style={{ width: "20%" }}
+                          style={{backgroundColor:'#a00407',borderRadius: 0, width: '10rem' ,border: 'none' }}
                           onClick={handleUpload}
                         >
                           <UploadIcon /> Upload Video
@@ -188,7 +187,7 @@ const CourseConInst = () => {
                             }}
                             className={style["subtitleView"]}
                           >
-                            Set Subtitle Exam
+                            Set Quiz
                           </button>
                         </ListGroup.Item>
                       </ListGroup>

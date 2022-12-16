@@ -9,46 +9,51 @@ import axios from "axios";
 import { useEffect } from "react";
 const cookie = new Cookie();
 const fetchUrl = "/individualtrainee/getIndividualTraineebyId";
+const fetchInstUrl = "/instructor/instructorbyid"
 const updateUrl = "/individualtrainee/updateBasics";
+const updateInstUrl = "/instructor/updateBasics";
 const Profile = () => {
-  const [isloading, setIsLoading] = useState(false);
   const id = cookie.get("currentUser");
+  const [isloading, setIsLoading] = useState(false);
   const [data, setData] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [minibio, setMiniBio] = useState("");
-  const [wallet, setWallet] = useState(<div></div>);
-
   const fetchData = async () => {
     setIsLoading(true);
+    const fetch = cookie.get("status")==1?fetchInstUrl:fetchUrl;
     try {
-      const res = await axios.get(fetchUrl, { params: { id: id } });
-      setData(res.data);
-      setFirstname(res.data.firstname);
-      setLastname(res.data.lastname);
-      setMiniBio(res.data.mini_bio);
-      if (!data.state) {
-        setWallet(<div>Wallet : {data.wallet == null ? "" : data.wallet}</div>);
+      const res = await axios.get(fetch, { params: { id: id } });
+      if (cookie.get("status")==1){
+        setData(res.data.firstField);
+        setFirstname(res.data.firstField.firstname);
+        setLastname(res.data.firstField.lastname);
+        setMiniBio(res.data.firstField.mini_bio);
+      }
+      else{
+        setData(res.data);
+        setFirstname(res.data.firstname);
+        setLastname(res.data.lastname);
+        setMiniBio(res.data.mini_bio);
       }
     } catch (err) {
       console.log(err);
     }
     setIsLoading(false);
   };
-
   useEffect(() => {
     fetchData();
   }, []);
   const handleSumbit = (event) => {
     event.preventDefault();
     const body = {
-      userId: id,
       firstname: firstname,
       lastname: lastname,
       minibio: minibio,
     };
+    const update = cookie.get("status")==1?updateInstUrl:updateUrl;
     try {
-      const res = axios.patch(updateUrl, body);
+      const res = axios.patch(update, body);
       window.location.reload();
     } catch (err) {
       console.log(err);
@@ -92,7 +97,6 @@ const Profile = () => {
                 </Button>
               </form>
             </section>
-            {wallet}
           </section>
         </section>
       )}

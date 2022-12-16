@@ -12,6 +12,7 @@ import Youtube from 'react-youtube';
 import Cookies from "universal-cookie";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import jsPDF from "jspdf";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import { Content, ContextualHelp, Heading } from "@adobe/react-spectrum";
@@ -55,7 +56,14 @@ const Subtitle = () => {
     setNotes(event.target.value);
     console.log(event.target.value);
   };
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
+
+    let res = await axios.post("/individualtrainee/updateLinkProgress", 
+        {
+          linkId: link._id,
+          courseId: location.state.courseId,
+          completedItems: progresser
+        });
     navigate(
       {
         pathname: "/subtitleView",
@@ -253,6 +261,9 @@ const Subtitle = () => {
                   value={notes}
                   onChange={handleNotesChange}
                 ></textarea>
+                <div>
+                  <button onClick={downloadPDFFile}>Download Notes</button>
+                </div>
               </div>
             </section>
           </section>

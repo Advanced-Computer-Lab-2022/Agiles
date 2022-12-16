@@ -1,58 +1,72 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate ,Link} from "react-router-dom";
+import Button from "react-bootstrap/Button";
 import axios from "axios";
-import InprogressStyles from "../../components/Inprogress.module.css";
-import { Link } from "react-router-dom";
-import Cookies from "universal-cookie";
-import a from "../../static/logo.png";
-import NavbarStyles from "../../components/Navbar.module.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-const cookies = new Cookies();
+import style from "./CreateCourse.module.css";
+import Swal from "sweetalert2";
+const CREATEURL = '/instructor/addCourse';
 const CreateCourse = () => {
-  const instructorname = cookies.get('username');
-  const instructorId = cookies.get('currentUser');
   const [title, setTitle] = useState("");
   const [preview, setPreview] = useState("");
   const [imgUrl, setImgUrl] = useState("");
   const [subject, setSubject] = useState("");
   const [price, setPrice] = useState("");
-  const [shortSummary, setShortSummary] = useState("");
+  const [description, setDescription] = useState("");
+  const [subtitles,setSubtitles]= useState([{ subtitle: "", time: 0 }]);
   const [free, setFree] = useState(false);
-  const [subtitles, setSubtitles] = useState([{ subtitle: "", time: ""}]);
   const [language, setLanguage] = useState("");
-  const handleSubmit = async (event) => {
-    let sumOfHours = 0;
-    for (let sub of subtitles) {
-      sumOfHours += Number(sub["time"]);
+  const [disabled, setDisabled] = useState(false);
+  const navigate = useNavigate();
+  const handleFree = (event) => {
+    if (event.target.checked) { 
+      setFree(true);
+      setDisabled(true);
+    } else {
+      setFree(false);
+      setDisabled(false);
     }
+  };
+  const handleSubmit = async (event) => { 
     const course = {
-      instructor : instructorId,
       title: title,
       imgUrl : imgUrl,
       coursePreviewUrl : preview,
       subtitles: subtitles,
       price: price,
       free: free,
-      description: shortSummary,
+      description: description,
       subject: subject,
-      totalHoursOfCourse: sumOfHours,
       language: language
     };
     event.preventDefault();
-    event.target.reset();
-    let config = {
-      headers: {
-        header1: "Access-Control-Allow-Origin",
-      },
-    };
-  
     try {
-      const res = await axios.post("/instructor/addCourse", course, config);
+      const res = await axios.post(CREATEURL, course);
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      
+      Toast.fire({
+        icon: 'success',
+        title: 'congratulations course created '
+      })
+      navigate("/mycourses");
     } catch (e) {
-      console.log(e);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Server error!",
+      });
     }
   };
-
   let handleChange = (i, e) => {
     let newFormValues = [...subtitles];
     newFormValues[i][e.target.name] = e.target.value;
@@ -60,7 +74,7 @@ const CreateCourse = () => {
   };
 
   let addFormFields = () => {
-    setSubtitles([...subtitles, { subtitle: "", time: ""}]);
+    setSubtitles([...subtitles, { subtitle: "", time: 0}]);
   };
 
   let removeFormFields = (i) => {
@@ -69,156 +83,56 @@ const CreateCourse = () => {
     setSubtitles(newFormValues);
   };
   return (
-    <div>
-    <section className="mainSection">
-    <div>
-      <h2>Welcome Back !</h2>
-    </div>
-    <img src={a} alt="canidan chamber of commerce" className="mainImage"></img>
-  </section>
-  <nav className={NavbarStyles["navbar"]}>
-    <div>
-      <Link to ="/"><button className={"notPressed" } >Explore </button></Link>
-      <Link to = "/mycourses"><button className={"notPressed"} >My Courses </button></Link>
-      <Link to = "/createcourse"><button className={"Inprogress"}>CreateCourse </button></Link>
-    </div>
-  </nav>
-    <section className={InprogressStyles["Wrapper"]}>
-    <h2 className={InprogressStyles["Wrapper_h2"]}>Create Course</h2>
-      <form onSubmit={handleSubmit}style = {{width :'30%'}}>
-        <div className="form-group mt-3">
-          <label className="Auth-label">
-            Title <span className="required">*</span>
-          </label>
-          <input
-            required
-            type="text"
-            name="title"
-            placeholder="title.."
-            className="form-control mt-1"
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
-        <div >
-          <label className="Auth-label">Course Image</label>
-          <input
-            type="text"
-            name="subject"
-            className="form-control mt-1"
-            placeholder="img url.."
-            onChange={(e) => setImgUrl(e.target.value)}
-          />
-        </div>
-        <div className="form-group mt-3">
-          <label className="Auth-label" >
-            Course preview Link 
-          </label>
-          <input
-            required
-            type="text"
-            name="preview"
-            className="form-control mt-1"
-            placeholder="course preview link.."
-            onChange={(e) => setPreview(e.target.value)}
-          />
-        </div>
-        <div >
-          <label className="Auth-label">
-            price in $ <span className="required">*</span>
-          </label>
-          <input
-            required
-            readOnly={free}
-            className="form-control mt-1"
-            type="number"
-            name="price"
-            placeholder="price.."
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-          />
-          <input
-            type="checkbox"
-            id="freeCheck"
-            onClick={(e) => {
-              setFree(e.target.checked);
-              setPrice("0");
-            }}
-          />
-          free
-        </div>
+    <div className={style['main']}>
+        <h1>Create Course</h1>
+      <form onSubmit={handleSubmit}>
+        <label>Title</label>
+        <input type='text' required placeholder="Web development.." onChange={(e)=>setTitle(e.target.value)}></input>
+        <label>Description</label>
+        <textarea type='text' required onChange={(e)=>setDescription(e.target.value)} ></textarea>
+        <label>Thumbnail</label>
+        <input type='text' required placeholder="image Url.." onChange={(e)=>setImgUrl(e.target.value)}></input>
+        <label>Subject</label>
+        <input type='text' required placeholder="programming.." onChange={(e)=>setSubject(e.target.value)}></input>
+        <label>Preview Video</label>
+        <input type='text' required placeholder="video Url.." onChange={(e)=>setPreview(e.target.value)}></input>
+        <label>Price</label>
         <div>
+        <input type='number' disabled={disabled} required onChange={(e)=>setPrice(e.target.value)} placeholder="Price.." min='0' max="9999" style={{width:'30%',height:'2rem'}}></input>
+        <input type='checkbox' onChange={handleFree} style={{marginLeft :'1rem',height:'1rem'}} className={style['check']}></input>
+        <span style={{marginLeft:'0.5rem',fontSize: '1rem',fontWeight: 'bold'}}>Free</span>
+        </div> 
+        <label >Subtitles</label>
+          <div className={style['subtitles']}>
           {subtitles.map((element, index) => (
-            <div  key={index}>
-              <label className="Auth-label">Subtitle</label>
-              <input
-                required
-                type="text"
-                placeholder="Subtitle name .."
-                name="subtitle"
-                className="form-control mt-1"
-                value={element.subtitle || ""}
-                onChange={(e) => handleChange(index, e)}
-              />
-              <label> time in hrs</label>
-              <input
-                required
-                type="number"
-                name="time"
-                placeholder="Subtitle duration .."
-                className="form-control mt-1"
-                value={element.time || ""}
-                onChange={(e) => handleChange(index, e)}
-              />
-              {index ? (
+            <>
+              <input required type="text"  placeholder="Subtitle name .."  name="subtitle"  value={element.subtitle || ""}  onChange={(e) => handleChange(index, e)}/>
+              {index>0?  (
                 <button
                   type="button"
                   className="button remove"
+                  style={{width:'5rem',height:'2rem',backgroundColor:'red',color:'white',border:'none'}}
                   onClick={() => removeFormFields(index)}
                 >
                   Remove
                 </button>
               ) : null}
-            </div>
+            </>
           ))}
           <span className="button-section">
             <button
               className="button add"
               type="button"
+              style={{width:'5rem',height:'2rem',backgroundColor:'green',color:'white',border:'none'}}
+
               onClick={() => addFormFields()}
             >
               Add
             </button>
           </span>
         </div>
-        
-
-        <div >
-          <label className="Auth-label">
-            ShortSummary <span className="required">*</span>
-          </label>
-          <input
-            required
-            type="text"
-            className="form-control mt-1"
-            name="shortSummary"
-            placeholder="shortSummary.."
-            onChange={(e) => setShortSummary(e.target.value)}
-          />
-        </div>
-        <div >
-          <label className="Auth-label">Subject</label>
-          <input
-            type="text"
-            name="subject"
-            className="form-control mt-1"
-            placeholder="subject.."
-            onChange={(e) => setSubject(e.target.value)}
-          />
-        </div>
-        <div >
-          <label className="Auth-label">language</label>
-
-          <select
+        <label className="Auth-label">language</label>
+        <select
             data-placeholder="Choose a Language..."
             onChange={(e) => {
               setLanguage(e.target.value);
@@ -297,19 +211,9 @@ const CreateCourse = () => {
             <option value="Welsh">Welsh</option>
             <option value="Xhosa">Xhosa</option>
           </select>
-        </div>
-        <div>
-          <input required type="checkbox" on></input> I agree to the Contract
-          license and{" "}
-          <Link target="_blank" to="/instructor/contract/">
-            Instructor terms
-          </Link>
-          used by the organization
-        </div>
-
-        <input type="submit" className="btn btn-primary" value="create Course" />
+         <p className={style['end']} >By completing your creation you agree to these <Link to='/instructor/terms' style={{color:'#a00407'}}>Terms of Service</Link></p>
+        <Button variant="dark" type="submit" style={{borderRadius:'0'}}>Finish </Button>
       </form>
-    </section>
     </div>
   );
 };

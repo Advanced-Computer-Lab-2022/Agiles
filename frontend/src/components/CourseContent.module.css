@@ -13,14 +13,9 @@
 .icon{
     font-size: small;
 }
-.accordation-body{
-    display: grid;
-    gap: 0.5rem;
-    align-items: center;
-}
 .subtitleView{
     background-color: white;
-    color: blue;
+    color: #a00407    ;
     border: none;
 }
 .videoDesc{

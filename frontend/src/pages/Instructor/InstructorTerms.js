@@ -5,18 +5,18 @@ function InstructorTerms() {
     <div className={InstructorTermsStyles["contract"]}>
       <h1>Instructor Terms:</h1>
       <p>
-        When you sign up to become an instructor on the Udemy platform, you
+        When you sign up to become an instructor on the canadian chamber of commerce platform, you
         agree to abide by these Instructor Terms ("Terms"). These Terms cover
-        details about the aspects of the Udemy platform relevant to instructors
+        details about the aspects of the canadian chamber of commerce platform relevant to instructors
         and are incorporated by reference into our Terms of Use, the general
         terms that govern your use of our Services. Any capitalized terms that
         aren't defined in these Terms are defined as specified in the Terms of
         Use.
       </p>
       <p>
-        As an instructor, you are contracting directly with Udemy, Inc. (a
+        As an instructor, you are contracting directly with canadian chamber of commerce, Inc. (a
         Delaware corporation in the United States), regardless of whether
-        another Udemy subsidiary facilitates payments to you.
+        another canadian chamber of commerce subsidiary facilitates payments to you.
       </p>
       <h2>1. Instructor Obligations</h2>
       <p>
@@ -27,10 +27,10 @@ function InstructorTerms() {
       </p>
       <p>You represent and warrant that:</p>
       <ul>
-        <li>you will provide and maintain accurate account information;</li>
+        <li>you will provide and maintain accurate account information</li>
         <li>
           you own or have the necessary licenses, rights, consents, permissions,
-          and authority to authorize Udemy to use your Submitted Content as
+          and authority to authorize canadian chamber of commerce to use your Submitted Content as
           specified in these Terms and the Terms of Use;
         </li>
         <li>
@@ -83,14 +83,14 @@ function InstructorTerms() {
           interfere with or otherwise prevent other instructors from providing
           their services or content; or
         </li>
-        <li>abuse Udemy resources, including support services.</li>
+        <li>abuse canadian chamber of commerce resources, including support services.</li>
       </ul>
-      <h2>2. License to Udemy</h2>
+      <h2>2. License to canadian chamber of commerce</h2>
       <p>
-        You grant Udemy the rights detailed in the Terms of Use to offer,
+        You grant canadian chamber of commerce the rights detailed in the Terms of Use to offer,
         market, and otherwise exploit your Submitted Content. This includes the
         right to add captions or otherwise modify Submitted Content to ensure
-        accessibility. You also authorize Udemy to sublicense these rights to
+        accessibility. You also authorize canadian chamber of commerce to sublicense these rights to
         your Submitted Content to third parties, including to students directly
         and through third parties such as resellers, distributors, affiliate
         sites, deal sites, and paid advertising on third-party platforms.
@@ -98,32 +98,32 @@ function InstructorTerms() {
       <p>
         Unless otherwise agreed (including within our Promotions Policy), you
         have the right to remove all or any portion of your Submitted Content
-        from the Services at any time. Except as otherwise agreed, Udemy's right
+        from the Services at any time. Except as otherwise agreed, canadian chamber of commerce's right
         to sublicense the rights in this section will terminate with respect to
         new users 60 days after the Submitted Content's removal. However, (1)
         rights given to students before the Submitted Content's removal will
         continue in accordance with the terms of those licenses (including any
-        grants of lifetime access) and (2) Udemy's right to use such Submitted
+        grants of lifetime access) and (2) canadian chamber of commerce's right to use such Submitted
         Content for marketing purposes shall survive termination.
       </p>
       <p>
         We may record and use all or any part of your Submitted Content for
         quality control and for delivering, marketing, promoting, demonstrating,
-        or operating the Services. You grant Udemy permission to use your name,
+        or operating the Services. You grant canadian chamber of commerce permission to use your name,
         likeness, voice, and image in connection with offering, delivering,
         marketing, promoting, demonstrating, and selling the Services, your
-        Submitted Content, or Udemy's content, and you waive any rights of
+        Submitted Content, or canadian chamber of commerce's content, and you waive any rights of
         privacy, publicity, or other rights of a similar nature, to the extent
         permissible under applicable law.
       </p>
       <h2>3. Trust & Safety</h2>
       <h3>3.1 Trust & Safety Policies</h3>
       <p>
-        You agree to abide by Udemy's Trust & Safety policies, Restricted Topics
+        You agree to abide by canadian chamber of commerce's Trust & Safety policies, Restricted Topics
         policy, and other content quality standards or policies prescribed by
-        Udemy from time to time. You should check these policies periodically to
+        canadian chamber of commerce from time to time. You should check these policies periodically to
         ensure that you comply with any updates to them. You understand that
-        your use of the Services is subject to Udemy's approval, which we may
+        your use of the Services is subject to canadian chamber of commerce's approval, which we may
         grant or deny at our sole discretion.
       </p>
       <p>
@@ -142,31 +142,31 @@ function InstructorTerms() {
         </li>
         <li>
           an instructor engages in behavior that might reflect unfavorably on
-          Udemy or bring Udemy into public disrepute, contempt, scandal, or
+          canadian chamber of commerce or bring canadian chamber of commerce into public disrepute, contempt, scandal, or
           ridicule;
         </li>
         <li>
           an instructor engages the services of a marketer or other business
-          partner who violates Udemy's policies;
+          partner who violates canadian chamber of commerce's policies;
         </li>
         <li>
           an instructor uses the Services in a way that constitutes unfair
           competition, such as promotion of their off-site business in a way
-          that violates Udemy's policies; or
+          that violates canadian chamber of commerce's policies; or
         </li>
-        <li>as determined by Udemy in its sole discretion.</li>
+        <li>as determined by canadian chamber of commerce in its sole discretion.</li>
       </ul>
       <h3>3.2 Co-Instructors and Teaching Assistants</h3>
       <p>
-        The Udemy platform allows you to add other users as co-instructors or
+        The canadian chamber of commerce platform allows you to add other users as co-instructors or
         teaching assistants for Submitted Content that you manage, and you are
         required to comply with our Co-Instructor Relationship Rules and
         Guidelines when taking such actions. By adding a co-instructor or
         teaching assistant, you understand that you are authorizing them to take
-        certain actions that affect your Udemy account and Submitted Content.
-        Violations of Udemy's terms and policies by your co-instructor or
-        teaching assistant may also impact your Udemy account and Submitted
-        Content. Udemy is not able to advise on any questions or mediate any
+        certain actions that affect your canadian chamber of commerce account and Submitted Content.
+        Violations of canadian chamber of commerce's terms and policies by your co-instructor or
+        teaching assistant may also impact your canadian chamber of commerce account and Submitted
+        Content. canadian chamber of commerce is not able to advise on any questions or mediate any
         disputes between you and such users. If your co-instructors have an
         assigned revenue share, their share will be paid out of your earned
         revenue share based on the ratios you have specified in your Course
@@ -178,25 +178,25 @@ function InstructorTerms() {
         so the only information you'll receive about students is what is
         provided to you through the Services. You agree that you will not use
         the data you receive for any purpose other than providing your services
-        to those students on the Udemy platform, and that you won't solicit
+        to those students on the canadian chamber of commerce platform, and that you won't solicit
         additional personal data or store students' personal data outside the
-        Udemy platform. You agree to indemnify Udemy against any claims arising
+        canadian chamber of commerce platform. You agree to indemnify canadian chamber of commerce against any claims arising
         from your use of students' personal data.
       </p>
       <h3>3.4 Anti-Piracy Efforts</h3>
       <p>
         We partner with anti-piracy vendors to help protect your content from
-        unauthorized use. To enable this protection, you hereby appoint Udemy
+        unauthorized use. To enable this protection, you hereby appoint canadian chamber of commerce
         and our anti-piracy vendors as your agents for the purpose of enforcing
         copyrights for each of your content, through notice and takedown
         processes (under applicable copyright laws like the Digital Millennium
         Copyright Act) and for other efforts to enforce those rights. You grant
-        Udemy and our anti-piracy vendors primary authority to file notices on
+        canadian chamber of commerce and our anti-piracy vendors primary authority to file notices on
         your behalf to enforce your copyright interests.
       </p>
       <p>
-        You agree that Udemy and our anti-piracy vendors will retain the above
-        rights unless you revoke them by sending an email to piracy@udemy.com
+        You agree that canadian chamber of commerce and our anti-piracy vendors will retain the above
+        rights unless you revoke them by sending an email to piracy@canadian chamber of commerce.com
         with the subject line: "Revoke Anti-Piracy Protection Rights" from the
         email address associated with your account. Any revocation of rights
         will be effective 48 hours after we receive it.
@@ -204,7 +204,7 @@ function InstructorTerms() {
       <h2>4. Pricing</h2>
       <h3>4.1 Price Setting</h3>
       <p>
-        When creating Submitted Content available for purchase on Udemy, you
+        When creating Submitted Content available for purchase on canadian chamber of commerce, you
         will be prompted to select a base price ("Base Price") for your
         Submitted Content from a list of available price tiers. Alternatively,
         you may choose to offer your Submitted Content for free. As a premium
@@ -223,12 +223,12 @@ function InstructorTerms() {
         When a student purchases using a foreign currency, we will convert the
         relevant Base Price or Promotional Program price into the student's
         applicable currency using a system-wide foreign currency conversion rate
-        set by Udemy and fixed periodically into a table of corresponding price
+        set by canadian chamber of commerce and fixed periodically into a table of corresponding price
         tiers by currency ("Price Tier Matrix"). Since the Price Tier Matrix is
         fixed, those conversion rates may not be identical to the applicable
         market rate in effect when a transaction is processed. We reserve the
         right to update the Price Tier Matrix at any time. The Price Tier Matrix
-        and additional information on Udemy's pricing tiers are available here.
+        and additional information on canadian chamber of commerce's pricing tiers are available here.
       </p>
       <p>
         When a student purchases through a mobile application, the mobile
@@ -247,7 +247,7 @@ function InstructorTerms() {
       <h3>4.2 Transaction Taxes</h3>
       <p>
         If a student purchases a product or service in a country that requires
-        Udemy to remit national, state, or local sales or use taxes, value added
+        canadian chamber of commerce to remit national, state, or local sales or use taxes, value added
         taxes (VAT), or other similar transaction taxes ("Transaction Taxes"),
         under applicable law, we will collect and remit those Transaction Taxes
         to the competent tax authorities for those sales. We may increase the
@@ -258,9 +258,9 @@ function InstructorTerms() {
       </p>
       <h3>4.3 Promotional Programs</h3>
       <p>
-        Udemy offers several optional marketing programs (Promotional Programs)
+        canadian chamber of commerce offers several optional marketing programs (Promotional Programs)
         in which you can choose to participate, as detailed in our Promotions
-        Policy. These programs can help increase your revenue potential on Udemy
+        Policy. These programs can help increase your revenue potential on canadian chamber of commerce
         by finding the optimal price point for your Submitted Content and
         offering them through subscriptions collections.
       </p>
@@ -274,7 +274,7 @@ function InstructorTerms() {
       <h3>5.1 Revenue Share</h3>
       <p>
         When a student purchases your Submitted Content, we calculate the gross
-        amount of the sale as the amount actually received by Udemy from the
+        amount of the sale as the amount actually received by canadian chamber of commerce from the
         student ("Gross Amount"). From this, we subtract any Transaction Taxes,
         any mobile platform fees applied to mobile provider checkout sales, a 3%
         service and processing fee (except in Japan, where we subtract a 4% fee)
@@ -284,7 +284,7 @@ function InstructorTerms() {
       </p>
       <p>
         {" "}
-        If you have not opted into any of Udemy's optional Promotional Programs,
+        If you have not opted into any of canadian chamber of commerce's optional Promotional Programs,
         and except for sales through instructor-generated coupon codes or course
         referral links as described below, your revenue share will be 37% of the
         Net Amount less any applicable deductions, such as student refunds. If
@@ -298,8 +298,8 @@ function InstructorTerms() {
         Policy.{" "}
       </p>
       <p>
-        Udemy makes all instructor payments in U.S. dollars (USD) regardless of
-        the currency with which the sale was made. Udemy is not responsible for
+        canadian chamber of commerce makes all instructor payments in U.S. dollars (USD) regardless of
+        the currency with which the sale was made. canadian chamber of commerce is not responsible for
         your foreign currency conversion fees, wiring fees, or any other
         processing fees that you may incur. Your revenue report will show the
         sales price (in local currency) and your converted revenue amount (in
@@ -307,9 +307,9 @@ function InstructorTerms() {
       </p>
       <h3>5.2 Instructor Coupons and Course Referral Links</h3>
       <p>
-        The Udemy platform allows you to generate coupon codes and referral
+        The canadian chamber of commerce platform allows you to generate coupon codes and referral
         links to offer certain items of your Submitted Content to students at a
-        discount, at Udemy's current price, or for free, as permitted within the
+        discount, at canadian chamber of commerce's current price, or for free, as permitted within the
         Services. These coupon codes and referral links are subject to limits,
         and you may not sell them on third-party websites or otherwise offer
         them in exchange for compensation. Additional information and
@@ -382,8 +382,8 @@ function InstructorTerms() {
         </li>{" "}
         <li>
           only use our trademarks in connection with the promotion and sale of
-          your Submitted Content available on Udemy or your participation on
-          Udemy;
+          your Submitted Content available on canadian chamber of commerce or your participation on
+          canadian chamber of commerce;
         </li>
         <li>immediately comply if we request that you discontinue use.</li>
       </ul>{" "}
@@ -408,7 +408,7 @@ function InstructorTerms() {
       <p>
         From time to time, we may update these Terms to clarify our practices or
         to reflect new or different practices (such as when we add new
-        features), and Udemy reserves the right in its sole discretion to modify
+        features), and canadian chamber of commerce reserves the right in its sole discretion to modify
         and/or make changes to these Terms at any time. If we make any material
         change, we will notify you using prominent means such as by email notice
         sent to the email address specified in your account or by posting a
@@ -435,7 +435,7 @@ function InstructorTerms() {
       <h3>8.4 Survival</h3>
       <p>
         The following sections shall survive the expiration or termination of
-        these Terms: Sections 2 (License to Udemy), 3.3 (Relationship to Other
+        these Terms: Sections 2 (License to canadian chamber of commerce), 3.3 (Relationship to Other
         Users), 5.3 (Receiving Payments), 5.4 (Refunds), 7 (Deleting Your
         Account), and 8 (Miscellaneous Legal Terms).
       </p>

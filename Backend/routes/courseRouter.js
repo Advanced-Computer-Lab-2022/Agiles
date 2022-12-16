@@ -9,11 +9,13 @@ const {
   getLink,
   rateCourse,
   findCourseById,
+  popularCourses
 } = require("../controllers/CourseController");
 
 courserouter.get("/listCourses/details", coursesDetails);
 courserouter.get("/:id", getCourseById);
 courserouter.get("/listCourses/filter", filterCourses);
+courserouter.get("/most/popular", popularCourses);
 courserouter.get("/listCourses/search", courseSearch);
 courserouter.get("/findCourseById", findCourseById);
 courserouter.patch("/addPromotion", addCoursePromotion);

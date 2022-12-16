@@ -306,7 +306,7 @@ const Checkout = () => {
           <label className={style['label1']}>Total: </label>
           <label>{price-price*discount/100} USD</label>
           </div>
-          <label className={style['end']}>By completing your purchase you agree to these <Link to='user/terms'>Terms of Service</Link></label>
+          <label className={style['end']}>By completing your purchase you agree to these <Link to='/user/terms'>Terms of Use</Link></label>
           <button on onClick={handleComplete}>Complete Checkout</button>
           <span>30-Day Money-Back Guarantee</span>
           </div>

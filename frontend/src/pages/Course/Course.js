@@ -5,9 +5,9 @@ import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif";
 import Rating from "@mui/material/Rating";
 import Button from "react-bootstrap/Button";
-import StarsIcon from '@mui/icons-material/Stars';
-import ReviewsIcon from '@mui/icons-material/Reviews';
-import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
+import StarsIcon from "@mui/icons-material/Stars";
+import ReviewsIcon from "@mui/icons-material/Reviews";
+import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
 import Modal from "react-bootstrap/Modal";
 import LanguageIcon from "@mui/icons-material/Language";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
@@ -16,24 +16,50 @@ import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import ListGroup from "react-bootstrap/ListGroup";
 import Accordion from "react-bootstrap/Accordion";
 import ReviewCard from "../../components/ReviewCard";
+import Cookies from "universal-cookie";
 import axios from "axios";
+const cookies = new Cookies();
 const Course = () => {
   const [course, setCourse] = useState([]);
-  const [reviews,setReviews]= useState([]);
-  const [instructor,setInstructor]=useState([]);
+  const [reviews, setReviews] = useState([]);
+  const [instructor, setInstructor] = useState([]);
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
+  const state = cookies.get("status");
+  const traineeId = cookies.get("currentUser");
   const [isloading, setIsLoading] = useState(false);
   const location = useLocation();
   const courseId = new URLSearchParams(location.search).get("cid");
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const navigateCheckout = ()=>{
-    navigate({
-      pathname: "/checkout",
-      search: `?cid=${course._id}&price=${course.price}&discount=${course.discount}`,
-    });
-  }
+  const navigateCheckout = () => {
+    if (state == 0) {
+      navigate({
+        pathname: "/checkout",
+        search: `?cid=${course._id}&price=${course.price}&discount=${course.discount}`,
+      });
+    } else {
+      navigate("/signUp");
+    }
+  };
+  const navigateRequestAccess = async () => {
+    const url = "/individualtrainee/requestAccess";
+    const body = {
+      traineeId: traineeId,
+      courseId: courseId,
+    };
+    let config = {
+      headers: {
+        header1: "Access-Control-Allow-Origin",
+      },
+    };
+    try {
+      const res = await axios.post(url, body, config);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -61,8 +87,15 @@ const Course = () => {
               <h1>{course.title}</h1>
               <h2>{course.description}</h2>
               <div className={styled["mainSection-left-rating"]}>
-                <Rating name="rating" readOnly value={Math.round(course.rating/course.ratingCount)} />
-                <label>({course.ratingCount-1} ratings)</label>
+                <Rating
+                  name="rating"
+                  readOnly
+                  value={Math.round(course.rating / course.ratingCount)}
+                />
+                <label>
+                  ({course.ratingCount - 1} ratings) {course.studentCount}{" "}
+                  students{" "}
+                </label>
               </div>
               <label className={styled["instlabel"]}>
                 Created by {instructor.firstname} {instructor.lastname}
@@ -91,12 +124,6 @@ const Course = () => {
               <button className={styled["preview"]} onClick={handleShow}>
                 &nbsp;preview this course
               </button>
-              <div className={styled["totalhours"]}>
-                <YouTubeIcon className={styled["icon"]} />
-                <label className={styled["time"]}>
-                  {course.totalHoursOfCourse}h 30m Video on demand
-                </label>
-              </div>
               <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                   <Modal.Title>Course Preview</Modal.Title>
@@ -108,18 +135,21 @@ const Course = () => {
                   </Button>
                 </Modal.Footer>
               </Modal>
-
               {course.price === 0 ? (
+                state==0&&
                 <div className={styled["price"]}>
                   <label className={styled["time"]}>Free</label>
                 </div>
               ) : (
+                state==0&&
                 <>
                   {!window.sessionStorage.getItem("factor") ? (
                     <div>
                       <label className={styled["price"]}>
                         {" "}
-                        {course.price-course.price*course.discount/100} USD{" "}
+                        {course.price -
+                          (course.price * course.discount) / 100}{" "}
+                        USD{" "}
                       </label>
                       <label className={styled["discount"]}>
                         &nbsp;
@@ -140,7 +170,7 @@ const Course = () => {
                   )}
                 </>
               )}
-              {course.discount > 0 && (
+              {course.discount > 0 && state==0&& (
                 <div>
                   <AccessAlarmIcon
                     style={{ color: "red" }}
@@ -151,7 +181,12 @@ const Course = () => {
                   </label>
                 </div>
               )}
-           <button className={styled["buyme"] } onClick={navigateCheckout}>Buy now</button>
+              <button
+                className={styled["buyme"]}
+                onClick={state==2 ? navigateRequestAccess : navigateCheckout}
+              >
+                {state == 2 ? "request access" : "Buy now"}
+              </button>
             </section>
           </section>
           <section className={styled["middle-top"]}>
@@ -198,25 +233,45 @@ const Course = () => {
           </section>
           <section className={styled["middle-bottom"]}>
             <label>Instructors</label>
-            <p className={styled["middle-bottom-content-label1"]} ><Link to="previewProfile">{instructor.firstname} {instructor.lastname}</Link></p>
+            <p className={styled["middle-bottom-content-label1"]}>
+              <Link to="previewProfile" style={{color:'#a00407'}}>
+                {instructor.firstname} {instructor.lastname}
+              </Link>
+            </p>
             <div className={styled["middle-bottom-content"]}>
               <div>
-              <img src = {instructor.imgUrl} alt ={instructor.username}></img>
+                <img src={instructor.imgUrl} alt={instructor.username}></img>
               </div>
-              
+
               <div className={styled["middle-bottom-content-right"]}>
-                <div> <StarsIcon></StarsIcon>
-                <label>{instructor.rating/instructor.ratingCount} Instructor Rating</label>
+                <div>
+                  {" "}
+                  <StarsIcon></StarsIcon>
+                  <label>
+                    {instructor.rating / instructor.ratingCount} Instructor
+                    Rating
+                  </label>
                 </div>
-                <div> <ReviewsIcon></ReviewsIcon>
-                <label>{instructor.reviews?instructor.reviews.length :0} Reviews</label>
+                <div>
+                  {" "}
+                  <ReviewsIcon></ReviewsIcon>
+                  <label>
+                    {instructor.reviews ? instructor.reviews.length : 0} Reviews
+                  </label>
                 </div>
-                <div> <PlayCircleFilledWhiteIcon/>
-                <label>{instructor.courseList?instructor.courseList.length:0} Courses</label>
+                <div>
+                  {" "}
+                  <PlayCircleFilledWhiteIcon />
+                  <label>
+                    {instructor.courseList ? instructor.courseList.length : 0}{" "}
+                    Courses
+                  </label>
                 </div>
               </div>
             </div>
-              <p className={styled["middle-bottom-content-labe2"]}>{instructor.mini_bio}</p>
+            <p className={styled["middle-bottom-content-labe2"]}>
+              {instructor.mini_bio}
+            </p>
           </section>
           {/* <h3>
           <Rating
@@ -229,7 +284,7 @@ const Course = () => {
           <CircleIcon style={{ fontSize: "0.5rem" }} /> ({course.ratingCount-1}{" "}
           ratings)
         </h3> */}
-        {/* <div className={styled["rating-box"]}>
+          {/* <div className={styled["rating-box"]}>
                   {reviews.filter((review, idx) => idx < 5)
                     .map((review,index) => {
                       return (

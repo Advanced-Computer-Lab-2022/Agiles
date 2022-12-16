@@ -116,7 +116,7 @@ function InstructorRating({id,instRating,instReview}) {
             setReview(e.target.value);
           }}
         />
-         <Button variant="dark" type="submit" >  save</Button>
+         <Button variant="dark" type="submit" style={{backgroundColor:'#a00407',borderRadius: 0, width: '10rem' ,border: 'none' }}>  save</Button>
       </form>
     </div>
   );

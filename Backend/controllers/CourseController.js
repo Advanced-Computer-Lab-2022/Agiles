@@ -64,7 +64,14 @@ const filterCourses = async (req, res) => {
     res.status(200).json(courses);
   }
 };
-
+const popularCourses = async (req, res) => {
+  const courses = await Course.find().sort({ studentCount: -1 }).limit(8);
+  if (!courses) {
+    res.status(400).json({ error: "Empty" });
+  } else {
+    res.status(200).json(courses);
+  }
+}
 const courseSearch = async (req, res) => {
   const search = req.query["search"];
   const courses = await Course.find({
@@ -108,26 +115,15 @@ const getAllExams = async (req, res) => {
 };
 
 const createCourse = async (req, res) => {
-  const {
-    instructor,
-    title,
-    imgUrl,
-    coursePreviewUrl,
-    subtitles,
-    price,
-    description,
-    subject,
-    totalHoursOfCourse,
-    totalHoursOfSubtitles,
-    language,
-  } = req.body;
-  const data = await Instructor.findById(instructor, {
+  const user = req.user;
+  const { title,imgUrl, coursePreviewUrl, subtitles, price, description, subject, language, } = req.body;
+  const data = await Instructor.findById(user.id, {
     firstname: 1,
     lastname: 1,
   });
   const instructorname = data.firstname + " " + data.lastname;
   const newCourse = new Course({
-    instructor: instructor,
+    instructor: user.id,
     instructorname: instructorname,
     title: title,
     imgUrl: imgUrl,
@@ -136,14 +132,12 @@ const createCourse = async (req, res) => {
     price: price,
     description: description,
     subject: subject,
-    totalHoursOfCourse: totalHoursOfCourse,
-    totalHoursOfSubtitles: totalHoursOfSubtitles,
     language: language,
   });
   try {
     const course = await Course.create(newCourse);
     const update = await Instructor.updateOne(
-      { _id: instructor },
+      { _id: user.id },
       { $push: { courseList: course._id } }
     );
     res.status(200).json(course);
@@ -348,6 +342,19 @@ const reportProblem = async (req, res) => {
   }
 };
 
+const viewReportedProblems = async(req,res) =>{
+
+  const userId = req.user.id;
+  try{
+    const reportedProblems = await Report.find({userId: userId });
+    res.status(200).json(reportedProblems);
+  }catch{
+    res.status(404).json({error : "Data Not Found"});
+  }
+
+
+};
+
 module.exports = {
   addCoursePromotion,
   createCourse,
@@ -364,4 +371,6 @@ module.exports = {
   courseFinalExam,
   findCourseById,
   reportProblem,
+  popularCourses,
+  viewReportedProblems,
 };

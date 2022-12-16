@@ -4,7 +4,6 @@ import Cookies from "universal-cookie";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import a from "../../static/logo.png";
-import NavbarStyles from "../../components/Navbar.module.css";
 import { BsSearch } from "react-icons/bs";
 import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif";
@@ -111,22 +110,7 @@ function InstructorOwnCourses() {
       <LoadingScreen loading={true} logoSrc={spinner} />
     ) : (
       <div>
-        <section className="mainSection">
-            <div>
-              <h2>Welcome Back !</h2>
-            </div>
-            <img src={a} alt="canidan chamber of commerce" className="mainImage"></img>
-          </section>
-          <nav className={NavbarStyles["navbar"]}>
-            <div>
-              <Link to ="/"><button className={"notPressed" } >Explore </button></Link>
-              <Link to = "/mycourses"><button className={"Inprogress"} >My Courses </button></Link>
-              <Link to = "/createcourse"><button className={"notPressed"}>CreateCourse </button></Link>
-            </div>
-          </nav>
-    
     <div className={InprogressStyles["Wrapper"]}>
-      <h2 className={InprogressStyles["Wrapper_h2"]}>My Courses</h2>
       <div className={InstructorOwnCoursesStyles["Wrapper-top"]}>
         <div>
           <label>Filter by</label>

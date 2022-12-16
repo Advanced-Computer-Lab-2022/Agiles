@@ -5,3 +5,7 @@
     max-height: 70px;
     padding: 10px 3rem;
   }
+.logOut{
+   background-color: inherit;  
+   border: 0;
+}

@@ -3,9 +3,6 @@ const bcrypt = require("bcrypt");
 const Course = require("../models/Course");
 const Link = require("../models/Link");
 const Rating = require("../models/Rating");
-const IndividualTrainee = require("../models/IndividualTrainee");
-
-//create Instructor
 
 const listAllInstructorCoursesTitles = async (req, res) => {
   const id = req.params["id"];
@@ -111,41 +108,30 @@ const getInstructorbyId = async (req, res) => {
   }
 };
 
-const updateInstructorBio = async (req, res) => {
+const updateFieldUser = async (req, res) => {
+  const person = req.user;
+  const {firstname, lastname, minibio } = req.body;
   try {
-    await Instructor.findByIdAndUpdate(
-      req.query["id"],
-      { mini_bio: req.body.bio },
-      function (err, docs) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("Updated Instructor : ", docs);
-        }
-        res.status(200);
-      }
-    );
+    const user = await Instructor.findByIdAndUpdate(person.id, {
+      firstname: firstname,
+      lastname: lastname,
+      mini_bio: minibio,
+    });
+    res.status(200).json("updated succ");
   } catch (err) {
-    res.status(500).json({ msg: "can't update bio" });
+    res.status(500).json(err);
   }
 };
 
-const updateInstructorEmail = async (req, res) => {
+const updateEmail = async (req, res) => {
+  const {email } = req.body;
   try {
-    await Instructor.findByIdAndUpdate(
-      req.query["id"],
-      { email: req.body.email },
-      function (err, docs) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("Updated Instructor : ", docs);
-        }
-        res.status(200);
-      }
-    );
+    const user = await Instructor.findByIdAndUpdate(req.user.id, {
+      email: email,
+    });
+    res.status(200).json("updated succ");
   } catch (err) {
-    res.status(500).json({ msg: "can't update email" });
+    res.status(500).json(err);
   }
 };
 const uploadSubLink = async (req, res) => {
@@ -201,14 +187,12 @@ const uploadPreLink = async (req, res) => {
 };
 const updateInstructorPassword = async (req, res) => {
   const { oldPass, newPass } = req.body;
-
-  const id = req.query["id"];
-  if (!oldPass || !newPass || !id) {
+  if (!oldPass || !newPass ) {
     return res.status(500);
   } else {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPass, salt);
-    const user = await Instructor.findById(id);
+    const user = await Instructor.findById(req.user.id);
 
     if (!user) return res.status(400).json({ msg: "User not exist" });
     bcrypt.compare(oldPass, user.password, (err, data) => {
@@ -223,6 +207,11 @@ const updateInstructorPassword = async (req, res) => {
     });
   }
 };
+const profit = async(req,res)=>{
+   const user = req.user;
+   const instructor = await Instructor.findById(user.id);
+   res.status(200).json(instructor.wallet);
+}
 
 //---------------
 
@@ -231,10 +220,11 @@ module.exports = {
   courseSearchByInstructor,
   filterCoursesByInstructor,
   getInstructorbyId,
-  updateInstructorEmail,
-  updateInstructorBio,
+  updateEmail,
+  updateFieldUser,
   updateInstructorPassword,
   uploadSubLink,
   uploadPreLink,
-  deletLink
+  deletLink,
+  profit
 };

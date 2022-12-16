@@ -1,6 +1,7 @@
 .mainreg {
   display: grid;
   grid-template-columns: 20%  80%;
+  min-height: 100vh;
 }
 .leftsection {
   flex: 2;
@@ -46,19 +47,17 @@
     justify-content: center;
 }
 .leftsection-bottom li{
-    border-radius: 0.25rem;
     min-width: 15rem;
     min-height: 4rem;
     padding: 16px 10px 10px 10px;
 }
 .leftsection-bottom li:hover{
-    background-color: rgba(208, 236, 242, 0.379);
+    background-color: #efdada; 
 
 }
 .leftsection-liclicked{
-    border-radius: 0.25rem;
     min-width: 15rem;
     min-height: 4rem;
     padding: 10px 10px 10px 10px;
-    border: 2px solid black ;
+    border-left: 2px solid #a00407; ;
 }

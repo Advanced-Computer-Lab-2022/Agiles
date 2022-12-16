@@ -8,6 +8,9 @@ const Exam = require("../models/Exam");
 const OTP = require("../models/OTP.js");
 const Course = require("../models/Course");
 const CreditCard = require("../models/CreditCard");
+const CourseSubscriptionRequest = require("../models/CourseSubscriptionRequest");
+const Course = require("../models/Course");
+const CourseRefundRequest = require("../models/CourseRefundRequest");
 const Link = require("../models/Link");
 const bcrypt = require("bcrypt");
 const resetPassword = require("./ResetPassword");
@@ -193,7 +196,6 @@ const submitExam = async (req, res) => {
         { $set: { studentChoices: answers, result: resultno } },
         { new: true, upsert: true },
         function (err, docs) {
-          console.log(docs);
           if (err) console.log(err);
           else console.log("Updated User : ", docs);
         }
@@ -256,9 +258,10 @@ const getExerciseGrade = async (req, res) => {
 };
 
 const updateFieldUser = async (req, res) => {
-  const { userId, firstname, lastname, minibio } = req.body;
+  const person = req.user;
+  const { firstname, lastname, minibio } = req.body;
   try {
-    const user = await IndividualTrainee.findByIdAndUpdate(userId, {
+    const user = await IndividualTrainee.findByIdAndUpdate(person.id, {
       firstname: firstname,
       lastname: lastname,
       mini_bio: minibio,
@@ -269,9 +272,9 @@ const updateFieldUser = async (req, res) => {
   }
 };
 const updateEmail = async (req, res) => {
-  const { userId, email } = req.body;
+  const {email } = req.body;
   try {
-    const user = await IndividualTrainee.findByIdAndUpdate(userId, {
+    const user = await IndividualTrainee.findByIdAndUpdate(req.user.id, {
       email: email,
     });
     res.status(200).json("updated succ");
@@ -434,14 +437,12 @@ const rateInstructor = async (req, res) => {
 };
 const updateITraineePassword = async (req, res) => {
   const { oldPass, newPass } = req.body;
-
-  const id = req.query["id"];
-  if (!oldPass || !newPass || !id) {
+  if (!oldPass || !newPass) {
     return res.status(500);
   } else {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPass, salt);
-    const user = await IndividualTrainee.findById(id);
+    const user = await IndividualTrainee.findById(req.user.id);
 
     if (!user) return res.status(400).json({ msg: "User not exist" });
     bcrypt.compare(oldPass, user.password, (err, data) => {
@@ -456,85 +457,145 @@ const updateITraineePassword = async (req, res) => {
     });
   }
 };
-const createCredit = async(req,res)=>{
+const createCredit = async (req, res) => {
   const user = req.user;
-  const id = user.id ;
-  const {cardName , cardNumber , cardExpiryDate , CVV} = req.body;
+  const id = user.id;
+  const { cardName, cardNumber, cardExpiryDate, CVV } = req.body;
   if (!cardNumber || !cardExpiryDate || !CVV) {
     return res.status(500).json("bad request");
   }
-  const exists = await CreditCard.findOne({cardNumber:cardNumber});
-  if (exists){
+  const exists = await CreditCard.findOne({ cardNumber: cardNumber });
+  if (exists) {
     return res.status(406).json("card already exists");
   }
   const data = {
-    userId : id,
-    cardName : cardName,
-    cardNumber : cardNumber,
-    cardExpiryDate : cardExpiryDate,
-    CVV : CVV,
+    userId: id,
+    cardName: cardName,
+    cardNumber: cardNumber,
+    cardExpiryDate: cardExpiryDate,
+    CVV: CVV,
   };
-    try{
-      const cretidCard = await CreditCard.create(data);
-      const update =await IndividualTrainee.updateOne({_id:id},{$push:{creditCard:cretidCard._id}});
-      return res.status(200).json("Credit Card added");
-}
-     catch(err){
-         return res.status(406).json("server error");
-}
-}
-const deleteCredit = async(req,res)=>{
-  const id = req.params["id"];
-  const user = req.user;
-  try{
-  const deleted = await CreditCard.deleteOne({_id:id});
-  const ans = await IndividualTrainee.updateOne({_id:user.id},{$pull:{creditCard:id}});
-  return res.status(200).json(ans);
-  }
-  catch(err){
+  try {
+    const cretidCard = await CreditCard.create(data);
+    const update = await IndividualTrainee.updateOne(
+      { _id: id },
+      { $push: { creditCard: cretidCard._id } }
+    );
+    return res.status(200).json("Credit Card added");
+  } catch (err) {
     return res.status(406).json("server error");
   }
-}
-const payForCourse = async(req,res)=>{
-      const user = req.user;
-      const {courseId ,create} = req.body;
-      if (!courseId){
-        return res.status(500).json("bad request");
-      }
-      if (create){
-        const id = user.id ;
-        const {cardName , cardNumber , cardExpiryDate , CVV} = req.body;
-        if (!cardNumber || !cardExpiryDate || !CVV) {
-          return res.status(500).json("bad request");
-        }
-        const exists = await CreditCard.findOne({cardNumber:cardNumber});
-        if (exists){
-          return res.status(406).json("card already exists");
-        }
-        const data = {
-          userId : id,
-          cardName : cardName,
-          cardNumber : cardNumber,
-          cardExpiryDate : cardExpiryDate,
-          CVV : CVV,
-        };
-          try{
-            const cretidCard = await CreditCard.create(data);
-            await IndividualTrainee.updateOne({_id:id},{$push:{creditCard:cretidCard._id}});
-      }
-           catch(error){
-               return res.status(406).json(error);
-      }
-      }
-      try {
-        await IndividualTrainee.findByIdAndUpdate(user.id,{$push:{registered_courses:{courseId:courseId}}});
-        return res.status(200).json("payment completed");
-        
-      } catch (error) {
-        return res.status(406).json(error);
-      }
-}
+};
+const deleteCredit = async (req, res) => {
+  const id = req.params["id"];
+  const user = req.user;
+  try {
+    const deleted = await CreditCard.deleteOne({ _id: id });
+    const ans = await IndividualTrainee.updateOne(
+      { _id: user.id },
+      { $pull: { creditCard: id } }
+    );
+    return res.status(200).json(ans);
+  } catch (err) {
+    return res.status(406).json("server error");
+  }
+};
+const payForCourse = async (req, res) => {
+  const user = req.user;
+  const { courseId, create } = req.body;
+  if (!courseId) {
+    return res.status(500).json("bad request");
+  }
+  const course = await Course.findById(courseId);
+  const instructor = await Instructor.findById(course.instructor);
+  const profit =
+    parseInt(course.price) -
+    (parseInt(course.price) * parseInt(course.discount)) / 100;
+  if (create) {
+    const id = user.id;
+    const { cardName, cardNumber, cardExpiryDate, CVV } = req.body;
+    if (!cardNumber || !cardExpiryDate || !CVV) {
+      return res.status(500).json("bad request");
+    }
+    const exists = await CreditCard.findOne({ cardNumber: cardNumber });
+    if (exists) {
+      return res.status(406).json("card already exists");
+    }
+    const data = {
+      userId: id,
+      cardName: cardName,
+      cardNumber: cardNumber,
+      cardExpiryDate: cardExpiryDate,
+      CVV: CVV,
+    };
+    try {
+      const cretidCard = await CreditCard.create(data);
+      await IndividualTrainee.updateOne(
+        { _id: id },
+        { $push: { creditCard: cretidCard._id } }
+      );
+    } catch (error) {
+      return res.status(406).json(error);
+    }
+  }
+  try {
+    await IndividualTrainee.findByIdAndUpdate(user.id, {
+      $push: { registered_courses: { courseId: courseId } },
+    });
+    await Instructor.updateOne(
+      { _id: course.instructor },
+      { wallet: instructor.wallet + profit*70/100 }
+    );
+    await Course.updateOne(
+      { _id: courseId },
+      { studentCount: course.studentCount + 1 }
+    );
+    return res.status(200).json("payment completed");
+  } catch (error) {
+    return res.status(406).json(error);
+  }
+};
+
+const requestAccess = async (req, res) => {
+  const { courseId, traineeId } = req.body;
+  if (!courseId || !traineeId) {
+    return res.status(500).json("bad request");
+  }
+  const trainee = await IndividualTrainee.findById(traineeId);
+  const newRequest = {
+    traineeId: trainee._id,
+    courseId: courseId,
+    email: trainee.email,
+    firstname: trainee.firstname,
+    lastname: trainee.lastname,
+  };
+  try {
+    await CourseSubscriptionRequest.create(newRequest);
+    return res.status(200).json("success");
+  } catch (err) {
+    return res.status(406).json(err);
+  }
+};
+
+const requestRefund = async (req, res) => {
+  const { courseId, traineeId } = req.body;
+  if (!courseId || !traineeId) {
+    return res.status(500).json("bad request");
+  }
+  const trainee = await IndividualTrainee.findById(traineeId);
+  const newRequest = {
+    traineeId: trainee._id,
+    courseId: courseId,
+  };
+  try {
+    await CourseRefundRequest.create(newRequest);
+    return res.status(200).json("success");
+  } catch (err) {
+    return res.status(406).json(err);
+  }
+};
 module.exports = {
+  requestAccess,
   getTraineebyID,
   InprogressCourses,
   InprogressCoursebyId,
@@ -553,5 +614,6 @@ module.exports = {
   createCredit,
   deleteCredit,
   payForCourse,
+  requestRefund,
   getAllItemsCourse
 };

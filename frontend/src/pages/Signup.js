@@ -80,7 +80,7 @@ const SignUp = () => {
       
       Toast.fire({
         icon: 'success',
-        title: 'Signed in successfully'
+        title: 'Signed up successfully'
       })
       navigate('/login');
     } catch (err) {
@@ -102,7 +102,7 @@ const SignUp = () => {
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Sign Up</h3>
           <div className="text-center">
-            Already registered? <Link to="/Login">Log In</Link>
+            Already registered? <Link to="/Login" style={{color:'#a00407'}}>Log In</Link>
           </div>
           <p
             ref={errRef}
@@ -167,7 +167,7 @@ const SignUp = () => {
             </label>
             <input
               className="form-control mt-1"
-              placeholder="e.g  hossamElfar41"
+              placeholder="username"
               required
               onChange={(e) => setUsername(e.target.value)}
               aria-invalid={validName ? "false" : "true"}
@@ -233,14 +233,14 @@ const SignUp = () => {
           </p>
 
           <div className="d-grid gap-2 mt-3 ">
-            <button disabled={!validName || !validPwd || !firstname ||!lastname ||!email? true : false} className="btn btn-primary">
+            <button disabled={!validName || !validPwd || !firstname ||!lastname ||!email? true : false} className="btn btn-primary"   style={{backgroundColor:'#a00407',border:'none'}}>
               Submit
             </button>
           </div>
           <div className="footForm">
             <input type="checkbox" required />
             <p>
-              I agree to <Link to="terms-conditions">terms & conditions </Link>
+              I agree to <Link to="/user/terms" style={{color:'#a00407'}}>terms & conditions </Link>
             </p>
           </div>
         </div>

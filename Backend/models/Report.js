@@ -5,13 +5,13 @@ const reportSchema = new Schema(
   {
     userId: {
       type: mongoose.Types.ObjectId,
-      ref: 'IndvidualTrainee',
+      ref: "IndividualTrainee",
       required: true,
     },
     courseId: {
       type: mongoose.Types.ObjectId,
-      ref:'Course',
-      required: true
+      ref: "Course",
+      required: true,
     },
     reportType: {
       type: String,
@@ -24,6 +24,10 @@ const reportSchema = new Schema(
     status: {
       type: String, //pending/resolved
       default: "pending",
+    },
+    isSeen: {
+      type: Boolean,
+      default: true,
     },
   },
   { timestamps: true }
