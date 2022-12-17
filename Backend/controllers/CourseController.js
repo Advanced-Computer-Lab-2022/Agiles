@@ -109,11 +109,6 @@ const courseFinalExam = async (req, res) => {
   }
 };
 
-const getAllExams = async (req, res) => {
-  const courseId = req.query["courseId"];
-  const exams = await Exam.find({ courseId: courseId });
-};
-
 const createCourse = async (req, res) => {
   const user = req.user;
   const { title,imgUrl, coursePreviewUrl, subtitles, price, description, subject, language, } = req.body;
@@ -179,44 +174,19 @@ const setFinalExam = async (req, res) => {
   }
 };
 
-//get all the titles of the courses available including the total hours of the course and course rating
 
-const coursesDetails = async (req, res) => {
+const getCourses = async (req, res) => {
   try {
-    const courseAttr = await Course.find({}).populate("instructor");
-    res.status(200).send(courseAttr);
+    const courses = await Course.find({}).populate("instructor");
+    res.status(200).send(courses);
   } catch (err) {
     res.status(500).json({ mssg: "can't find courses" });
   }
 };
-
-const oneCoursesDetails = async (req, res) => {
-  const cid = req.query["id"];
-
-  try {
-    const courseAttr = await Course.findOne(
-      { _id: cid },
-      { title: 1, totalHoursOfCourse: 1, rating: 1, _id: 1 }
-    );
-    res.status(200).send(courseAttr);
-  } catch (err) {
-    res.status(500).json({ mssg: "can't find courses" });
-  }
-};
-const findCourseById = async (req, res) => {
-  const cid = req.query["id"];
-  try {
-    const courseAttr = await Course.findById(cid);
-    res.status(200).send(courseAttr);
-  } catch (err) {
-    res.status(500).json({ mssg: "can't find courses" });
-  }
-};
-
 
 const getCourseById = async (req, res) => {
   const id = req.params["id"];
-
+  const userId = req.cookies?.currentUser;
   try {
     const course = await Course.findById(id)
       .populate("instructor")
@@ -227,9 +197,14 @@ const getCourseById = async (req, res) => {
     const reviews = await Rating.find({ state: true, courseId: id }).populate(
       "userId"
     );
+    let exists = false;
+    if (userId){
+       exists = await IndividualTrainee.exists({ _id: userId, "registered_courses.courseId": id });
+    }
     const result = {
       firstField: course,
       secondField: reviews,
+      thirdField: exists,
     };
     res.status(200).send(result);
   } catch (err) {
@@ -358,8 +333,7 @@ const viewReportedProblems = async(req,res) =>{
 module.exports = {
   addCoursePromotion,
   createCourse,
-  coursesDetails,
-  oneCoursesDetails,
+  getCourses,
   filterCourses,
   courseSearch,
   getCourseById,
@@ -369,7 +343,6 @@ module.exports = {
   rateCourse,
   setFinalExam,
   courseFinalExam,
-  findCourseById,
   reportProblem,
   popularCourses,
   viewReportedProblems,

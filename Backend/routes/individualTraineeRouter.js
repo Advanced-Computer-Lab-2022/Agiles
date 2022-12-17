@@ -1,5 +1,6 @@
 const express = require("express");
 const IndividualTraineeRouter = express.Router();
+const {isAuthTrainee} = require("../controllers/authContext");
 const {
   courseExam,
   courseFinalExam,
@@ -109,5 +110,6 @@ IndividualTraineeRouter.post("/forgotpassword", forgetPassword);
 IndividualTraineeRouter.post("/verifyCode", verifyCode);
 IndividualTraineeRouter.post("/requestAccess", requestAccess);
 IndividualTraineeRouter.post("/requestRefund", requestRefund);
+IndividualTraineeRouter.get("/isAuth", isAuthTrainee);
 
 module.exports = IndividualTraineeRouter;

@@ -16,7 +16,6 @@ const AddAdmin = (props) => {
     };
     try {
       const res = await axios.post("/admin/addAdmin", admin, config);
-      console.log(res.data);
     } catch (e) {
       console.log(e);
     }

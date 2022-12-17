@@ -15,7 +15,6 @@ const Inprogress = () => {
   const currentUser = cookies.get("currentUser");
   const [isloading, setIsLoading] = useState(true);
   const [courses, setCourses] = useState([]);
-  const token = cookies.get("jwt");
   let result = [];
   const getCourses = async () => {
     setIsLoading(true);
@@ -25,9 +24,7 @@ const Inprogress = () => {
       setCourses(result);
       setIsLoading(false);
     } catch (err) {
-       if (err.response?.status == 401){
-          unAuth();
-       }
+       console.log(err);
     }
   };
   useEffect(() => {

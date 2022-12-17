@@ -2,6 +2,7 @@ import "./Login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import  clearAuth  from "../clearAuth"
 import Cookies from "universal-cookie";
 import axios from "axios";
 const LOGIN_URL = "/admin/logIn";
@@ -15,6 +16,10 @@ const Login = () => {
   useEffect(() => {
     setErrMsg("");
   }, [username, password]);
+  useEffect(()=>
+  {
+    clearAuth();
+  },[])
   const handleSumbit = async (event) => {
     event.preventDefault();
     const user = {
