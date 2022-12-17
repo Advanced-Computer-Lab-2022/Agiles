@@ -15,6 +15,7 @@ const bcrypt = require("bcrypt");
 const resetPassword = require("./ResetPassword");
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const TraineeCourse = require("../models/TraineeCourse");
 var nodemailer = require("nodemailer");
 
 const getTraineebyID = async (req, res) => {
@@ -80,45 +81,58 @@ const updateLinkProgress = async (req, res) => {
   // const id = req.body.id;
   const courseId = req.body.courseId;
   const linkId = req.body.linkId;
-  const studentId = req.body.studentId;
-  const subtitle = req.body.subtitle;
-  
+  const studentId = req.user.id;
+  const subtitle = req.body.subtitleId;
   const completedItems = req.body.completedItems;
   let numberOfItems = 0;
   try {
 
+    
     const course = await Course.findOne({ _id: courseId },{subtitles:1});
     if(course){
       course.subtitles.forEach(subtitle => {
         numberOfItems += subtitle.link.length});
       numberOfItems += course.subtitles.length + 1;
     }
+
+
     else{
       return res.status(400).json({ msg: "bad request" });
     }
 
-    // const regcourse = await IndividualTrainee.findOne({ _id: id, "registered_courses.courseId": courseId }
-    // ,{"registered_courses": 1});
+    const updatecourse = await Course.findOneAndUpdate( { _id: courseId },
+    { $set: { "numberOfItems": numberOfItems } },
+    { new: true, upsert: true }
+  );
+      console.log(updatecourse)
+      console.log(numberOfItems)
+      
+
+    const linkprogress = await TraineeCourse.findOne({ traineeId: studentId , courseId: courseId, subtitleId: subtitle, linkId: linkId },
+      {progress: 1});
+    if(linkprogress){
+      if(linkprogress.progress === 1) res.status(200).json({numberOfItems: numberOfItems}); return;
+    }
+
 
     // const linkcourse = await Link.findOne({ _id: linkId },{progress:1});
 
-    // const progress = regcourse.registered_courses[0].progress;
-    // const progress = linkcourse.progress;
 
-    const link = await IndividualTrainee.findOneAndUpdate(
-      { _id: studentId , "registered_courses.courseId": courseId, "registered_courses.subtitles.subtitle": subtitle, "registered_courses.subtitles.link.linkId": linkId },
-      { $set: { "registered_courses.subtitles.$.link.$.progress": completedItems } },
+    const progress = await TraineeCourse.findOneAndUpdate(
+      { traineeId: studentId , courseId: courseId, subtitleId: subtitle, linkId: linkId },
+      { $set: { progress: completedItems } },
       { new: true, upsert: true }
     );
 
-    // const regcourse1 = await IndividualTrainee.findOneAndUpdate(
-    //   { _id: id, "registered_courses.courseId": courseId },
-    //   { $set: { "registered_courses.$.progress": progress + completedItems } },
-    //   { new: true, upsert: true }
-    // );
 
-    if (link) {
-      return res.status(200).json({ progress: completedItems});
+    const regcourse1 = await IndividualTrainee.findOneAndUpdate(
+      { _id: studentId, "registered_courses.courseId": courseId },
+      { $inc: { "registered_courses.$.progress": completedItems } },
+      { new: true, upsert: true }
+    );
+
+    if (progress) {
+      return res.status(200).json({ progress: completedItems, course: regcourse1, numberOfItems: numberOfItems});
     } else {
       return res.status(400).json({ msg: "bad request" });
     }
@@ -127,11 +141,6 @@ const updateLinkProgress = async (req, res) => {
   }
 };
 
-const updateProgress = async (req, res) => {
-  const id = req.body.id;
-  const courseId = req.body.courseId;
-
-};
 
 const submitExam = async (req, res) => {
   const answers = req.body.answers;

@@ -58,6 +58,7 @@ const CoursePreview = () => {
   };
   useEffect(() => {
     fetchdata();
+    console.log(progress);
   }, []);
   return (
     <>

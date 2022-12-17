@@ -20,8 +20,11 @@ const Inprogress = () => {
     setIsLoading(true);
     try {
       const res = await axios.get(INPROGRESS_URL + "/" + currentUser);
+      // const items = await axios.post('individualtrainee/getAllItems',{courseId:course_id});
       result = res.data.registered_courses
       setCourses(result);
+      console.log(result);
+      // setNumberOfItems(items.data.numberOfItems);
       setIsLoading(false);
     } catch (err) {
        console.log(err);
@@ -43,7 +46,7 @@ const Inprogress = () => {
            <section className={InprogressStyles['courses']}>
           <div className={RegCourseCardStyles["cardgrid"]}>
             {courses.map((el, index) => {
-              return <RegCourseCard  data={el.courseId} progress={el.progress} courseRating = {el.courseRating?el.courseRating.userRating:0}index={index} key={index} />;
+              return <RegCourseCard  data={el.courseId} progress={ Math.floor((el.progress/el.courseId.numberOfItems)*100)} courseRating = {el.courseRating?el.courseRating.userRating:0}index={index} key={index} />;
             })}
           </div> 
           </section>
