@@ -18,6 +18,62 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const TraineeCourse = require("../models/TraineeCourse");
 var nodemailer = require("nodemailer");
 
+const GetNotes = async (req, res) => {
+  const subtitleId = req.body.subtitleId;
+  const notes = " ";
+  const courseId = req.body.courseId;
+  const traineeId = req.user.id;
+  const linkId = req.body.linkId;
+  if (!subtitleId || !linkId || !courseId || !traineeId) {
+    return res.status(500).json("bad request");
+  }
+  try {
+    const updatedNotes = await TraineeCourse.findOne(
+      {
+        traineeId: traineeId,
+        courseId: courseId,
+        subtitleId: subtitleId,
+        linkId: linkId,
+      },
+      { notes: 1 }
+    );
+    if (updatedNotes) {
+      notes = updatedNotes.notes;
+      return res.status(200).json({ notes: notes });
+    } else {
+      return res.status(200).json({ notes: notes });
+    }
+  } catch {
+    return res.status(406).json("Data not found");
+  }
+};
+const addNotesToTrainee = async (req, res) => {
+  const subtitleId = req.body.subtitleId;
+  const notes = req.body.notes;
+  const courseId = req.body.courseId;
+  const traineeId = req.user.id;
+  const linkId = req.body.linkId;
+
+  if (!subtitleId || !linkId || !courseId || !traineeId || !notes) {
+    return res.status(500).json("bad request");
+  }
+  try {
+    const updateNotes = await TraineeCourse.findOneAndUpdate(
+      {
+        traineeId: traineeId,
+        courseId: courseId,
+        subtitleId: subtitleId,
+        linkId: linkId,
+      },
+      { $set: { notes: notes } },
+      { new: true, upsert: true }
+    );
+    return res.status(200).json("Updated Notes");
+  } catch {
+    return res.status(406).json("Data not found");
+  }
+};
+
 const getTraineebyID = async (req, res) => {
   const id = req.query.id;
   const Itrainee = await IndividualTrainee.findById(id).populate("creditCard");
@@ -60,20 +116,18 @@ const getAllItemsCourse = async (req, res) => {
   const courseId = req.body.courseId;
   let numberOfItems = 0;
   try {
-
-    const course = await Course.findOne({ _id: courseId },{subtitles:1});
-    if(course){
-      course.subtitles.forEach(subtitle => {
-        numberOfItems += subtitle.link.length});
+    const course = await Course.findOne({ _id: courseId }, { subtitles: 1 });
+    if (course) {
+      course.subtitles.forEach((subtitle) => {
+        numberOfItems += subtitle.link.length;
+      });
       numberOfItems += course.subtitles.length + 1;
-      res.status(200).json({numberOfItems : numberOfItems});
-    }
-    else{
+      res.status(200).json({ numberOfItems: numberOfItems });
+    } else {
       return res.status(400).json({ msg: "bad request" });
     }
-  }
-  catch (err) {
-    res.status(403).json({ msg: err.message});
+  } catch (err) {
+    res.status(403).json({ msg: err.message });
   }
 };
 
@@ -86,44 +140,51 @@ const updateLinkProgress = async (req, res) => {
   const completedItems = req.body.completedItems;
   let numberOfItems = 0;
   try {
-
-    
-    const course = await Course.findOne({ _id: courseId },{subtitles:1});
-    if(course){
-      course.subtitles.forEach(subtitle => {
-        numberOfItems += subtitle.link.length});
+    const course = await Course.findOne({ _id: courseId }, { subtitles: 1 });
+    if (course) {
+      course.subtitles.forEach((subtitle) => {
+        numberOfItems += subtitle.link.length;
+      });
       numberOfItems += course.subtitles.length + 1;
-    }
-
-
-    else{
+    } else {
       return res.status(400).json({ msg: "bad request" });
     }
 
-    const updatecourse = await Course.findOneAndUpdate( { _id: courseId },
-    { $set: { "numberOfItems": numberOfItems } },
-    { new: true, upsert: true }
-  );
-      console.log(updatecourse)
-      console.log(numberOfItems)
-      
+    const updatecourse = await Course.findOneAndUpdate(
+      { _id: courseId },
+      { $set: { numberOfItems: numberOfItems } },
+      { new: true, upsert: true }
+    );
+    console.log(updatecourse);
+    console.log(numberOfItems);
 
-    const linkprogress = await TraineeCourse.findOne({ traineeId: studentId , courseId: courseId, subtitleId: subtitle, linkId: linkId },
-      {progress: 1});
-    if(linkprogress){
-      if(linkprogress.progress === 1) res.status(200).json({numberOfItems: numberOfItems}); return;
+    const linkprogress = await TraineeCourse.findOne(
+      {
+        traineeId: studentId,
+        courseId: courseId,
+        subtitleId: subtitle,
+        linkId: linkId,
+      },
+      { progress: 1 }
+    );
+    if (linkprogress) {
+      if (linkprogress.progress === 1)
+        res.status(200).json({ numberOfItems: numberOfItems });
+      return;
     }
-
 
     // const linkcourse = await Link.findOne({ _id: linkId },{progress:1});
 
-
     const progress = await TraineeCourse.findOneAndUpdate(
-      { traineeId: studentId , courseId: courseId, subtitleId: subtitle, linkId: linkId },
+      {
+        traineeId: studentId,
+        courseId: courseId,
+        subtitleId: subtitle,
+        linkId: linkId,
+      },
       { $set: { progress: completedItems } },
       { new: true, upsert: true }
     );
-
 
     const regcourse1 = await IndividualTrainee.findOneAndUpdate(
       { _id: studentId, "registered_courses.courseId": courseId },
@@ -132,15 +193,18 @@ const updateLinkProgress = async (req, res) => {
     );
 
     if (progress) {
-      return res.status(200).json({ progress: completedItems, course: regcourse1, numberOfItems: numberOfItems});
+      return res.status(200).json({
+        progress: completedItems,
+        course: regcourse1,
+        numberOfItems: numberOfItems,
+      });
     } else {
       return res.status(400).json({ msg: "bad request" });
     }
   } catch (err) {
-    res.status(403).json({ msg: err.message});
+    res.status(403).json({ msg: err.message });
   }
 };
-
 
 const submitExam = async (req, res) => {
   const answers = req.body.answers;
@@ -193,7 +257,6 @@ const submitExam = async (req, res) => {
         result: resultno,
       });
     }
-
   } else {
     const test = await FinalExamResult({
       studentId: studentId,
@@ -220,15 +283,19 @@ const submitExam = async (req, res) => {
   }
 
   try {
-    const regcourse = await IndividualTrainee.findOne({ _id: studentId, "registered_courses.courseId": courseId }
-    ,{"registered_courses": 1});
+    const regcourse = await IndividualTrainee.findOne(
+      { _id: studentId, "registered_courses.courseId": courseId },
+      { registered_courses: 1 }
+    );
     const progress = regcourse.registered_courses[0].progress;
     const regcourse1 = await IndividualTrainee.findOneAndUpdate(
       { _id: studentId, "registered_courses.courseId": courseId },
       { $set: { "registered_courses.$.progress": progress + 1 } },
       { new: true, upsert: true }
     );
-    res.status(200).json({ result: result, resultno: resultno,progress: progress +1  });
+    res
+      .status(200)
+      .json({ result: result, resultno: resultno, progress: progress + 1 });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -281,7 +348,7 @@ const updateFieldUser = async (req, res) => {
   }
 };
 const updateEmail = async (req, res) => {
-  const {email } = req.body;
+  const { email } = req.body;
   try {
     const user = await IndividualTrainee.findByIdAndUpdate(req.user.id, {
       email: email,
@@ -509,46 +576,48 @@ const deleteCredit = async (req, res) => {
     return res.status(406).json("server error");
   }
 };
-const CreateCheckout = async(req,res)=>{
-  const {courseId} = req.body;
-  if(!courseId){
+const CreateCheckout = async (req, res) => {
+  const { courseId } = req.body;
+  if (!courseId) {
     return res.status(500).json("bad request");
   }
   const course = await Course.findById(courseId);
-  const price = parseInt(course.price) - (parseInt(course.price) * parseInt(course.discount)) / 100;
+  const price =
+    parseInt(course.price) -
+    (parseInt(course.price) * parseInt(course.discount)) / 100;
   const title = course.title;
   const desccription = course.description;
-  try{
+  try {
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: [{
-        price_data: {
-          currency: 'usd',
-          product_data: {
-            name: title,
-            description: desccription,
-            images:[course.imgUrl]
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: title,
+              description: desccription,
+              images: [course.imgUrl],
+            },
+            unit_amount: price * 100,
           },
-          unit_amount: price*100,
+          quantity: 1,
         },
-        quantity: 1,
-      }],
-      mode: 'payment',
+      ],
+      mode: "payment",
       custom_text: {
-        submit: {message: '30-Day Money-Back Guarantee'},
+        submit: { message: "30-Day Money-Back Guarantee" },
       },
-      success_url: 'http://localhost:3000/success',
-      cancel_url: 'http://localhost:3000/cancel',
+      success_url: "http://localhost:3000/success",
+      cancel_url: "http://localhost:3000/cancel",
     });
-    payForCourse(courseId,req.user.id);
-    return res.status(200).json({url:session.url});
-  }
-  catch(err){
+    payForCourse(courseId, req.user.id);
+    return res.status(200).json({ url: session.url });
+  } catch (err) {
     return res.status(500).json("server error");
   }
-
-}
-const payForCourse =  async(courseId,userId) => {
+};
+const payForCourse = async (courseId, userId) => {
   if (!courseId) {
     return;
   }
@@ -563,15 +632,18 @@ const payForCourse =  async(courseId,userId) => {
     });
     await Instructor.updateOne(
       { _id: course.instructor },
-      { wallet: instructor.wallet + profit*70/100 ,studentCount :instructor.studentCount+1}
+      {
+        wallet: instructor.wallet + (profit * 70) / 100,
+        studentCount: instructor.studentCount + 1,
+      }
     );
     await Course.updateOne(
       { _id: courseId },
       { studentCount: course.studentCount + 1 }
     );
-    return ;
+    return;
   } catch (error) {
-    return ;
+    return;
   }
 };
 
@@ -634,5 +706,7 @@ module.exports = {
   deleteCredit,
   CreateCheckout,
   requestRefund,
-  getAllItemsCourse
+  getAllItemsCourse,
+  addNotesToTrainee,
+  GetNotes,
 };

@@ -20,6 +20,7 @@ const CoursContent = () => {
   const index = new URLSearchParams(location.search).get("idx");
   const [course, setCourse] = useState([]);
   const [subtitles, setSubtitles] = useState([]);
+  const [subtitleId, setSubtitleId] = useState("");
   const [isloading, setIsLoading] = useState(false);
   const [grade, setGrade] = useState([]);
   const [questions, setQuestions] = useState(0);
@@ -27,6 +28,7 @@ const CoursContent = () => {
   const navigate = useNavigate();
 
   const handleClick = (e) => {
+    console.log(e.target.id);
     navigate(
       {
         pathname: "/subtitleView",
@@ -157,7 +159,13 @@ const CoursContent = () => {
                           <ListGroup.Item key={index1}>
                             {index1 + 1}.{" "}
                             <button
-                              id={"linkId=" + link._id}
+                              id={
+                                "linkId=" +
+                                link._id +
+                                "&" +
+                                "subtitleId=" +
+                                subtitle._id
+                              }
                               name={index0 + " " + index1}
                               onClick={handleClick}
                               className={style["subtitleView"]}
@@ -210,8 +218,11 @@ const CoursContent = () => {
                     name={"finalexam"}
                     onClick={handleFinalExamClick}
                     size="lg"
-                    style={{backgroundColor:'#a00407',borderRadius: 0 ,border: 'none' }}
-      
+                    style={{
+                      backgroundColor: "#a00407",
+                      borderRadius: 0,
+                      border: "none",
+                    }}
                   >
                     Final Exam
                   </Button>
@@ -231,9 +242,7 @@ const CoursContent = () => {
                       </div>
                     </Modal.Body>
                     <Modal.Footer>
-                      <Button onClick={handleClose}>
-                        close
-                      </Button>
+                      <Button onClick={handleClose}>close</Button>
                     </Modal.Footer>
                   </Modal>
                 </Accordion.Item>
