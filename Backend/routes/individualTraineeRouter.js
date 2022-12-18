@@ -1,6 +1,6 @@
 const express = require("express");
 const IndividualTraineeRouter = express.Router();
-const {isAuthTrainee} = require("../controllers/authContext");
+const { isAuthTrainee } = require("../controllers/authContext");
 const {
   courseExam,
   courseFinalExam,
@@ -30,7 +30,7 @@ const {
   getAllItemsCourse,
   requestRefund,
   addNotesToTrainee,
-  GetNotes,
+  getNotes,
 } = require("../controllers/IndividualTraineeController");
 const { verifyItraineeJWT } = require("../middleware/authMiddleware");
 
@@ -59,7 +59,7 @@ IndividualTraineeRouter.get(
   verifyItraineeJWT,
   compareAnswers
 );
-IndividualTraineeRouter.get("/getNote", verifyItraineeJWT, GetNotes);
+IndividualTraineeRouter.get("/getNote", verifyItraineeJWT, getNotes);
 IndividualTraineeRouter.patch(
   "/addNotes",
   verifyItraineeJWT,

@@ -31,6 +31,8 @@ const Subtitle = () => {
   const [grade, setGrade] = useState([]);
   const [questions, setQuestions] = useState(0);
   const [show, setShow] = useState(false);
+  // const [show, setShow] = useState(false);
+  
   const [notes, setNotes] = useState("Blank");
   const downloadPDFFile = () => {
     var doc = new jsPDF("landscape", "px", "a4", "false");
@@ -46,6 +48,16 @@ const Subtitle = () => {
       linkId: link._id,
       courseId: location.state.courseId,
     });
+  };
+  const getOldNotes = async (e) => {
+    let oldNotes = await axios.get("/individualtrainee/getNotes", {
+      subtitleId: subtitleId,
+      linkId: link._id,
+      courseId: location.state.courseId,
+    });
+    if (oldNotes) {
+      setNotes(oldNotes);
+    }
   };
 
   const handleNotesChange = (event) => {
@@ -139,8 +151,8 @@ const Subtitle = () => {
 
   const handleProgress = async (event) => {
     let progresser = 0;
-    if(event.data == 1 ){
-      progress.current = setInterval (async () => {
+    if (event.data == 1) {
+      progress.current = setInterval(async () => {
         const player = event.target;
         const currentTime = player.getCurrentTime();
         const duration = player.getDuration();
@@ -148,31 +160,27 @@ const Subtitle = () => {
         if (progresser >= 80) {
           progresser = 100;
         }
-        let res = await axios.post("/individualtrainee/updateLinkProgress", 
-        {
+        let res = await axios.post("/individualtrainee/updateLinkProgress", {
           linkId: link._id,
           courseId: location.state.courseId,
           completedItems: progresser,
         });
-    }, 5000);
-    
-    }
-    else if( event.data == 2 || event.data == 0){
+      }, 5000);
+    } else if (event.data == 2 || event.data == 0) {
       const player = event.target;
-        const currentTime = player.getCurrentTime();
-        const duration = player.getDuration();
-        progresser = Math.floor((currentTime / duration) * 100);
-        if(progresser >= 80){
-          progresser = 100;
-  
-        }
-        let res = await axios.post("/individualtrainee/updateLinkProgress", 
-        {
-          id: cookies.get("currentUser"),
-          courseId: location.state.courseId,
-          completedItems: progresser
-        });}
-    return () =>{
+      const currentTime = player.getCurrentTime();
+      const duration = player.getDuration();
+      progresser = Math.floor((currentTime / duration) * 100);
+      if (progresser >= 80) {
+        progresser = 100;
+      }
+      let res = await axios.post("/individualtrainee/updateLinkProgress", {
+        id: cookies.get("currentUser"),
+        courseId: location.state.courseId,
+        completedItems: progresser,
+      });
+    }
+    return () => {
       clearInterval(progress.current);
     };
   };
@@ -183,6 +191,7 @@ const Subtitle = () => {
       const res = await axios.get(LINK_URL + query);
       setLink(res.data);
       setSubtitles(location.state.data);
+      setNotes();
     } catch (err) {
       console.log(err);
     }

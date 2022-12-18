@@ -18,9 +18,9 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const TraineeCourse = require("../models/TraineeCourse");
 var nodemailer = require("nodemailer");
 
-const GetNotes = async (req, res) => {
+const getNotes = async (req, res) => {
   const subtitleId = req.body.subtitleId;
-  const notes = " ";
+  let oldNotes = " ";
   const courseId = req.body.courseId;
   const traineeId = req.user.id;
   const linkId = req.body.linkId;
@@ -28,7 +28,7 @@ const GetNotes = async (req, res) => {
     return res.status(500).json("bad request");
   }
   try {
-    const updatedNotes = await TraineeCourse.findOne(
+    const old = await TraineeCourse.findOne(
       {
         traineeId: traineeId,
         courseId: courseId,
@@ -37,13 +37,12 @@ const GetNotes = async (req, res) => {
       },
       { notes: 1 }
     );
-    if (updatedNotes) {
-      notes = updatedNotes.notes;
-      return res.status(200).json({ notes: notes });
-    } else {
-      return res.status(200).json({ notes: notes });
+    if (old) {
+      oldNotes = old.notes;
+
+      return res.status(200).json({ notes: oldNotes });
     }
-  } catch {
+  } catch (e) {
     return res.status(406).json("Data not found");
   }
 };
@@ -708,5 +707,5 @@ module.exports = {
   requestRefund,
   getAllItemsCourse,
   addNotesToTrainee,
-  GetNotes,
+  getNotes,
 };
