@@ -45,8 +45,8 @@ const Course = () => {
         );
         const url = res.data.url;
         window.location.href = url;
-      } catch (err) {
-        console.log(err);
+      } catch (e) {
+        console.log(e);
       }
     } else {
       navigate("/signUp");

@@ -45,8 +45,8 @@ const CoursePreInst = () => {
       (response) => {
         window.location.reload();
       },
-      (error) => {
-        console.log(error);  
+      (e) => {
+        console.log(e);  
       });};
       const fetchdata = async () => {
         setIsLoading(true);

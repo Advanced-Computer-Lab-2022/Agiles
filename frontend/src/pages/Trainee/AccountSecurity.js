@@ -40,8 +40,8 @@ const AccountSecurity = () => {
       setFullname(res.data.firstname + " "+res.data.lastname)
       }
      
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
     }
     setIsLoading(false);
   };

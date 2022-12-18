@@ -19,8 +19,8 @@ const AdminNavbar = () => {
           localStorage.removeItem("username");
           navigate("/");
     
-        } catch (err) {
-          console.log(err);
+        } catch (e) {
+          console.log(e);
         }
       };
     return ( <nav className={style['admin-navbar']}>

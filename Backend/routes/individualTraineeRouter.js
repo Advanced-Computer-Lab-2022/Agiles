@@ -1,13 +1,13 @@
 const express = require("express");
 const IndividualTraineeRouter = express.Router();
-const {isAuthTrainee} = require("../controllers/authContext");
+const { isAuthTrainee } = require("../controllers/authContext");
 const {
-  courseExam,
-  courseFinalExam,
   reportProblem,
   viewReportedProblems,
 } = require("../controllers/CourseController");
 const {
+  courseExam,
+  courseFinalExam,
   requestAccess,
   getTraineebyID,
   InprogressCourses,
@@ -29,6 +29,8 @@ const {
   CreateCheckout,
   getAllItemsCourse,
   requestRefund,
+  addNotesToTrainee,
+  getNotes,
 } = require("../controllers/IndividualTraineeController");
 const { verifyItraineeJWT } = require("../middleware/authMiddleware");
 
@@ -56,6 +58,12 @@ IndividualTraineeRouter.get(
   "/getIndividualAnswers",
   verifyItraineeJWT,
   compareAnswers
+);
+IndividualTraineeRouter.get("/getNote", verifyItraineeJWT, getNotes);
+IndividualTraineeRouter.patch(
+  "/addNotes",
+  verifyItraineeJWT,
+  addNotesToTrainee
 );
 IndividualTraineeRouter.patch(
   "/updateBasics",
@@ -95,14 +103,26 @@ IndividualTraineeRouter.delete(
   verifyItraineeJWT,
   deleteCredit
 );
-IndividualTraineeRouter.post("/create-checkout-session", verifyItraineeJWT, CreateCheckout);
+IndividualTraineeRouter.post(
+  "/create-checkout-session",
+  verifyItraineeJWT,
+  CreateCheckout
+);
 IndividualTraineeRouter.get(
   "/viewReportedProblems",
   verifyItraineeJWT,
   viewReportedProblems
 );
-IndividualTraineeRouter.post("/updateLinkProgress",verifyItraineeJWT,updateLinkProgress);
-IndividualTraineeRouter.post("/getAllItems",verifyItraineeJWT,getAllItemsCourse);
+IndividualTraineeRouter.post(
+  "/updateLinkProgress",
+  verifyItraineeJWT,
+  updateLinkProgress
+);
+IndividualTraineeRouter.post(
+  "/getAllItems",
+  verifyItraineeJWT,
+  getAllItemsCourse
+);
 //no auth
 IndividualTraineeRouter.post("/forgotpassword", forgetPassword);
 IndividualTraineeRouter.post("/verifyCode", verifyCode);

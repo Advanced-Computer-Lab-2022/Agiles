@@ -26,8 +26,8 @@ const PreviewProfile = () => {
             setReviews(res.data.secondField.length);
             setSCount(res.data.firstField.studentCount);
            
-        } catch (err) {
-          console.log(err);
+        } catch (e) {
+          console.log(e);
         }
         setIsLoading(false);
       };

@@ -70,8 +70,8 @@ const CourseConInst = () => {
       (res) => {
         window.location.reload();
       },
-      (error) => {
-        console.log(error);
+      (e) => {
+        console.log(e);
       }
     );
   };

@@ -23,8 +23,8 @@ const Inprogress = () => {
       result = res.data.registered_courses
       setCourses(result);
       setIsLoading(false);
-    } catch (err) {
-       console.log(err);
+    } catch (e) {
+       console.log(e);
     }
   };
   useEffect(() => {
