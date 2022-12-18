@@ -33,7 +33,6 @@ const courseSchema = new Schema(
       required: false,
       default: 1,
     },
-    reviews: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Rating" }],
     description: {
       type: String,
       required: false,

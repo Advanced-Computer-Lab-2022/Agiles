@@ -196,8 +196,8 @@ const Subtitle = () => {
       const res = await axios.get(LINK_URL + query);
       setLink(res.data);
       setSubtitles(location.state.data);
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
     }
     setIsLoading(false);
   };

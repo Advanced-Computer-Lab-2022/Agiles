@@ -10,7 +10,6 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Modal from "react-bootstrap/Modal";
 import UploadIcon from "@mui/icons-material/Upload";
-import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 import ReviewCard from "../../components/ReviewCard";
 import MyCourseInst from "./MyCourseInst";
@@ -109,8 +108,9 @@ const CoursePreInst = () => {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
+            <br></br>
             <Button  onClick={handleShow} style={{borderRadius:'0',border:'none',backgroundColor:'#a00407'}}>
-              <EditIcon /> Edit Course Preview Video
+               Edit
             </Button>
             <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>

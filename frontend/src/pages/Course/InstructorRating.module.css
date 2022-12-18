@@ -1,7 +1,4 @@
-.ratingStars{
-  display: inline-block;
-  text-align: center;
-  }
+
 .ratingStars form input{
   padding: 1.5rem;
   align-items: center;
@@ -10,6 +7,6 @@
 .ratingStars form{
   display: grid;
   margin-top: 1rem;
-  width: 70%;
+  width: 30%;
   gap: 2rem;
 }

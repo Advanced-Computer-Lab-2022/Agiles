@@ -13,13 +13,18 @@ const cookies = new Cookies();
 const RegCourseCard = (props) => {
   const userId = cookies.get("currentUser");
   const index=props.index;
+  const id = props.data._id;
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [review, setReview] = useState("");
-  const [oldReview, setOldReview] = useState([]);
+  const [editReview,setEditReviw]=useState(false);
   const [courseRating,setCourseRating] = useState(props.courseRating);
+  const [oldReview, setOldReview] = useState(props.courseReview);
   const [value, setValue] = useState(courseRating);
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    setEditReviw(false)
+  }
   const handleShow = () => {
     setValue(courseRating);
     setShow(true);
@@ -38,6 +43,34 @@ const RegCourseCard = (props) => {
   };
 
   //------------------
+  const deleteRating = async()=>{
+    try{
+      const res =await axios.delete("/individualtrainee/deleteCourseRating",{params:{courseId:id}});
+      setCourseRating(0);
+      handleClose();
+      setOldReview("");
+      setValue(0);
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      
+      Toast.fire({
+        icon: 'success',
+        title: 'delete successfully'
+      })
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
   const setRating = async (event) => {
     event.preventDefault();
       const body = {
@@ -48,6 +81,8 @@ const RegCourseCard = (props) => {
       };
       try {
         const res = axios.post("/course/setRating", body);
+        handleClose();
+
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",
@@ -65,6 +100,7 @@ const RegCourseCard = (props) => {
           title: "updated succesfully",
         });
         setCourseRating(value);
+        setOldReview(review);
         setShow(false)
       } catch (err) {
         Swal.fire({
@@ -79,9 +115,9 @@ const RegCourseCard = (props) => {
     },[courseRating])
   return (
     <div className={RegCourseCardStyles["regcard"]}>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={editReview} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Rating</Modal.Title>
+          <Modal.Title>Edit Review</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Rating name="rating" value={value} onChange={handleChangeRating} />
@@ -95,11 +131,29 @@ const RegCourseCard = (props) => {
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            close
-          </Button>
           <Button variant="primary" onClick={setRating}>
-            save changes
+            save
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/**** */}
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Your Review</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Rating name="rating" value={value} readOnly />
+          <p style={{fontWeight:'bold'}}>{oldReview==""?"There are no written comments for your review.":oldReview}</p>
+        </Modal.Body>
+        <Modal.Footer>
+        {value!=0&& <Button variant="danger" onClick={deleteRating}>
+            delete
+          </Button>}
+          <Button variant="primary" onClick={()=>{
+            setEditReviw(true)
+            setShow(false)
+          }}>
+            Edit Review
           </Button>
         </Modal.Footer>
       </Modal>

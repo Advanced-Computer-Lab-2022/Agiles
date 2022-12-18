@@ -28,23 +28,53 @@ function getLabelText(value) {
   return `${value} Star${value !== 1 ? "s" : ""}, ${labels[value]}`;
 }
 
-function InstructorRating({id,instRating,instReview}) {
+function InstructorRating({id,instRating,instReview,courseId}) {
   const userId = cookies.get("currentUser");
   const [value, setValue] = useState(instRating);
   const [hover, setHover] = React.useState(-1);
-  const [review, setReview] = useState("");
-
+  const [review, setReview] = useState(instReview);
+  const [view,setView]=useState(instRating!=0);
+  const delRating=async()=>{
+        try{
+          const res =await axios.delete("/individualtrainee/deleteRating",{params:{instId:id}});
+          setView(false);
+          setReview("");
+          setValue(0);
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+          
+          Toast.fire({
+            icon: 'success',
+            title: 'delete successfully'
+          })
+        }
+        catch(err){
+          console.log(err);
+        }
+          
+  }
   const setRating = async (event) => {
     event.preventDefault();
     event.target.reset();
     const body = {
         instId: id,
-        userId: userId,
+        userId: userId, 
+        courseId:courseId,
         userRating: value,
         userReview: review,
       };
     try {
         const res = axios.post("/individualtrainee/setRating", body);
+        setView(true);
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-end',
@@ -80,6 +110,7 @@ function InstructorRating({id,instRating,instReview}) {
         })
       }
     }
+
   useEffect(()=>{
   },[]);
   return (
@@ -111,13 +142,17 @@ function InstructorRating({id,instRating,instReview}) {
       <form onSubmit={setRating}>
         <input
           type="text"
-          placeholder="Write a review"
+          placeholder={instReview==""&&"write your review"}
+          value={review}
           onChange={(e) => {
             setReview(e.target.value);
           }}
         />
-         <Button variant="dark" type="submit" style={{backgroundColor:'#a00407',borderRadius: 0, width: '10rem' ,border: 'none' }}>  save</Button>
+         <Button variant="dark" type="submit" style={{backgroundColor:'green',borderRadius: 0, width: '7rem' ,borderRadius:'0.5rem',border: 'none' }}> save</Button>
       </form>
+      <div>
+       {view&&<Button variant="dark" onClick={delRating} type="submit" style={{backgroundColor:'darkRed',borderRadius: 0, width: '7rem' ,borderRadius:'0.5rem',border: 'none',marginTop:'0.5rem' }}> Delete</Button>}
+      </div>
     </div>
   );
 }

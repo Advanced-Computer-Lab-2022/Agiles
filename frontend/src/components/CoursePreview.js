@@ -18,11 +18,9 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const CoursePreview = () => {
   const location = useLocation();
-  const id = cookies.get("currentUser");
   const course_id = new URLSearchParams(location.search).get("courseId");
   const index = new URLSearchParams(location.search).get("idx");
   const [isloading, setIsLoading] = useState(false);
-  const token = cookies.get("jwt");
   const [data, setData] = useState([]);
   const [course, setCourse] = useState([]);
   const [instId, setInstId] = useState(0);
@@ -40,7 +38,6 @@ const CoursePreview = () => {
     setIsLoading(true);
     try {
       const res = await axios.post("individualtrainee/inprogressCourse", {
-        id: id,
         courseId: course_id,
       });
       const items = await axios.post("individualtrainee/getAllItems", {
@@ -151,6 +148,7 @@ const CoursePreview = () => {
             <InstructorRating
               id={instId}
               instRating={instRating}
+              courseId={course_id}
               instReview={instReview}
             />
             <hr className={style["mainRight-hr"]}></hr>

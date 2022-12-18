@@ -179,8 +179,6 @@ const getCourseById = async (req, res) => {
     const course = await Course.findById(id)
       .populate("instructor")
       .populate("subtitles.link")
-      .populate("reviews")
-      .populate("reviews.userId")
       .exec();
     const reviews = await Rating.find({ state: true, courseId: id }).populate(
       "userId"
@@ -239,14 +237,14 @@ const rateCourse = async (req, res) => {
     let x = parseInt(userRating);
     const exists = await Rating.findOne({
       userId: userId,
-      courseId,
+      courseId:courseId,
       state: true,
     }).exec();
     if (exists) {
       let currentRating = parseInt(exists.userRating);
       let newRating = oldRating - currentRating + x;
       const updateRating = await Rating.findOneAndUpdate(
-        { userId: userId, courseId, state: true },
+        { userId: userId, courseId:courseId, state: true },
         { userRating: userRating, userReview: userReview },
         { new: true }
       ).exec();
@@ -265,18 +263,7 @@ const rateCourse = async (req, res) => {
         state: true,
         courseId: courseId,
       });
-      const UpdatedRating = await Course.updateOne(
-        { _id: courseId },
-        {
-          $push: {
-            reviews: newRatingObj._id,
-          },
-          $set: {
-            rating: newRating,
-            ratingCount: newCount,
-          },
-        }
-      ).exec();
+      const updateCourse = await Course.findByIdAndUpdate(courseId,{$set:{rating:newRating,ratingCount:newCount}})
       const updateIndvidual = await IndividualTrainee.updateOne(
         { _id: userId, "registered_courses.courseId": courseId },
         { $set: { "registered_courses.$.courseRating": newRatingObj._id } }

@@ -37,7 +37,7 @@ const Wallet = () => {
         <LoadingScreen loading={true} logoSrc={spinner} />
       ) : (
     <section className={style['mainWallet']}>
-        <h1>Wallet</h1>
+        <h1>Ballance</h1>
         <div className={style['currentBalance']}>
           <h2>Your Current Month Balance :</h2>
           <h3>USD {wallet?.length>0?wallet?.filter((el=>el.month==currentMonth))[0].amount:"0.00"}</h3>
