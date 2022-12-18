@@ -19,11 +19,15 @@ const TraineeCourse = require("../models/TraineeCourse");
 var nodemailer = require("nodemailer");
 
 const getNotes = async (req, res) => {
-  const subtitleId = req.body.subtitleId;
-  let oldNotes = " ";
-  const courseId = req.body.courseId;
   const traineeId = req.user.id;
-  const linkId = req.body.linkId;
+  let oldNotes = " ";
+  console.log(req["query"].subtitleId);
+  console.log(req["query"].courseId);
+  console.log(req["query"].linkId);
+
+  const subtitleId = req["query"].subtitleId;
+  const courseId = req["query"].courseId;
+  const linkId = req["query"].linkId;
   if (!subtitleId || !linkId || !courseId || !traineeId) {
     return res.status(500).json("bad request");
   }

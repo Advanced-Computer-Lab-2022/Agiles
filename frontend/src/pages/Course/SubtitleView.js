@@ -50,16 +50,24 @@ const Subtitle = () => {
     });
   };
   const getOldNotes = async (e) => {
-    console.log(subtitleId);
     let id = new URLSearchParams(location.search).get("linkId");
-    console.log(id);
-    console.log(location.state.courseId);
-    let res = await axios.get("/individualtrainee/getNote", {
-      subtitleId: subtitleId,
-      linkId: id,
-      courseId: location.state.courseId,
-    });
-    console.log(res);
+    console.log("linkID: " + id);
+    console.log("courseId: " + location.state.courseId);
+    console.log("subtitleID: " + subtitleId);
+    try {
+      let res = await axios.get("/individualtrainee/getNote", {
+        params: {
+          subtitleId: subtitleId,
+          linkId: id,
+          courseId: location.state.courseId,
+        },
+      });
+      console.log(notes);
+      setNotes(res.data.notes);
+      console.log(notes);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleNotesChange = (event) => {
@@ -202,7 +210,7 @@ const Subtitle = () => {
 
   useEffect(() => {
     FetchData();
-
+    getOldNotes();
     return () => {
       clearInterval(progress.current);
     };
