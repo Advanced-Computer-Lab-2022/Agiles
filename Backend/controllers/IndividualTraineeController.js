@@ -315,6 +315,28 @@ const getFinalExamGrade = async (req, res) => {
   }
 };
 
+//get the subtitle exam
+const courseExam = async (req, res) => {
+  const subtitleId = req.query["subtitleId"];
+  questions = await Exam.findOne({ subtitleId: subtitleId });
+
+  if (!questions) {
+    res.status(400).json({ error: "Empty" });
+  } else {
+    res.status(200).json(questions);
+  }
+};
+const courseFinalExam = async (req, res) => {
+  const courseId = req.query["courseId"];
+  questions = await FinalExam.findOne({ courseId: courseId });
+
+  if (!questions) {
+    res.status(400).json({ error: "Empty" });
+  } else {
+    res.status(200).json(questions);
+  }
+};
+
 const getExerciseGrade = async (req, res) => {
   const studentId = req.query["id"];
   const subtitleId = req.query["subtitleId"];
@@ -709,4 +731,6 @@ module.exports = {
   getAllItemsCourse,
   addNotesToTrainee,
   getNotes,
+  courseExam,
+  courseFinalExam
 };

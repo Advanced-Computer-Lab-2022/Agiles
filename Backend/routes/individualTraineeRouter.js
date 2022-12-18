@@ -2,12 +2,12 @@ const express = require("express");
 const IndividualTraineeRouter = express.Router();
 const { isAuthTrainee } = require("../controllers/authContext");
 const {
-  courseExam,
-  courseFinalExam,
   reportProblem,
   viewReportedProblems,
 } = require("../controllers/CourseController");
 const {
+  courseExam,
+  courseFinalExam,
   requestAccess,
   getTraineebyID,
   InprogressCourses,
