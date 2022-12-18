@@ -87,27 +87,7 @@ const courseSearch = async (req, res) => {
     res.status(200).json(courses);
   }
 };
-//get the subtitle exam
-const courseExam = async (req, res) => {
-  const subtitleId = req.query["subtitleId"];
-  questions = await Exam.findOne({ subtitleId: subtitleId });
 
-  if (!questions) {
-    res.status(400).json({ error: "Empty" });
-  } else {
-    res.status(200).json(questions);
-  }
-};
-const courseFinalExam = async (req, res) => {
-  const courseId = req.query["courseId"];
-  questions = await FinalExam.findOne({ courseId: courseId });
-
-  if (!questions) {
-    res.status(400).json({ error: "Empty" });
-  } else {
-    res.status(200).json(questions);
-  }
-};
 
 const createCourse = async (req, res) => {
   const user = req.user;
