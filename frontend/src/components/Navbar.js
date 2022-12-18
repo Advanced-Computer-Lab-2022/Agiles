@@ -122,30 +122,30 @@ const Navbar = () => {
         onClick={handleClose}
       >
         <MenuItem onClick = {navigatetoProfile}>
-          Public profile
+          public profile
         </MenuItem>
         <MenuItem onClick = {navigateAccountSettings}>
-          Account security
+          account security
         </MenuItem>
        {isTrainee()&&<MenuItem onClick = {navigatePaymentMethods}>
-          Payment methods
+          payment methods
         </MenuItem>}
         <Divider/>
         {isTrainee ()&&  <MenuItem onClick = {navigateMyLearning}>
-          My learning
+          my learning
         </MenuItem>}
         {isTrainee ()&&  <MenuItem onClick = {navigateprevReportsTrainee}>
-        Previous Reports
+        reported problems
         </MenuItem>}
         {isInstructor()&& 
         <>
-          <MenuItem onClick = {hanldleMycourses}> My Courses </MenuItem>
-          <MenuItem onClick = {handleCreateCourse}>Create Course</MenuItem>
-          <MenuItem onClick = {handlePrevReports}>Previous Reports</MenuItem>
+          <MenuItem onClick = {hanldleMycourses}> my courses </MenuItem>
+          <MenuItem onClick = {handleCreateCourse}>create course</MenuItem>
+          <MenuItem onClick = {handlePrevReports}>reported problems</MenuItem>
           </>
           }
         <Divider />
-        <MenuItem onClick = {navigateTerms}>Terms & conditions</MenuItem>
+        <MenuItem onClick = {navigateTerms}>terms & conditions</MenuItem>
         <Divider />
         <MenuItem onClick={handleLogOut}>
           <ListItemIcon>

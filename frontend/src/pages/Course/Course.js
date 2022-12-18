@@ -238,7 +238,7 @@ const Course = () => {
                                 {link.allowed ? (
                                   <Link
                                     to={link.linkUrl}
-                                    style={{ color: "#a00407" }}
+                                    style={{ color: "#a00407" ,textDecoration:"none"}}
                                   >
                                     {" "}
                                     {link.linkDesc}{" "}

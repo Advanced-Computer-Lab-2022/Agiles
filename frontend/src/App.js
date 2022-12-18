@@ -120,7 +120,7 @@ function App() {
             <Route path="/reviews" element={<Reviews />} />
             <Route path="/wallet" element={<Wallet />} />
             <Route path="/subtitleView" element={<Subtitle />}/>
-            <Route path="/ReportProblem" element={<ReportProblem />} />
+            <Route path="/reportproblem" element={<ReportProblem />}/>
           </Route>
 
           </Routes>

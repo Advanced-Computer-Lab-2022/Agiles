@@ -78,7 +78,6 @@ const getAllItemsCourse = async (req, res) => {
 };
 
 const updateLinkProgress = async (req, res) => {
-  // const id = req.body.id;
   const courseId = req.body.courseId;
   const linkId = req.body.linkId;
   const studentId = req.user.id;
@@ -375,11 +374,22 @@ const changePassword = async (req, res) => {
   }
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
+  const oldUser = await IndividualTrainee.findOne({ email: email});
+  console.log(oldUser);
   try {
-    const data = await IndividualTrainee.findOneAndUpdate(
-      { email: email },
-      { password: hashedPassword }
-    );
+    if (oldUser){
+      const data = await IndividualTrainee.findOneAndUpdate(
+        { email: email },
+        { password: hashedPassword }
+      );
+    }
+    else{
+      const data = await Instructor.findOneAndUpdate(
+        { email: email },
+        { password: hashedPassword }
+      );
+    }
+  
     return res.status(200).json("success");
   } catch (err) {
     return res.status(406).json(err);
@@ -553,7 +563,6 @@ const payForCourse =  async(courseId,userId) => {
     return;
   }
   const course = await Course.findById(courseId);
-  const instructor = await Instructor.findById(course.instructor);
   const profit =
     parseInt(course.price) -
     (parseInt(course.price) * parseInt(course.discount)) / 100;
@@ -561,10 +570,16 @@ const payForCourse =  async(courseId,userId) => {
     await IndividualTrainee.findByIdAndUpdate(userId, {
       $push: { registered_courses: { courseId: courseId } },
     });
-    await Instructor.updateOne(
-      { _id: course.instructor },
-      { wallet: instructor.wallet + profit*70/100 ,studentCount :instructor.studentCount+1}
-    );
+    const month = new Date().getMonth();
+    const exists = await Instructor.findOne({ _id: course.instructor,"wallet.month": month});
+    if(!exists){
+      await Instructor.updateOne( {_id: course.instructor},{$push:{wallet:{amount:profit*70/100,month:month}},$inc:{studentCount:1}});
+    }
+    else{
+      await Instructor.updateOne({_id: course.instructor,"wallet.month": month},{$inc:{"wallet.$.amount":profit*70/100}});
+      await Instructor.updateOne({_id: course.instructor},{$inc:{studentCount:1}});
+      console.log(update);
+    }
     await Course.updateOne(
       { _id: courseId },
       { studentCount: course.studentCount + 1 }

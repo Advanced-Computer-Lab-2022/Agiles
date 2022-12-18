@@ -70,7 +70,6 @@ const Subtitle = () => {
   const handleNotesChange = (event) => {
     // 👇️ access textarea value
     setNotes(event.target.value);
-    console.log(event.target.value);
   };
   const handleClick = async (e) => {
 
@@ -197,7 +196,6 @@ const Subtitle = () => {
         }
         let res = await axios.post("/individualtrainee/updateLinkProgress", 
         {
-          id: cookies.get("currentUser"),
           courseId: location.state.courseId,
           completedItems: progresser
         });}

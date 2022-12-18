@@ -29,8 +29,11 @@ export const CourseCard = (props) => {
       <div className={style["cardheader"]}>{props.data.title}</div>
       <div className={style["cardfooter"]}>{props.data.instructorname}</div>
       <div>
-        <YouTubeIcon className={style["icon"]} />
         <label className={style["time"]}>
+          <span style={{color:'#a00407',marginRight:'0.5rem'}}>{props.data.studentCount} (students)</span>
+          
+          {" "}
+         <YouTubeIcon className={style["icon"]} />
           {props.data.totalHoursOfCourse}h 30m
         </label>
       </div>

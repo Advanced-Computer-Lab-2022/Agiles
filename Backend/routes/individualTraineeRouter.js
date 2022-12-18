@@ -70,9 +70,7 @@ IndividualTraineeRouter.patch(
 );
 IndividualTraineeRouter.patch(
   "/changePassword",
-  verifyItraineeJWT,
-  changePassword
-);
+  changePassword); // forgetten password
 IndividualTraineeRouter.post("/submitExam", verifyItraineeJWT, submitExam);
 IndividualTraineeRouter.get("/courseExam", verifyItraineeJWT, courseExam);
 IndividualTraineeRouter.get(

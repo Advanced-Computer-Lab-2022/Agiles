@@ -208,3 +208,35 @@
     width: 30%;
     border-radius: 0;
   }
+  .mainWallet{
+    padding-left: 8rem;
+    padding-top: 2rem;
+  }
+  .mainWallet h1{
+    font-size: 2rem;
+    color: #a00407;
+  }
+  .currentBalance{
+    padding-left: 1rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border: 1px solid black;
+    width: 40%;
+    border-radius: 0.5rem;
+  }
+  .currentBalance h2{
+    font-size: 1rem;
+  }
+  .currentBalance h3{
+    font-size: 2rem;
+    margin-left: 0.5rem;
+    color: green;
+  }
+  .profit{
+    margin-top: 3rem;
+    width: 30%;
+  }
+  .profit h2{
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }

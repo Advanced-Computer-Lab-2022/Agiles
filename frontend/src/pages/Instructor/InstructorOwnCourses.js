@@ -72,6 +72,7 @@ function InstructorOwnCourses() {
            </section>
        
       <section className={InprogressStyles['courses']}>
+      <button  className={InprogressStyles['main-btn']} onClick={()=>window.location.href="/createcourse"}>Create Course</button>
       <div className={RegCourseCardStyles["cardgrid"]}>
         {courses.length>0 ?(<>{courses.map((el,index) => {
           return <CourseCard data={el} key={index}></CourseCard>;

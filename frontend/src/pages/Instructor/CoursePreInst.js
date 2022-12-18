@@ -176,10 +176,12 @@ const CoursePreInst = () => {
       </div>
       <hr className={style["mainRight-hr"]}></hr>
       <h3>About this course</h3>
-      <p>{course.description}</p>
-      <hr className={style["mainRight-hr"]}></hr>
-      <h3>Subject</h3>
-      <p>{course.subject}</p>
+      <p>Description : {course.description}
+      <br></br>
+      <span>Subject : {course.subject}</span>
+      <br></br>
+      <span style={{color:'#a00407',fontWeight:'bold'}}>Enrolled students : {course.studentCount} students</span>
+      </p>
       <hr className={style["mainRight-hr"]}></hr>
       <h3>Define promotion</h3>
       <CoursePromo course_id={course_id}></CoursePromo>

@@ -4,7 +4,7 @@
 }
 .courses{
     margin-left: 10rem;
-    margin-top: 3rem;
+    margin-top: 2rem;
 }
 .main-section{
     background-color: rgb(111, 111, 111);
@@ -18,4 +18,14 @@
     color: white;
     margin-left: 10rem;
 
+}
+.main-btn{
+    border: none;
+    background-color: #a00407;
+    border-radius: 0.2rem;
+    padding: 0.5rem;
+    color: white;
+}
+.main-btn:hover{
+    background-color: #670204;
 }
