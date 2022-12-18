@@ -326,7 +326,6 @@ module.exports = {
   courseSearch,
   getCourseById,
   setExam,
-  courseExam,
   getLink,
   rateCourse,
   setFinalExam,
