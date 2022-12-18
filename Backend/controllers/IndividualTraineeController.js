@@ -154,8 +154,6 @@ const updateLinkProgress = async (req, res) => {
       { $set: { numberOfItems: numberOfItems } },
       { new: true, upsert: true }
     );
-    console.log(updatecourse);
-    console.log(numberOfItems);
 
     const linkprogress = await TraineeCourse.findOne(
       {
@@ -244,7 +242,6 @@ const submitExam = async (req, res) => {
         { new: true },
         function (err, docs) {
           if (err) console.log(err);
-          else console.log("Updated User : ", docs);
         }
       );
     } else {

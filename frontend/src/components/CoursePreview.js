@@ -14,7 +14,7 @@ import axios from "axios";
 import ReviewCard from "./ReviewCard";
 import RegCourse from "../pages/Course/RegCourse";
 import InstructorRating from "../pages/Course/InstructorRating";
-import Cookies  from "universal-cookie";
+import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const CoursePreview = () => {
   const location = useLocation();
@@ -23,12 +23,12 @@ const CoursePreview = () => {
   const index = new URLSearchParams(location.search).get("idx");
   const [isloading, setIsLoading] = useState(false);
   const token = cookies.get("jwt");
-  const [data , setData] = useState([]);
+  const [data, setData] = useState([]);
   const [course, setCourse] = useState([]);
-  const [instId , setInstId]= useState(0);
-  const [instRating , setInstRating]= useState(0);
-  const [instReview , setInstReview]= useState("");
-  const [progress,setProgress] = useState(0);
+  const [instId, setInstId] = useState(0);
+  const [instRating, setInstRating] = useState(0);
+  const [instReview, setInstReview] = useState("");
+  const [progress, setProgress] = useState(0);
   const [show, setShow] = useState(false);
   const [reviews, setReviews] = useState([]);
   const handleClose = () => setShow(false);
@@ -39,17 +39,33 @@ const CoursePreview = () => {
   const fetchdata = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.post('individualtrainee/inprogressCourse',{id:id,courseId:course_id});
-      const items = await axios.post('individualtrainee/getAllItems',{courseId:course_id});
+      const res = await axios.post("individualtrainee/inprogressCourse", {
+        id: id,
+        courseId: course_id,
+      });
+      const items = await axios.post("individualtrainee/getAllItems", {
+        courseId: course_id,
+      });
       setData(res.data);
       setReviews(res.data.secondField);
-      setProgress(Math.floor((res.data.firstField.registered_courses[index].progress / items.data.numberOfItems) * 100));
+      setProgress(
+        Math.floor(
+          (res.data.firstField.registered_courses[index].progress /
+            items.data.numberOfItems) *
+            100
+        )
+      );
       setCourse(res.data.firstField.registered_courses[index].courseId);
-      setInstId(res.data.firstField.registered_courses[index].courseId.instructor)
-      if (res.data.firstField.registered_courses[index].instRating){
-        setInstRating(res.data.firstField.registered_courses[index].instRating.userRating);
-        setInstReview(res.data.firstField.registered_courses[index].instRating.userReview);
-  
+      setInstId(
+        res.data.firstField.registered_courses[index].courseId.instructor
+      );
+      if (res.data.firstField.registered_courses[index].instRating) {
+        setInstRating(
+          res.data.firstField.registered_courses[index].instRating.userRating
+        );
+        setInstReview(
+          res.data.firstField.registered_courses[index].instRating.userReview
+        );
       }
       setIsLoading(false);
     } catch (e) {
@@ -58,7 +74,6 @@ const CoursePreview = () => {
   };
   useEffect(() => {
     fetchdata();
-    console.log(progress);
   }, []);
   return (
     <>
@@ -73,7 +88,7 @@ const CoursePreview = () => {
             course_title={course.title}
             course_inst={course.instructorname}
             name={"preview"}
-            idx = {index}
+            idx={index}
           />
           <div className={style["mainRight"]}>
             <Modal show={show} size="lg" onHide={handleClose}>
@@ -82,11 +97,12 @@ const CoursePreview = () => {
               </Modal.Header>
               <Modal.Body>
                 <div className={style["rating-box"]}>
-                  {reviews.filter((review, idx) => idx < 5)
-                    .map((review,index) => {
+                  {reviews
+                    .filter((review, idx) => idx < 5)
+                    .map((review, index) => {
                       return (
                         <ReviewCard
-                          index = {index}
+                          index={index}
                           username={review.userId.username}
                           rating={review.userRating}
                           review={review.userReview}
@@ -131,38 +147,52 @@ const CoursePreview = () => {
             <p>{course.subject}</p>
             <hr className={style["mainRight-hr"]}></hr>
             <h3>Rate Instructor</h3>
-            <InstructorRating id={instId} instRating={instRating} instReview={instReview}/>
+            <InstructorRating
+              id={instId}
+              instRating={instRating}
+              instReview={instReview}
+            />
             <hr className={style["mainRight-hr"]}></hr>
             <div className={style["mainRight-rating"]}>
               <h3>
                 <Rating
                   name="rating"
                   readOnly
-                  value={!course.rating ? 0 : Math.round(course.rating/course.ratingCount)}
+                  value={
+                    !course.rating
+                      ? 0
+                      : Math.round(course.rating / course.ratingCount)
+                  }
                   className={style["rating"]}
                 />{" "}
                 <span>
-                  {Math.round(course.rating/course.ratingCount)} course rating{" "}
+                  {Math.round(course.rating / course.ratingCount)} course rating{" "}
                   <CircleIcon style={{ fontSize: "0.5rem" }} /> (
                   {course.ratingCount - 1} ratings)
                 </span>
               </h3>
               <div className={style["rating-box"]}>
-                  {reviews.filter((review, idx) => idx < 5)
-                    .map((review,index) => {
-                      return (
-                        <ReviewCard
-                          index = {index}
-                          username={review.userId.username}
-                          rating={review.userRating}
-                          review={review.userReview}
-                        ></ReviewCard>
-                      );
-                    })}
-                </div>
+                {reviews
+                  .filter((review, idx) => idx < 5)
+                  .map((review, index) => {
+                    return (
+                      <ReviewCard
+                        index={index}
+                        username={review.userId.username}
+                        rating={review.userRating}
+                        review={review.userReview}
+                      ></ReviewCard>
+                    );
+                  })}
+              </div>
               <Button
                 onClick={handleShow}
-                style={{backgroundColor:'#a00407',borderRadius: 0, width: '10rem' ,border: 'none' }}
+                style={{
+                  backgroundColor: "#a00407",
+                  borderRadius: 0,
+                  width: "10rem",
+                  border: "none",
+                }}
               >
                 show all reviews
               </Button>

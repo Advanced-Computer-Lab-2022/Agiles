@@ -27,12 +27,13 @@ const Subtitle = () => {
   const subtitleId = new URLSearchParams(location.search).get("subtitleId");
   const [link, setLink] = useState({ linkUrl: "", linkDesc: "" });
   const [subtitles, setSubtitles] = useState([]);
+  const subtitles2 = location.state.data;
   const [isloading, setIsLoading] = useState(false);
   const [grade, setGrade] = useState([]);
   const [questions, setQuestions] = useState(0);
   const [show, setShow] = useState(false);
   // const [show, setShow] = useState(false);
-  
+
   const [notes, setNotes] = useState("Blank");
   const downloadPDFFile = () => {
     var doc = new jsPDF("landscape", "px", "a4", "false");
@@ -41,7 +42,6 @@ const Subtitle = () => {
   };
 
   const saveNotes = async (e) => {
-    console.log(notes);
     let res = await axios.patch("/individualtrainee/addNotes", {
       subtitleId: subtitleId,
       notes: notes,
@@ -50,14 +50,16 @@ const Subtitle = () => {
     });
   };
   const getOldNotes = async (e) => {
-    let oldNotes = await axios.get("/individualtrainee/getNotes", {
+    console.log(subtitleId);
+    let id = new URLSearchParams(location.search).get("linkId");
+    console.log(id);
+    console.log(location.state.courseId);
+    let res = await axios.get("/individualtrainee/getNote", {
       subtitleId: subtitleId,
-      linkId: link._id,
+      linkId: id,
       courseId: location.state.courseId,
     });
-    if (oldNotes) {
-      setNotes(oldNotes);
-    }
+    console.log(res);
   };
 
   const handleNotesChange = (event) => {
@@ -189,14 +191,15 @@ const Subtitle = () => {
     setIsLoading(true);
     try {
       const res = await axios.get(LINK_URL + query);
+      console.log("link: " + res.data);
       setLink(res.data);
       setSubtitles(location.state.data);
-      setNotes();
     } catch (err) {
       console.log(err);
     }
     setIsLoading(false);
   };
+
   useEffect(() => {
     FetchData();
 

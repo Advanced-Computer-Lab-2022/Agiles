@@ -28,7 +28,6 @@ const CoursContent = () => {
   const navigate = useNavigate();
 
   const handleClick = (e) => {
-    console.log(e.target.id);
     navigate(
       {
         pathname: "/subtitleView",
