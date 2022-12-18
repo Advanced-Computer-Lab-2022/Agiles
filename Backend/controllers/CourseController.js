@@ -329,7 +329,6 @@ module.exports = {
   getLink,
   rateCourse,
   setFinalExam,
-  courseFinalExam,
   reportProblem,
   popularCourses,
   viewReportedProblems,
