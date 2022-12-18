@@ -7,10 +7,7 @@ function RefundRequests() {
   const fetchData = async () => {
     const url = "/admin/refundRequests";
     const res = await axios.get(url);
-    console.log(res.status);
-    console.log(res.data);
     setReports(res.data);
-    console.log(reports);
   };
   useEffect(() => {
     fetchData();
@@ -18,8 +15,6 @@ function RefundRequests() {
 
   const handleApprove = async (traineeId, courseId, index) => {
     const url = "/admin/grantAccess";
-    // console.log(traineeId);
-    // console.log(courseId);
     try {
       const res = await axios.post(url, {
         traineeId: traineeId,

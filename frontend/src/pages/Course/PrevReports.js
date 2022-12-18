@@ -15,7 +15,6 @@ const PrevReports = () => {
             let jsondata = await res.json();
             if(res.ok){
                 setReports(jsondata);
-                console.log(reports);
             }
         };
         fetchData();

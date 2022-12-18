@@ -266,7 +266,7 @@ const grantAccess = async (req, res) => {
     );
     return res.status(200).json("access granted");
   } catch (error) {
-    console.log(error);
+
     return res.status(406).json(error);
   }
 };
@@ -301,7 +301,6 @@ const acceptRefund = async (req, res) => {
     );
     return res.status(200).json("refund done");
   } catch (error) {
-    console.log(error);
     return res.status(406).json(error);
   }
 };

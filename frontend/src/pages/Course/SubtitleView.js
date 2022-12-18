@@ -138,11 +138,9 @@ const Subtitle = () => {
   };
 
   const handleProgress = async (event) => {
-    //console.log(event.data);
     let progresser = 0;
-    if (event.data == 1) {
-      console.log("playing,paused,ended");
-      progress.current = setInterval(async () => {
+    if(event.data == 1 ){
+      progress.current = setInterval (async () => {
         const player = event.target;
         const currentTime = player.getCurrentTime();
         const duration = player.getDuration();
@@ -150,31 +148,31 @@ const Subtitle = () => {
         if (progresser >= 80) {
           progresser = 100;
         }
-        console.log(progresser);
-        let res = await axios.post("/individualtrainee/updateLinkProgress", {
+        let res = await axios.post("/individualtrainee/updateLinkProgress", 
+        {
           linkId: link._id,
           courseId: location.state.courseId,
           completedItems: progresser,
         });
-        console.log(res);
-      }, 5000);
-    } else if (event.data == 2 || event.data == 0) {
-      console.log("paused,buffering");
-      const player = event.target;
-      const currentTime = player.getCurrentTime();
-      const duration = player.getDuration();
-      progresser = Math.floor((currentTime / duration) * 100);
-      if (progresser >= 80) {
-        progresser = 100;
-      }
-      let res = await axios.post("/individualtrainee/updateLinkProgress", {
-        id: cookies.get("currentUser"),
-        courseId: location.state.courseId,
-        completedItems: progresser,
-      });
-      console.log(res);
+    }, 5000);
+    
     }
-    return () => {
+    else if( event.data == 2 || event.data == 0){
+      const player = event.target;
+        const currentTime = player.getCurrentTime();
+        const duration = player.getDuration();
+        progresser = Math.floor((currentTime / duration) * 100);
+        if(progresser >= 80){
+          progresser = 100;
+  
+        }
+        let res = await axios.post("/individualtrainee/updateLinkProgress", 
+        {
+          id: cookies.get("currentUser"),
+          courseId: location.state.courseId,
+          completedItems: progresser
+        });}
+    return () =>{
       clearInterval(progress.current);
     };
   };

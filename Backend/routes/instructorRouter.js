@@ -1,5 +1,6 @@
 const express = require("express");
 const instructorRouter = express.Router();
+const {isAuthInstructor} = require("../controllers/authContext");
 
 const {
   createCourse,
@@ -38,5 +39,5 @@ instructorRouter.patch("/updatePreview", verifyInstructorJWT, uploadPreLink);
 instructorRouter.post("/reportProblem", verifyInstructorJWT, reportProblem);
 instructorRouter.get("/viewReportedProblems",verifyInstructorJWT,viewReportedProblems);
 instructorRouter.get("/instructorbyid", getInstructorbyId);
-
+instructorRouter.get("/isAuth",isAuthInstructor);
 module.exports = instructorRouter;
