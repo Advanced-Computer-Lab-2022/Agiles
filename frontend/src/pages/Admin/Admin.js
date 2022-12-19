@@ -8,7 +8,7 @@ const Admin = (props) => {
     <div className={style["admin"]}>
       <AdminSidebar/>
       <div className={style["admin-content"]}>
-      <AdminNavbar/>
+      <AdminNavbar funcNav={props.funcNav}/>
       <Outlet/>
       </div>
 
