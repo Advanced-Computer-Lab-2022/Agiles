@@ -5,7 +5,8 @@ import axios from "axios";
 
 const LOGOUT_URL = "/admin/logOut";
 
-const AdminNavbar = () => {
+const AdminNavbar = ({funcNav}) => {
+   
     const username = localStorage.getItem("username");
     const navigate = useNavigate();
     const handleLogOut = async () => {
@@ -17,6 +18,7 @@ const AdminNavbar = () => {
         try {
           const res = await axios.post(LOGOUT_URL, { username: 4 }, config);
           localStorage.removeItem("username");
+          funcNav(true);
           navigate("/");
     
         } catch (e) {

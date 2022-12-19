@@ -81,10 +81,7 @@ function App() {
             <Route path="/previewprofile" element={<PreviewProfile />} />
             <Route path="/instructor/terms" element={<InstructorTerms />} />
             <Route path="/user/terms" element={<UserTerms />} />
-            <Route
-              path="/forbidden"
-              element={<Forbidden funcNav={setShowNav} />}
-            />
+            <Route path="/forbidden" element={<Forbidden />} />
 
             <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}>
               <Route path="/admin" element={<Admin funcNav={setShowNav} />}>
