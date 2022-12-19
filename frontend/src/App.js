@@ -46,14 +46,16 @@ import Sucess from "./components/Sucess";
 import Cancel from "./components/Cancel";
 import RequireAuth from "./RequireAuth";
 import Forbidden from "./pages/Forbidden";
+import SetPromotion from "./pages/Admin/adminComponents/SetPromotion";
+
 function App() {
   const [showNav, setShowNav] = useState(true);
   const ROLES = {
-    'TRAINEE':0,
-    'INSTRUCTOR':1,
-    'CORPORATE':2,
-    'ADMIN':3
-  }
+    TRAINEE: 0,
+    INSTRUCTOR: 1,
+    CORPORATE: 2,
+    ADMIN: 3,
+  };
   return (
     <div className="App">
       <BrowserRouter>
@@ -67,7 +69,10 @@ function App() {
             <Route index element={<Home />}></Route>
             <Route path="/login" element={<Login />} />
             <Route path="/forgotpassword" element={<ForgetPassword />} />
-            <Route path="/updateforgotpassword" element={<UpdateForgottenPassword />}/>
+            <Route
+              path="/updateforgotpassword"
+              element={<UpdateForgottenPassword />}
+            />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/course" element={<Course />} />
@@ -75,54 +80,65 @@ function App() {
             <Route path="/courses/filter" element={<FilterResults />} />
             <Route path="/previewprofile" element={<PreviewProfile />} />
             <Route path="/instructor/terms" element={<InstructorTerms />} />
-            <Route path="/user/terms" element={<UserTerms/>} />
-            <Route path="/forbidden" element={<Forbidden funcNav={setShowNav}/>}/>
-          
-            <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]}/>}>
-            <Route path="/admin" element={<Admin funcNav={setShowNav} />}>
-              <Route path="dashboard" />
-              <Route path="addInstructor" element={<AddInstructor />} />
-              <Route path="addAdmin" element={<AddAdmin />} />
-              <Route path="addCorporate" element={<AddCorporate />} />
-              <Route path="viewRequests" element={<ViewRequests />} />
-              <Route path="RefundRequests" element={<RefundRequests />} />
-              <Route path="ViewReports" element={<ViewReports />} />
+            <Route path="/user/terms" element={<UserTerms />} />
+            <Route
+              path="/forbidden"
+              element={<Forbidden funcNav={setShowNav} />}
+            />
+
+            <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}>
+              <Route path="/admin" element={<Admin funcNav={setShowNav} />}>
+                <Route path="dashboard" />
+                <Route path="addInstructor" element={<AddInstructor />} />
+                <Route path="addAdmin" element={<AddAdmin />} />
+                <Route path="addCorporate" element={<AddCorporate />} />
+                <Route path="viewRequests" element={<ViewRequests />} />
+                <Route path="RefundRequests" element={<RefundRequests />} />
+                <Route path="ViewReports" element={<ViewReports />} />
+                <Route path="setPromotion" element={<SetPromotion />} />
+              </Route>
             </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES.TRAINEE]} />}>
+              <Route path="/mylearning" element={<Inprogress />} />
+              <Route path="/grades" element={<CourseContent />} />
+              <Route path="/preReg" element={<CoursePreview />} />
+              <Route path="/conReg" element={<CourseContent />} />
+              <Route path="/paymentMethods" element={<PaymentMethods />} />
+              <Route path="/finalexam" element={<CourseFinalExam />} />
+              <Route path="/CourseExam" element={<CourseExam />} />
+              <Route path="/success" element={<Sucess />} />
+              <Route path="/cancel" element={<Cancel />} />
+              <Route
+                path="/PrevReportsTrainee"
+                element={<PrevReportsTrainee />}
+              />
+            </Route>
+            <Route element={<RequireAuth allowedRoles={[ROLES.INSTRUCTOR]} />}>
+              <Route path="/createcourse" element={<CreateCourse />} />
+              <Route
+                path="/mycourses"
+                element={<InstructorOwnCourses />}
+              ></Route>
+              <Route path="/setExam" element={<SetExam />} />
+              <Route path="/preInst" element={<CoursePreInst />} />
+              <Route path="/conInst" element={<CourseConInst />} />
+              <Route path="/setFinalExam" element={<SetFinalExam />} />
+              <Route path="/PrevReports" element={<PrevReports />} />
             </Route>
 
-             <Route element={<RequireAuth allowedRoles={[ROLES.TRAINEE]}/>}>
-                <Route path="/mylearning" element={<Inprogress />}/>
-                <Route path="/grades" element={<CourseContent />} />
-                <Route path="/preReg" element={<CoursePreview />} />
-                <Route path="/conReg" element={<CourseContent />} />
-                <Route path="/paymentMethods" element={<PaymentMethods />} />
-                <Route path="/finalexam" element={<CourseFinalExam />} />
-                <Route path="/CourseExam" element={<CourseExam />} />
-                <Route path="/success" element={<Sucess />} />
-               <Route path="/cancel" element={<Cancel />} />
-               <Route path="/PrevReportsTrainee" element={<PrevReportsTrainee />}/>
-
-
+            <Route
+              element={
+                <RequireAuth allowedRoles={[ROLES.INSTRUCTOR, ROLES.TRAINEE]} />
+              }
+            >
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/accountsettings" element={<AccountSecurity />} />
+              <Route path="/reviews" element={<Reviews />} />
+              <Route path="/wallet" element={<Wallet />} />
+              <Route path="/subtitleView" element={<Subtitle />} />
+              <Route path="/reportproblem" element={<ReportProblem />} />
             </Route>
-            <Route element={<RequireAuth allowedRoles={[ROLES.INSTRUCTOR]}/>}>  
-               <Route path="/createcourse" element={<CreateCourse />} />
-               <Route path="/mycourses" element={<InstructorOwnCourses />}></Route>
-               <Route path="/setExam" element={<SetExam />} />
-               <Route path="/preInst" element={<CoursePreInst />} />
-               <Route path="/conInst" element={<CourseConInst />} />
-               <Route path="/setFinalExam" element={<SetFinalExam />} />
-               <Route path="/PrevReports" element={<PrevReports />} />
-             </Route>
-
-          <Route element={<RequireAuth allowedRoles={[ROLES.INSTRUCTOR,ROLES.TRAINEE]}/>}>  
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/accountsettings" element={<AccountSecurity />} />
-            <Route path="/reviews" element={<Reviews />} />
-            <Route path="/wallet" element={<Wallet />} />
-            <Route path="/subtitleView" element={<Subtitle />}/>
-            <Route path="/reportproblem" element={<ReportProblem />}/>
-          </Route>
-
           </Routes>
         </div>
       </BrowserRouter>

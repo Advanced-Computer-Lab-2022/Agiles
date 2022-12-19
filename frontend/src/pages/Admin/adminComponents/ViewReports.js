@@ -1,4 +1,6 @@
 import axios from "axios";
+import Accordion from "react-bootstrap/Accordion";
+import Report from "./Report";
 import React, { useState, useEffect } from "react";
 function ViewReports() {
   const [reports, setReports] = useState([]);
@@ -28,27 +30,11 @@ function ViewReports() {
   const handleView = async (id) => {};
 
   return (
-    <ul>
+    <Accordion defaultActiveKey={-1}>
       {reports.map((el, index) => {
-        return el.userId == null ? (
-          ""
-        ) : (
-          <li key={index}>
-            <div>{el["isSeen"] ? "seen" : "not seen yet"}</div>
-            <div>
-              trainee name: {el.userId.firstname + " " + el.userId.lastname}
-            </div>
-            <div>course title: {el.courseId.title}</div>{" "}
-            <div>status: {el.status}</div>
-            {el.status == "pending" ? (
-              <button onClick={() => handleView(el._id)}> View</button>
-            ) : (
-              ""
-            )}
-          </li>
-        );
+        return el.userId == null ? "" : <Report data={el}></Report>;
       })}
-    </ul>
+    </Accordion>
   );
 }
 

@@ -1,9 +1,23 @@
 const express = require("express");
 const adminrouter = express.Router();
-const {createCorporate,createInstructor,createAdmin,logIn,signUp,logOut,accessRequests,grantAccess,acceptRefund,getReports,refundRequests,} = require("..//controllers/AdminController");
+const {
+  createCorporate,
+  createInstructor,
+  createAdmin,
+  logIn,
+  signUp,
+  logOut,
+  accessRequests,
+  grantAccess,
+  acceptRefund,
+  getReports,
+  refundRequests,
+  viewReport,
+  resolveReport,
+} = require("..//controllers/AdminController");
 const { verifyAdminJWT } = require("../middleware/authMiddleware");
-const {isAuthAdmin} = require("../controllers/authContext");
-adminrouter.post("/addAdmin",verifyAdminJWT, createAdmin);
+const { isAuthAdmin } = require("../controllers/authContext");
+adminrouter.post("/addAdmin", verifyAdminJWT, createAdmin);
 adminrouter.post("/addInstructor", verifyAdminJWT, createInstructor);
 adminrouter.post("/addCorporate", createCorporate);
 adminrouter.get("/accessRequests", accessRequests);
@@ -16,7 +30,8 @@ adminrouter.get("/refundRequests", refundRequests);
 adminrouter.post("/login", logIn);
 adminrouter.post("/logout", logOut);
 adminrouter.post("/signUp", signUp);
-adminrouter.get("/isAuth",isAuthAdmin);
-
+adminrouter.get("/isAuth", isAuthAdmin);
+adminrouter.post("/viewReport", viewReport);
+adminrouter.post("/resolveReport", resolveReport);
 
 module.exports = adminrouter;

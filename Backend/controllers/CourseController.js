@@ -71,7 +71,7 @@ const popularCourses = async (req, res) => {
   } else {
     res.status(200).json(courses);
   }
-}
+};
 const courseSearch = async (req, res) => {
   const search = req.query["search"];
   const courses = await Course.find({
@@ -88,10 +88,18 @@ const courseSearch = async (req, res) => {
   }
 };
 
-
 const createCourse = async (req, res) => {
   const user = req.user;
-  const { title,imgUrl, coursePreviewUrl, subtitles, price, description, subject, language, } = req.body;
+  const {
+    title,
+    imgUrl,
+    coursePreviewUrl,
+    subtitles,
+    price,
+    description,
+    subject,
+    language,
+  } = req.body;
   const data = await Instructor.findById(user.id, {
     firstname: 1,
     lastname: 1,
@@ -134,8 +142,9 @@ const setExam = async (req, res) => {
     const exam = await Exam.create(newExam);
     const dataFinal = await Course.updateOne(
       { _id: courseId },
-      { $inc: {numberOfItems: 1} },
-      { new: true });
+      { $inc: { numberOfItems: 1 } },
+      { new: true }
+    );
     res.status(200).json(exam);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -146,9 +155,10 @@ const setExam = async (req, res) => {
 const setFinalExam = async (req, res) => {
   const { courseId, questions } = req.body;
   const dataFinal = await Course.updateOne(
-    { _id: courseId},
-    { $inc: {numberOfItems: 1} },
-    { new: true });
+    { _id: courseId },
+    { $inc: { numberOfItems: 1 } },
+    { new: true }
+  );
   const newExam = new FinalExam({
     courseId,
     questions: questions,
@@ -161,7 +171,6 @@ const setFinalExam = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-
 
 const getCourses = async (req, res) => {
   try {
@@ -184,8 +193,11 @@ const getCourseById = async (req, res) => {
       "userId"
     );
     let exists = false;
-    if (userId){
-       exists = await IndividualTrainee.exists({ _id: userId, "registered_courses.courseId": id });
+    if (userId) {
+      exists = await IndividualTrainee.exists({
+        _id: userId,
+        "registered_courses.courseId": id,
+      });
     }
     const result = {
       firstField: course,
@@ -216,6 +228,30 @@ const addCoursePromotion = async (req, res) => {
     res.status(500).json({ mssg: "no such Id" });
   }
 };
+
+const addCoursePromotionMulti = async (req, res) => {
+  const idArr = req.body.idArr;
+  const disc = req.body.promo;
+  const enddate = req.body.enddate;
+  try {
+    await idArr.map(async (el) => {
+      let course = await Course.findByIdAndUpdate(
+        el,
+        {
+          discount: disc,
+          discount_enddate: enddate,
+        },
+        { new: true }
+      );
+      console.log(course.discount);
+    });
+
+    res.status(200).json("updated");
+  } catch (err) {
+    res.status(500).json({ mssg: "no such Id" });
+  }
+};
+
 const getLink = async (req, res) => {
   const id = req.query.linkId;
   try {
@@ -237,14 +273,14 @@ const rateCourse = async (req, res) => {
     let x = parseInt(userRating);
     const exists = await Rating.findOne({
       userId: userId,
-      courseId:courseId,
+      courseId: courseId,
       state: true,
     }).exec();
     if (exists) {
       let currentRating = parseInt(exists.userRating);
       let newRating = oldRating - currentRating + x;
       const updateRating = await Rating.findOneAndUpdate(
-        { userId: userId, courseId:courseId, state: true },
+        { userId: userId, courseId: courseId, state: true },
         { userRating: userRating, userReview: userReview },
         { new: true }
       ).exec();
@@ -263,7 +299,9 @@ const rateCourse = async (req, res) => {
         state: true,
         courseId: courseId,
       });
-      const updateCourse = await Course.findByIdAndUpdate(courseId,{$set:{rating:newRating,ratingCount:newCount}})
+      const updateCourse = await Course.findByIdAndUpdate(courseId, {
+        $set: { rating: newRating, ratingCount: newCount },
+      });
       const updateIndvidual = await IndividualTrainee.updateOne(
         { _id: userId, "registered_courses.courseId": courseId },
         { $set: { "registered_courses.$.courseRating": newRatingObj._id } }
@@ -292,17 +330,14 @@ const reportProblem = async (req, res) => {
   }
 };
 
-const viewReportedProblems = async(req,res) =>{
-
+const viewReportedProblems = async (req, res) => {
   const userId = req.user.id;
-  try{
-    const reportedProblems = await Report.find({userId: userId });
+  try {
+    const reportedProblems = await Report.find({ userId: userId });
     res.status(200).json(reportedProblems);
-  }catch{
-    res.status(404).json({error : "Data Not Found"});
+  } catch {
+    res.status(404).json({ error: "Data Not Found" });
   }
-
-
 };
 
 module.exports = {
@@ -319,4 +354,5 @@ module.exports = {
   reportProblem,
   popularCourses,
   viewReportedProblems,
+  addCoursePromotionMulti,
 };
