@@ -97,36 +97,150 @@ function SetPromotion(props) {
 
   if (isloading) return <LoadingScreen loading={true} logoSrc={spinner} />;
   return (
-    <div>
-      <form onSubmit={handleSearch} className={NavbarStyles["search-bar"]}>
-        <BsSearch
-          className={NavbarStyles["search-icon"]}
-          onClick={handleSearch}
-        />
-        <input
-          className={NavbarStyles["inpt"]}
-          placeholder="search for anything"
-          value={searchString}
-          required
-          onChange={(event) => setSearchString(event.target.value)}
-        ></input>
-      </form>
-      <div>
-        <AdminFilter
-          changeState={{ change, setChange }}
-          actionState={{ action, setAction }}
-        />
+    <div className={NavbarStyles["promo-container"]}>
+      <div className={NavbarStyles["misc"]}>
+        <h5>Search Courses</h5>
+        <form onSubmit={handleSearch} className={NavbarStyles["search-bar"]}>
+          <BsSearch
+            className={NavbarStyles["search-icon"]}
+            onClick={handleSearch}
+          />
+          <input
+            className={NavbarStyles["inpt"]}
+            placeholder="search for a course"
+            value={searchString}
+            required
+            onChange={(event) => setSearchString(event.target.value)}
+          ></input>
+        </form>
+        <h5>Filter Courses</h5>
+        <div>
+          <AdminFilter
+            changeState={{ change, setChange }}
+            actionState={{ action, setAction }}
+          />
+        </div>
+        <form
+          onSubmit={handleSubmit}
+          style={{
+            // display: "grid",
+            margin: "70px 0",
+            maxWidth: "50%",
+            gap: "2rem",
+          }}
+        >
+          <h5>Set Promotion</h5>
+          <div>
+            {flag && (
+              <Alert key={alert} variant={alert}>
+                {alert == "success"
+                  ? "promotion updated successfully"
+                  : "error happened"}
+              </Alert>
+            )}
+            <span>Amount (%) </span>
+            <input
+              required
+              type="number"
+              value={promotion}
+              placeholder="amount.."
+              min="0"
+              max="100"
+              style={{
+                border: "0.5px solid black",
+                borderRadius: "0.25rem",
+                padding: "0.5rem",
+                width: "10rem",
+                margin: "1rem 0",
+              }}
+              onChange={handlePromo}
+            />
+          </div>
+          <div>
+            <span>End Date </span>
+            <input
+              required
+              type="date"
+              value={enddate}
+              style={{
+                border: "0.5px solid black",
+                borderRadius: "0.25rem",
+                margin: "1rem 0",
+                padding: "0.5rem",
+                width: "10rem",
+              }}
+              onChange={handleEnddate}
+            ></input>
+          </div>
+          <Button
+            variant="dark"
+            type="submit"
+            style={{
+              backgroundColor: "#a00407",
+              borderRadius: 0,
+              width: "10rem",
+              border: "none",
+            }}
+          >
+            Submit
+          </Button>
+        </form>
       </div>
 
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Course Title</TableCell>
-            <TableCell align="middle">Instructor Name</TableCell>
-            <TableCell align="middle">Current Price ($)</TableCell>
-            <TableCell align="middle">Current Discount (if any)</TableCell>
-            <TableCell align="middle">discount enddate</TableCell>
-            <TableCell align="middle">
+            <TableCell
+              style={{
+                fontWeight: "600",
+                fontSize: "20px",
+              }}
+            >
+              Course Title
+            </TableCell>
+            <TableCell
+              align="middle"
+              style={{
+                fontWeight: "600",
+                fontSize: "20px",
+              }}
+            >
+              Instructor Name
+            </TableCell>
+            <TableCell
+              align="middle"
+              style={{
+                fontWeight: "600",
+                fontSize: "20px",
+              }}
+            >
+              Current Price ($)
+            </TableCell>
+            <TableCell
+              align="middle"
+              style={{
+                fontWeight: "600",
+                fontSize: "20px",
+              }}
+            >
+              Current Discount (if any)
+            </TableCell>
+            <TableCell
+              align="middle"
+              style={{
+                fontWeight: "600",
+                fontSize: "20px",
+              }}
+            >
+              discount enddate
+            </TableCell>
+            <TableCell
+              align="middle"
+              style={{
+                fontWeight: "600",
+                fontSize: "20px",
+              }}
+            >
               select{" "}
               <Checkbox
                 defaultChecked={selectAll}
@@ -170,68 +284,6 @@ function SetPromotion(props) {
           })}
         </TableBody>
       </Table>
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          // display: "grid",
-          maxWidth: "50%",
-          gap: "2rem",
-          marginTop: "20rem",
-        }}
-      >
-        <div>
-          {flag && (
-            <Alert key={alert} variant={alert}>
-              {alert == "success"
-                ? "promotion updated successfully"
-                : "error happened"}
-            </Alert>
-          )}
-          <span>Amount (%) </span>
-          <input
-            required
-            type="number"
-            value={promotion}
-            placeholder="amount.."
-            style={{
-              border: "0.5px solid black",
-              borderRadius: "0.25rem",
-              marginLeft: "0.5rem",
-              padding: "0.5rem",
-              width: "10rem",
-            }}
-            onChange={handlePromo}
-          />
-        </div>
-        <div>
-          <span>End Date </span>
-          <input
-            required
-            type="date"
-            value={enddate}
-            style={{
-              border: "0.5px solid black",
-              borderRadius: "0.25rem",
-              marginLeft: "1.7rem",
-              padding: "0.5rem",
-              width: "10rem",
-            }}
-            onChange={handleEnddate}
-          ></input>
-        </div>
-        <Button
-          variant="dark"
-          type="submit"
-          style={{
-            backgroundColor: "#a00407",
-            borderRadius: 0,
-            width: "10rem",
-            border: "none",
-          }}
-        >
-          Submit
-        </Button>
-      </form>
     </div>
   );
 }

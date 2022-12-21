@@ -94,13 +94,7 @@ const AdminFilter = (props) => {
   };
   return (
     <div className={FilterStyles["filter"]}>
-      <div className={FilterStyles["top"]}>
-        <button className={FilterStyles["logo"]} onClick={handleSubmit}>
-          <span>
-            <FilterListIcon /> Filter
-          </span>
-        </button>
-      </div>
+      <div className={FilterStyles["top"]}></div>
       <hr />
       <div className="center">
         <Accordion defaultActiveKey="0" alwaysOpen>
@@ -159,6 +153,11 @@ const AdminFilter = (props) => {
           )}
         </Accordion>
       </div>
+      <button className={FilterStyles["logo"]} onClick={handleSubmit}>
+        <span>
+          <FilterListIcon /> Filter
+        </span>
+      </button>
     </div>
   );
 };
