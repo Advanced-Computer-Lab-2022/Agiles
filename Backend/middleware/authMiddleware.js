@@ -7,9 +7,9 @@ function verifyAdminJWT(req,res,next) {
    if (!token) return res.status(401).json({msg:"Unauthorized"});
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_ADMIN, (err, decoded) => {
       if (err) {
-        res.clearCookie("currentUser");
-        res.clearCookie("jwt");
-        res.clearCookie("status");
+        // res.clearCookie("currentUser");
+        // res.clearCookie("jwt");
+        // res.clearCookie("status");
         return res.status(401).json({msg:"Unauthorized"});
       }
       else{
@@ -27,9 +27,9 @@ function verifyInstructorJWT(req,res,next) {
       process.env.ACCESS_TOKEN_SECRET_INSTRUCTOR,
       (err, decoded) => {
         if (err) {
-          res.clearCookie("currentUser");
-          res.clearCookie("jwt");
-          res.clearCookie("status");
+          // res.clearCookie("currentUser");
+          // res.clearCookie("jwt");
+          // res.clearCookie("status");
           return res.status(401).json({msg:"Unauthorized"});
          } //invalid token
         else{
@@ -47,9 +47,9 @@ function verifyInstructorJWT(req,res,next) {
       process.env.ACCESS_TOKEN_SECRET_ITRAINEE,
       (err, decoded) => {
         if (err) {
-          res.clearCookie("currentUser");
-          res.clearCookie("jwt");
-          res.clearCookie("status");
+          // res.clearCookie("currentUser");
+          // res.clearCookie("jwt");
+          // res.clearCookie("status");
           return res.status(401).json({msg:err});
         }
         else{
