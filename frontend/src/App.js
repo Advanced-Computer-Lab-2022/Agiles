@@ -69,10 +69,7 @@ function App() {
             <Route index element={<Home />}></Route>
             <Route path="/login" element={<Login />} />
             <Route path="/forgotpassword" element={<ForgetPassword />} />
-            <Route
-              path="/updateforgotpassword"
-              element={<UpdateForgottenPassword />}
-            />
+            <Route path="/updateforgotpassword"  element={<UpdateForgottenPassword />}/>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/course" element={<Course />} />
@@ -96,7 +93,7 @@ function App() {
               </Route>
             </Route>
 
-            <Route element={<RequireAuth allowedRoles={[ROLES.TRAINEE]} />}>
+            <Route element={<RequireAuth allowedRoles={[ROLES.TRAINEE,ROLES.CORPORATE]} />}>
               <Route path="/mylearning" element={<Inprogress />} />
               <Route path="/grades" element={<CourseContent />} />
               <Route path="/preReg" element={<CoursePreview />} />
@@ -119,7 +116,7 @@ function App() {
               <Route path="/PrevReports" element={<PrevReports />} />
             </Route>
 
-            <Route element={<RequireAuth allowedRoles={[ROLES.INSTRUCTOR, ROLES.TRAINEE]} />}> 
+            <Route element={<RequireAuth allowedRoles={[ROLES.INSTRUCTOR, ROLES.TRAINEE, ROLES.CORPORATE]} />}> 
               <Route path="/profile" element={<Profile />} />
               <Route path="/accountsettings" element={<AccountSecurity />} />
               <Route path="/reviews" element={<Reviews />} />
