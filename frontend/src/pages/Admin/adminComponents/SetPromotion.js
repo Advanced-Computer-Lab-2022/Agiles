@@ -6,6 +6,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 import {
   Checkbox,
   Table,
@@ -23,24 +24,26 @@ import LoadingScreen from "react-loading-screen";
 import AdminFilter from "./AdminFilter";
 import Alert from "react-bootstrap/Alert";
 
-function SetPromotion() {
+function SetPromotion(props) {
   const [courses, setCourses] = useState([]);
-  const [filtered, setFiltered] = useState([]);
-  const [search, setSearched] = useState([]);
+  const [change, setChange] = useState(true);
   const [action, setAction] = useState(0);
   const [isloading, setIsLoading] = useState(true);
   const [searchString, setSearchString] = useState("");
   const [selectAll, setSelectAll] = useState(false);
-  const [message, setMessage] = useState(true);
   const [promotion, setPromotion] = useState();
   const [enddate, setEnddate] = useState("");
   const [alert, setAlert] = useState("");
   const [flag, setFlag] = useState(false);
   const PROMO_URL = "/course/addPromotionMulti";
-
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
   let IDsArr = [];
   const handleSearch = async (event) => {
     event.preventDefault();
+    console.log(searchString);
+    setAction(1);
+    setChange(!change);
   };
   const handlePromo = (e) => {
     setPromotion(e.target.value);
@@ -67,27 +70,31 @@ function SetPromotion() {
     setPromotion("amount..");
     setEnddate("");
   };
-  const chooseMessage = (message) => {
-    setMessage(message);
-  };
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      let URL = "/course/listCourses/details";
-      if (action == 1) URL = "/course/listCourses/filter";
-      if (action == 2) URL = "/course/listCourses/search";
-      const res = await fetch(URL);
-
-      let jsondata = await res.json();
-      if (res.ok) {
-        setCourses(jsondata);
+      if (action == 0) {
+        const { data } = await axios.get(`/course/listCourses/details`);
+        setCourses(data);
       }
-
+      if (action == 1) {
+        const { data } = await axios.get(
+          `/course/listCourses/search?search=${searchString}`
+        );
+        setCourses(data);
+      }
+      if (props.filter) {
+        let url = "/course/listCourses/filter" + location.search;
+        let res = await axios.get(url);
+        setCourses(res.data);
+      }
       setIsLoading(false);
     };
 
     fetchData();
-  }, [action, selectAll, alert]);
+  }, [alert, change]);
+
   if (isloading) return <LoadingScreen loading={true} logoSrc={spinner} />;
   return (
     <div>
@@ -105,7 +112,10 @@ function SetPromotion() {
         ></input>
       </form>
       <div>
-        <AdminFilter />
+        <AdminFilter
+          changeState={{ change, setChange }}
+          actionState={{ action, setAction }}
+        />
       </div>
 
       <Table>
@@ -120,7 +130,10 @@ function SetPromotion() {
               select{" "}
               <Checkbox
                 defaultChecked={selectAll}
-                onChange={(event) => setSelectAll(event.target.checked)}
+                onChange={(event) => {
+                  setSelectAll(event.target.checked);
+                  setChange(!change);
+                }}
               ></Checkbox>
             </TableCell>
           </TableRow>

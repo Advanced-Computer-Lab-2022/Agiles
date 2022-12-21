@@ -9,7 +9,7 @@ import { subjectList } from "/Users/abdullahahmad/Agiles/frontend/src/pages/Cour
 import Form from "react-bootstrap/Form";
 import { Checkbox } from "@mui/material";
 const cookies = new Cookies();
-const AdminFilter = ({ chooseMessage, currentMessage }) => {
+const AdminFilter = (props) => {
   const status = cookies.get("status");
   const [disapled, setDisapled] = useState(false);
   const [minPrice, setMinPrice] = useState();
@@ -56,7 +56,6 @@ const AdminFilter = ({ chooseMessage, currentMessage }) => {
   };
 
   const handleSubmit = async () => {
-    chooseMessage(!currentMessage);
     if (
       subject == "" &&
       minPrice == null &&
@@ -86,9 +85,11 @@ const AdminFilter = ({ chooseMessage, currentMessage }) => {
       }
 
       navigate({
-        pathname: "/courses/filter",
+        pathname: "/admin/filter",
         search: url,
       });
+      props.actionState.setAction(2);
+      props.changeState.setChange(!props.changeState.change);
     }
   };
   return (
