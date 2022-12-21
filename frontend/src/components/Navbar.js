@@ -100,6 +100,8 @@ const Navbar = () => {
         ></input>
       </form>
       <div className={NavbarStyles["linkContainer"]}>
+        {/*<SelectCountry style={{marginTop:'1rem'}}></SelectCountry> */}
+
         <Link to="/" className={NavbarStyles["links"]}>
           Home
         </Link>
@@ -176,7 +178,6 @@ const Navbar = () => {
           </Menu>
         </div>
       )}
-      {/* <SelectCountry></SelectCountry> */}
     </nav>
   );
 };
