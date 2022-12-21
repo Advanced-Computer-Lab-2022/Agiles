@@ -7,8 +7,6 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import Accordion from "react-bootstrap/Accordion";
 import { subjectList } from "../pages/Course/subjectList";
 import Form from "react-bootstrap/Form";
-import { Checkbox } from "@mui/material";
-import SetPromotion from "../pages/Admin/adminComponents/SetPromotion";
 const cookies = new Cookies();
 const Filter = ({ chooseMessage, currentMessage }) => {
   const status = cookies.get("status");

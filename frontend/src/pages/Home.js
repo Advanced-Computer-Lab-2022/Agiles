@@ -63,9 +63,7 @@ const Home = () => {
   } else {
     return (
       <div className="home">
-        <div className="craousel">
-           {/* <Thumbnail></Thumbnail>*/}
-           </div>
+           <Thumbnail ></Thumbnail>
         <footer></footer>
       </div>
     );

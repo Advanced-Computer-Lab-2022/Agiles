@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
+import "./index.css"
 import "bootstrap/dist/css/bootstrap.min.css";
 import Courses from "./pages/Course/Courses";
 import Login from "./pages/Login";
@@ -18,7 +19,6 @@ import Course from "./pages/Course/Course";
 import FilterResults from "./pages/Course/FilterResults";
 import InstructorTerms from "./pages/Instructor/InstructorTerms";
 import CourseExam from "./pages/Course/CourseExam";
-import InstructorRating from "./pages/Course/InstructorRating.js";
 import Profile from "./pages/Trainee/Profile";
 import Subtitle from "./pages/Course/SubtitleView";
 import CoursePreInst from "./pages/Instructor/CoursePreInst";

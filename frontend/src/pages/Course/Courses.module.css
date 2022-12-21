@@ -1,6 +1,7 @@
 .wrapper {
   display: flex;
 }
+
 .course-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 250px));
@@ -17,6 +18,7 @@
   min-height: 130vh;
 }
 .wrapper-right h1 {
+  color: #a00407;
   font-size: 2.5rem;
   font-weight: bolder;
   font-family: "Open Sans", sans-serif;
@@ -56,8 +58,4 @@
   padding: 0.5rem;
   background-color: white;
   border: 0.5px solid rgb(111, 109, 109);
-}
-
-.selectall {
-  margin-left: 50px;
 }
