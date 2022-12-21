@@ -7,7 +7,7 @@ import style from "./SubtitleView.module.css";
 import ListGroup from "react-bootstrap/ListGroup";
 import Accordion from "react-bootstrap/Accordion";
 import { useNavigate } from "react-router-dom";
-import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
+  import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
 import Youtube from "react-youtube";
 import Cookies from "universal-cookie";
 import Modal from "react-bootstrap/Modal";
@@ -217,7 +217,7 @@ const Subtitle = () => {
         <section className={style["main-section"]}>
           <section className={style["main-section-left"]}>
             <section className={style["main-section-left-top"]}>
-              <Youtube
+              {/*<Youtube
                 videoId={link.linkUrl.substring(30, 41)}
                 opts={{
                   width: "800",
@@ -232,7 +232,7 @@ const Subtitle = () => {
                   },
                 }}
                 onStateChange={handleProgress}
-              />
+              />*/}
             </section>
             <section className={style["main-section-left-bottom"]}>
               <h3>Short Summary</h3>

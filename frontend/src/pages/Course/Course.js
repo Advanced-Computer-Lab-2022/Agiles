@@ -29,6 +29,8 @@ const Course = () => {
   const [paid, setPaid] = useState(false);
   const [course, setCourse] = useState([]);
   const [instructor, setInstructor] = useState([]);
+  const [courseHour,setCourseHour] = useState(0);
+  const [courseMin,setCourseMin] = useState(0);
   const traineeId = cookies.get("currentUser");
   const [isloading, setIsLoading] = useState(false);
   const location = useLocation();
@@ -70,6 +72,9 @@ const Course = () => {
       try {
         const res = await axios.get(`/course/${courseId}`);
         setCourse(res.data.firstField);
+        let hours = res.data.firstField.totalHoursOfCourse;
+        setCourseHour(Math.floor(hours/60));
+        setCourseMin(hours%60);
         setInstructor(res.data.firstField.instructor);
         if (res.data.thirdField) {
           setPaid(true);
@@ -217,9 +222,9 @@ const Course = () => {
               </section>
               <section className={styled["middle-bottom"]}>
                 <label>Course Content</label>
-                <p>
+                <p style={{color:"grey",fontWeight:'bold',fontSize:'0.8rem'}}>
                   {course.subtitles?.length} sections . {course.numberOfItems}{" "}
-                  lectures{" "}
+                  lectures{" "} . {courseHour}h {courseMin}m total length
                 </p>
                 {course.subtitles && (
                   <Accordion defaultActiveKey="0" alwaysOpen>
@@ -233,8 +238,7 @@ const Course = () => {
                         <Accordion.Body>
                           <ListGroup>
                             {subtitle.link?.map((link, index) => (
-                              <ListGroup.Item>
-                                {index + 1}.{" "}
+                              <ListGroup.Item className="list-group-item list-group-item-action">
                                 {link.allowed ? (
                                   <Link
                                     to={link.linkUrl}
@@ -313,7 +317,7 @@ const Course = () => {
             <section className={styled["middle-right"]}>
               <label>This course includes :</label>
               <ListGroup variant="flush">
-                <ListGroup.Item><OndemandVideoIcon style={{marginRight:'0.5rem'}}/> hours on-demand video</ListGroup.Item>
+                <ListGroup.Item><OndemandVideoIcon style={{marginRight:'0.5rem'}}/>{courseHour} hours on-demand video</ListGroup.Item>
                 <ListGroup.Item><SubjectIcon style={{marginRight:'0.5rem'}}/>{course.subtitles?.length} sections </ListGroup.Item>
                 <ListGroup.Item><SchoolIcon  style={{marginRight:'0.5rem'}}/>{course.numberOfItems} lectures</ListGroup.Item>
                 <ListGroup.Item><AllInclusiveIcon style={{marginRight:'0.5rem'}}/>Full lifetime access </ListGroup.Item>

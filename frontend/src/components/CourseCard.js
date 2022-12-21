@@ -9,6 +9,8 @@ const cookies = new Cookies();
 export const CourseCard = (props) => {
   const navigate = useNavigate();
   const status = cookies.get("status");
+  const hours = Math.floor(props.data.totalHoursOfCourse/60);
+  const min = props.data.totalHoursOfCourse%60;
   const [checked, setChecked] = useState(
     props.checked == null ? false : props.checked
   );
@@ -45,7 +47,7 @@ export const CourseCard = (props) => {
               {props.data.studentCount} (students)
             </span>{" "}
             <YouTubeIcon className={style["icon"]} />
-            {props.data.totalHoursOfCourse}h 30m
+            {hours}h {min}m
           </label>
         </div>
         <div className={style["rating"]}>
@@ -88,14 +90,6 @@ export const CourseCard = (props) => {
             )}
           </div>
         )}
-        {/* {props.admin ? (
-          <Checkbox
-            defaultChecked={checked}
-            onChange={(event) => setChecked(event.target.value)}
-          />
-        ) : (
-          ""
-        )} */}
       </button>
     </div>
   );

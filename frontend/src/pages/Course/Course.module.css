@@ -67,16 +67,6 @@
   color: black;
   border:none ;
 }
-.totalhours{
-  color: white;
-  font-family: 'Open Sans', sans-serif;
-  font-weight: bold;
-  color: rgb(153, 147, 147);
-  margin-left: 5%;
-  font-size: 0.8rem;
-  margin-bottom: 0.2rem;
-  border:none ;
-}
 .buyme{
   width: 90%;
   margin-left: 5%;
@@ -157,8 +147,9 @@
   margin-bottom: 1rem;
 }
 .middle-top h2{
-  font-size: 1rem;
-  font-weight: 100;
+  font-size: 0.9rem;
+  color: rgb(121, 121, 121);
+  font-weight: bold;
   font-family: 'Open Sans', sans-serif;
 }
 .middle-bottom{
@@ -211,7 +202,8 @@
 }
 .middle-bottom-content-label2{
   margin-top: 1rem;
-  font-size: 1rem;
+  font-size: 0.8rem;
+  font-weight: bold;
   margin-left:2rem;
   color: rgb(121, 121, 121);
 }
@@ -221,4 +213,8 @@
   font-weight: bold;
   font-family: Tahoma, sans-serif;
   color: rgb(121, 121, 121);
+}
+.listItem:hover{
+  color: rgb(121, 121, 121);
+
 }

@@ -1,6 +1,5 @@
 import Cookies from "universal-cookie";
 import axios from "axios";
-import unAuth from "../clearAuth";
 import { useEffect, useState } from "react";
 import RegCourseCardStyles from "./RegCourseCard.module.css";
 import CourseStyles from "../pages/Course/Courses.module.css";

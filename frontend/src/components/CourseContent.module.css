@@ -13,7 +13,7 @@
     font-size: small;
 }
 .subtitleView{
-    background-color: white;
+    background-color: inherit;
     color: #a00407;
     border: none;
 }

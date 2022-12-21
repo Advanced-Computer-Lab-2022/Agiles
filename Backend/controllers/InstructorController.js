@@ -133,13 +133,14 @@ const updateEmail = async (req, res) => {
   }
 };
 const uploadSubLink = async (req, res) => {
-  const { courseId, subId, linkDesc, linkUrl, allowed } = req.body;
+  const { courseId, subId, linkDesc, linkUrl, allowed,duration } = req.body;
   if (!courseId || !subId) {
     return res.status(400).json({ msg: "missing data" });
   }
   const newlink = new Link({
     linkUrl: linkUrl,
     linkDesc: linkDesc,
+    duration :duration,
     allowed: allowed,
   });
 
@@ -147,7 +148,7 @@ const uploadSubLink = async (req, res) => {
     const data = await Link.create(newlink);
     const dataFinal = await Course.updateOne(
       { _id: courseId, "subtitles._id": subId },
-      { $push: { "subtitles.$.link": data._id } , $inc: {numberOfItems: 1} },
+      { $push: { "subtitles.$.link": data._id } , $inc: {numberOfItems: 1},$inc:{"subtitles.$.time":duration},$inc:{totalHoursOfCourse:duration} },
       { new: true }
     );
     res.status(200).json(dataFinal);

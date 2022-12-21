@@ -106,17 +106,12 @@ function App() {
               <Route path="/CourseExam" element={<CourseExam />} />
               <Route path="/success" element={<Sucess />} />
               <Route path="/cancel" element={<Cancel />} />
-              <Route
-                path="/PrevReportsTrainee"
-                element={<PrevReportsTrainee />}
-              />
+              <Route path="/PrevReportsTrainee" element={<PrevReportsTrainee />}/>
             </Route>
+
             <Route element={<RequireAuth allowedRoles={[ROLES.INSTRUCTOR]} />}>
               <Route path="/createcourse" element={<CreateCourse />} />
-              <Route
-                path="/mycourses"
-                element={<InstructorOwnCourses />}
-              ></Route>
+              <Route path="/mycourses"element={<InstructorOwnCourses />}></Route>
               <Route path="/setExam" element={<SetExam />} />
               <Route path="/preInst" element={<CoursePreInst />} />
               <Route path="/conInst" element={<CourseConInst />} />
@@ -124,11 +119,7 @@ function App() {
               <Route path="/PrevReports" element={<PrevReports />} />
             </Route>
 
-            <Route
-              element={
-                <RequireAuth allowedRoles={[ROLES.INSTRUCTOR, ROLES.TRAINEE]} />
-              }
-            >
+            <Route element={<RequireAuth allowedRoles={[ROLES.INSTRUCTOR, ROLES.TRAINEE]} />}> 
               <Route path="/profile" element={<Profile />} />
               <Route path="/accountsettings" element={<AccountSecurity />} />
               <Route path="/reviews" element={<Reviews />} />

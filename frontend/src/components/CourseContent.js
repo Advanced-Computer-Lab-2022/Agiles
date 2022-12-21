@@ -155,8 +155,7 @@ const CoursContent = () => {
                     <Accordion.Body>
                       <ListGroup>
                         {subtitle.link?.map((link, index1) => (
-                          <ListGroup.Item key={index1}>
-                            {index1 + 1}.{" "}
+                          <ListGroup.Item key={index1} className="list-group-item list-group-item-action"> 
                             <button
                               id={
                                 "linkId=" +
@@ -173,7 +172,7 @@ const CoursContent = () => {
                             </button>
                           </ListGroup.Item>
                         ))}
-                        <ListGroup.Item key={"exam"}>
+                        <ListGroup.Item key={"exam"} className="list-group-item list-group-item-action">
                           <button
                             id={subtitle._id}
                             name={"exam"}
