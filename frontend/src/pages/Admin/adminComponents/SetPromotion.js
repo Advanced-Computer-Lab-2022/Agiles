@@ -12,7 +12,7 @@ import {
   TableRow,
   TableSortLabel,
 } from "@mui/material";
-import spinner from "/Users/abdullahahmad/Agiles/frontend/src/static/download.gif";
+import spinner from "../../../static/download.gif";
 import LoadingScreen from "react-loading-screen";
 import AdminFilter from "./AdminFilter";
 
