@@ -1,6 +1,6 @@
 .course-list {
   display: grid;
-  grid-template-columns: 250px 250px 250px 250px 250px ; 
+  grid-template-columns: repeat(auto-fit, minmax(250px, 250px));
   grid-gap: 20px 20px;
   margin-left: 20px;
 
@@ -13,11 +13,13 @@
   font-size: 1.8rem;
   font-weight: bold;
   margin-left:5rem;
+  color: #a00407;
+
 }
 .item{
   justify-content: center;
 }
 .carousel{
-  width: 1380px;
+  max-width: 1380px;
   margin-left: 5rem;
 }

@@ -6,7 +6,6 @@ const Course = require("../models/Course");
 const Report = require("../models/Report");
 const CourseRefundRequest = require("../models/CourseRefundRequest");
 const TraineeCourse = require("../models/TraineeCourse");
-
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const {
@@ -24,7 +23,7 @@ const createAdmin = async (req, res) => {
     return res.status(409).json({ msg: "username already exists" });
   }
   if (!username || !password) {
-    return res.status(500).json({ msg: "bad request" })
+    return res.status(500).json({ msg: "bad request" });
   } else {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -131,8 +130,7 @@ const logIn = async (req, res) => {
         }
       });
     });
-  } else if (await Instructor.exists({username:username}))
-  {
+  } else if (await Instructor.exists({ username: username })) {
     await Instructor.findOne({ username: username }).then((user) => {
       if (!user) return res.status(400).json({ msg: "User not exist" });
       bcrypt.compare(password, user.password, (err, data) => {
@@ -164,8 +162,7 @@ const logIn = async (req, res) => {
         }
       });
     });
-  }
-  else{
+  } else {
     await Admin.findOne({ username: username }).then((user) => {
       if (!user) return res.status(400).json({ msg: "User not exist" });
       bcrypt.compare(password, user.password, (err, data) => {
@@ -231,6 +228,7 @@ const logOut = async (req, res) => {
 const accessRequests = async (req, res) => {
   requests = await CourseSubscriptionRequest.find({})
     .populate("traineeId courseId")
+    .sort("-createdAt")
     .exec();
   res.send(requests).status(200);
 };
@@ -238,11 +236,15 @@ const accessRequests = async (req, res) => {
 const refundRequests = async (req, res) => {
   requests = await CourseRefundRequest.find({})
     .populate("traineeId courseId")
+    .sort("-createdAt")
     .exec();
+
   res.send(requests).status(200);
 };
 const grantAccess = async (req, res) => {
   const { traineeId, courseId } = req.body;
+  console.log(traineeId);
+  console.log(courseId);
   const course = await Course.findById(courseId);
   const instructor = await Instructor.findById(course.instructor);
   const profit =
@@ -250,12 +252,12 @@ const grantAccess = async (req, res) => {
     (parseInt(course.price) * parseInt(course.discount)) / 100;
   try {
     await IndividualTrainee.findByIdAndUpdate(traineeId, {
-      $push: { registered_courses: { courseId: courseId, } },
+      $push: { registered_courses: { courseId: courseId } },
     });
-    await Instructor.updateOne(
-      { _id: course.instructor },
-      { wallet: instructor.wallet + profit }
-    );
+    // await Instructor.updateOne(
+    //   { _id: course.instructor },
+    //   { wallet: instructor.wallet + profit }
+    // );
     await Course.updateOne(
       { _id: courseId },
       { studentCount: course.studentCount + 1 }
@@ -266,13 +268,15 @@ const grantAccess = async (req, res) => {
     );
     return res.status(200).json("access granted");
   } catch (error) {
-
     return res.status(406).json(error);
   }
 };
 
 const getReports = async (req, res) => {
-  requests = await Report.find({}).populate("userId courseId").exec();
+  requests = await Report.find({})
+    .populate("userId courseId")
+    .sort("-createdAt")
+    .exec();
   res.send(requests).status(200);
 };
 
@@ -304,7 +308,21 @@ const acceptRefund = async (req, res) => {
     return res.status(406).json(error);
   }
 };
+const viewReport = async (req, res) => {
+  const { reportId } = req.body;
+  Report.findByIdAndUpdate(reportId, {
+    isSeen: false,
+  });
+};
+const resolveReport = async (req, res) => {
+  const { reportId } = req.body;
+  await Report.findByIdAndUpdate(reportId, {
+    status: "resolved",
+  });
+};
 module.exports = {
+  resolveReport,
+  viewReport,
   accessRequests,
   createAdmin,
   createInstructor,

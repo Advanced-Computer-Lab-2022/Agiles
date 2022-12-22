@@ -4,7 +4,7 @@
     margin-top: 2rem;
 }
 .mainRight{
-    min-height: 250vh;
+    min-height: 220vh;
 }
 .mainRight-hr{
     height: 3px;
@@ -24,11 +24,12 @@
     font-weight: bold;
     font-family: Tahoma, sans-serif;
     color: rgb(33, 32, 32);
-    margin-bottom: 2rem;
     margin-top: 2rem;
+    margin-bottom: 1rem;
 }
 .mainRight p {
-    margin-left: 2rem;
+    margin-left: 1rem;
+    font-weight: bold;
 }
 .video{
     margin-left: 1rem;

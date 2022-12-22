@@ -25,12 +25,14 @@ const {
   rateInstructor,
   updateLinkProgress,
   createCredit,
+  deleteInstRating,
   deleteCredit,
   CreateCheckout,
   getAllItemsCourse,
   requestRefund,
   addNotesToTrainee,
   getNotes,
+  deleteCourseRating,
   getTraineeProgress
 } = require("../controllers/IndividualTraineeController");
 const { verifyItraineeJWT } = require("../middleware/authMiddleware");
@@ -41,7 +43,7 @@ IndividualTraineeRouter.get(
   getTraineebyID
 );
 IndividualTraineeRouter.get(
-  "/inprogress/:id",
+  "/inprogress",
   verifyItraineeJWT,
   InprogressCourses
 );
@@ -77,35 +79,17 @@ IndividualTraineeRouter.patch(
   verifyItraineeJWT,
   updateITraineePassword
 );
-IndividualTraineeRouter.patch(
-  "/changePassword",
-  verifyItraineeJWT,
-  changePassword
-);
+IndividualTraineeRouter.patch("/changePassword",changePassword); // forgetten password
 IndividualTraineeRouter.post("/submitExam", verifyItraineeJWT, submitExam);
 IndividualTraineeRouter.get("/courseExam", verifyItraineeJWT, courseExam);
-IndividualTraineeRouter.get(
-  "/courseFinalExam",
-  verifyItraineeJWT,
-  courseFinalExam
-);
-IndividualTraineeRouter.get(
-  "/getFinalExamGrade",
-  verifyItraineeJWT,
-  getFinalExamGrade
-);
+IndividualTraineeRouter.get( "/courseFinalExam", verifyItraineeJWT, courseFinalExam);
+IndividualTraineeRouter.get("/getFinalExamGrade",verifyItraineeJWT,getFinalExamGrade);
 IndividualTraineeRouter.post("/setRating", verifyItraineeJWT, rateInstructor);
-IndividualTraineeRouter.post(
-  "/reportProblem",
-  verifyItraineeJWT,
-  reportProblem
-);
+IndividualTraineeRouter.delete("/deleteRating", verifyItraineeJWT, deleteInstRating);
+IndividualTraineeRouter.delete("/deleteCourseRating", verifyItraineeJWT, deleteCourseRating);
+IndividualTraineeRouter.post("/reportProblem",verifyItraineeJWT,reportProblem);
 IndividualTraineeRouter.post("/createCredit", verifyItraineeJWT, createCredit);
-IndividualTraineeRouter.delete(
-  "/deleteCredit/:id",
-  verifyItraineeJWT,
-  deleteCredit
-);
+IndividualTraineeRouter.delete("/deleteCredit/:id",verifyItraineeJWT,deleteCredit);
 IndividualTraineeRouter.post(
   "/create-checkout-session",
   verifyItraineeJWT,

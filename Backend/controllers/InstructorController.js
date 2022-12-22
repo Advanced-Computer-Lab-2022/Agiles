@@ -92,8 +92,6 @@ const courseSearchByInstructor = async (req, res) => {
 const getInstructorbyId = async (req, res) => {
   try {
     const instructor = await Instructor.findById(req.query["id"])
-      .populate("reviews")
-      .exec();
     const reviews = await Rating.find({
       state: false,
       instId: req.query["id"],

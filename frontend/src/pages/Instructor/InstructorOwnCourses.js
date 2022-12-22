@@ -38,8 +38,8 @@ function InstructorOwnCourses() {
     try {
       const res = await axios.get(Search_URL ,{ params: { search:searchString , instructor :currentUser }});
       setCourses(res.data)
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
     }
     setIsLoading(false);
   
@@ -50,8 +50,8 @@ function InstructorOwnCourses() {
     try {
       const res = await axios.get(FetchUrl + "/" + currentUser);
       setCourses(res.data)
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
     }
     setIsLoading(false);
   }
@@ -72,6 +72,7 @@ function InstructorOwnCourses() {
            </section>
        
       <section className={InprogressStyles['courses']}>
+      <button  className={InprogressStyles['main-btn']} onClick={()=>window.location.href="/createcourse"}>Create Course</button>
       <div className={RegCourseCardStyles["cardgrid"]}>
         {courses.length>0 ?(<>{courses.map((el,index) => {
           return <CourseCard data={el} key={index}></CourseCard>;

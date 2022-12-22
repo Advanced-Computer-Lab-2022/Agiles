@@ -21,10 +21,6 @@ var nodemailer = require("nodemailer");
 const getNotes = async (req, res) => {
   const traineeId = req.user.id;
   let oldNotes = " ";
-  console.log(req["query"].subtitleId);
-  console.log(req["query"].courseId);
-  console.log(req["query"].linkId);
-
   const subtitleId = req["query"].subtitleId;
   const courseId = req["query"].courseId;
   const linkId = req["query"].linkId;
@@ -83,7 +79,7 @@ const getTraineebyID = async (req, res) => {
   return res.status(200).json(Itrainee);
 };
 const InprogressCourses = async (req, res) => {
-  const id = req.params["id"];
+  const id = req.user.id;
   if (!id) return res.status(400).json({ msg: "bad request" });
   const courses = await IndividualTrainee.findById(id, {
     registered_courses: 1,
@@ -93,7 +89,7 @@ const InprogressCourses = async (req, res) => {
   return res.status(200).json(courses);
 };
 const InprogressCoursebyId = async (req, res) => {
-  const id = req.body.id;
+  const id = req.user.id;
   const courseId = req.body.courseId;
   if (!id) return res.status(400).json({ msg: "bad request" });
   const courses = await IndividualTrainee.findOne(
@@ -135,7 +131,6 @@ const getAllItemsCourse = async (req, res) => {
 };
 
 const updateLinkProgress = async (req, res) => {
-  // const id = req.body.id;
   const courseId = req.body.courseId;
   const linkId = req.body.linkId;
   const studentId = req.user.id;
@@ -266,8 +261,8 @@ const submitExam = async (req, res) => {
         { studentId: studentId, subtitleId: subtitleId, courseId: courseId },
         { $set: { studentChoices: answers, result: resultno } },
         { new: true },
-        function (err, docs) {
-          if (err) console.log(err);
+        function (e, docs) {
+          if (e) console.log(e);
         }
       );
     } else {
@@ -289,8 +284,8 @@ const submitExam = async (req, res) => {
         { studentId: studentId, courseId: courseId },
         { $set: { studentChoices: answers, result: resultno } },
         { new: true, upsert: true },
-        function (err, docs) {
-          if (err) console.log(err);
+        function (e, docs) {
+          if (e) console.log(e);
           else console.log("Updated User : ", docs);
         }
       );
@@ -486,11 +481,21 @@ const changePassword = async (req, res) => {
   }
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
+  const oldUser = await IndividualTrainee.findOne({ email: email});
   try {
-    const data = await IndividualTrainee.findOneAndUpdate(
-      { email: email },
-      { password: hashedPassword }
-    );
+    if (oldUser){
+      const data = await IndividualTrainee.findOneAndUpdate(
+        { email: email },
+        { password: hashedPassword }
+      );
+    }
+    else{
+      const data = await Instructor.findOneAndUpdate(
+        { email: email },
+        { password: hashedPassword }
+      );
+    }
+  
     return res.status(200).json("success");
   } catch (err) {
     return res.status(406).json(err);
@@ -500,7 +505,7 @@ const changePassword = async (req, res) => {
 const rateInstructor = async (req, res) => {
   const { instId, userId, courseId, userRating, userReview } = req.body;
   if (!instId || !userId) {
-    return res.status(400).json({ error: "Empty" });
+    return res.status(500).json({ error: "Empty" });
   }
   try {
     const data = await Instructor.findById(instId).exec();
@@ -509,20 +514,18 @@ const rateInstructor = async (req, res) => {
     let x = parseInt(userRating);
     const exists = await Rating.findOne({
       userId: userId,
+      instId:instId,
       state: false,
     }).exec();
     if (exists) {
       let currentRating = parseInt(exists.userRating);
       let newRating = oldRating - currentRating + x;
       const updateRating = await Rating.findOneAndUpdate(
-        { userId: userId },
+        { userId: userId,instId:instId },
         { userRating: userRating, userReview: userReview },
         { new: true }
-      ).exec();
-      const updateInstructor = await Instructor.updateOne(
-        { _id: instId },
-        { $set: { rating: newRating } }
-      ).exec();
+      ).exec(); 
+      const updateInstructor = await Instructor.findByIdAndUpdate(instId,{$set:{rating:newRating}})
       return res.status(200).json({ msg: "Rating updated" });
     } else {
       let newRating = oldRating + x;
@@ -532,19 +535,9 @@ const rateInstructor = async (req, res) => {
         userRating: userRating,
         userReview: userReview,
         instId: instId,
+        state:false
       });
-      const UpdatedRating = await Instructor.updateOne(
-        { _id: instId },
-        {
-          $push: {
-            reviews: newRatingObj._id,
-          },
-          $set: {
-            rating: newRating,
-            ratingCount: newCount,
-          },
-        }
-      ).exec();
+      const updateInstructor = await Instructor.findByIdAndUpdate(instId,{$set:{rating:newRating,ratingCount:newCount}})
       const updateIndvidual = await IndividualTrainee.updateOne(
         { _id: userId, "registered_courses.courseId": courseId },
         { $set: { "registered_courses.$.instRating": newRatingObj._id } }
@@ -555,6 +548,24 @@ const rateInstructor = async (req, res) => {
     res.status(500).json({ msg: "can't update rating" });
   }
 };
+const deleteInstRating = async(req,res)=>{
+  const instId=req.query.instId;
+  const userId = req.user.id;
+  const rating = await Rating.findOneAndDelete({userId:userId,instId:instId ,state :false});
+  const oldRating = rating?rating.userRating:0;
+  const REMOVERATING = await Instructor.findOneAndUpdate({_id:instId},{$inc:{rating:-oldRating}});
+  const REOMVECOUNT = await Instructor.findOneAndUpdate({_id:instId},{$inc:{ratingCount:-1}});
+  res.status(200).json("deleted")
+}
+const deleteCourseRating = async(req,res)=>{
+  const courseId=req.query.courseId;
+  const userId = req.user.id;
+  const rating = await Rating.findOneAndDelete({userId:userId,courseId:courseId ,state :true});
+  const oldRating = rating?rating.userRating:0;
+  const REMOVERATING = await Course.findOneAndUpdate({_id:courseId},{$inc:{rating:-oldRating}});
+  const REOMVECOUNT = await Course.findOneAndUpdate({_id:courseId},{$inc:{ratingCount:-1}});
+  res.status(200).json("deleted")
+}
 const updateITraineePassword = async (req, res) => {
   const { oldPass, newPass } = req.body;
   if (!oldPass || !newPass) {
@@ -666,7 +677,6 @@ const payForCourse = async (courseId, userId) => {
     return;
   }
   const course = await Course.findById(courseId);
-  const instructor = await Instructor.findById(course.instructor);
   const profit =
     parseInt(course.price) -
     (parseInt(course.price) * parseInt(course.discount)) / 100;
@@ -674,13 +684,15 @@ const payForCourse = async (courseId, userId) => {
     await IndividualTrainee.findByIdAndUpdate(userId, {
       $push: { registered_courses: { courseId: courseId } },
     });
-    await Instructor.updateOne(
-      { _id: course.instructor },
-      {
-        wallet: instructor.wallet + (profit * 70) / 100,
-        studentCount: instructor.studentCount + 1,
-      }
-    );
+    const month = new Date().getMonth();
+    const exists = await Instructor.findOne({ _id: course.instructor,"wallet.month": month});
+    if(!exists){
+      await Instructor.updateOne( {_id: course.instructor},{$push:{wallet:{amount:profit*70/100,month:month}},$inc:{studentCount:1}});
+    }
+    else{
+      await Instructor.updateOne({_id: course.instructor,"wallet.month": month},{$inc:{"wallet.$.amount":profit*70/100}});
+      await Instructor.updateOne({_id: course.instructor},{$inc:{studentCount:1}});
+    }
     await Course.updateOne(
       { _id: courseId },
       { studentCount: course.studentCount + 1 }
@@ -745,6 +757,8 @@ module.exports = {
   verifyCode,
   getFinalExamGrade,
   rateInstructor,
+  deleteInstRating,
+  deleteCourseRating,
   updateLinkProgress,
   createCredit,
   deleteCredit,

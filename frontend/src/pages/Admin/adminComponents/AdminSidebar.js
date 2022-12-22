@@ -99,10 +99,17 @@ const AdminSidebar = () => {
             <span>Settings</span>
           </li>
 
-
-          <li>
-           
-          </li>
+          <Link
+            to="setPromotion"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <li>
+              <FormatListBulletedIcon
+                className={style["icon"]}
+              ></FormatListBulletedIcon>
+              <span>add Promotion(s)</span>
+            </li>
+          </Link>
         </ul>
       </div>
     </div>

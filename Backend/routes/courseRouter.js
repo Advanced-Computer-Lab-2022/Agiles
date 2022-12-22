@@ -8,7 +8,8 @@ const {
   getCourseById,
   getLink,
   rateCourse,
-  popularCourses
+  popularCourses,
+  addCoursePromotionMulti,
 } = require("../controllers/CourseController");
 
 courserouter.get("/listCourses/details", getCourses);
@@ -19,6 +20,6 @@ courserouter.get("/listCourses/search", courseSearch);
 courserouter.patch("/addPromotion", addCoursePromotion);
 courserouter.get("/link/view", getLink);
 courserouter.post("/setRating", rateCourse);
-
+courserouter.patch("/addPromotionMulti", addCoursePromotionMulti);
 
 module.exports = courserouter;

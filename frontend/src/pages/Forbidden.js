@@ -1,6 +1,5 @@
 import style from "./Forbidden.module.css"
-const Forbidden = ({funcNav}) => {
-    funcNav(false);
+const Forbidden = () => {
   return (
     <div>
         <div className={style['header']}>

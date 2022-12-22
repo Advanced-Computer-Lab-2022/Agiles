@@ -74,9 +74,6 @@ const Subtitle = () => {
 
   const getOldNotes = async (e) => {
     let id = new URLSearchParams(location.search).get("linkId");
-    // console.log("linkID: " + id);
-    // console.log("courseId: " + location.state.courseId);
-    // console.log("subtitleID: " + subtitleId);
     try {
       let res = await axios.get("/individualtrainee/getNote", {
         params: {
@@ -84,9 +81,7 @@ const Subtitle = () => {
           courseId: location.state.courseId,
         },
       });
-      // console.log(notes);
       setNotes(res.data.notes);
-      // console.log(notes);
     } catch (e) {
       console.log(e);
     }
@@ -252,11 +247,10 @@ const Subtitle = () => {
     setIsLoading(true);
     try {
       const res = await axios.get(LINK_URL + query);
-      //console.log("link: " + res.data);
       setLink(res.data);
       setSubtitles(location.state.data);
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
     }
     setIsLoading(false);
   };

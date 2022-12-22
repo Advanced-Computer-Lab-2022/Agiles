@@ -4,3 +4,11 @@
   scroll-behavior: smooth;
   box-sizing: border-box ;
 }
+.App{
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.App::-webkit-scrollbar {
+  display: none;
+}

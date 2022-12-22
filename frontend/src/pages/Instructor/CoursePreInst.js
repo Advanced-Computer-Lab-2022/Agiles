@@ -10,7 +10,6 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Modal from "react-bootstrap/Modal";
 import UploadIcon from "@mui/icons-material/Upload";
-import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 import ReviewCard from "../../components/ReviewCard";
 import MyCourseInst from "./MyCourseInst";
@@ -45,8 +44,8 @@ const CoursePreInst = () => {
       (response) => {
         window.location.reload();
       },
-      (error) => {
-        console.log(error);  
+      (e) => {
+        console.log(e);  
       });};
       const fetchdata = async () => {
         setIsLoading(true);
@@ -109,8 +108,9 @@ const CoursePreInst = () => {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
+            <br></br>
             <Button  onClick={handleShow} style={{borderRadius:'0',border:'none',backgroundColor:'#a00407'}}>
-              <EditIcon /> Edit Course Preview Video
+               Edit
             </Button>
             <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>
@@ -176,10 +176,12 @@ const CoursePreInst = () => {
       </div>
       <hr className={style["mainRight-hr"]}></hr>
       <h3>About this course</h3>
-      <p>{course.description}</p>
-      <hr className={style["mainRight-hr"]}></hr>
-      <h3>Subject</h3>
-      <p>{course.subject}</p>
+      <p>Description : {course.description}
+      <br></br>
+      <span>Subject : {course.subject}</span>
+      <br></br>
+      <span style={{color:'#a00407',fontWeight:'bold'}}>Enrolled students : {course.studentCount} students</span>
+      </p>
       <hr className={style["mainRight-hr"]}></hr>
       <h3>Define promotion</h3>
       <CoursePromo course_id={course_id}></CoursePromo>

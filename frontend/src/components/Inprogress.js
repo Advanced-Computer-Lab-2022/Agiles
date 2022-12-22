@@ -12,22 +12,18 @@ import RegCourseCard from "./RegCourseCard";
 const cookies = new Cookies();
 const INPROGRESS_URL = "/individualtrainee/inprogress";
 const Inprogress = () => {
-  const currentUser = cookies.get("currentUser");
   const [isloading, setIsLoading] = useState(true);
   const [courses, setCourses] = useState([]);
   let result = [];
   const getCourses = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.get(INPROGRESS_URL + "/" + currentUser);
-      // const items = await axios.post('individualtrainee/getAllItems',{courseId:course_id});
+      const res = await axios.get(INPROGRESS_URL);
       result = res.data.registered_courses
       setCourses(result);
-      console.log(result);
-      // setNumberOfItems(items.data.numberOfItems);
       setIsLoading(false);
-    } catch (err) {
-       console.log(err);
+    } catch (e) {
+       console.log(e);
     }
   };
   useEffect(() => {
@@ -44,9 +40,10 @@ const Inprogress = () => {
               <h1>My Learning</h1>          
            </section>
            <section className={InprogressStyles['courses']}>
+           <button  className={InprogressStyles['main-btn']} style={{marginBottom:'1rem'}} onClick={()=>window.location.href="/courses"}>Learn more</button>
           <div className={RegCourseCardStyles["cardgrid"]}>
             {courses.map((el, index) => {
-              return <RegCourseCard  data={el.courseId} progress={ Math.floor((el.progress/el.courseId.numberOfItems)*100)} courseRating = {el.courseRating?el.courseRating.userRating:0}index={index} key={index} />;
+              return <RegCourseCard  data={el.courseId} progress={ Math.floor((el.progress/el.courseId.numberOfItems)*100)} courseRating = {el.courseRating?el.courseRating.userRating:0} courseReview={el.courseRating?el.courseRating.userReview:""}index={index} key={index} />;
             })}
           </div> 
           </section>

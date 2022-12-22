@@ -1,14 +1,15 @@
-import FilterStyles from "./Filter.module.css";
+import FilterStyles from "./AdminFilter.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Rating from "@mui/material/Rating";
 import Cookies from "universal-cookie";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import Accordion from "react-bootstrap/Accordion";
-import { subjectList } from "../pages/Course/subjectList";
+import { subjectList } from "/Users/abdullahahmad/Agiles/frontend/src/pages/Course/subjectList.js";
 import Form from "react-bootstrap/Form";
+import { Checkbox } from "@mui/material";
 const cookies = new Cookies();
-const Filter = ({ chooseMessage, currentMessage }) => {
+const AdminFilter = (props) => {
   const status = cookies.get("status");
   const [disapled, setDisapled] = useState(false);
   const [minPrice, setMinPrice] = useState();
@@ -55,7 +56,6 @@ const Filter = ({ chooseMessage, currentMessage }) => {
   };
 
   const handleSubmit = async () => {
-    chooseMessage(!currentMessage);
     if (
       subject == "" &&
       minPrice == null &&
@@ -85,20 +85,16 @@ const Filter = ({ chooseMessage, currentMessage }) => {
       }
 
       navigate({
-        pathname: "/courses/filter",
+        pathname: "/admin/filter",
         search: url,
       });
+      props.actionState.setAction(2);
+      props.changeState.setChange(!props.changeState.change);
     }
   };
   return (
     <div className={FilterStyles["filter"]}>
-      <div className={FilterStyles["top"]}>
-        <button className={FilterStyles["logo"]} onClick={handleSubmit}>
-          <span>
-            <FilterListIcon /> Filter
-          </span>
-        </button>
-      </div>
+      <div className={FilterStyles["top"]}></div>
       <hr />
       <div className="center">
         <Accordion defaultActiveKey="0" alwaysOpen>
@@ -157,8 +153,13 @@ const Filter = ({ chooseMessage, currentMessage }) => {
           )}
         </Accordion>
       </div>
+      <button className={FilterStyles["logo"]} onClick={handleSubmit}>
+        <span>
+          <FilterListIcon /> Filter
+        </span>
+      </button>
     </div>
   );
 };
 
-export default Filter;
+export default AdminFilter;

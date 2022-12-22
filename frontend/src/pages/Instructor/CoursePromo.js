@@ -1,8 +1,8 @@
 import style from "../../components/CoursePreview.module.css";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
-import Alert from 'react-bootstrap/Alert';
-import {useState } from "react";
+import Alert from "react-bootstrap/Alert";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 
 const PROMO_URL = "/course/addPromotion";
@@ -10,8 +10,8 @@ const CoursePromo = (props) => {
   const course_id = props.course_id;
   const [promotion, setPromotion] = useState();
   const [enddate, setEnddate] = useState("");
-  const [alert,setAlert] = useState("");
-  const [flag,setFlag] = useState(false);
+  const [alert, setAlert] = useState("");
+  const [flag, setFlag] = useState(false);
   const handlePromo = (e) => {
     setPromotion(e.target.value);
   };
@@ -27,29 +27,47 @@ const CoursePromo = (props) => {
     };
     try {
       const res = await axios.patch(PROMO_URL, data);
-      setAlert("success")
+      setAlert("success");
       setFlag(true);
     } catch (e) {
-      setAlert("danger")
+      setAlert("danger");
       setFlag(false);
     }
-    setPromotion('amount..');
+    setPromotion("amount..");
     setEnddate("");
   };
   return (
-    <div >
-      <form onSubmit={handleSubmit} style={{display : 'grid' ,maxWidth:'50%' , gap:'2rem' , marginTop :'2rem'}}>
+    <div>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: "grid",
+          maxWidth: "50%",
+          gap: "2rem",
+          marginTop: "2rem",
+        }}
+      >
         <div>
-        {flag &&<Alert key={alert} variant={alert}>
-             {alert == 'success' ? "promotion updated successfully" :"error happened"}
-        </Alert>}
+          {flag && (
+            <Alert key={alert} variant={alert}>
+              {alert == "success"
+                ? "promotion updated successfully"
+                : "error happened"}
+            </Alert>
+          )}
           <span>Amount (%) </span>
           <input
             required
             type="number"
             value={promotion}
-            placeholder= "amount.."
-            style = {{border:'0.5px solid black',borderRadius:'0.25rem' , marginLeft:'0.5rem',padding:'0.5rem',width:'10rem'}}
+            placeholder="amount.."
+            style={{
+              border: "0.5px solid black",
+              borderRadius: "0.25rem",
+              marginLeft: "0.5rem",
+              padding: "0.5rem",
+              width: "10rem",
+            }}
             onChange={handlePromo}
           />
         </div>
@@ -59,12 +77,28 @@ const CoursePromo = (props) => {
             required
             type="date"
             value={enddate}
-            style = {{border:'0.5px solid black',borderRadius:'0.25rem' , marginLeft:'1.7rem',padding:'0.5rem' ,width:'10rem'}}
+            style={{
+              border: "0.5px solid black",
+              borderRadius: "0.25rem",
+              marginLeft: "1.7rem",
+              padding: "0.5rem",
+              width: "10rem",
+            }}
             onChange={handleEnddate}
           ></input>
         </div>
-        <Button variant="dark" type="submit"style={{backgroundColor:'#a00407',borderRadius: 0, width: '10rem' ,border: 'none' }}>Sumbit
-          </Button>
+        <Button
+          variant="dark"
+          type="submit"
+          style={{
+            backgroundColor: "#a00407",
+            borderRadius: 0,
+            width: "10rem",
+            border: "none",
+          }}
+        >
+          Submit
+        </Button>
       </form>
     </div>
   );

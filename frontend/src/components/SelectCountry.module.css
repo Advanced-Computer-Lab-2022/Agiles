@@ -2,4 +2,10 @@
     border: none;
     scroll-behavior: smooth;
     overflow: hidden;
+    width: 40px;
+
+}
+.country-select .country-list{
+    display: none;
+    overflow-x: hidden;
 }

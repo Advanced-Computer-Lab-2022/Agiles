@@ -36,8 +36,8 @@ const Profile = () => {
         setLastname(res.data.lastname);
         setMiniBio(res.data.mini_bio);
       }
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
     }
     setIsLoading(false);
   };
@@ -55,8 +55,8 @@ const Profile = () => {
     try {
       const res = axios.patch(update, body);
       window.location.reload();
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
     }
   };
   return (

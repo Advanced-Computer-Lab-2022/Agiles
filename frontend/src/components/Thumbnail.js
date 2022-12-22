@@ -1,29 +1,20 @@
-import Carousel from 'react-bootstrap/Carousel';
-import A1 from "../static/Technology.png"
-import A2 from "../static/A2.png"
-
+import style from "./Thumbnail.module.css"
 const Thumbnail = () => {
-    return ( <Carousel >
-    <Carousel.Item>
-      <img
-        className="d-block w-100 "
-        style={{height:'30rem'}}
-        src={A1}
-        alt="First slide"
-      />
-     
-    
-     
-    </Carousel.Item>
-    <Carousel.Item>
-      <img
-       src={A2}
-        className="d-block w-100"
-        style={{height:'30rem'}}
-        alt="Second slide"
-      />
-    </Carousel.Item>
-  </Carousel> );
+    return ( <section className={style["main"]}>
+      <section className={style["container"]}>
+      <label>Lets</label>
+          <h1>
+          E-learning
+          </h1>
+          <label>at your home</label>
+          <div  className={style["container-signUp"]}>
+            <button className={style["container-signUp-1"]} onClick={()=>window.location.href="/signup"}>Sign up</button>
+            <button className={style["container-signUp-2"]} onClick={()=>window.location.href="/login"}>Log in</button>
+          </div>
+      </section>
+          
+
+    </section>)
 }
  
 export default Thumbnail;

@@ -1,5 +1,7 @@
 .home{
-  min-height: 150vh;
+   display: flex;
+   flex-direction: column;
+   margin-top: 0.1rem;
 }
 .navbarSub {
   display: flex;
@@ -18,10 +20,8 @@
   border-bottom: 1px solid #f2f2f2;
   padding: 0.3rem 1rem;
 }
-
-.craousel{
-  width: 80%;
-  margin-left: 10%;
+.thumbnail{
+    margin-left: 20rem;
 }
 .Inprogress{
   background-color: white;
