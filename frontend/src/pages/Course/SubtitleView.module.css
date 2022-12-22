@@ -38,3 +38,12 @@
     color: blue;
     border: none;
 }
+.button-check{
+    display: flex;
+    flex-direction: row;
+    
+
+}
+.check{
+    justify-content: end;
+}

@@ -150,7 +150,7 @@ const updateLinkProgress = async (req, res) => {
       });
       numberOfItems += course.subtitles.length + 1;
     } else {
-      return res.status(400).json({ msg: "bad request" });
+      res.status(400).json({ msg: "bad request" });
     }
 
     const updatecourse = await Course.findOneAndUpdate(
@@ -170,7 +170,8 @@ const updateLinkProgress = async (req, res) => {
     );
     if (linkprogress) {
       if (linkprogress.progress === 1)
-        res.status(200).json({ numberOfItems: numberOfItems });
+        res.status(200).json({ progress: -1,numberOfItems: numberOfItems });
+        console.log(linkprogress);
       return;
     }
 
@@ -194,18 +195,39 @@ const updateLinkProgress = async (req, res) => {
     );
 
     if (progress) {
-      return res.status(200).json({
+      res.status(200).json({
         progress: completedItems,
         course: regcourse1,
         numberOfItems: numberOfItems,
       });
+      console.log(progress);
     } else {
-      return res.status(400).json({ msg: "bad request" });
+      res.status(400).json({ msg: "bad request" });
     }
   } catch (err) {
     res.status(403).json({ msg: err.message });
   }
 };
+
+const getTraineeProgress = async (req, res) => {
+  const traineeId = req.user.id;
+  const courseId = req.body.courseId;
+  try{
+    const progress = await TraineeCourse.find(
+      { traineeId: traineeId, "registered_courses.courseId": courseId }
+    );
+    if (progress) {
+      res.status(200).json({ progress: progress });
+    }
+    else{
+      res.status(200).json({ progress: 0 });
+    }
+  }catch(err){
+    res.status(403).json({ msg: err.message });
+    
+  }
+  }
+
 
 const submitExam = async (req, res) => {
   const answers = req.body.answers;
@@ -732,5 +754,6 @@ module.exports = {
   addNotesToTrainee,
   getNotes,
   courseExam,
-  courseFinalExam
+  courseFinalExam,
+  getTraineeProgress
 };

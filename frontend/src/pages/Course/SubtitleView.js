@@ -16,6 +16,10 @@ import jsPDF from "jspdf";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import { Content, ContextualHelp, Heading } from "@adobe/react-spectrum";
+//import react icons
+import {AiOutlineCheck} from "react-icons/ai";
+
+
 
 const LINK_URL = "/course/link/view";
 const cookies = new Cookies();
@@ -23,15 +27,17 @@ const Subtitle = () => {
   const progress = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
+  //const history = useHistory();
   const query = location.search;
   const subtitleId = new URLSearchParams(location.search).get("subtitleId");
   const [link, setLink] = useState({ linkUrl: "", linkDesc: "" });
   const [subtitles, setSubtitles] = useState([]);
-  const subtitles2 = location.state.data;
+  //const subtitles2 = location.state.data;
   const [isloading, setIsLoading] = useState(false);
   const [grade, setGrade] = useState([]);
   const [questions, setQuestions] = useState(0);
   const [show, setShow] = useState(false);
+  const [done, setDone] = useState([]);
   // const [show, setShow] = useState(false);
 
   const [notes, setNotes] = useState("Blank");
@@ -43,28 +49,44 @@ const Subtitle = () => {
 
   const saveNotes = async (e) => {
     let res = await axios.patch("/individualtrainee/addNotes", {
-      subtitleId: subtitleId,
       notes: notes,
       linkId: link._id,
       courseId: location.state.courseId,
     });
   };
+
+  const getFinishedItems = async (e) => {
+    console.log("yes")
+    try{
+    let res = await axios.get("/individualtrainee/getTraineeProgress",
+    {   
+      courseId: location.state.courseId,
+    })
+    setDone(res.data.progress);
+    setNotes(res.data.notes);
+    console.log(res.data.progress)
+  }catch(e){
+    console.log(e);
+    
+  }
+  }
+
+
   const getOldNotes = async (e) => {
     let id = new URLSearchParams(location.search).get("linkId");
-    console.log("linkID: " + id);
-    console.log("courseId: " + location.state.courseId);
-    console.log("subtitleID: " + subtitleId);
+    // console.log("linkID: " + id);
+    // console.log("courseId: " + location.state.courseId);
+    // console.log("subtitleID: " + subtitleId);
     try {
       let res = await axios.get("/individualtrainee/getNote", {
         params: {
-          subtitleId: subtitleId,
           linkId: id,
           courseId: location.state.courseId,
         },
       });
-      console.log(notes);
+      // console.log(notes);
       setNotes(res.data.notes);
-      console.log(notes);
+      // console.log(notes);
     } catch (e) {
       console.log(e);
     }
@@ -75,11 +97,22 @@ const Subtitle = () => {
     setNotes(event.target.value);
   };
   const handleClick = async (e) => {
-    let res = await axios.post("/individualtrainee/updateLinkProgress", {
-      linkId: link._id,
+    e.preventDefault();
+    console.log(e.target.id.substring(7))
+    if(cookies.get("status") != 1){
+    try{
+    const res = await axios.post("/individualtrainee/updateLinkProgress", {
+
+      linkId: e.target.id.substring(7),
       courseId: location.state.courseId,
       completedItems: 1,
-    });
+      subtitleId: e.target.value,
+    
+
+      
+    }) //status 1 means instructor 2c,0 means trainee 3 means admin
+    console.log(res);
+    if(res){
     navigate(
       {
         pathname: "/subtitleView",
@@ -94,6 +127,26 @@ const Subtitle = () => {
       }
     );
     window.location.reload();
+    }
+    }catch(e){
+      console.log(e);
+    }
+  }else{
+    navigate(
+      {
+        pathname: "/subtitleView",
+        search: e.target.id,
+      },
+      {
+        state: {
+          currentState: e.target.name,
+          data: subtitles,
+          courseId: location.state.courseId,
+        },
+      }
+    );
+  }
+    
   };
 
   const handleClose = () => setShow(false);
@@ -159,47 +212,47 @@ const Subtitle = () => {
     }
   };
 
-  const handleProgress = async (event) => {
-    let progresser = 0;
-    if (event.data == 1) {
-      progress.current = setInterval(async () => {
-        const player = event.target;
-        const currentTime = player.getCurrentTime();
-        const duration = player.getDuration();
-        progresser = Math.floor((currentTime / duration) * 100);
-        if (progresser >= 80) {
-          progresser = 100;
-        }
-        let res = await axios.post("/individualtrainee/updateLinkProgress", {
-          linkId: link._id,
-          courseId: location.state.courseId,
-          completedItems: progresser,
-        });
-      }, 5000);
-    } else if (event.data == 2 || event.data == 0) {
-      const player = event.target;
-      const currentTime = player.getCurrentTime();
-      const duration = player.getDuration();
-      progresser = Math.floor((currentTime / duration) * 100);
-      if (progresser >= 80) {
-        progresser = 100;
-      }
-      let res = await axios.post("/individualtrainee/updateLinkProgress", {
-        id: cookies.get("currentUser"),
-        courseId: location.state.courseId,
-        completedItems: progresser,
-      });
-    }
-    return () => {
-      clearInterval(progress.current);
-    };
-  };
+  // const handleProgress = async (event) => {
+  //   let progresser = 0;
+  //   if (event.data == 1) {
+  //     progress.current = setInterval(async () => {
+  //       const player = event.target;
+  //       const currentTime = player.getCurrentTime();
+  //       const duration = player.getDuration();
+  //       progresser = Math.floor((currentTime / duration) * 100);
+  //       if (progresser >= 80) {
+  //         progresser = 100;
+  //       }
+  //       let res = await axios.post("/individualtrainee/updateLinkProgress", {
+  //         linkId: link._id,
+  //         courseId: location.state.courseId,
+  //         completedItems: progresser,
+  //       });
+  //     }, 5000);
+  //   } else if (event.data == 2 || event.data == 0) {
+  //     const player = event.target;
+  //     const currentTime = player.getCurrentTime();
+  //     const duration = player.getDuration();
+  //     progresser = Math.floor((currentTime / duration) * 100);
+  //     if (progresser >= 80) {
+  //       progresser = 100;
+  //     }
+  //     let res = await axios.post("/individualtrainee/updateLinkProgress", {
+  //       id: cookies.get("currentUser"),
+  //       courseId: location.state.courseId,
+  //       completedItems: progresser,
+  //     });
+  //   }
+  //   return () => {
+  //     clearInterval(progress.current);
+  //   };
+  // };
 
   const FetchData = async () => {
     setIsLoading(true);
     try {
       const res = await axios.get(LINK_URL + query);
-      console.log("link: " + res.data);
+      //console.log("link: " + res.data);
       setLink(res.data);
       setSubtitles(location.state.data);
     } catch (err) {
@@ -210,11 +263,11 @@ const Subtitle = () => {
 
   useEffect(() => {
     FetchData();
-    getOldNotes();
-    return () => {
-      clearInterval(progress.current);
-    };
-  }, []);
+    getFinishedItems();
+    // return () => {
+    //   clearInterval(progress.current);
+    // };
+  },[]);
   return (
     <>
       {isloading ? (
@@ -234,10 +287,9 @@ const Subtitle = () => {
                     "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
                   playerVars: {
                     fs: 1,
-                    autoplay: 1,
+                    autoplay: 0,
                   },
                 }}
-                onStateChange={handleProgress}
               />
             </section>
             <section className={style["main-section-left-bottom"]}>
@@ -279,16 +331,20 @@ const Subtitle = () => {
                     <Accordion.Body>
                       <ListGroup>
                         {subtitle.link?.map((link, index1) => (
-                          <ListGroup.Item key={index1}>
-                            {index1 + 1}.{" "}
+                          <ListGroup.Item key={index1} className= "d-flex justify-content-between align-items-start">
                             <button
                               id={"linkId=" + link._id}
                               name={index0 + " " + index1}
                               onClick={handleClick}
+                              value = {subtitle._id}
                               className={style["subtitleView"]}
                             >
                               {link.linkDesc}
                             </button>
+                            {done.find((item) => item.linkId === link._id)? (
+                              <AiOutlineCheck className={style["check"]} />) : (null)
+                                }
+
                           </ListGroup.Item>
                         ))}
                         <ListGroup.Item key={"exam"}>
