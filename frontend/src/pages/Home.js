@@ -17,9 +17,7 @@ const Home = () => {
     if (status == 0 || status == 2) {
       return (
         <div className="home">
-      <div className="craousel">
-           {/* <Thumbnail></Thumbnail>*/}
-          </div>
+          <div className="craousel">{/* <Thumbnail></Thumbnail>*/}</div>
           <nav className="smallNav">
             <div>
               <Link to="/">
@@ -30,7 +28,7 @@ const Home = () => {
               </Link>
             </div>
           </nav>
-          
+
           <Explore></Explore>
           <footer></footer>
         </div>
@@ -38,23 +36,36 @@ const Home = () => {
     } else {
       return (
         <div className="home">
-           <div className="craousel">
-           {/* <Thumbnail></Thumbnail>*/}
-           </div>
-          <nav className="smallNav">
+          <div className="craousel">{/* <Thumbnail></Thumbnail>*/}</div>
+          <nav className="smallNav" style={{ marginTop: "15px" }}>
             <div>
               <Link to="/">
-                <button className={"Inprogress"}>Explore </button>
+                <button
+                  style={{ fontWeight: "500", fontSize: "20px" }}
+                  className={"Inprogress"}
+                >
+                  Explore{" "}
+                </button>
               </Link>
               <Link to="/mycourses">
-                <button className={"notPressed"}>My Courses </button>
+                <button
+                  style={{ fontWeight: "500", fontSize: "20px" }}
+                  className={"notPressed"}
+                >
+                  My Courses{" "}
+                </button>
               </Link>
               <Link to="/createcourse">
-                <button className={"notPressed"}>CreateCourse </button>
+                <button
+                  style={{ fontWeight: "500", fontSize: "20px" }}
+                  className={"notPressed"}
+                >
+                  Create New Course{" "}
+                </button>
               </Link>
             </div>
           </nav>
-         
+
           <Explore></Explore>
           <footer></footer>
         </div>
@@ -63,7 +74,7 @@ const Home = () => {
   } else {
     return (
       <div className="home">
-           <Thumbnail ></Thumbnail>
+        <Thumbnail></Thumbnail>
         <footer></footer>
       </div>
     );
