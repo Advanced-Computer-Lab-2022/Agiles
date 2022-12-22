@@ -38,7 +38,19 @@ function SetPromotion(props) {
   const PROMO_URL = "/course/addPromotionMulti";
   const location = useLocation();
   const query = new URLSearchParams(location.search);
-  let IDsArr = [];
+  const [IDsArr, setIDsArr] = useState([]);
+  const addOrRemove = async (name) => {
+    const newIDsArr = [...IDsArr];
+    const index = newIDsArr.indexOf(name);
+    if (index === -1) {
+      newIDsArr.push(name);
+    } else {
+      newIDsArr.splice(index, 1);
+    }
+    await setIDsArr(newIDsArr);
+    console.log(newIDsArr);
+  };
+
   const handleSearch = async (event) => {
     event.preventDefault();
     console.log(searchString);
@@ -51,9 +63,8 @@ function SetPromotion(props) {
   const handleEnddate = (e) => {
     setEnddate(e.target.value);
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, IDsArr) => {
     e.preventDefault();
-
     try {
       const data = {
         idArr: IDsArr,
@@ -63,6 +74,7 @@ function SetPromotion(props) {
       const res = await axios.patch(PROMO_URL, data);
       setAlert("success");
       setFlag(true);
+      setChange(!change);
     } catch (e) {
       setAlert("danger");
       setFlag(false);
@@ -89,6 +101,16 @@ function SetPromotion(props) {
         let res = await axios.get(url);
         setCourses(res.data);
       }
+      if (selectAll) {
+        setIDsArr(
+          courses.map((el) => {
+            return el._id;
+          })
+        );
+      } else {
+        setIDsArr([]);
+      }
+
       setIsLoading(false);
     };
 
@@ -121,7 +143,7 @@ function SetPromotion(props) {
           />
         </div>
         <form
-          onSubmit={handleSubmit}
+          onSubmit={(e) => handleSubmit(e, IDsArr)}
           style={{
             // display: "grid",
             margin: "70px 0",
@@ -189,7 +211,7 @@ function SetPromotion(props) {
 
       <Table>
         <TableHead>
-          <TableRow>
+          <TableRow style={{ verticalAlign: "text-top" }}>
             <TableCell
               style={{
                 fontWeight: "600",
@@ -254,8 +276,6 @@ function SetPromotion(props) {
         </TableHead>
         <TableBody>
           {courses.map((el) => {
-            if (selectAll) IDsArr.push(el._id);
-
             return (
               <TableRow>
                 <TableCell>{el.title}</TableCell>
@@ -266,16 +286,8 @@ function SetPromotion(props) {
                 <TableCell>
                   <Checkbox
                     defaultChecked={selectAll}
-                    onChange={(event) => {
-                      if (event.target.checked) {
-                        IDsArr.push(el._id);
-                      } else {
-                        const index = IDsArr.indexOf(el._id);
-                        if (index > -1) {
-                          // only splice array when item is found
-                          IDsArr.splice(index, 1); // 2nd parameter means remove one item only
-                        }
-                      }
+                    onChange={() => {
+                      addOrRemove(el._id);
                     }}
                   />
                 </TableCell>

@@ -31,6 +31,20 @@ function ViewReports() {
 
   return (
     <Accordion defaultActiveKey={-1}>
+      <div
+        style={{
+          display: "flex",
+          width: "80%",
+          marginLeft: "20px",
+          borderBottom: "1px solid black",
+        }}
+      >
+        <div style={{ width: "25%" }}>Seen</div>
+        <div style={{ width: "25%" }}>Trainee Name</div>
+        <div style={{ width: "25%" }}>Course Title</div>{" "}
+        <div style={{ width: "25%" }}>Status</div>
+      </div>
+
       {reports.map((el, index) => {
         return el.userId == null ? "" : <Report data={el}></Report>;
       })}
