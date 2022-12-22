@@ -1,5 +1,7 @@
+import { TableCell, TableRow, TableHead, Table } from "@mui/material";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import Button from "react-bootstrap/Button";
 
 function ViewRequests() {
   const [reports, setReports] = useState([]);
@@ -17,43 +19,51 @@ function ViewRequests() {
   const handleApprove = async (traineeId, courseId, index) => {
     const url = "/admin/grantAccess";
     try {
-      const res = await axios.post(url, {
-        traineeId: traineeId,
-        courseId: courseId,
-      });
-      setChange(!change);
+      axios
+        .post(url, { traineeId: traineeId, courseId: courseId })
+        .then(setChange(!change));
     } catch (e) {
       console.log(e);
     }
   };
   return (
-    <ul>
+    <Table>
+      <TableHead>
+        <TableCell>Trainee Email</TableCell>
+        <TableCell>Trainee Name</TableCell>
+        <TableCell>Course Title</TableCell>
+        <TableCell style={{ textAlign: "center" }}>Status</TableCell>
+      </TableHead>
       {reports.map((el, index) => {
         if (el.traineeId == null || el.courseId == null) return "";
+
         return (
-          <li key={index}>
-            <div>trainee email: {el.email}</div>
-            <div>
-              trainee name:{" "}
+          <TableRow style={{ verticalAlign: "text-top" }} key={index}>
+            <TableCell>{el.email}</TableCell>
+            <TableCell>
               {el.traineeId.firstname + " " + el.traineeId.lastname}
-            </div>
-            <div>course title: {el.courseId.title}</div> <div>{el.status}</div>
-            {el.status == "pending" ? (
-              <button
-                onClick={() =>
-                  handleApprove(el.traineeId._id, el.courseId._id, index)
-                }
-              >
-                {" "}
-                Approve
-              </button>
-            ) : (
-              ""
-            )}
-          </li>
+            </TableCell>
+            <TableCell>{el.courseId.title}</TableCell>{" "}
+            <TableCell style={{ textAlign: "center" }}>
+              {el.status}
+              {el.status == "pending" ? (
+                <Button
+                  style={{ marginLeft: "15px" }}
+                  onClick={() =>
+                    handleApprove(el.traineeId._id, el.courseId._id, index)
+                  }
+                >
+                  {" "}
+                  Approve
+                </Button>
+              ) : (
+                ""
+              )}
+            </TableCell>
+          </TableRow>
         );
       })}
-    </ul>
+    </Table>
   );
 }
 
