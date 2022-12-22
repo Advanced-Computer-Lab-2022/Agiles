@@ -19,7 +19,7 @@ import {
   TableSortLabel,
 } from "@mui/material";
 import TablePagination from "@mui/material/TablePagination";
-import spinner from "/Users/abdullahahmad/Agiles/frontend/src/static/download.gif";
+import spinner from "../../../static/download.gif";
 import LoadingScreen from "react-loading-screen";
 import AdminFilter from "./AdminFilter";
 import Alert from "react-bootstrap/Alert";

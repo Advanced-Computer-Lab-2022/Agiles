@@ -57,17 +57,19 @@ const Subtitle = () => {
 
   const getFinishedItems = async (e) => {
     console.log("yes")
-    try{
-    let res = await axios.get("/individualtrainee/getTraineeProgress",
-    {   
-      courseId: location.state.courseId,
-    })
-    setDone(res.data.progress);
-    setNotes(res.data.notes);
-    console.log(res.data.progress)
-  }catch(e){
-    console.log(e);
-    
+    if(cookies.get("status") !== 1){
+      try{
+      let res = await axios.get("/individualtrainee/getTraineeProgress",
+      {   
+        courseId: location.state.courseId,
+      })
+      setDone(res.data.progress);
+      setNotes(res.data.notes);
+      console.log(res.data.progress)
+    }catch(e){
+      console.log(e);
+      
+    }
   }
   }
 
@@ -93,8 +95,7 @@ const Subtitle = () => {
   };
   const handleClick = async (e) => {
     e.preventDefault();
-    console.log(e.target.id.substring(7))
-    if(cookies.get("status") != 1){
+    if(cookies.get("status") !== 1){
     try{
     const res = await axios.post("/individualtrainee/updateLinkProgress", {
 

@@ -5,7 +5,7 @@ import Rating from "@mui/material/Rating";
 import Cookies from "universal-cookie";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import Accordion from "react-bootstrap/Accordion";
-import { subjectList } from "/Users/abdullahahmad/Agiles/frontend/src/pages/Course/subjectList.js";
+import { subjectList } from "../../Course/subjectList";
 import Form from "react-bootstrap/Form";
 import { Checkbox } from "@mui/material";
 const cookies = new Cookies();
