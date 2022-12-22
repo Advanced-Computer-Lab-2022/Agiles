@@ -228,6 +228,7 @@ const logOut = async (req, res) => {
 const accessRequests = async (req, res) => {
   requests = await CourseSubscriptionRequest.find({})
     .populate("traineeId courseId")
+    .sort("-createdAt")
     .exec();
   res.send(requests).status(200);
 };
@@ -235,7 +236,9 @@ const accessRequests = async (req, res) => {
 const refundRequests = async (req, res) => {
   requests = await CourseRefundRequest.find({})
     .populate("traineeId courseId")
+    .sort("-createdAt")
     .exec();
+
   res.send(requests).status(200);
 };
 const grantAccess = async (req, res) => {
@@ -270,7 +273,10 @@ const grantAccess = async (req, res) => {
 };
 
 const getReports = async (req, res) => {
-  requests = await Report.find({}).populate("userId courseId").exec();
+  requests = await Report.find({})
+    .populate("userId courseId")
+    .sort("-createdAt")
+    .exec();
   res.send(requests).status(200);
 };
 

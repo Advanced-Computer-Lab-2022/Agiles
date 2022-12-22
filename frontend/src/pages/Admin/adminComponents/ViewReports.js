@@ -27,7 +27,6 @@ function ViewReports() {
       console.log(e);
     }
   };
-  const handleView = async (id) => {};
 
   return (
     <Accordion style={{ margin: "0 5px" }} defaultActiveKey={-1}>

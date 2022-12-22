@@ -28,11 +28,31 @@ function ViewRequests() {
   };
   return (
     <Table>
-      <TableHead style={{ verticalAlign: "text-top" }}>
-        <TableCell>Trainee Email</TableCell>
-        <TableCell>Trainee Name</TableCell>
-        <TableCell>Course Title</TableCell>
-        <TableCell style={{ textAlign: "center" }}>Status</TableCell>
+      <TableHead
+        style={{
+          verticalAlign: "text-top",
+          width: "100%",
+          paddingLeft: "15px",
+          borderBottom: "1px solid gray",
+          paddingBottom: "30px",
+
+          boxShadow: "inset 0 -1px 0 rgb(0 0 0 / 13%)",
+        }}
+      >
+        <TableCell style={{ fontSize: "20px", fontWeight: "600" }}>
+          Trainee Email
+        </TableCell>
+        <TableCell style={{ fontSize: "20px", fontWeight: "600" }}>
+          Trainee Name
+        </TableCell>
+        <TableCell style={{ fontSize: "20px", fontWeight: "600" }}>
+          Course Title
+        </TableCell>
+        <TableCell
+          style={{ fontSize: "20px", fontWeight: "600", textAlign: "center" }}
+        >
+          Status
+        </TableCell>
       </TableHead>
       {reports.map((el, index) => {
         if (el.traineeId == null || el.courseId == null) return "";
