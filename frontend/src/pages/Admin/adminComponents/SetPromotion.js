@@ -282,7 +282,7 @@ function SetPromotion(props) {
                 <TableCell>{el.instructorname}</TableCell>
                 <TableCell>{el.price}</TableCell>
                 <TableCell>{el.discount}</TableCell>
-                <TableCell>{el.discount_enddate}</TableCell>
+                <TableCell>{Date(el.discount_enddate)}</TableCell>
                 <TableCell>
                   <Checkbox
                     defaultChecked={selectAll}

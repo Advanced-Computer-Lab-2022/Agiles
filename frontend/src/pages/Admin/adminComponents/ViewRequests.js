@@ -28,7 +28,7 @@ function ViewRequests() {
   };
   return (
     <Table>
-      <TableHead>
+      <TableHead style={{ verticalAlign: "text-top" }}>
         <TableCell>Trainee Email</TableCell>
         <TableCell>Trainee Name</TableCell>
         <TableCell>Course Title</TableCell>

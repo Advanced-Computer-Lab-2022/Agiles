@@ -37,12 +37,12 @@ function Report(props) {
     >
       <Accordion.Header>
         <div style={{ display: "flex", width: "80%" }}>
-          <div style={{ width: "25%" }}>{seen}</div>
           <div style={{ width: "25%" }}>
-            trainee name: {el.userId.firstname + " " + el.userId.lastname}
+            {el.userId.firstname + " " + el.userId.lastname}
           </div>
-          <div style={{ width: "25%" }}>course title: {el.courseId.title}</div>{" "}
-          <div style={{ width: "25%" }}> status: {status}</div>
+          <div style={{ width: "25%" }}> {el.courseId.title}</div>{" "}
+          <div style={{ width: "25%" }}> {status}</div>
+          <div style={{ width: "25%" }}>{seen ? "Yes" : "No"}</div>
         </div>
       </Accordion.Header>
       <Accordion.Body>
