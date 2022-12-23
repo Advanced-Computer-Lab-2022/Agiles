@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import "./AddInstructor.css";
 import AdminImg from "../../static/Admin.png";
-import Alert from "react-bootstrap/Alert";
+import Alert from "@mui/material/Alert";
 
 const AddAdmin = (props) => {
   const [username, setUsername] = useState("");
@@ -20,13 +20,13 @@ const AddAdmin = (props) => {
     };
     try {
       const res = await axios.post("/admin/addAdmin", admin, config);
-      setAlert("Success");
-      setFlag(true);
+      setAlert("success");
     } catch (e) {
       console.log(e);
-      setAlert("Danger");
-      setFlag(false);
+      setAlert("error");
     }
+    setFlag(true);
+
     setUsername("");
     setPassword("");
   };
@@ -73,10 +73,14 @@ const AddAdmin = (props) => {
               </div>
               <div className="alertContainer">
                 {flag && (
-                  <Alert key={alert} variant={alert}>
+                  <Alert
+                    severity={alert}
+                    key={alert}
+                    style={{ fontSize: "20px" }}
+                  >
                     {alert == "success"
                       ? "admin added successfully"
-                      : "error happened"}
+                      : "username already taken"}
                   </Alert>
                 )}
               </div>
