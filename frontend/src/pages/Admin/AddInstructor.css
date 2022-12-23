@@ -20,7 +20,8 @@
 .bottom {
   border-radius: 25px;
   background-color: #f2f2f2;
-
+  width: 70%;
+  min-width: 500px;
   padding: 30px;
   margin: 20px;
   display: flex;
@@ -96,4 +97,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.bottom-admin {
+  border-radius: 25px;
+  background-color: #f2f2f2;
+  width: 50%;
+  min-width: 500px;
+  padding: 30px;
+  margin: 20px;
+  /* display: flex; */
+}
+
+.formClassAdmin {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.buttonContAdmin {
+  margin: auto 0;
+}
+
+.formInputAdmin {
+  width: 100%;
 }
