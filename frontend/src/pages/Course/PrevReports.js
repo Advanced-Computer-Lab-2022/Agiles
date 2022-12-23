@@ -17,9 +17,7 @@ const PrevReports = () => {
     const [followUp, setFollowUp] = useState("");
     const [reportId, setReportId] = useState("");
     const [followUpArr , setFollowUpArr]=useState([]);
-   
-     
-   
+    
     
     const handleSubmit = async(event) => {
        const follow = {
@@ -50,7 +48,7 @@ const PrevReports = () => {
          timer: 1500,
        });
      }
- 
+     
      };
     
     
