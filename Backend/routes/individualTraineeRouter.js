@@ -35,6 +35,7 @@ const {
   getNotes,
   deleteCourseRating,
   getTraineeProgress,
+  getTraineeExams,
 } = require("../controllers/IndividualTraineeController");
 const { verifyItraineeJWT } = require("../middleware/authMiddleware");
 
@@ -57,6 +58,11 @@ IndividualTraineeRouter.get(
   "/getIndividualExerciseGrade",
   verifyItraineeJWT,
   getExerciseGrade
+);
+IndividualTraineeRouter.post(
+  "/getTraineeExams",
+  verifyItraineeJWT,
+  getTraineeExams
 );
 IndividualTraineeRouter.get(
   "/getIndividualAnswers",

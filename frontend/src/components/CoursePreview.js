@@ -7,7 +7,7 @@ import CircleIcon from "@mui/icons-material/Circle";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import LoadingScreen from "react-loading-screen";
 import spinner from "../static/download.gif";
 import axios from "axios";
@@ -17,6 +17,7 @@ import InstructorRating from "../pages/Course/InstructorRating";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const CoursePreview = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const course_id = new URLSearchParams(location.search).get("courseId");
   const index = new URLSearchParams(location.search).get("idx");
@@ -27,13 +28,45 @@ const CoursePreview = () => {
   const [instRating, setInstRating] = useState(0);
   const [instReview, setInstReview] = useState("");
   const [progress, setProgress] = useState(0);
+  const [completedItems, setCompletedItems] = useState(0);
+  const [allItems, setAllItems] = useState(0);
   const [show, setShow] = useState(false);
   const [reviews, setReviews] = useState([]);
+  const [certificate, setCertificate] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setReviews(data.secondField);
     setShow(true);
   };
+
+  const handleCertificate = async (e) => {
+    try{
+    const res = await axios.get("individualtrainee/getIndividualTraineebyId");
+    console.log(res);
+    if(res){
+    navigate("/certificate", {
+      state: {
+        progress: progress,
+          course_id: course_id,
+          course_img: course.imgUrl,
+          course_title: course.title,
+          course_inst: course.instructorname,
+          idx: index,
+          fname: res.data.firstname,
+          lname: res.data.lastname
+
+      }
+    })
+    }}
+    catch(e){
+      console.log(e);
+    }
+  }
+
+        
+        
+
+
   const fetchdata = async () => {
     setIsLoading(true);
     try {
@@ -52,6 +85,11 @@ const CoursePreview = () => {
             100
         )
       );
+      setCompletedItems(res.data.firstField.registered_courses[index].progress);
+      setAllItems(items.data.numberOfItems);
+      if(res.data.firstField.registered_courses[index].progress === items.data.numberOfItems - 11){
+        setCertificate(true);
+      }
       setCourse(res.data.firstField.registered_courses[index].courseId);
       setInstId(
         res.data.firstField.registered_courses[index].courseId.instructor
@@ -119,6 +157,28 @@ const CoursePreview = () => {
               now={progress}
               className={style["progressbar"]}
             ></ProgressBar>
+            <div className={style["progress"]}>
+              <div className={style["progress-left"]}>
+                <h6 style={
+                  {marginLeft: "0.5rem",
+                  marginTop: "0.5rem",}
+                }>
+                  {completedItems} of {allItems} items completed
+                  </h6>
+                  {certificate ?
+                  <Button variant="text" style={{
+                    borderRadius: "1rem",
+                    width: "10rem",
+                    border: "none",
+                    color: "#a00407",
+                    
+                    }
+                  } onClick={handleCertificate}
+                    >Get Certificate</Button> : null}
+                  
+              </div>
+            </div>
+
             <h1>Welcome to the {course.title} Course</h1>
             <div className={style["video"]}>
               {course.coursePreviewUrl != "" ? (
