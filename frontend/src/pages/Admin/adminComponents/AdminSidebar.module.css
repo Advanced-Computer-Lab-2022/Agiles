@@ -3,7 +3,7 @@
   border-right: 0.5px solid rgb(230, 227, 227);
   align-items: center;
   min-height: 100vh;
-  background-color: white;
+  background-color: #1c2d40;
 }
 .top {
   height: 50px;
@@ -15,7 +15,7 @@
 .logo {
   font-size: 2rem;
   font-weight: bold;
-  color: rgb(0, 0, 0);
+  color: rgb(200, 200, 200);
 }
 
 .hr {
@@ -33,35 +33,45 @@
   width: 100%;
 }
 .main {
-  font-size: 15px;
-  color: rgb(0, 0, 0);
+  font-size: 20px;
+  font-weight: 500;
+  color: #696969;
   padding: 0.5rem;
-  background-color:rgb(241, 241, 249);
+  margin-bottom: 0;
 }
+
+.sub {
+  color: #696969;
+}
+
 .center li {
   display: flex;
   width: 100%;
   align-items: center;
   padding: 5px;
   cursor: pointer;
-  
 }
-.center li:hover{
-   color: rgb(66, 104, 246);
+
+.center li span {
+  font-size: 13px;
+  color: rgb(0, 0, 0);
+  color: rgb(200, 200, 200);
+  margin-left: 10px;
+  margin-bottom: 2px;
 }
- .center li span{
-    font-size: 13px;
-    color: rgb(0, 0, 0);
-    margin-left: 10px;
-    margin-bottom: 2px;
+
+.center li:hover span {
+  color: #960018;
 }
-.center li span:hover{
-  color: rgb(66, 104, 246);
+
+.center li:hover {
+  color: #960018;
 }
-.spam{
-    font-size: 13px;
-    font-weight: 600;
-    color: #888;
-    margin-left: 10px;
-    margin-bottom: 2px;
+
+.spam {
+  font-size: 13px;
+  font-weight: 600;
+  color: #888;
+  margin-left: 10px;
+  margin-bottom: 2px;
 }

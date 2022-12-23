@@ -36,34 +36,37 @@ function ViewReports() {
   if (isLoading) return <LoadingScreen loading={true} logoSrc={spinner} />;
 
   return (
-    <Accordion style={{ margin: "0 5px" }} defaultActiveKey={-1}>
-      <div
-        style={{
-          display: "flex",
-          width: "100%",
-          paddingLeft: "15px",
-          borderBottom: "1px solid gray",
-          paddingBottom: "30px",
-          fontSize: "20px",
-          fontWeight: "600",
-          boxShadow: "inset 0 -1px 0 rgb(0 0 0 / 13%)",
-        }}
-      >
-        <div style={{ width: "25%" }}>Trainee Name</div>
-        <div style={{ width: "25%" }}>Course Title</div>{" "}
-        <div style={{ width: "25%" }}>Status</div>
-        <div style={{ width: "25%" }}>Seen</div>
-        <div style={{ width: "25%" }}></div>
-      </div>
+    <>
+      <h2 style={{ marginLeft: "25px", marginBottom: "25px" }}>Reports</h2>
+      <Accordion style={{ margin: "0 5px" }} defaultActiveKey={-1}>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            paddingLeft: "15px",
+            borderBottom: "1px solid gray",
+            paddingBottom: "30px",
+            fontSize: "20px",
+            fontWeight: "600",
+            boxShadow: "inset 0 -1px 0 rgb(0 0 0 / 13%)",
+          }}
+        >
+          <div style={{ width: "25%" }}>Trainee Name</div>
+          <div style={{ width: "25%" }}>Course Title</div>{" "}
+          <div style={{ width: "25%" }}>Status</div>
+          <div style={{ width: "25%" }}>Seen</div>
+          <div style={{ width: "25%" }}></div>
+        </div>
 
-      {reports.map((el, index) => {
-        return el.userId == null ? (
-          ""
-        ) : (
-          <Report data={el} index={index}></Report>
-        );
-      })}
-    </Accordion>
+        {reports.map((el, index) => {
+          return el.userId == null ? (
+            ""
+          ) : (
+            <Report data={el} index={index}></Report>
+          );
+        })}
+      </Accordion>
+    </>
   );
 }
 
