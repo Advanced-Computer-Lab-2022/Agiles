@@ -7,6 +7,7 @@ import spinner from "../../static/download.gif";
 import InprogressStyles from "../../components/Inprogress.module.css";
 import RegCourseCardStyles from "../../components/RegCourseCard.module.css";
 import { CourseCard } from "../../components/CourseCard";
+import { Link } from "react-router-dom"
 const cookies = new Cookies();
 const FetchUrl = '/instructor/listCourseTitles';
 const Search_URL = '/instructor/searchCourses'
@@ -65,7 +66,34 @@ function InstructorOwnCourses() {
       <LoadingScreen loading={true} logoSrc={spinner} />
     ) : (
       <div>
-        
+       {/* <nav className="smallNav" >
+            <div>
+              <Link to="/">
+                <button
+                
+                  className="notPressed"
+                >
+                  Explore{" "}
+                </button>
+              </Link>
+              <Link to="/mycourses">
+                <button
+                
+                className={"Inprogress"}
+                >
+                  My Courses{" "}
+                </button>
+              </Link>
+              <Link to="/createcourse">
+                <button
+                 
+                  className={"notPressed"}
+                >
+                  Create new course{" "}
+                </button>
+              </Link>
+            </div>
+          </nav>*/}
     <section className={InprogressStyles["Wrapper"]}>
            <section className={InprogressStyles["main-section"]}>
               <h1>My Courses</h1>          

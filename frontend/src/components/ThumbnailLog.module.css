@@ -1,7 +1,6 @@
 .main{
-    margin-top: 1rem;
     display: flex;
-    background-image: url("../static/wave-haikei (5).svg");
+    background-image: url("../static/wave-haikei.svg");
     height: 300px;
     width: 90%;
     border-radius: 1rem;

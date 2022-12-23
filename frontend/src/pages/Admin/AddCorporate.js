@@ -33,7 +33,9 @@ const AddCorporate = () => {
   return (
     <div className="new">
       <div className="newContainer">
-          <h1 >Add new corporate trainee</h1>
+        <div className="top">
+          <h1 className="h1Class">Add New Corporate Trainee</h1>
+        </div>
         <div className="bottom">
           <div className="right">
             <form className="formClass" onSubmit={handleSumbit}>
@@ -115,7 +117,7 @@ const AddCorporate = () => {
                 </select>
               </div>
               <div className="buttonContainer">
-                <button className="buttonClass">Send</button>
+                <button className="buttonClass">Sumbit</button>
               </div>
             </form>
           </div>

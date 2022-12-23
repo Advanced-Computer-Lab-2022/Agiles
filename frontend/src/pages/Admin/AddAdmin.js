@@ -62,7 +62,7 @@ const AddAdmin = (props) => {
                 />
               </div>
               <div className="buttonContainer">
-                <button className="buttonClass">Send</button>
+                <button className="buttonClass">Sumbit</button>
               </div>
               <div className="alertContainer">
                 {flag && (

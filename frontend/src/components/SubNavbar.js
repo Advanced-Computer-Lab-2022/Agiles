@@ -9,9 +9,9 @@ const SubNavbar = () => {
           <Link to="/">
             <button className={"Inprogress"}>Explore</button>
           </Link>
-         {status!=1&& <Link to="/mylearning"> <button className={"notPressed"}>My Learning</button> </Link>}
-        {status==2&&<Link to="/mycourses"> <button className={"notPressed"} > My Courses </button> </Link>}
-        {status==2 &&<Link to="/createcourse"><button className={"notPressed"} >Create New Course</button></Link>}
+        {status!=1&&status!=3&& <Link to="/mylearning"> <button className={"notPressed"}>My Learning</button> </Link>}
+        {status==1&&<Link to="/mycourses"> <button className={"notPressed"} > My Courses </button> </Link>}
+        {status==1 &&<Link to="/createcourse"><button className={"notPressed"} >Create New Course</button></Link>}
         </div>
       </nav>}</> );
 }
