@@ -68,6 +68,10 @@ const instructorSchema = new Schema(
         month : Number
       }
     ],
+    firstLogIn:{
+      type:Boolean,
+      default : true,
+    },
     imgUrl: {
       type: String,
     },

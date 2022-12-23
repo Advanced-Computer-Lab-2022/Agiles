@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
-import "./index.css"
+import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Courses from "./pages/Course/Courses";
 import Login from "./pages/Login";
@@ -90,6 +90,7 @@ function App() {
                 <Route path="RefundRequests" element={<RefundRequests />} />
                 <Route path="ViewReports" element={<ViewReports />} />
                 <Route path="setPromotion" element={<SetPromotion />} />
+                <Route path="filter" element={<SetPromotion filter={true} />} />
               </Route>
             </Route>
 

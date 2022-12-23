@@ -16,7 +16,7 @@ const RegCourseCard = (props) => {
   const id = props.data._id;
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
-  const [review, setReview] = useState("");
+  const [review, setReview] = useState(props.courseReview);
   const [editReview,setEditReviw]=useState(false);
   const [courseRating,setCourseRating] = useState(props.courseRating);
   const [oldReview, setOldReview] = useState(props.courseReview);
@@ -49,6 +49,7 @@ const RegCourseCard = (props) => {
       setCourseRating(0);
       handleClose();
       setOldReview("");
+      setReview("");
       setValue(0);
       const Toast = Swal.mixin({
         toast: true,
@@ -125,6 +126,7 @@ const RegCourseCard = (props) => {
             required
             placeholder="write review for the course.."
             type="text"
+            value={review}
             name="review"
             style = {{height:'5rem'}}
             onChange={(e) => setReview(e.target.value)}

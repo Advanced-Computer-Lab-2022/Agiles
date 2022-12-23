@@ -37,8 +37,8 @@
   border: 1px solid #1c1d1f;
   display: flex;
   flex-grow: 1;
-  margin-left: 1rem;
-  margin-right: 2rem;
+  margin-top: 30px;
+  margin-bottom: 100px;
 }
 
 .search-icon {
@@ -52,4 +52,12 @@
 }
 .dropUser:hover {
   color: rgba(192, 4, 24, 255);
+}
+
+.promo-container {
+  display: flex;
+}
+
+.misc {
+  margin: auto 50px;
 }

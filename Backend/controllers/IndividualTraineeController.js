@@ -14,6 +14,8 @@ const Link = require("../models/Link");
 const bcrypt = require("bcrypt");
 const resetPassword = require("./ResetPassword");
 require("dotenv").config();
+const endpointSecret = "whsec_c69d6e1b76c6a80ef78977e1f65d1caad055b7e0b3d4c3e9d1ed66309647865c";
+
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const TraineeCourse = require("../models/TraineeCourse");
 var nodemailer = require("nodemailer");
@@ -650,6 +652,30 @@ const CreateCheckout = async (req, res) => {
     return res.status(500).json("server error");
   }
 };
+const fullFill =  async(request, response) => {
+  const sig = request.headers['stripe-signature'];
+
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+  } catch (err) {
+    response.status(400).send(`Webhook Error: ${err.message}`);
+    return;
+  }
+
+  switch (event.type) {
+    case 'payment_intent.succeeded':
+      const paymentIntent = event.data.object;
+      // Then define and call a function to handle the event payment_intent.succeeded
+      break;
+    // ... handle other event types
+    default:
+      console.log(`Unhandled event type ${event.type}`);
+  }
+
+  response.send();
+};
 const payForCourse = async (courseId, userId) => {
   if (!courseId) {
     return;
@@ -741,6 +767,7 @@ module.exports = {
   createCredit,
   deleteCredit,
   CreateCheckout,
+  fullFill,
   requestRefund,
   getAllItemsCourse,
   addNotesToTrainee,

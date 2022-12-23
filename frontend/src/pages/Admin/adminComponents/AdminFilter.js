@@ -8,7 +8,7 @@ import Accordion from "react-bootstrap/Accordion";
 import { subjectList } from "../../Course/subjectList.js";
 import Form from "react-bootstrap/Form";
 const cookies = new Cookies();
-const AdminFilter = ({ chooseMessage, currentMessage }) => {
+const AdminFilter = (props) => {
   const status = cookies.get("status");
   const [disapled, setDisapled] = useState(false);
   const [minPrice, setMinPrice] = useState();
@@ -55,7 +55,6 @@ const AdminFilter = ({ chooseMessage, currentMessage }) => {
   };
 
   const handleSubmit = async () => {
-    chooseMessage(!currentMessage);
     if (
       subject == "" &&
       minPrice == null &&
@@ -85,20 +84,16 @@ const AdminFilter = ({ chooseMessage, currentMessage }) => {
       }
 
       navigate({
-        pathname: "/courses/filter",
+        pathname: "/admin/filter",
         search: url,
       });
+      props.actionState.setAction(2);
+      props.changeState.setChange(!props.changeState.change);
     }
   };
   return (
     <div className={FilterStyles["filter"]}>
-      <div className={FilterStyles["top"]}>
-        <button className={FilterStyles["logo"]} onClick={handleSubmit}>
-          <span>
-            <FilterListIcon /> Filter
-          </span>
-        </button>
-      </div>
+      <div className={FilterStyles["top"]}></div>
       <hr />
       <div className="center">
         <Accordion defaultActiveKey="0" alwaysOpen>
@@ -157,6 +152,11 @@ const AdminFilter = ({ chooseMessage, currentMessage }) => {
           )}
         </Accordion>
       </div>
+      <button className={FilterStyles["logo"]} onClick={handleSubmit}>
+        <span>
+          <FilterListIcon /> Filter
+        </span>
+      </button>
     </div>
   );
 };
