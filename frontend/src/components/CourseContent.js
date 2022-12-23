@@ -12,6 +12,8 @@ import RegCourse from "../pages/Course/RegCourse";
 import axios from "axios";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import {AiOutlineCheck} from "react-icons/ai";
+import Badge from 'react-bootstrap/Badge';
 const cookies = new Cookies();
 const CoursContent = () => {
   const location = useLocation();
@@ -23,24 +25,103 @@ const CoursContent = () => {
   const [subtitleId, setSubtitleId] = useState("");
   const [isloading, setIsLoading] = useState(false);
   const [grade, setGrade] = useState([]);
-  const [questions, setQuestions] = useState(0);
+  const [finalgrade, setFinalGrade] = useState(-1);
+  const [finalquestions, setFinalQuestions] = useState(0);
+  const [questions, setQuestions] = useState([]);
   const [show, setShow] = useState(false);
+  const [done, setDone] = useState([]);
   const navigate = useNavigate();
 
-  const handleClick = (e) => {
-    navigate(
-      {
-        pathname: "/subtitleView",
-        search: e.target.id,
-      },
-      {
-        state: {
-          currentState: e.target.name,
-          data: subtitles,
-          courseId: course_id,
-        },
+  const getFinishedExams = async (e) => {
+    if(cookies.get("status") !== 1){
+      try{
+        let res = await axios.post("/individualtrainee/getTraineeExams",
+      {   
+        courseId: course_id,
+      }) 
+      let finalexam = await axios.get(
+        `/individualtrainee/getFinalExamGrade?studentId=${cookies.get(
+          "currentUser"
+        )}&courseId=${course_id}`
+      );
+
+        setGrade(res.data);
+        setFinalGrade(finalexam.data.result);
+        setFinalQuestions(finalexam.data.studentChoices.length);
+        console.log(res);
+        console.log(course_id)
+      }catch (e) {
+        console.log(e);
       }
-    );
+    } 
+  }
+
+  const getFinishedItems = async (e) => {
+    console.log("yes")
+    if(cookies.get("status") !== 1){
+      try{
+      let res = await axios.get("/individualtrainee/getTraineeProgress",
+      {   
+        courseId: course_id,
+      })
+      setDone(res.data.progress);
+    }catch(e){
+      console.log(e);
+      
+    }
+  }
+  }
+
+
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    
+    if(cookies.get("status") !== 1){
+      try{
+      const res = await axios.post("/individualtrainee/updateLinkProgress", {
+  
+        linkId: e.target.id.substring(7,31),
+        courseId: course_id,
+        completedItems: 1,
+        subtitleId: e.target.value,
+      
+  
+        
+      }) //status 1 means instructor 2c,0 means trainee 3 means admin
+    if(res){
+      navigate(
+        {
+          pathname: "/subtitleView",
+          search: e.target.id,
+        },
+        {
+          state: {
+            currentState: e.target.name,
+            data: subtitles,
+            courseId: course_id,
+          },
+        }
+      );
+    }
+      }catch(e){
+        console.log(e)
+      }
+    } else{
+      navigate(
+        {
+          pathname: "/subtitleView",
+          search: e.target.id,
+        },
+        {
+          state: {
+            currentState: e.target.name,
+            data: subtitles,
+            courseId: course_id,
+          },
+        }
+      );
+    }
   };
   const fetchdata = async () => {
     setIsLoading(true);
@@ -54,7 +135,9 @@ const CoursContent = () => {
     }
   };
   useEffect(() => {
+    getFinishedItems();
     fetchdata();
+    getFinishedExams();
   }, []);
 
   const handleClose = () => setShow(false);
@@ -155,7 +238,7 @@ const CoursContent = () => {
                     <Accordion.Body>
                       <ListGroup>
                         {subtitle.link?.map((link, index1) => (
-                          <ListGroup.Item key={index1} className="list-group-item list-group-item-action"> 
+                          <ListGroup.Item key={index1} className="list-group-item list-group-item-action d-flex justify-content-between align-items-start"> 
                             <button
                               id={
                                 "linkId=" +
@@ -165,45 +248,46 @@ const CoursContent = () => {
                                 subtitle._id
                               }
                               name={index0 + " " + index1}
+                              value = {subtitle._id}
                               onClick={handleClick}
                               className={style["subtitleView"]}
                             >
                               {link.linkDesc}
                             </button>
+                            {done.find((item) => item.linkId === link._id)? (
+                              <AiOutlineCheck className={style["check"]} />) : (null)
+                                }
                           </ListGroup.Item>
                         ))}
-                        <ListGroup.Item key={"exam"} className="list-group-item list-group-item-action">
-                          <button
-                            id={subtitle._id}
-                            name={"exam"}
-                            onClick={handleExamClick}
-                            className={style["subtitleView"]}
-                          >
-                            Quiz
-                          </button>
-                          <Modal
-                            backdrop={false}
-                            show={show}
-                            onHide={handleClose}
-                          >
-                            <Modal.Header closeButton>
-                              <Modal.Title>Grade</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                              <div className={style["rating-box"]}>
-                                {grade == null ? (
-                                  <h3>Not Graded Yet</h3>
-                                ) : (
-                                  <h3>Grade: {grade}</h3>
-                                )}
-                              </div>
-                            </Modal.Body>
-                            <Modal.Footer>
-                              <Button variant="secondary" onClick={handleClose}>
-                                close
-                              </Button>
-                            </Modal.Footer>
-                          </Modal>
+                        <ListGroup.Item key={"exam"} className="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+                          {grade.find((item) => item.subtitleId === subtitle._id)? (
+                            <><button
+                              id={subtitle._id}
+                              name={"exam"}
+                              onClick={handleExamClick}
+                              className={style["subtitleView"]}
+                              disabled
+                            >
+                              Quiz
+                            </button>
+                            <h5>
+                            <Badge bg="primary" className={style["gradeBadge"]} pill>
+                                {grade.find((item) => item.subtitleId === subtitle._id).result + "/" + grade.find((item) => item.subtitleId === subtitle._id).studentChoices.length}
+                              </Badge>
+                              </h5></>
+                          ):(
+                            <button
+                                id={subtitle._id}
+                                name={"exam"}
+                                onClick={handleExamClick}
+                                className={style["subtitleView"]}
+                              >
+                                Quiz
+                              </button>
+                                  )}
+                                  
+
+                                  
                         </ListGroup.Item>
                       </ListGroup>
                     </Accordion.Body>
@@ -211,7 +295,16 @@ const CoursContent = () => {
                 ))}
               <div>
                 <Accordion.Item key={"finalExam"} className="d-grid gap-2">
-                  <Button
+                {finalgrade !== -1? (
+                            <><h5 className="d-flex justify-content-center mt-2 ">
+                              Final Exam Grade
+                            </h5>
+                            <h3  className="d-flex justify-content-center">
+                                {finalgrade + "/" +  finalquestions}
+                              </h3>
+                              </>
+                          ):(
+                            <Button
                     id={course_id}
                     name={"finalexam"}
                     onClick={handleFinalExamClick}
@@ -220,29 +313,13 @@ const CoursContent = () => {
                       backgroundColor: "#a00407",
                       borderRadius: 0,
                       border: "none",
-                    }}
+                    }}  
                   >
                     Final Exam
                   </Button>
-                  <Modal backdrop={false} show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                      <Modal.Title>Grade</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <div className={style["rating-box"]}>
-                        {grade == null ? (
-                          <h3>Not Graded Yet</h3>
-                        ) : (
-                          <h3>
-                            Grade: {grade} / {questions}
-                          </h3>
-                        )}
-                      </div>
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button onClick={handleClose}>close</Button>
-                    </Modal.Footer>
-                  </Modal>
+                                  )}
+                  
+                  
                 </Accordion.Item>
               </div>
             </Accordion>

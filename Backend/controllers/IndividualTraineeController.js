@@ -75,7 +75,7 @@ const addNotesToTrainee = async (req, res) => {
 };
 
 const getTraineebyID = async (req, res) => {
-  const id = req.query.id;
+  const id = req.user.id;
   const Itrainee = await IndividualTrainee.findById(id).populate("creditCard");
   return res.status(200).json(Itrainee);
 };
@@ -323,7 +323,7 @@ const getFinalExamGrade = async (req, res) => {
   const { studentId, courseId } = req.query;
   const finalExam = await FinalExamResult.findOne(
     { studentId: studentId, courseId: courseId },
-    { result: 1, studentChoices: 1 }
+    
   );
 
   try {
@@ -363,11 +363,26 @@ const getExerciseGrade = async (req, res) => {
       studentId: studentId,
       subtitleId: subtitleId,
     },
-    { result: 1, studentChoices: 1 }
   ).exec();
 
   try {
     res.status(200).json(exercise);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const getTraineeExams = async (req, res) => {
+  const studentId = req.user.id;
+  const courseId = req.body.courseId;
+  const exams = await ExamResult.find(
+    {
+      studentId: studentId,
+      courseId: courseId
+    },
+  ).exec();
+  try{
+    res.status(200).json(exams);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -794,5 +809,6 @@ module.exports = {
   getNotes,
   courseExam,
   courseFinalExam,
-  getTraineeProgress
+  getTraineeProgress,
+  getTraineeExams,
 };
