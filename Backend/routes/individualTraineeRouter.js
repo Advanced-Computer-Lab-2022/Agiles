@@ -5,6 +5,7 @@ const {
   courseFinalExam,
   reportProblem,
   viewReportedProblems,
+  addFollowUp,
 } = require("../controllers/CourseController");
 const {
   requestAccess,
@@ -109,5 +110,7 @@ IndividualTraineeRouter.post("/forgotpassword", forgetPassword);
 IndividualTraineeRouter.post("/verifyCode", verifyCode);
 IndividualTraineeRouter.post("/requestAccess", requestAccess);
 IndividualTraineeRouter.post("/requestRefund", requestRefund);
+IndividualTraineeRouter.patch("/addFollowUp", verifyItraineeJWT, addFollowUp);
+
 
 module.exports = IndividualTraineeRouter;

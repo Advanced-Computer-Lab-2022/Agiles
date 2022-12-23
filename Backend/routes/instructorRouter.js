@@ -7,6 +7,7 @@ const {
   setFinalExam,
   reportProblem,
   viewReportedProblems,
+  addFollowUp
 } = require("../controllers/CourseController");
 const {
   filterCoursesByInstructor,
@@ -38,5 +39,6 @@ instructorRouter.patch("/updatePreview", verifyInstructorJWT, uploadPreLink);
 instructorRouter.post("/reportProblem", verifyInstructorJWT, reportProblem);
 instructorRouter.get("/viewReportedProblems",verifyInstructorJWT,viewReportedProblems);
 instructorRouter.get("/instructorbyid", getInstructorbyId);
+instructorRouter.patch("/addFollowUp", verifyInstructorJWT, addFollowUp);
 
 module.exports = instructorRouter;
