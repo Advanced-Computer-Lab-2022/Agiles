@@ -107,23 +107,24 @@
 .bottom-admin {
   border-radius: 25px;
   background-color: #f2f2f2;
-  width: 50%;
-  min-width: 500px;
+  width: 70%;
+  max-width: 500px;
   padding: 30px;
   margin: 20px;
   /* display: flex; */
 }
 
 .formClassAdmin {
-  display: flex;
+  /* display: flex; */
   flex-wrap: wrap;
   gap: 30px;
 }
 
 .buttonContAdmin {
-  margin: auto 0;
+  margin: 30px;
 }
 
 .formInputAdmin {
   width: 100%;
+  margin-bottom: 15px;
 }

@@ -5,6 +5,8 @@ import Alert from "@mui/material/Alert";
 
 const AddAdmin = (props) => {
   const [username, setUsername] = useState("");
+  const [confirm, setConfirm] = useState("");
+
   const [password, setPassword] = useState("");
   const [alert, setAlert] = useState("");
   const [flag, setFlag] = useState(false);
@@ -66,6 +68,19 @@ const AddAdmin = (props) => {
                     placeholder="password.."
                     className="inputClass"
                     onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+                <div className="formInputAdmin">
+                  <label className="labelClass">
+                    Confirm Password <span className="required">*</span>
+                  </label>
+                  <input
+                    type="password"
+                    name="confirm"
+                    required
+                    placeholder="password.."
+                    className="inputClass"
+                    onChange={(e) => setConfirm(e.target.value)}
                   />
                 </div>
               </div>

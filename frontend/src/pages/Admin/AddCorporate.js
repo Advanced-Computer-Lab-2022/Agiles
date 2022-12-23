@@ -14,6 +14,7 @@ const AddCorporate = () => {
   const [lastname, setLastname] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
   const handleSubmit = async (event) => {
@@ -117,6 +118,19 @@ const AddCorporate = () => {
                   placeholder="password.."
                   className="inputClass"
                   onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <div className="formInput">
+                <label className="labelClass">
+                  Confirm Password <span className="required">*</span>
+                </label>
+                <input
+                  type="password"
+                  name="confirm"
+                  required
+                  placeholder="password.."
+                  className="inputClass"
+                  onChange={(e) => setConfirm(e.target.value)}
                 />
               </div>
               <div className="formInput">
