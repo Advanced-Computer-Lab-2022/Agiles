@@ -7,6 +7,8 @@ import Box from "@mui/material/Box";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import { format } from "date-fns";
+
 import {
   Checkbox,
   Table,
@@ -38,7 +40,19 @@ function SetPromotion(props) {
   const PROMO_URL = "/course/addPromotionMulti";
   const location = useLocation();
   const query = new URLSearchParams(location.search);
-  let IDsArr = [];
+  const [IDsArr, setIDsArr] = useState([]);
+  const addOrRemove = async (name) => {
+    const newIDsArr = [...IDsArr];
+    const index = newIDsArr.indexOf(name);
+    if (index === -1) {
+      newIDsArr.push(name);
+    } else {
+      newIDsArr.splice(index, 1);
+    }
+    await setIDsArr(newIDsArr);
+    console.log(newIDsArr);
+  };
+
   const handleSearch = async (event) => {
     event.preventDefault();
     console.log(searchString);
@@ -51,9 +65,8 @@ function SetPromotion(props) {
   const handleEnddate = (e) => {
     setEnddate(e.target.value);
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, IDsArr) => {
     e.preventDefault();
-
     try {
       const data = {
         idArr: IDsArr,
@@ -63,6 +76,7 @@ function SetPromotion(props) {
       const res = await axios.patch(PROMO_URL, data);
       setAlert("success");
       setFlag(true);
+      setChange(!change);
     } catch (e) {
       setAlert("danger");
       setFlag(false);
@@ -89,6 +103,16 @@ function SetPromotion(props) {
         let res = await axios.get(url);
         setCourses(res.data);
       }
+      if (selectAll) {
+        setIDsArr(
+          courses.map((el) => {
+            return el._id;
+          })
+        );
+      } else {
+        setIDsArr([]);
+      }
+
       setIsLoading(false);
     };
 
@@ -99,97 +123,95 @@ function SetPromotion(props) {
   return (
     <div className={NavbarStyles["promo-container"]}>
       <div className={NavbarStyles["misc"]}>
-        <h5>Search Courses</h5>
-        <form onSubmit={handleSearch} className={NavbarStyles["search-bar"]}>
-          <BsSearch
-            className={NavbarStyles["search-icon"]}
-            onClick={handleSearch}
-          />
-          <input
-            className={NavbarStyles["inpt"]}
-            placeholder="search for a course"
-            value={searchString}
-            required
-            onChange={(event) => setSearchString(event.target.value)}
-          ></input>
-        </form>
-        <h5>Filter Courses</h5>
         <div>
-          <AdminFilter
-            changeState={{ change, setChange }}
-            actionState={{ action, setAction }}
-          />
-        </div>
-        <form
-          onSubmit={handleSubmit}
-          style={{
-            // display: "grid",
-            margin: "70px 0",
-            maxWidth: "50%",
-            gap: "2rem",
-          }}
-        >
-          <h5>Set Promotion</h5>
-          <div>
-            {flag && (
-              <Alert key={alert} variant={alert}>
-                {alert == "success"
-                  ? "promotion updated successfully"
-                  : "error happened"}
-              </Alert>
-            )}
-            <span>Amount (%) </span>
+          <h5>Search Courses</h5>
+          <form onSubmit={handleSearch} className={NavbarStyles["search-bar"]}>
+            <BsSearch
+              className={NavbarStyles["search-icon"]}
+              onClick={handleSearch}
+            />
             <input
+              className={NavbarStyles["inpt"]}
+              placeholder="search for a course"
+              value={searchString}
               required
-              type="number"
-              value={promotion}
-              placeholder="amount.."
-              min="0"
-              max="100"
-              style={{
-                border: "0.5px solid black",
-                borderRadius: "0.25rem",
-                padding: "0.5rem",
-                width: "10rem",
-                margin: "1rem 0",
-              }}
-              onChange={handlePromo}
+              onChange={(event) => setSearchString(event.target.value)}
+            ></input>
+          </form>
+        </div>
+        <div>
+          <h5>Filter Courses</h5>
+          <div>
+            <AdminFilter
+              changeState={{ change, setChange }}
+              actionState={{ action, setAction }}
             />
           </div>
-          <div>
-            <span>End Date </span>
-            <input
-              required
-              type="date"
-              value={enddate}
+        </div>
+        <div className={NavbarStyles["setPromotion"]}>
+          <form onSubmit={(e) => handleSubmit(e, IDsArr)}>
+            <h5>Set Promotion</h5>
+            <div>
+              {flag && (
+                <Alert key={alert} variant={alert}>
+                  {alert == "success"
+                    ? "promotion updated successfully"
+                    : "error happened"}
+                </Alert>
+              )}
+              <div>Amount (%) </div>
+              <input
+                required
+                type="number"
+                value={promotion}
+                placeholder="amount.."
+                min="0"
+                max="100"
+                style={{
+                  border: "0.5px solid black",
+                  borderRadius: "0.25rem",
+                  padding: "0.5rem",
+                  width: "10rem",
+                  margin: "1rem 0",
+                }}
+                onChange={handlePromo}
+              />
+            </div>
+            <div>
+              <div>End Date </div>
+              <input
+                required
+                type="date"
+                value={enddate}
+                style={{
+                  border: "0.5px solid black",
+                  borderRadius: "0.25rem",
+                  margin: "1rem 0",
+                  padding: "0.5rem",
+                  width: "10rem",
+                }}
+                onChange={handleEnddate}
+              ></input>
+            </div>
+            <Button
+              variant="dark"
+              type="submit"
               style={{
-                border: "0.5px solid black",
-                borderRadius: "0.25rem",
-                margin: "1rem 0",
-                padding: "0.5rem",
+                backgroundColor: "#a00407",
+                borderRadius: 0,
                 width: "10rem",
+                border: "none",
               }}
-              onChange={handleEnddate}
-            ></input>
-          </div>
-          <Button
-            variant="dark"
-            type="submit"
-            style={{
-              backgroundColor: "#a00407",
-              borderRadius: 0,
-              width: "10rem",
-              border: "none",
-            }}
-          >
-            Submit
-          </Button>
-        </form>
+            >
+              Submit
+            </Button>
+          </form>
+        </div>
       </div>
 
-      <Table>
+      <Table style={{ width: "100%" }}>
         <TableHead>
-          <TableRow>
+          <TableRow style={{ verticalAlign: "text-top" }}>
             <TableCell
               style={{
                 fontWeight: "600",
@@ -223,7 +245,7 @@ function SetPromotion(props) {
                 fontSize: "20px",
               }}
             >
-              Current Discount (if any)
+              Current Discount (%)
             </TableCell>
             <TableCell
               align="middle"
@@ -254,28 +276,22 @@ function SetPromotion(props) {
         </TableHead>
         <TableBody>
           {courses.map((el) => {
-            if (selectAll) IDsArr.push(el._id);
-
             return (
               <TableRow>
                 <TableCell>{el.title}</TableCell>
                 <TableCell>{el.instructorname}</TableCell>
                 <TableCell>{el.price}</TableCell>
                 <TableCell>{el.discount}</TableCell>
-                <TableCell>{el.discount_enddate.split("T")[0]}</TableCell>
+                <TableCell>
+                  {new Date(el.discount_enddate).toDateString() +
+                    " " +
+                    new Date(el.discount_enddate).toLocaleTimeString()}
+                </TableCell>
                 <TableCell>
                   <Checkbox
                     defaultChecked={selectAll}
-                    onChange={(event) => {
-                      if (event.target.checked) {
-                        IDsArr.push(el._id);
-                      } else {
-                        const index = IDsArr.indexOf(el._id);
-                        if (index > -1) {
-                          // only splice array when item is found
-                          IDsArr.splice(index, 1); // 2nd parameter means remove one item only
-                        }
-                      }
+                    onChange={() => {
+                      addOrRemove(el._id);
                     }}
                   />
                 </TableCell>

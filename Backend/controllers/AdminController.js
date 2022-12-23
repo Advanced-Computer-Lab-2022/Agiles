@@ -228,6 +228,7 @@ const logOut = async (req, res) => {
 const accessRequests = async (req, res) => {
   requests = await CourseSubscriptionRequest.find({})
     .populate("traineeId courseId")
+    .sort("-createdAt")
     .exec();
   res.send(requests).status(200);
 };
@@ -235,11 +236,15 @@ const accessRequests = async (req, res) => {
 const refundRequests = async (req, res) => {
   requests = await CourseRefundRequest.find({})
     .populate("traineeId courseId")
+    .sort("-createdAt")
     .exec();
+
   res.send(requests).status(200);
 };
 const grantAccess = async (req, res) => {
   const { traineeId, courseId } = req.body;
+  console.log(traineeId);
+  console.log(courseId);
   const course = await Course.findById(courseId);
   const instructor = await Instructor.findById(course.instructor);
   const profit =
@@ -249,10 +254,10 @@ const grantAccess = async (req, res) => {
     await IndividualTrainee.findByIdAndUpdate(traineeId, {
       $push: { registered_courses: { courseId: courseId } },
     });
-    await Instructor.updateOne(
-      { _id: course.instructor },
-      { wallet: instructor.wallet + profit }
-    );
+    // await Instructor.updateOne(
+    //   { _id: course.instructor },
+    //   { wallet: instructor.wallet + profit }
+    // );
     await Course.updateOne(
       { _id: courseId },
       { studentCount: course.studentCount + 1 }
@@ -268,7 +273,10 @@ const grantAccess = async (req, res) => {
 };
 
 const getReports = async (req, res) => {
-  requests = await Report.find({}).populate("userId courseId").exec();
+  requests = await Report.find({})
+    .populate("userId courseId")
+    .sort("-createdAt")
+    .exec();
   res.send(requests).status(200);
 };
 
@@ -308,7 +316,7 @@ const viewReport = async (req, res) => {
 };
 const resolveReport = async (req, res) => {
   const { reportId } = req.body;
-  Report.findByIdAndUpdate(reportId, {
+  await Report.findByIdAndUpdate(reportId, {
     status: "resolved",
   });
 };

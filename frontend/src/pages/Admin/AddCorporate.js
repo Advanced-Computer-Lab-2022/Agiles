@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
 import "./AddInstructor.css";
-import AdminImg from "../../static/Admin.png";
 const AddCorporate = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -36,13 +35,8 @@ const AddCorporate = () => {
     <div className="new">
    
       <div className="newContainer">
-        <div className="top">
-          <h1 className="h1Class">Add New Corporate Trainee</h1>
-        </div>
+          <h1 >Add new corporate trainee</h1>
         <div className="bottom">
-          <div className="left">
-            <img className="imgClass" src={AdminImg} alt="adminImg" />
-          </div>
           <div className="right">
             <form className="formClass" onSubmit={handleSumbit}>
               <div className="formInput">

@@ -33,6 +33,7 @@ const {
   addNotesToTrainee,
   getNotes,
   deleteCourseRating,
+  getTraineeProgress,
   fullFill,
 } = require("../controllers/IndividualTraineeController");
 const { verifyItraineeJWT } = require("../middleware/authMiddleware");
@@ -111,11 +112,13 @@ IndividualTraineeRouter.post(
   verifyItraineeJWT,
   getAllItemsCourse
 );
+IndividualTraineeRouter.get("/getTraineeProgress", verifyItraineeJWT, getTraineeProgress);
 //no auth
 IndividualTraineeRouter.post("/forgotpassword", forgetPassword);
 IndividualTraineeRouter.post("/verifyCode", verifyCode);
 IndividualTraineeRouter.post("/requestAccess", requestAccess);
 IndividualTraineeRouter.post("/requestRefund", requestRefund);
 IndividualTraineeRouter.get("/isAuth", isAuthTrainee);
+
 
 module.exports = IndividualTraineeRouter;

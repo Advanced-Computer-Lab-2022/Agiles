@@ -1,10 +1,9 @@
 import "./Home.css";
-import Button from "react-bootstrap/Button";
-import React from "react";
 import Cookies from "universal-cookie";
 import { useNavigate, Link } from "react-router-dom";
 import Explore from "../components/Explore";
 import Thumbnail from "../components/Thumbnail";
+import ThumbnailLog from "../components/ThumbnailLog";
 const cookies = new Cookies();
 const Home = () => {
   const navigate = useNavigate();
@@ -17,9 +16,6 @@ const Home = () => {
     if (status == 0 || status == 2) {
       return (
         <div className="home">
-      <div className="craousel">
-           {/* <Thumbnail></Thumbnail>*/}
-          </div>
           <nav className="smallNav">
             <div>
               <Link to="/">
@@ -30,31 +26,44 @@ const Home = () => {
               </Link>
             </div>
           </nav>
-          
+          <ThumbnailLog></ThumbnailLog>
           <Explore></Explore>
           <footer></footer>
         </div>
       );
-    } else {
+    } else if (status==1) {
       return (
         <div className="home">
-           <div className="craousel">
-           {/* <Thumbnail></Thumbnail>*/}
-           </div>
-          <nav className="smallNav">
+          <div className="craousel">{/* <Thumbnail></Thumbnail>*/}</div>
+          <nav className="smallNav" >
             <div>
               <Link to="/">
-                <button className={"Inprogress"}>Explore </button>
+                <button
+                
+                  className={"Inprogress"}
+                >
+                  Explore{" "}
+                </button>
               </Link>
               <Link to="/mycourses">
-                <button className={"notPressed"}>My Courses </button>
+                <button
+                
+                  className={"notPressed"}
+                >
+                  My Courses{" "}
+                </button>
               </Link>
               <Link to="/createcourse">
-                <button className={"notPressed"}>CreateCourse </button>
+                <button
+                 
+                  className={"notPressed"}
+                >
+                  Create new course{" "}
+                </button>
               </Link>
             </div>
           </nav>
-         
+          <ThumbnailLog></ThumbnailLog>
           <Explore></Explore>
           <footer></footer>
         </div>
@@ -63,7 +72,7 @@ const Home = () => {
   } else {
     return (
       <div className="home">
-           <Thumbnail ></Thumbnail>
+        <Thumbnail></Thumbnail>
         <footer></footer>
       </div>
     );

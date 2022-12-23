@@ -13,68 +13,79 @@ const AdminSidebar = () => {
   return (
     <div className={style["sidebar"]}>
       <div className={style["top"]}>
-        <Link to="/admin" style={{ textDecoration: "none" }}>
-          <span className={style["logo"]}>Agiles Admin</span>
+        <Link
+          className={style["link"]}
+          to="/admin"
+          style={{ textDecorationLine: "none" }}
+        >
+          <span className={style["logo"]}>Admin</span>
         </Link>
       </div>
       <div className={style["center"]}>
-        <ul>
+        <ul style={{ paddingLeft: "0" }}>
           <p className={style["main"]}>Main</p>
-          <li>
+          <Link  className={style["link"]}   style={{ textDecorationLine: "none", color: "black" }} to = "dashboard">
+          <li className={style["sub"]}>
             <DashboardIcon />
             <span>dashboard</span>
           </li>
+          </Link>
           <p className={style["main"]}>AddUsers</p>
           <Link
+            className={style["link"]}
             to="addAdmin"
-            style={{ textDecoration: "none", color: "black" }}
+            style={{ textDecorationLine: "none", color: "black" }}
           >
-            <li>
+            <li className={style["sub"]}>
               <SupervisorAccountIcon />
               <span>Admin</span>
             </li>
           </Link>
           <Link
+            className={style["link"]}
             to="addCorporate"
-            style={{ textDecoration: "none", color: "black" }}
+            style={{ textDecorationLine: "none", color: "black" }}
           >
             {" "}
-            <li>
+            <li className={style["sub"]}>
               <CorporateFareIcon />
               <span>CorporateTrainee</span>
             </li>
           </Link>
           <Link
+            className={style["link"]}
             to="addInstructor"
-            style={{ textDecoration: "none", color: "black" }}
+            style={{ textDecorationLine: "none", color: "black" }}
           >
             {" "}
-            <li>
+            <li className={style["sub"]}>
               <PersonAddAltIcon />
               <span>Instructor </span>
             </li>
           </Link>
           <p className={style["main"]}>Services</p>
-          <li>
+          <li className={style["sub"]}>
             <NotificationsNoneIcon
               className={style["icon"]}
             ></NotificationsNoneIcon>
             <span>Notfications</span>
           </li>
           <Link
+            className={style["link"]}
             to="viewReports"
-            style={{ textDecoration: "none", color: "black" }}
+            style={{ textDecorationLine: "none", color: "black" }}
           >
-            <li>
+            <li className={style["sub"]}>
               <ReportIcon className={style["icon"]}></ReportIcon>
               <span>Reports</span>
             </li>
           </Link>
           <Link
+            className={style["link"]}
             to="viewRequests"
-            style={{ textDecoration: "none", color: "black" }}
+            style={{ textDecorationLine: "none" }}
           >
-            <li>
+            <li className={style["sub"]}>
               <FormatListBulletedIcon
                 className={style["icon"]}
               ></FormatListBulletedIcon>
@@ -82,17 +93,18 @@ const AdminSidebar = () => {
             </li>
           </Link>
           <Link
+            className={style["link"]}
             to="RefundRequests"
-            style={{ textDecoration: "none", color: "black" }}
+            style={{ textDecorationLine: "none", color: "black" }}
           >
-            <li>
+            <li className={style["sub"]}>
               <FormatListBulletedIcon
                 className={style["icon"]}
               ></FormatListBulletedIcon>
               <span>Refund Requests</span>
             </li>
           </Link>
-          <li>
+          <li className={style["sub"]}>
             <SettingsApplicationsIcon
               className={style["icon"]}
             ></SettingsApplicationsIcon>
@@ -100,10 +112,11 @@ const AdminSidebar = () => {
           </li>
 
           <Link
+            className={style["link"]}
             to="setPromotion"
-            style={{ textDecoration: "none", color: "black" }}
+            style={{ textDecorationLine: "none", color: "black" }}
           >
-            <li>
+            <li className={style["sub"]}>
               <FormatListBulletedIcon
                 className={style["icon"]}
               ></FormatListBulletedIcon>

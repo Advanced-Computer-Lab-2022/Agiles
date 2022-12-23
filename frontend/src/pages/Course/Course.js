@@ -210,7 +210,7 @@ const Course = () => {
                 </button>
               )}
               {(paid) && (
-                <button className={styled["buyme"]}>Go to course</button>
+                <button className={styled["buyme"]} onClick={(e)=>window.location.href="/mylearning"}>Go to course</button>
               )}
             </section>
           </section>

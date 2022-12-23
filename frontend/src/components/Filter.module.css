@@ -10,12 +10,12 @@
 }
 .logo {
   width: 50%;
-  margin-left: 4rem;
+  margin: 0 auto;
   border-radius: 0.25rem;
   font-weight: bold;
   font-family: "Open Sans", sans-serif;
   padding: 0.5rem;
-  background-color: white ;
+  background-color: white;
   border: 0.5px solid rgb(111, 109, 109);
 }
 .logo:hover {
@@ -27,10 +27,10 @@
   row-gap: 0.8rem;
   margin: 0 -0.4rem;
 }
-.inpt{
-  width:5rem;
+.inpt {
+  width: 5rem;
   margin-right: 1rem;
 }
-.check{
+.check {
   margin-top: 0.4rem;
 }

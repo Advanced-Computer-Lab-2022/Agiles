@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
 import "./AddInstructor.css";
-import AdminImg from "../../static/Admin.png";
 const AddAdmin = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -25,14 +24,8 @@ const AddAdmin = (props) => {
   return (
     <div className="new">
       <div className="newContainer">
-        <div className="top">
-          <h1 className="h1Class">Add New Admin</h1>
-        </div>
-        <div className="bottom">
-          <div className="left">
-            <img className="imgClass" src={AdminImg} alt="adminImg" />
-          </div>
-          <div className="right">
+          <h1 >Add new admin</h1>
+      
             <form className="formClass" onSubmit={handleSumbit}>
               <div className="formInput">
                 <label className="labelClass">
@@ -60,11 +53,8 @@ const AddAdmin = (props) => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-
               <button className="buttonClass">Send</button>
             </form>
-          </div>
-        </div>
       </div>
     </div>
   );

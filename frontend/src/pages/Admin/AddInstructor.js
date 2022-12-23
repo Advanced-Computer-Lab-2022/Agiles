@@ -35,9 +35,7 @@ const AddInstructor = () => {
   return (
     <div className="new">
       <div className="newContainer">
-        <div className="top">
-          <h1 className="h1Class">Add new Instructor</h1>
-        </div>
+          <h1 >Add new instructor</h1>
         <div className="bottom">
           <div className="right">
       <form  className = "formClass" onSubmit={handleSumbit}>

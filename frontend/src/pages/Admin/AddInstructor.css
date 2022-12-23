@@ -1,5 +1,11 @@
 .newContainer{
-  background-color:rgb(246, 247, 251)}
+  margin-top: 2rem;}
+.newContainer h1{
+  color: rgb(186, 179, 179);
+  margin-left: 2rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
   .inputClass{
     width: 100%;
     padding: 5px;
@@ -31,10 +37,6 @@
   }
   .formInput {
     width: 40%;
-  }
-  .h1Class{
-    color: rgb(186, 179, 179);
-    font-size: 20px;
   }
   .formClass {
     display: flex;
