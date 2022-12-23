@@ -1,11 +1,15 @@
 .admin-navbar {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    max-height: 70px;
-    padding: 10px 3rem;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 3rem;
+}
+.logOut {
+  background-color: inherit;
+  border: 0;
+  font-weight: bold;
+  margin-left: auto;
   }
-.logOut{
-   background-color: inherit;  
-   border: 0;
+.admin-navbar p{
+  font-weight: bold;
 }

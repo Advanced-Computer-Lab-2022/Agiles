@@ -1,13 +1,14 @@
 const express = require("express");
 const IndividualTraineeRouter = express.Router();
+const { isAuthTrainee } = require("../controllers/authContext");
 const {
-  courseExam,
-  courseFinalExam,
   reportProblem,
   viewReportedProblems,
   addFollowUp,
 } = require("../controllers/CourseController");
 const {
+  courseExam,
+  courseFinalExam,
   requestAccess,
   getTraineebyID,
   InprogressCourses,
@@ -25,10 +26,16 @@ const {
   rateInstructor,
   updateLinkProgress,
   createCredit,
+  deleteInstRating,
   deleteCredit,
   CreateCheckout,
   getAllItemsCourse,
   requestRefund,
+  addNotesToTrainee,
+  getNotes,
+  deleteCourseRating,
+  getTraineeProgress,
+  fullFill,
 } = require("../controllers/IndividualTraineeController");
 const { verifyItraineeJWT } = require("../middleware/authMiddleware");
 
@@ -38,7 +45,7 @@ IndividualTraineeRouter.get(
   getTraineebyID
 );
 IndividualTraineeRouter.get(
-  "/inprogress/:id",
+  "/inprogress",
   verifyItraineeJWT,
   InprogressCourses
 );
@@ -57,6 +64,12 @@ IndividualTraineeRouter.get(
   verifyItraineeJWT,
   compareAnswers
 );
+IndividualTraineeRouter.get("/getNote", verifyItraineeJWT, getNotes);
+IndividualTraineeRouter.patch(
+  "/addNotes",
+  verifyItraineeJWT,
+  addNotesToTrainee
+);
 IndividualTraineeRouter.patch(
   "/updateBasics",
   verifyItraineeJWT,
@@ -68,49 +81,46 @@ IndividualTraineeRouter.patch(
   verifyItraineeJWT,
   updateITraineePassword
 );
-IndividualTraineeRouter.patch(
-  "/changePassword",
-  verifyItraineeJWT,
-  changePassword
-);
+IndividualTraineeRouter.patch("/changePassword",changePassword); // forgetten password
 IndividualTraineeRouter.post("/submitExam", verifyItraineeJWT, submitExam);
 IndividualTraineeRouter.get("/courseExam", verifyItraineeJWT, courseExam);
-IndividualTraineeRouter.get(
-  "/courseFinalExam",
-  verifyItraineeJWT,
-  courseFinalExam
-);
-IndividualTraineeRouter.get(
-  "/getFinalExamGrade",
-  verifyItraineeJWT,
-  getFinalExamGrade
-);
+IndividualTraineeRouter.get( "/courseFinalExam", verifyItraineeJWT, courseFinalExam);
+IndividualTraineeRouter.get("/getFinalExamGrade",verifyItraineeJWT,getFinalExamGrade);
 IndividualTraineeRouter.post("/setRating", verifyItraineeJWT, rateInstructor);
-IndividualTraineeRouter.post(
-  "/reportProblem",
-  verifyItraineeJWT,
-  reportProblem
-);
+IndividualTraineeRouter.delete("/deleteRating", verifyItraineeJWT, deleteInstRating);
+IndividualTraineeRouter.delete("/deleteCourseRating", verifyItraineeJWT, deleteCourseRating);
+IndividualTraineeRouter.post("/reportProblem",verifyItraineeJWT,reportProblem);
 IndividualTraineeRouter.post("/createCredit", verifyItraineeJWT, createCredit);
-IndividualTraineeRouter.delete(
-  "/deleteCredit/:id",
+IndividualTraineeRouter.delete("/deleteCredit/:id",verifyItraineeJWT,deleteCredit);
+IndividualTraineeRouter.post(
+  "/create-checkout-session",
   verifyItraineeJWT,
-  deleteCredit
+  CreateCheckout
 );
-IndividualTraineeRouter.post("/create-checkout-session", verifyItraineeJWT, CreateCheckout);
+IndividualTraineeRouter.post('/webhook',fullFill);
 IndividualTraineeRouter.get(
   "/viewReportedProblems",
   verifyItraineeJWT,
   viewReportedProblems
 );
-IndividualTraineeRouter.post("/updateLinkProgress",verifyItraineeJWT,updateLinkProgress);
-IndividualTraineeRouter.post("/getAllItems",verifyItraineeJWT,getAllItemsCourse);
+IndividualTraineeRouter.post(
+  "/updateLinkProgress",
+  verifyItraineeJWT,
+  updateLinkProgress
+);
+IndividualTraineeRouter.post(
+  "/getAllItems",
+  verifyItraineeJWT,
+  getAllItemsCourse
+);
+IndividualTraineeRouter.get("/getTraineeProgress", verifyItraineeJWT, getTraineeProgress);
 //no auth
 IndividualTraineeRouter.post("/forgotpassword", forgetPassword);
 IndividualTraineeRouter.post("/verifyCode", verifyCode);
 IndividualTraineeRouter.post("/requestAccess", requestAccess);
 IndividualTraineeRouter.post("/requestRefund", requestRefund);
 IndividualTraineeRouter.patch("/addFollowUp", verifyItraineeJWT, addFollowUp);
+IndividualTraineeRouter.get("/isAuth", isAuthTrainee);
 
 
 module.exports = IndividualTraineeRouter;

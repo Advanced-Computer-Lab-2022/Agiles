@@ -1,0 +1,27 @@
+.main{
+    display: flex;
+    background-image: url("../static/wave-haikei.svg");
+    height: 300px;
+    width: 90%;
+    border-radius: 1rem;
+    margin-left: 5%;
+    flex-direction: column;
+    font-family: 'Josefin Sans', sans-serif;
+}
+.quote{
+    padding: 1rem 1rem 0.2rem 1rem;
+    margin-left: 10rem;
+    margin-top: 3rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: white;
+    width: 25em;
+}
+.quote h1{
+    font-weight: bold;
+    font-size: 1.8rem;
+    color:#a00407;
+}
+.quote p{
+    font-weight: bold;
+    font-size: 0.8rem; 
+}

@@ -35,6 +35,15 @@
 }
 .subtitleView{
     background-color: white;
-    color: blue;
+    color: #a00407;
     border: none;
+}
+.button-check{
+    display: flex;
+    flex-direction: row;
+    
+
+}
+.check{
+    justify-content: end;
 }

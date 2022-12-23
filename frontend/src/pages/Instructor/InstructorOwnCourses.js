@@ -7,6 +7,7 @@ import spinner from "../../static/download.gif";
 import InprogressStyles from "../../components/Inprogress.module.css";
 import RegCourseCardStyles from "../../components/RegCourseCard.module.css";
 import { CourseCard } from "../../components/CourseCard";
+import { Link } from "react-router-dom"
 const cookies = new Cookies();
 const FetchUrl = '/instructor/listCourseTitles';
 const Search_URL = '/instructor/searchCourses'
@@ -38,8 +39,8 @@ function InstructorOwnCourses() {
     try {
       const res = await axios.get(Search_URL ,{ params: { search:searchString , instructor :currentUser }});
       setCourses(res.data)
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
     }
     setIsLoading(false);
   
@@ -50,8 +51,8 @@ function InstructorOwnCourses() {
     try {
       const res = await axios.get(FetchUrl + "/" + currentUser);
       setCourses(res.data)
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
     }
     setIsLoading(false);
   }
@@ -65,13 +66,41 @@ function InstructorOwnCourses() {
       <LoadingScreen loading={true} logoSrc={spinner} />
     ) : (
       <div>
-        
+       {/* <nav className="smallNav" >
+            <div>
+              <Link to="/">
+                <button
+                
+                  className="notPressed"
+                >
+                  Explore{" "}
+                </button>
+              </Link>
+              <Link to="/mycourses">
+                <button
+                
+                className={"Inprogress"}
+                >
+                  My Courses{" "}
+                </button>
+              </Link>
+              <Link to="/createcourse">
+                <button
+                 
+                  className={"notPressed"}
+                >
+                  Create new course{" "}
+                </button>
+              </Link>
+            </div>
+          </nav>*/}
     <section className={InprogressStyles["Wrapper"]}>
            <section className={InprogressStyles["main-section"]}>
               <h1>My Courses</h1>          
            </section>
        
       <section className={InprogressStyles['courses']}>
+      <button  className={InprogressStyles['main-btn']} onClick={()=>window.location.href="/createcourse"}>Create Course</button>
       <div className={RegCourseCardStyles["cardgrid"]}>
         {courses.length>0 ?(<>{courses.map((el,index) => {
           return <CourseCard data={el} key={index}></CourseCard>;

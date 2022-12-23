@@ -3,6 +3,7 @@
   grid-template-columns: 20% 80%;
   margin-left: 15%;
   width: 70%;
+  min-width: 400px;
   margin-top: 2rem;
   min-height: 80vh;
   border: 1px solid #e0e0e0;
@@ -20,7 +21,7 @@
 
 .side-bar-top img {
   width: 140px;
-  height: 140px;
+  max-width: 100%;
 }
 
 .side-bar-top label {
@@ -50,6 +51,7 @@
   background-color: rgb(162, 160, 160);
 }
 .side-bar-bottom li span {
+  display: inline-block;
   margin-left: 1rem;
 }
 .profile {
@@ -72,7 +74,7 @@
   align-items: center;
 }
 .profile-bottom form {
-  margin-left: 8rem;
+  margin: auto;
   display: grid;
   width: 70%;
   gap: 2rem;
@@ -119,7 +121,7 @@
   width: 70%;
   gap: 2rem;
 }
-.security-bottom form label{
+.security-bottom form label {
   font-size: 1rem;
   font-weight: bold;
 }
@@ -165,7 +167,7 @@
   justify-content: center;
   border-bottom: 1px solid #e0e0e0;
 }
-.payment{
+.payment {
   display: inline-block;
   width: 100%;
   min-height: 100vh;
@@ -182,7 +184,7 @@
   align-items: center;
   border-bottom: 1px solid #e0e0e0;
 }
-.payment-bottom label{
+.payment-bottom label {
   margin-bottom: 1rem;
   margin-left: 1rem;
   font-size: 1rem;
@@ -192,19 +194,51 @@
   margin-left: 8rem;
   display: grid;
   width: 70%;
-  gap : 0.5rem
-  }
-  .payment-bottom form label{
-    margin-bottom: 0.1rem;
-    font-size: 1rem;
-  }
- .payment-bottom form input{
-    height: 2.5rem;
-    padding: 1.5rem;
-    align-items: center;
-    border: 1px solid black;
-  }
-  .payment-bottom form button {
-    width: 30%;
-    border-radius: 0;
-  }
+  gap: 0.5rem;
+}
+.payment-bottom form label {
+  margin-bottom: 0.1rem;
+  font-size: 1rem;
+}
+.payment-bottom form input {
+  height: 2.5rem;
+  padding: 1.5rem;
+  align-items: center;
+  border: 1px solid black;
+}
+.payment-bottom form button {
+  width: 30%;
+  border-radius: 0;
+}
+.mainWallet {
+  padding-left: 8rem;
+  padding-top: 2rem;
+}
+.mainWallet h1 {
+  font-size: 2rem;
+  color: #a00407;
+}
+.currentBalance {
+  padding-left: 1rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border: 1px solid black;
+  width: 40%;
+  border-radius: 0.5rem;
+}
+.currentBalance h2 {
+  font-size: 1rem;
+}
+.currentBalance h3 {
+  font-size: 2rem;
+  margin-left: 0.5rem;
+  color: green;
+}
+.profit {
+  margin-top: 3rem;
+  width: 30%;
+}
+.profit h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}

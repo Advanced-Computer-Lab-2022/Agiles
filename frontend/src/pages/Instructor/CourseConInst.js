@@ -23,7 +23,7 @@ const CourseConInst = () => {
   const [linkUrl, setLinkUrl] = useState("");
   const [linkDesc, setLinKDesc] = useState("");
   const [subId, setSubId] = useState("");
-  const [subb, setSubb] = useState("");
+  const [duration, setDuration] = useState("");
   const [allowed, setAllowed] = useState(false);
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
@@ -59,6 +59,7 @@ const CourseConInst = () => {
       subId: subId,
       linkUrl: linkUrl,
       linkDesc: linkDesc,
+      duration: duration,
       allowed: allowed,
     };
     let config = {
@@ -70,8 +71,8 @@ const CourseConInst = () => {
       (res) => {
         window.location.reload();
       },
-      (error) => {
-        console.log(error);
+      (e) => {
+        console.log(e);
       }
     );
   };
@@ -129,6 +130,16 @@ const CourseConInst = () => {
                     onChange={(e) => setLinKDesc(e.target.value)}
                   />
                 </InputGroup>
+                <InputGroup className="mb-2">
+                  <InputGroup.Text id="basic-addon3">
+                    Duratuion 
+                  </InputGroup.Text>
+                  <Form.Control
+                    id="basic-url"
+                    aria-describedby="basic-addon3"
+                    onChange={(e) => setDuration(e.target.value)}
+                  />
+                </InputGroup>
                 <Form.Check
                   type="checkbox"
                   label="Allow for Guests"
@@ -158,15 +169,14 @@ const CourseConInst = () => {
                         <Button
                           id={subtitle._id}
                           size="sm"
-                          style={{backgroundColor:'#a00407',borderRadius: 0, width: '10rem' ,border: 'none' }}
+                          style={{backgroundColor:'#a00407',borderRadius: 0, width: '10rem' ,border: 'none' ,marginBottom:'1rem'}}
                           onClick={handleUpload}
                         >
                           <UploadIcon /> Upload Video
                         </Button>
                         <ListGroup>
                           {subtitle.link?.map((link, index1) => (
-                            <ListGroup.Item key={index1}>
-                              {index1 + 1}.{" "}
+                            <ListGroup.Item key={index1} className="list-group-item list-group-item-action">
                               <button
                                 id={"linkId=" + link._id}
                                 name={index0 + " " + index1}
@@ -177,10 +187,7 @@ const CourseConInst = () => {
                               </button>
                             </ListGroup.Item>
                           ))}
-                        </ListGroup>
-                      </div>
-                      <ListGroup>
-                        <ListGroup.Item>
+                          <ListGroup.Item className="list-group-item list-group-item-action">
                           <button
                             onClick={() => {
                               route(subtitle._id);
@@ -190,7 +197,11 @@ const CourseConInst = () => {
                             Set Quiz
                           </button>
                         </ListGroup.Item>
-                      </ListGroup>
+                        </ListGroup>
+                      </div>
+                 
+                        
+                   
                     </Accordion.Body>
                   </Accordion.Item>
                 ))}

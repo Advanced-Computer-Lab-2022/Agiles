@@ -1,5 +1,7 @@
 .home{
-  min-height: 150vh;
+   display: flex;
+   flex-direction: column;
+   margin-top: 0.1rem;
 }
 .navbarSub {
   display: flex;
@@ -15,20 +17,19 @@
   max-height: 70px;
   width: 80%;
   margin-left: 10%;
+  margin-bottom: 0.5rem;
   border-bottom: 1px solid #f2f2f2;
   padding: 0.3rem 1rem;
 }
-
-.craousel{
-  width: 80%;
-  margin-left: 10%;
+.thumbnail{
+    margin-left: 20rem;
 }
 .Inprogress{
   background-color: white;
   color: black;
   margin-left: 5rem;
   border: none;
-  border-bottom: 5px solid  rgba(192,4,24,255);
+  border-bottom: 2px solid  rgba(192,4,24,255);
 }
 .notPressed{
   background-color: white;
@@ -37,7 +38,7 @@
   border: none;
 }
 .notPressed:hover {
-  border-bottom: 5px solid rgba(192,4,24,255); ;
+  border-bottom: 2px solid rgba(192,4,24,255); ;
 }
 .accordion-button:not(.collapsed) {
   color: #ffffff;

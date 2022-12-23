@@ -10,12 +10,68 @@ const CreditCard = require("../models/CreditCard");
 const CourseSubscriptionRequest = require("../models/CourseSubscriptionRequest");
 const Course = require("../models/Course");
 const CourseRefundRequest = require("../models/CourseRefundRequest");
-const Link = require("../models/Link");
 const bcrypt = require("bcrypt");
 const resetPassword = require("./ResetPassword");
 require("dotenv").config();
+const endpointSecret = "whsec_c69d6e1b76c6a80ef78977e1f65d1caad055b7e0b3d4c3e9d1ed66309647865c";
+
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 var nodemailer = require("nodemailer");
+
+const getNotes = async (req, res) => {
+  const traineeId = req.user.id;
+  let oldNotes = " ";
+  const subtitleId = req["query"].subtitleId;
+  const courseId = req["query"].courseId;
+  const linkId = req["query"].linkId;
+  if (!subtitleId || !linkId || !courseId || !traineeId) {
+    return res.status(500).json("bad request");
+  }
+  try {
+    const old = await TraineeCourse.findOne(
+      {
+        traineeId: traineeId,
+        courseId: courseId,
+        subtitleId: subtitleId,
+        linkId: linkId,
+      },
+      { notes: 1 }
+    );
+    if (old) {
+      oldNotes = old.notes;
+
+      return res.status(200).json({ notes: oldNotes });
+    }
+  } catch (e) {
+    return res.status(406).json("Data not found");
+  }
+};
+const addNotesToTrainee = async (req, res) => {
+  const subtitleId = req.body.subtitleId;
+  const notes = req.body.notes;
+  const courseId = req.body.courseId;
+  const traineeId = req.user.id;
+  const linkId = req.body.linkId;
+
+  if (!subtitleId || !linkId || !courseId || !traineeId || !notes) {
+    return res.status(500).json("bad request");
+  }
+  try {
+    const updateNotes = await TraineeCourse.findOneAndUpdate(
+      {
+        traineeId: traineeId,
+        courseId: courseId,
+        subtitleId: subtitleId,
+        linkId: linkId,
+      },
+      { $set: { notes: notes } },
+      { new: true, upsert: true }
+    );
+    return res.status(200).json("Updated Notes");
+  } catch {
+    return res.status(406).json("Data not found");
+  }
+};
 
 const getTraineebyID = async (req, res) => {
   const id = req.query.id;
@@ -23,7 +79,7 @@ const getTraineebyID = async (req, res) => {
   return res.status(200).json(Itrainee);
 };
 const InprogressCourses = async (req, res) => {
-  const id = req.params["id"];
+  const id = req.user.id;
   if (!id) return res.status(400).json({ msg: "bad request" });
   const courses = await IndividualTrainee.findById(id, {
     registered_courses: 1,
@@ -33,7 +89,7 @@ const InprogressCourses = async (req, res) => {
   return res.status(200).json(courses);
 };
 const InprogressCoursebyId = async (req, res) => {
-  const id = req.body.id;
+  const id = req.user.id;
   const courseId = req.body.courseId;
   if (!id) return res.status(400).json({ msg: "bad request" });
   const courses = await IndividualTrainee.findOne(
@@ -59,25 +115,22 @@ const getAllItemsCourse = async (req, res) => {
   const courseId = req.body.courseId;
   let numberOfItems = 0;
   try {
-
-    const course = await Course.findOne({ _id: courseId },{subtitles:1});
-    if(course){
-      course.subtitles.forEach(subtitle => {
-        numberOfItems += subtitle.link.length});
+    const course = await Course.findOne({ _id: courseId }, { subtitles: 1 });
+    if (course) {
+      course.subtitles.forEach((subtitle) => {
+        numberOfItems += subtitle.link.length;
+      });
       numberOfItems += course.subtitles.length + 1;
-      res.status(200).json({numberOfItems : numberOfItems});
-    }
-    else{
+      res.status(200).json({ numberOfItems: numberOfItems });
+    } else {
       return res.status(400).json({ msg: "bad request" });
     }
-  }
-  catch (err) {
-    res.status(403).json({ msg: err.message});
+  } catch (err) {
+    res.status(403).json({ msg: err.message });
   }
 };
 
 const updateLinkProgress = async (req, res) => {
-  // const id = req.body.id;
   const courseId = req.body.courseId;
   const linkId = req.body.linkId;
   const studentId = req.body.studentId;
@@ -86,52 +139,91 @@ const updateLinkProgress = async (req, res) => {
   const completedItems = req.body.completedItems;
   let numberOfItems = 0;
   try {
-
-    const course = await Course.findOne({ _id: courseId },{subtitles:1});
-    if(course){
-      course.subtitles.forEach(subtitle => {
-        numberOfItems += subtitle.link.length});
+    const course = await Course.findOne({ _id: courseId }, { subtitles: 1 });
+    if (course) {
+      course.subtitles.forEach((subtitle) => {
+        numberOfItems += subtitle.link.length;
+      });
       numberOfItems += course.subtitles.length + 1;
+    } else {
+      res.status(400).json({ msg: "bad request" });
     }
-    else{
-      return res.status(400).json({ msg: "bad request" });
-    }
 
-    // const regcourse = await IndividualTrainee.findOne({ _id: id, "registered_courses.courseId": courseId }
-    // ,{"registered_courses": 1});
-
-    // const linkcourse = await Link.findOne({ _id: linkId },{progress:1});
-
-    // const progress = regcourse.registered_courses[0].progress;
-    // const progress = linkcourse.progress;
-
-    const link = await IndividualTrainee.findOneAndUpdate(
-      { _id: studentId , "registered_courses.courseId": courseId, "registered_courses.subtitles.subtitle": subtitle, "registered_courses.subtitles.link.linkId": linkId },
-      { $set: { "registered_courses.subtitles.$.link.$.progress": completedItems } },
+    const updatecourse = await Course.findOneAndUpdate(
+      { _id: courseId },
+      { $set: { numberOfItems: numberOfItems } },
       { new: true, upsert: true }
     );
 
-    // const regcourse1 = await IndividualTrainee.findOneAndUpdate(
-    //   { _id: id, "registered_courses.courseId": courseId },
-    //   { $set: { "registered_courses.$.progress": progress + completedItems } },
-    //   { new: true, upsert: true }
-    // );
+    const linkprogress = await TraineeCourse.findOne(
+      {
+        traineeId: studentId,
+        courseId: courseId,
+        subtitleId: subtitle,
+        linkId: linkId,
+      },
+      { progress: 1 }
+    );
+    if (linkprogress) {
+      if (linkprogress.progress === 1)
+        res.status(200).json({ progress: -1,numberOfItems: numberOfItems });
+        console.log(linkprogress);
+      return;
+    }
 
-    if (link) {
-      return res.status(200).json({ progress: completedItems});
+    // const linkcourse = await Link.findOne({ _id: linkId },{progress:1});
+
+    const progress = await TraineeCourse.findOneAndUpdate(
+      {
+        traineeId: studentId,
+        courseId: courseId,
+        subtitleId: subtitle,
+        linkId: linkId,
+      },
+      { $set: { progress: completedItems } },
+      { new: true, upsert: true }
+    );
+
+    const regcourse1 = await IndividualTrainee.findOneAndUpdate(
+      { _id: studentId, "registered_courses.courseId": courseId },
+      { $inc: { "registered_courses.$.progress": completedItems } },
+      { new: true, upsert: true }
+    );
+
+    if (progress) {
+      res.status(200).json({
+        progress: completedItems,
+        course: regcourse1,
+        numberOfItems: numberOfItems,
+      });
+      console.log(progress);
     } else {
-      return res.status(400).json({ msg: "bad request" });
+      res.status(400).json({ msg: "bad request" });
     }
   } catch (err) {
-    res.status(403).json({ msg: err.message});
+    res.status(403).json({ msg: err.message });
   }
 };
 
-const updateProgress = async (req, res) => {
-  const id = req.body.id;
+const getTraineeProgress = async (req, res) => {
+  const traineeId = req.user.id;
   const courseId = req.body.courseId;
+  try{
+    const progress = await TraineeCourse.find(
+      { traineeId: traineeId, "registered_courses.courseId": courseId }
+    );
+    if (progress) {
+      res.status(200).json({ progress: progress });
+    }
+    else{
+      res.status(200).json({ progress: 0 });
+    }
+  }catch(err){
+    res.status(403).json({ msg: err.message });
+    
+  }
+  }
 
-};
 
 const submitExam = async (req, res) => {
   const answers = req.body.answers;
@@ -170,9 +262,8 @@ const submitExam = async (req, res) => {
         { studentId: studentId, subtitleId: subtitleId, courseId: courseId },
         { $set: { studentChoices: answers, result: resultno } },
         { new: true },
-        function (err, docs) {
-          if (err) console.log(err);
-          else console.log("Updated User : ", docs);
+        function (e, docs) {
+          if (e) console.log(e);
         }
       );
     } else {
@@ -184,7 +275,6 @@ const submitExam = async (req, res) => {
         result: resultno,
       });
     }
-
   } else {
     const test = await FinalExamResult({
       studentId: studentId,
@@ -195,8 +285,8 @@ const submitExam = async (req, res) => {
         { studentId: studentId, courseId: courseId },
         { $set: { studentChoices: answers, result: resultno } },
         { new: true, upsert: true },
-        function (err, docs) {
-          if (err) console.log(err);
+        function (e, docs) {
+          if (e) console.log(e);
           else console.log("Updated User : ", docs);
         }
       );
@@ -211,15 +301,19 @@ const submitExam = async (req, res) => {
   }
 
   try {
-    const regcourse = await IndividualTrainee.findOne({ _id: studentId, "registered_courses.courseId": courseId }
-    ,{"registered_courses": 1});
+    const regcourse = await IndividualTrainee.findOne(
+      { _id: studentId, "registered_courses.courseId": courseId },
+      { registered_courses: 1 }
+    );
     const progress = regcourse.registered_courses[0].progress;
     const regcourse1 = await IndividualTrainee.findOneAndUpdate(
       { _id: studentId, "registered_courses.courseId": courseId },
       { $set: { "registered_courses.$.progress": progress + 1 } },
       { new: true, upsert: true }
     );
-    res.status(200).json({ result: result, resultno: resultno,progress: progress +1  });
+    res
+      .status(200)
+      .json({ result: result, resultno: resultno, progress: progress + 1 });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -236,6 +330,28 @@ const getFinalExamGrade = async (req, res) => {
     res.status(200).json(finalExam);
   } catch (error) {
     res.status(400).json({ error: error.message });
+  }
+};
+
+//get the subtitle exam
+const courseExam = async (req, res) => {
+  const subtitleId = req.query["subtitleId"];
+  questions = await Exam.findOne({ subtitleId: subtitleId });
+
+  if (!questions) {
+    res.status(400).json({ error: "Empty" });
+  } else {
+    res.status(200).json(questions);
+  }
+};
+const courseFinalExam = async (req, res) => {
+  const courseId = req.query["courseId"];
+  questions = await FinalExam.findOne({ courseId: courseId });
+
+  if (!questions) {
+    res.status(400).json({ error: "Empty" });
+  } else {
+    res.status(200).json(questions);
   }
 };
 
@@ -272,7 +388,7 @@ const updateFieldUser = async (req, res) => {
   }
 };
 const updateEmail = async (req, res) => {
-  const {email } = req.body;
+  const { email } = req.body;
   try {
     const user = await IndividualTrainee.findByIdAndUpdate(req.user.id, {
       email: email,
@@ -366,11 +482,21 @@ const changePassword = async (req, res) => {
   }
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
+  const oldUser = await IndividualTrainee.findOne({ email: email});
   try {
-    const data = await IndividualTrainee.findOneAndUpdate(
-      { email: email },
-      { password: hashedPassword }
-    );
+    if (oldUser){
+      const data = await IndividualTrainee.findOneAndUpdate(
+        { email: email },
+        { password: hashedPassword }
+      );
+    }
+    else{
+      const data = await Instructor.findOneAndUpdate(
+        { email: email },
+        { password: hashedPassword }
+      );
+    }
+  
     return res.status(200).json("success");
   } catch (err) {
     return res.status(406).json(err);
@@ -380,7 +506,7 @@ const changePassword = async (req, res) => {
 const rateInstructor = async (req, res) => {
   const { instId, userId, courseId, userRating, userReview } = req.body;
   if (!instId || !userId) {
-    return res.status(400).json({ error: "Empty" });
+    return res.status(500).json({ error: "Empty" });
   }
   try {
     const data = await Instructor.findById(instId).exec();
@@ -389,20 +515,18 @@ const rateInstructor = async (req, res) => {
     let x = parseInt(userRating);
     const exists = await Rating.findOne({
       userId: userId,
+      instId:instId,
       state: false,
     }).exec();
     if (exists) {
       let currentRating = parseInt(exists.userRating);
       let newRating = oldRating - currentRating + x;
       const updateRating = await Rating.findOneAndUpdate(
-        { userId: userId },
+        { userId: userId,instId:instId },
         { userRating: userRating, userReview: userReview },
         { new: true }
-      ).exec();
-      const updateInstructor = await Instructor.updateOne(
-        { _id: instId },
-        { $set: { rating: newRating } }
-      ).exec();
+      ).exec(); 
+      const updateInstructor = await Instructor.findByIdAndUpdate(instId,{$set:{rating:newRating}})
       return res.status(200).json({ msg: "Rating updated" });
     } else {
       let newRating = oldRating + x;
@@ -412,19 +536,9 @@ const rateInstructor = async (req, res) => {
         userRating: userRating,
         userReview: userReview,
         instId: instId,
+        state:false
       });
-      const UpdatedRating = await Instructor.updateOne(
-        { _id: instId },
-        {
-          $push: {
-            reviews: newRatingObj._id,
-          },
-          $set: {
-            rating: newRating,
-            ratingCount: newCount,
-          },
-        }
-      ).exec();
+      const updateInstructor = await Instructor.findByIdAndUpdate(instId,{$set:{rating:newRating,ratingCount:newCount}})
       const updateIndvidual = await IndividualTrainee.updateOne(
         { _id: userId, "registered_courses.courseId": courseId },
         { $set: { "registered_courses.$.instRating": newRatingObj._id } }
@@ -435,6 +549,24 @@ const rateInstructor = async (req, res) => {
     res.status(500).json({ msg: "can't update rating" });
   }
 };
+const deleteInstRating = async(req,res)=>{
+  const instId=req.query.instId;
+  const userId = req.user.id;
+  const rating = await Rating.findOneAndDelete({userId:userId,instId:instId ,state :false});
+  const oldRating = rating?rating.userRating:0;
+  const REMOVERATING = await Instructor.findOneAndUpdate({_id:instId},{$inc:{rating:-oldRating}});
+  const REOMVECOUNT = await Instructor.findOneAndUpdate({_id:instId},{$inc:{ratingCount:-1}});
+  res.status(200).json("deleted")
+}
+const deleteCourseRating = async(req,res)=>{
+  const courseId=req.query.courseId;
+  const userId = req.user.id;
+  const rating = await Rating.findOneAndDelete({userId:userId,courseId:courseId ,state :true});
+  const oldRating = rating?rating.userRating:0;
+  const REMOVERATING = await Course.findOneAndUpdate({_id:courseId},{$inc:{rating:-oldRating}});
+  const REOMVECOUNT = await Course.findOneAndUpdate({_id:courseId},{$inc:{ratingCount:-1}});
+  res.status(200).json("deleted")
+}
 const updateITraineePassword = async (req, res) => {
   const { oldPass, newPass } = req.body;
   if (!oldPass || !newPass) {
@@ -500,51 +632,75 @@ const deleteCredit = async (req, res) => {
     return res.status(406).json("server error");
   }
 };
-const CreateCheckout = async(req,res)=>{
-  const {courseId} = req.body;
-  if(!courseId){
+const CreateCheckout = async (req, res) => {
+  const { courseId } = req.body;
+  if (!courseId) {
     return res.status(500).json("bad request");
   }
   const course = await Course.findById(courseId);
-  const price = parseInt(course.price) - (parseInt(course.price) * parseInt(course.discount)) / 100;
+  const price =
+    parseInt(course.price) -
+    (parseInt(course.price) * parseInt(course.discount)) / 100;
   const title = course.title;
   const desccription = course.description;
-  try{
+  try {
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: [{
-        price_data: {
-          currency: 'usd',
-          product_data: {
-            name: title,
-            description: desccription,
-            images:[course.imgUrl]
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: title,
+              description: desccription,
+              images: [course.imgUrl],
+            },
+            unit_amount: price * 100,
           },
-          unit_amount: price*100,
+          quantity: 1,
         },
-        quantity: 1,
-      }],
-      mode: 'payment',
+      ],
+      mode: "payment",
       custom_text: {
-        submit: {message: '30-Day Money-Back Guarantee'},
+        submit: { message: "30-Day Money-Back Guarantee" },
       },
-      success_url: 'http://localhost:3000/success',
-      cancel_url: 'http://localhost:3000/cancel',
+      success_url: "http://localhost:3000/success",
+      cancel_url: "http://localhost:3000/cancel",
     });
-    payForCourse(courseId,req.user.id);
-    return res.status(200).json({url:session.url});
-  }
-  catch(err){
+    return res.status(200).json({ url: session.url });
+  } catch (err) {
     return res.status(500).json("server error");
   }
+};
+const fullFill =  async(request, response) => {
+  const sig = request.headers['stripe-signature'];
 
-}
-const payForCourse =  async(courseId,userId) => {
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+  } catch (err) {
+    response.status(400).send(`Webhook Error: ${err.message}`);
+    return;
+  }
+
+  switch (event.type) {
+    case 'payment_intent.succeeded':
+      const paymentIntent = event.data.object;
+      // Then define and call a function to handle the event payment_intent.succeeded
+      break;
+    // ... handle other event types
+    default:
+      console.log(`Unhandled event type ${event.type}`);
+  }
+
+  response.send();
+};
+const payForCourse = async (courseId, userId) => {
   if (!courseId) {
     return;
   }
   const course = await Course.findById(courseId);
-  const instructor = await Instructor.findById(course.instructor);
   const profit =
     parseInt(course.price) -
     (parseInt(course.price) * parseInt(course.discount)) / 100;
@@ -552,17 +708,22 @@ const payForCourse =  async(courseId,userId) => {
     await IndividualTrainee.findByIdAndUpdate(userId, {
       $push: { registered_courses: { courseId: courseId } },
     });
-    await Instructor.updateOne(
-      { _id: course.instructor },
-      { wallet: instructor.wallet + profit*70/100 ,studentCount :instructor.studentCount+1}
-    );
+    const month = new Date().getMonth();
+    const exists = await Instructor.findOne({ _id: course.instructor,"wallet.month": month});
+    if(!exists){
+      await Instructor.updateOne( {_id: course.instructor},{$push:{wallet:{amount:profit*70/100,month:month}},$inc:{studentCount:1}});
+    }
+    else{
+      await Instructor.updateOne({_id: course.instructor,"wallet.month": month},{$inc:{"wallet.$.amount":profit*70/100}});
+      await Instructor.updateOne({_id: course.instructor},{$inc:{studentCount:1}});
+    }
     await Course.updateOne(
       { _id: courseId },
       { studentCount: course.studentCount + 1 }
     );
-    return ;
+    return;
   } catch (error) {
-    return ;
+    return;
   }
 };
 
@@ -620,10 +781,18 @@ module.exports = {
   verifyCode,
   getFinalExamGrade,
   rateInstructor,
+  deleteInstRating,
+  deleteCourseRating,
   updateLinkProgress,
   createCredit,
   deleteCredit,
   CreateCheckout,
+  fullFill,
   requestRefund,
-  getAllItemsCourse
+  getAllItemsCourse,
+  addNotesToTrainee,
+  getNotes,
+  courseExam,
+  courseFinalExam,
+  getTraineeProgress
 };

@@ -48,7 +48,6 @@ const PrevReportsTrainee = () => {
        timer: 1500,
      });
    }
-
    };
   
   

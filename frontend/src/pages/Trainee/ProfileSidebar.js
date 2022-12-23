@@ -20,7 +20,7 @@ const ProfileSideBar = ({fullname,state}) => {
                         <li id ="/accountsettings" className={state==='security'?style['side-bar-bottomClicked']:""} onClick={handleNavigate}><span  id ="/accountsettings">Account Security</span></li>
                        {status!=1&&<li id ="/paymentMethods" className={state==='payment'?style['side-bar-bottomClicked']:""} onClick={handleNavigate}><span id ="/paymentMethods">Payment Methods</span></li>}
                        {status==1&&<li id ="/reviews" className={state==='reviews'?style['side-bar-bottomClicked']:""} onClick={handleNavigate}><span id ="/paymentMethods">Reviews</span></li>}
-                       <li id ="/wallet" className={state==='wallet'?style['side-bar-bottomClicked']:""} onClick={handleNavigate}><span id ="/wallet">Wallet</span></li>
+                       {status==1&&<li id ="/wallet" className={state==='wallet'?style['side-bar-bottomClicked']:""} onClick={handleNavigate}><span id ="/wallet">Balance</span></li>}
   
                     </ul>
                 </section>

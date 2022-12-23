@@ -1,10 +1,9 @@
-.admin{
-    display: flex;
-    font-family: 'tahoma';
-
-} 
-.admin-content{
-    display: grid;
-    grid-template-rows: 5rem;
-    flex: 6
+.admin {
+  display: flex;
+  font-family: "tahoma";
+}
+.admin-content {
+  /* display: grid; */
+  grid-template-rows: 5rem;
+  flex: 6;
 }

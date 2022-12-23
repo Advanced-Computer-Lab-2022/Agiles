@@ -57,13 +57,21 @@ const instructorSchema = new Schema(
       type: Number,
       default: 1,
     },
-    reviews: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Rating" }],
     mini_bio: {
       type: String,
       required: false,
       default: "",
     },
-    wallet: Number,
+    wallet:[
+      {
+        amount : Number,
+        month : Number
+      }
+    ],
+    firstLogIn:{
+      type:Boolean,
+      default : true,
+    },
     imgUrl: {
       type: String,
     },

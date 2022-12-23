@@ -1,18 +1,25 @@
 import { useState } from "react";
 import axios from "axios";
 import "./AddInstructor.css";
-import AdminImg from "../../static/Admin.png";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import Alert from "@mui/material/Alert";
+
 const AddCorporate = () => {
+  const [alert, setAlert] = useState("");
+  const [flag, setFlag] = useState(false);
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
-  const handleSumbit = async (event) => {
+  const handleSubmit = async (event) => {
     const corporate = {
       firstname: firstname,
-      lastname :lastname,
+      lastname: lastname,
       username: username,
       password: password,
       email: email,
@@ -27,27 +34,29 @@ const AddCorporate = () => {
     };
     try {
       const res = await axios.post("/admin/addCorporate", corporate, config);
-      console.log(res.data);
+      setAlert("success");
+      setFlag(true);
     } catch (e) {
       console.log(e);
+      setAlert("error");
+      setFlag(true);
     }
+    setTimeout(() => {
+      setFlag(false);
+    }, 3000);
   };
   return (
     <div className="new">
-   
       <div className="newContainer">
         <div className="top">
           <h1 className="h1Class">Add New Corporate Trainee</h1>
         </div>
         <div className="bottom">
-          <div className="left">
-            <img className="imgClass" src={AdminImg} alt="adminImg" />
-          </div>
           <div className="right">
-            <form className="formClass" onSubmit={handleSumbit}>
+            <form className="formClass" onSubmit={handleSubmit}>
               <div className="formInput">
                 <label className="labelClass">
-                  First name <span className="required">*</span>
+                  First Name <span className="required">*</span>
                 </label>
                 <input
                   type="text"
@@ -60,7 +69,7 @@ const AddCorporate = () => {
               </div>
               <div className="formInput">
                 <label className="labelClass">
-                  Last name <span className="required">*</span>
+                  Last Name <span className="required">*</span>
                 </label>
                 <input
                   type="text"
@@ -86,7 +95,7 @@ const AddCorporate = () => {
               </div>
               <div className="formInput">
                 <label className="labelClass">
-                  username <span className="required">*</span>
+                  Username <span className="required">*</span>
                 </label>
                 <input
                   type="text"
@@ -99,7 +108,7 @@ const AddCorporate = () => {
               </div>
               <div className="formInput">
                 <label className="labelClass">
-                  password <span className="required">*</span>
+                  Password <span className="required">*</span>
                 </label>
                 <input
                   type="password"
@@ -111,21 +120,42 @@ const AddCorporate = () => {
                 />
               </div>
               <div className="formInput">
-                <label className="labelClass">gender</label>
-                <select
+                <label className="labelClass">Gender</label>
+                <Select
+                  style={{ padding: "0", borderRadius: "25px" }}
+                  className="inputClass"
+                  labelId="gender"
                   id="gender"
-                  name="gender "
-                  className="selectClass"
+                  value={gender}
+                  label="Gender"
                   onChange={(e) => setGender(e.target.value)}
                 >
-                  <option value="male">male</option>
-                  <option value="female">female</option>
-                </select>
+                  <MenuItem value={"male"}>male</MenuItem>
+                  <MenuItem value={"female"}>female</MenuItem>
+                </Select>
               </div>
-
-              <button className="buttonClass">Send</button>
+              <div className="buttonContainer">
+                <button className="buttonClass">Submit</button>
+              </div>
             </form>
           </div>
+        </div>
+        <div
+          className="alertContainer"
+          style={{
+            margin: "15px",
+            width: "50%",
+            minWidth: "500px",
+            borderRadius: "25px",
+          }}
+        >
+          {flag && (
+            <Alert severity={alert} style={{ fontSize: "20px" }}>
+              {alert == "success"
+                ? "Corporate Trainee added successfully"
+                : "username already taken"}
+            </Alert>
+          )}
         </div>
       </div>
     </div>

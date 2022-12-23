@@ -10,7 +10,7 @@ const courseSchema = new Schema(
     subtitles: [
       {
         subtitle: { type: String, default: "" },
-        time: { type: String, default: "h::mm:ss" },
+        time: { type: Number, default:0},
         link: [{ type: mongoose.Schema.Types.ObjectId, ref: "Link" }],
       },
     ],
@@ -33,7 +33,6 @@ const courseSchema = new Schema(
       required: false,
       default: 1,
     },
-    reviews: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Rating" }],
     description: {
       type: String,
       required: false,
@@ -76,6 +75,7 @@ const courseSchema = new Schema(
     },
     totalHoursOfCourse: {
       type: Number,
+      default:0,
       required: false,
     },
     exercises: {

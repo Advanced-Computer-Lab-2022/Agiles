@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap');
+.main{
+    display: flex;
+    background-image: url("../static/blob-haikei.svg");
+    height: 88vh;
+    flex-direction: column;
+    font-family: 'Josefin Sans', sans-serif;
+    
+}
+.container{
+    margin-left: 8rem;
+    margin-top: 8rem;
+    display: flex;
+    flex-direction: column;
+}
+.container-signUp{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+.container-signUp-1{
+    border: none;
+    background-color: #a00407;
+    padding: 0.8rem 1rem 0.8rem 1rem;
+    width: 8rem;
+    border-radius: 0.5rem;
+    color: white;
+}
+.container-signUp-1:hover{
+    background-color: #670002;
+}
+.container-signUp-2{
+    border: none;
+    background-color: rgb(196, 195, 195);
+    padding: 0.8rem 1rem 0.8rem 1rem;
+    width: 8rem;
+    border-radius: 0.5rem;
+    color: black;
+}
+.container-signUp-2:hover{
+    background-color: rgb(132, 132, 132);
+
+}
+.main label{
+    color: black;
+    font-size: 2rem;
+    font-weight: bold;
+    
+}
+.main h1{
+    font-weight: bold;
+    font-size: 5rem;
+    color:#a00407;
+    margin: 0;
+}
+@media (max-width: 640px) {
+    .container {
+     margin-left: 2rem;
+     height: 914px;
+    }
+  
+    
+  }

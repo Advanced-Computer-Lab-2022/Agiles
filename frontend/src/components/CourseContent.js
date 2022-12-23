@@ -20,6 +20,7 @@ const CoursContent = () => {
   const index = new URLSearchParams(location.search).get("idx");
   const [course, setCourse] = useState([]);
   const [subtitles, setSubtitles] = useState([]);
+  const [subtitleId, setSubtitleId] = useState("");
   const [isloading, setIsLoading] = useState(false);
   const [grade, setGrade] = useState([]);
   const [questions, setQuestions] = useState(0);
@@ -154,10 +155,15 @@ const CoursContent = () => {
                     <Accordion.Body>
                       <ListGroup>
                         {subtitle.link?.map((link, index1) => (
-                          <ListGroup.Item key={index1}>
-                            {index1 + 1}.{" "}
+                          <ListGroup.Item key={index1} className="list-group-item list-group-item-action"> 
                             <button
-                              id={"linkId=" + link._id}
+                              id={
+                                "linkId=" +
+                                link._id +
+                                "&" +
+                                "subtitleId=" +
+                                subtitle._id
+                              }
                               name={index0 + " " + index1}
                               onClick={handleClick}
                               className={style["subtitleView"]}
@@ -166,7 +172,7 @@ const CoursContent = () => {
                             </button>
                           </ListGroup.Item>
                         ))}
-                        <ListGroup.Item key={"exam"}>
+                        <ListGroup.Item key={"exam"} className="list-group-item list-group-item-action">
                           <button
                             id={subtitle._id}
                             name={"exam"}
@@ -210,8 +216,11 @@ const CoursContent = () => {
                     name={"finalexam"}
                     onClick={handleFinalExamClick}
                     size="lg"
-                    style={{backgroundColor:'#a00407',borderRadius: 0 ,border: 'none' }}
-      
+                    style={{
+                      backgroundColor: "#a00407",
+                      borderRadius: 0,
+                      border: "none",
+                    }}
                   >
                     Final Exam
                   </Button>
@@ -231,9 +240,7 @@ const CoursContent = () => {
                       </div>
                     </Modal.Body>
                     <Modal.Footer>
-                      <Button onClick={handleClose}>
-                        close
-                      </Button>
+                      <Button onClick={handleClose}>close</Button>
                     </Modal.Footer>
                   </Modal>
                 </Accordion.Item>

@@ -1,79 +1,129 @@
-.newContainer{
-  background-color:rgb(246, 247, 251)}
-  .inputClass{
-    width: 100%;
-    padding: 5px;
-    border: none;
-    border-bottom: 1px solid gray;
-  }
-  .labelClass {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  
-  .bottom {
-   background-color: white;
-    padding: 10px;
-    margin: 20px;
-    display: flex;
-  }
-  
-  .imgClass {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  .right {
-    flex: 2;
-  }
-  .formInput {
-    width: 40%;
-  }
-  .h1Class{
-    color: rgb(186, 179, 179);
-    font-size: 20px;
-  }
-  .formClass {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    justify-content: space-around;
-  }
-  .new {
-    width: 100%;
-    display: flex;
-  }
-  .newContainer {
-    flex: 6;
-  }
-  .required {
-    color: red;
-  }
-  .title {
-    color: #ff6529;
-    margin-bottom: 30px;
-    padding: 20px;
-    border-bottom: 1px solid #f2f2f2;
-  }
-  
-  .buttonClass {
-    width: 150px;
-    border: none;
-    background-color:rgb(66, 104, 246);
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  .selectClass {
-    width: 30%;
-    padding: 12px 20px;
-    margin-right: 50px;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
+.newContainer {
+  /* background-color: rgb(0, 0, 0); */
+  padding: 20px;
+}
+.inputClass {
+  border-radius: 25px;
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  border: none;
+  font-size: 20px;
+  margin-top: 15px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  background-color: white;
+  border: 1px solid rgb(rgb(228, 228, 228), green, blue);
+}
+.labelClass {
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bottom {
+  border-radius: 25px;
+  background-color: #f2f2f2;
+  width: 70%;
+  min-width: 500px;
+  padding: 30px;
+  margin: 20px;
+  display: flex;
+}
+
+.imgClass {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.right {
+  flex: 2;
+}
+.formInput {
+  width: 40%;
+}
+.h1Class {
+  margin-left: 20px;
+  margin-top: 20px;
+  color: rgb(50, 50, 50);
+  font-size: 36px;
+  font-weight: 500;
+}
+.formClass {
+  justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+.new {
+  width: 100%;
+  display: flex;
+}
+.newContainer {
+  flex: 6;
+}
+.required {
+  color: red;
+}
+.title {
+  color: #ff6529;
+  margin-bottom: 30px;
+  padding: 20px;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.buttonClass {
+  width: 150px;
+  font-size: 20px;
+  border: none;
+  background-color: rgb(66, 104, 246);
+  color: white;
+  font-weight: bold;
+  height: 50px;
+  cursor: pointer;
+  border-radius: 25px;
+  /* display: inline-block; */
+  /* margin: auto; */
+}
+.selectClass {
+  width: 30%;
+  height: 20px;
+  padding: 12px 20px;
+  margin-right: 50px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.buttonContainer {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bottom-admin {
+  border-radius: 25px;
+  background-color: #f2f2f2;
+  width: 50%;
+  min-width: 500px;
+  padding: 30px;
+  margin: 20px;
+  /* display: flex; */
+}
+
+.formClassAdmin {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.buttonContAdmin {
+  margin: auto 0;
+}
+
+.formInputAdmin {
+  width: 100%;
+}

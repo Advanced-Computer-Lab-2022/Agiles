@@ -71,7 +71,7 @@ const popularCourses = async (req, res) => {
   } else {
     res.status(200).json(courses);
   }
-}
+};
 const courseSearch = async (req, res) => {
   const search = req.query["search"];
   const courses = await Course.find({
@@ -87,36 +87,19 @@ const courseSearch = async (req, res) => {
     res.status(200).json(courses);
   }
 };
-//get the subtitle exam
-const courseExam = async (req, res) => {
-  const subtitleId = req.query["subtitleId"];
-  questions = await Exam.findOne({ subtitleId: subtitleId });
-
-  if (!questions) {
-    res.status(400).json({ error: "Empty" });
-  } else {
-    res.status(200).json(questions);
-  }
-};
-const courseFinalExam = async (req, res) => {
-  const courseId = req.query["courseId"];
-  questions = await FinalExam.findOne({ courseId: courseId });
-
-  if (!questions) {
-    res.status(400).json({ error: "Empty" });
-  } else {
-    res.status(200).json(questions);
-  }
-};
-
-const getAllExams = async (req, res) => {
-  const courseId = req.query["courseId"];
-  const exams = await Exam.find({ courseId: courseId });
-};
 
 const createCourse = async (req, res) => {
   const user = req.user;
-  const { title,imgUrl, coursePreviewUrl, subtitles, price, description, subject, language, } = req.body;
+  const {
+    title,
+    imgUrl,
+    coursePreviewUrl,
+    subtitles,
+    price,
+    description,
+    subject,
+    language,
+  } = req.body;
   const data = await Instructor.findById(user.id, {
     firstname: 1,
     lastname: 1,
@@ -159,8 +142,9 @@ const setExam = async (req, res) => {
     const exam = await Exam.create(newExam);
     const dataFinal = await Course.updateOne(
       { _id: courseId },
-      { $inc: {numberOfItems: 1} },
-      { new: true });
+      { $inc: { numberOfItems: 1 } },
+      { new: true }
+    );
     res.status(200).json(exam);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -171,9 +155,10 @@ const setExam = async (req, res) => {
 const setFinalExam = async (req, res) => {
   const { courseId, questions } = req.body;
   const dataFinal = await Course.updateOne(
-    { _id: courseId},
-    { $inc: {numberOfItems: 1} },
-    { new: true });
+    { _id: courseId },
+    { $inc: { numberOfItems: 1 } },
+    { new: true }
+  );
   const newExam = new FinalExam({
     courseId,
     questions: questions,
@@ -187,57 +172,37 @@ const setFinalExam = async (req, res) => {
   }
 };
 
-//get all the titles of the courses available including the total hours of the course and course rating
-
-const coursesDetails = async (req, res) => {
+const getCourses = async (req, res) => {
   try {
-    const courseAttr = await Course.find({}).populate("instructor");
-    res.status(200).send(courseAttr);
+    const courses = await Course.find({}).populate("instructor");
+    res.status(200).send(courses);
   } catch (err) {
     res.status(500).json({ mssg: "can't find courses" });
   }
 };
-
-const oneCoursesDetails = async (req, res) => {
-  const cid = req.query["id"];
-
-  try {
-    const courseAttr = await Course.findOne(
-      { _id: cid },
-      { title: 1, totalHoursOfCourse: 1, rating: 1, _id: 1 }
-    );
-    res.status(200).send(courseAttr);
-  } catch (err) {
-    res.status(500).json({ mssg: "can't find courses" });
-  }
-};
-const findCourseById = async (req, res) => {
-  const cid = req.query["id"];
-  try {
-    const courseAttr = await Course.findById(cid);
-    res.status(200).send(courseAttr);
-  } catch (err) {
-    res.status(500).json({ mssg: "can't find courses" });
-  }
-};
-
 
 const getCourseById = async (req, res) => {
   const id = req.params["id"];
-
+  const userId = req.cookies?.currentUser;
   try {
     const course = await Course.findById(id)
       .populate("instructor")
       .populate("subtitles.link")
-      .populate("reviews")
-      .populate("reviews.userId")
       .exec();
     const reviews = await Rating.find({ state: true, courseId: id }).populate(
       "userId"
     );
+    let exists = false;
+    if (userId) {
+      exists = await IndividualTrainee.exists({
+        _id: userId,
+        "registered_courses.courseId": id,
+      });
+    }
     const result = {
       firstField: course,
       secondField: reviews,
+      thirdField: exists,
     };
     res.status(200).send(result);
   } catch (err) {
@@ -263,6 +228,30 @@ const addCoursePromotion = async (req, res) => {
     res.status(500).json({ mssg: "no such Id" });
   }
 };
+
+const addCoursePromotionMulti = async (req, res) => {
+  const idArr = req.body.idArr;
+  const disc = req.body.promo;
+  const enddate = req.body.enddate;
+  try {
+    await idArr.map(async (el) => {
+      let course = await Course.findByIdAndUpdate(
+        el,
+        {
+          discount: disc,
+          discount_enddate: enddate,
+        },
+        { new: true }
+      );
+      console.log(course.discount);
+    });
+
+    res.status(200).json("updated");
+  } catch (err) {
+    res.status(500).json({ mssg: "no such Id" });
+  }
+};
+
 const getLink = async (req, res) => {
   const id = req.query.linkId;
   try {
@@ -284,14 +273,14 @@ const rateCourse = async (req, res) => {
     let x = parseInt(userRating);
     const exists = await Rating.findOne({
       userId: userId,
-      courseId,
+      courseId: courseId,
       state: true,
     }).exec();
     if (exists) {
       let currentRating = parseInt(exists.userRating);
       let newRating = oldRating - currentRating + x;
       const updateRating = await Rating.findOneAndUpdate(
-        { userId: userId, courseId, state: true },
+        { userId: userId, courseId: courseId, state: true },
         { userRating: userRating, userReview: userReview },
         { new: true }
       ).exec();
@@ -310,18 +299,9 @@ const rateCourse = async (req, res) => {
         state: true,
         courseId: courseId,
       });
-      const UpdatedRating = await Course.updateOne(
-        { _id: courseId },
-        {
-          $push: {
-            reviews: newRatingObj._id,
-          },
-          $set: {
-            rating: newRating,
-            ratingCount: newCount,
-          },
-        }
-      ).exec();
+      const updateCourse = await Course.findByIdAndUpdate(courseId, {
+        $set: { rating: newRating, ratingCount: newCount },
+      });
       const updateIndvidual = await IndividualTrainee.updateOne(
         { _id: userId, "registered_courses.courseId": courseId },
         { $set: { "registered_courses.$.courseRating": newRatingObj._id } }
@@ -350,6 +330,7 @@ const reportProblem = async (req, res) => {
   }
 };
 
+
 const addFollowUp = async (req, res) => {
   const { reportId , followUpArr} = req.body;
   const userId = req.user.id;
@@ -363,36 +344,34 @@ const addFollowUp = async (req, res) => {
   }
 };
 
-const viewReportedProblems = async(req,res) =>{
+
+const viewReportedProblems = async (req, res) => {
 
   const userId = req.user.id;
-  try{
-    const reportedProblems = await Report.find({userId: userId });
+  try {
+    const reportedProblems = await Report.find({ userId: userId });
     res.status(200).json(reportedProblems);
-  }catch{
-    res.status(404).json({error : "Data Not Found"});
+  } catch {
+    res.status(404).json({ error: "Data Not Found" });
   }
-
-
 };
 
 module.exports = {
   addCoursePromotion,
   createCourse,
-  coursesDetails,
-  oneCoursesDetails,
+  getCourses,
   filterCourses,
   courseSearch,
   getCourseById,
   setExam,
-  courseExam,
   getLink,
   rateCourse,
   setFinalExam,
-  courseFinalExam,
-  findCourseById,
   reportProblem,
   popularCourses,
   viewReportedProblems,
+
   addFollowUp,
+
+  addCoursePromotionMulti,
 };

@@ -18,7 +18,7 @@ mongoose
       console.log(`Listening to requests on http://localhost:${port}`);
     });
   })
-  .catch((err) => console.log(err));
+  .catch((e) => console.log(e));
 
 // middleware
 app.use(express.urlencoded({ extended: true }));

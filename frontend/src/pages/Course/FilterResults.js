@@ -6,7 +6,11 @@ import axios from "axios";
 import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif";
 import Filter from "../../components/Filter";
-const FilterResults = (props) => {
+import Courses from "./Courses";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
+
+const FilterResults = async (props) => {
   const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
   const [message, setMessage] = useState(null);
@@ -29,6 +33,7 @@ const FilterResults = (props) => {
   useEffect(() => {
     fetchData();
   }, [message]);
+  let status = cookies.get("status");
 
   return (
     <div className={style["course"]}>

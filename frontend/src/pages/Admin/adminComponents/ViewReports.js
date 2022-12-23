@@ -1,16 +1,21 @@
 import axios from "axios";
+import Accordion from "react-bootstrap/Accordion";
+import Report from "./Report";
 import React, { useState, useEffect } from "react";
+import LoadingScreen from "react-loading-screen";
+import spinner from "../../../static/download.gif";
+
 function ViewReports() {
   const [reports, setReports] = useState([]);
   const [change, setChange] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = async () => {
+    setIsLoading(true);
     const url = "/admin/getReports";
     const res = await axios.get(url);
-    console.log(res.status);
-    console.log(res.data);
     setReports(res.data);
-    console.log(reports);
+    setIsLoading(false);
   };
   useEffect(() => {
     fetchData();
@@ -18,8 +23,6 @@ function ViewReports() {
 
   const handleApprove = async (traineeId, courseId, index) => {
     const url = "/admin/grantAccess";
-    // console.log(traineeId);
-    // console.log(courseId);
     try {
       const res = await axios.post(url, {
         traineeId: traineeId,
@@ -30,30 +33,40 @@ function ViewReports() {
       console.log(e);
     }
   };
-  const handleView = async (id) => {};
+  if (isLoading) return <LoadingScreen loading={true} logoSrc={spinner} />;
 
   return (
-    <ul>
-      {reports.map((el, index) => {
-        return el.userId == null ? (
-          ""
-        ) : (
-          <li key={index}>
-            <div>{el["isSeen"] ? "seen" : "not seen yet"}</div>
-            <div>
-              trainee name: {el.userId.firstname + " " + el.userId.lastname}
-            </div>
-            <div>course title: {el.courseId.title}</div>{" "}
-            <div>status: {el.status}</div>
-            {el.status == "pending" ? (
-              <button onClick={() => handleView(el._id)}> View</button>
-            ) : (
-              ""
-            )}
-          </li>
-        );
-      })}
-    </ul>
+    <>
+      <h2 style={{ marginLeft: "25px", marginBottom: "25px" }}>Reports</h2>
+      <Accordion style={{ margin: "0 5px" }} defaultActiveKey={-1}>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            paddingLeft: "15px",
+            borderBottom: "1px solid gray",
+            paddingBottom: "30px",
+            fontSize: "20px",
+            fontWeight: "600",
+            boxShadow: "inset 0 -1px 0 rgb(0 0 0 / 13%)",
+          }}
+        >
+          <div style={{ width: "25%" }}>Trainee Name</div>
+          <div style={{ width: "25%" }}>Course Title</div>{" "}
+          <div style={{ width: "25%" }}>Status</div>
+          <div style={{ width: "25%" }}>Seen</div>
+          <div style={{ width: "25%" }}></div>
+        </div>
+
+        {reports.map((el, index) => {
+          return el.userId == null ? (
+            ""
+          ) : (
+            <Report data={el} index={index}></Report>
+          );
+        })}
+      </Accordion>
+    </>
   );
 }
 

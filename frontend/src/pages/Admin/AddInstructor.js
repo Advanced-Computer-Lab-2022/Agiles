@@ -1,7 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
 import "./AddInstructor.css";
-import Instimg from "../../static/Instructor.png"
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import Alert from "@mui/material/Alert";
 
 const AddInstructor = () => {
   const [firstname, setFirstname] = useState("");
@@ -10,10 +14,12 @@ const AddInstructor = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
-  const handleSumbit = async (event) => {
+  const [alert, setAlert] = useState("");
+  const [flag, setFlag] = useState(false);
+  const handleSubmit = async (event) => {
     const instructor = {
       firstname: firstname,
-      lastname :lastname,
+      lastname: lastname,
       username: username,
       password: password,
       email: email,
@@ -28,23 +34,29 @@ const AddInstructor = () => {
     };
     try {
       const res = await axios.post("/admin/addInstructor", instructor, config);
-      console.log(res.data);
+      setAlert("success");
+      setFlag(true);
     } catch (e) {
       console.log(e);
+      setAlert("error");
+      setFlag(true);
     }
+    setTimeout(() => {
+      setFlag(false);
+    }, 3000);
   };
   return (
     <div className="new">
       <div className="newContainer">
         <div className="top">
-          <h1 className="h1Class">Add new Instructor</h1>
+          <h1 className="h1Class">Add New Instructor</h1>
         </div>
         <div className="bottom">
           <div className="right">
-      <form  className = "formClass" onSubmit={handleSumbit}>
-      <div className="formInput">
+            <form className="formClass" onSubmit={handleSubmit}>
+              <div className="formInput">
                 <label className="labelClass">
-                  First name <span className="required">*</span>
+                  First Name <span className="required">*</span>
                 </label>
                 <input
                   type="text"
@@ -57,7 +69,7 @@ const AddInstructor = () => {
               </div>
               <div className="formInput">
                 <label className="labelClass">
-                  Last name <span className="required">*</span>
+                  Last Name <span className="required">*</span>
                 </label>
                 <input
                   type="text"
@@ -67,69 +79,97 @@ const AddInstructor = () => {
                   className="inputClass"
                   onChange={(e) => setLastname(e.target.value)}
                 />
+              </div>
+              <div className="formInput">
+                <label className="labelClass">
+                  Email <span className="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="email"
+                  placeholder="Email.."
+                  required
+                  className="inputClass"
+                  onChange={(e) => setEmail(e.target.value)}
+                />{" "}
+              </div>
+              <div className="formInput">
+                <label className="labelClass">
+                  Username <span className="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="username"
+                  required
+                  placeholder="username.."
+                  className="inputClass"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+              <div className="formInput">
+                <label className="labelClass">
+                  Password <span className="required">*</span>
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  required
+                  placeholder="password.."
+                  className="inputClass"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <div className="formInput">
+                <label className="labelClass">Gender</label>
+                <Select
+                  style={{ padding: "0", borderRadius: "25px" }}
+                  className="inputClass"
+                  labelId="gender"
+                  id="gender"
+                  value={gender}
+                  label="Age"
+                  onChange={(e) => setGender(e.target.value)}
+                >
+                  <MenuItem value={"male"}>male</MenuItem>
+                  <MenuItem value={"female"}>female</MenuItem>
+                </Select>
+                {/* <label className="labelClass">gender</label>
+                <select
+                  id="gender"
+                  name="gender "
+                  className="selectClass"
+                  onChange={(e) => {
+                    setGender(e.target.value);
+                    console.log(gender);
+                  }}
+                > */}
+                {/* <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select> */}
+              </div>
+              <div className="buttonContainer">
+                <button className="buttonClass">Submit</button>
+              </div>
+            </form>
+          </div>
         </div>
-        <div className="formInput">
-        <label  className="labelClass">
-          Email <span className="required">*</span>
-        </label>
-        <input
-          type="text"
-          name="email"
-          placeholder="Email.."
-          required
-          className="inputClass"
-
-          onChange={(e) => setEmail(e.target.value)}
-        />        </div>
-        <div className="formInput">
-
-
-        <label className="labelClass">
-          username <span className="required">*</span>
-        </label>
-        <input
-          type="text"
-          name="username"
-          required
-          placeholder="username.."
-          className="inputClass"
-
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        </div>
-        <div className="formInput">
-
-        <label className="labelClass">
-          password <span className="required">*</span>
-        </label>
-        <input
-          type="password"
-          name="password"
-          required
-          placeholder="password.."
-          className="inputClass"
-
-          onChange={(e) => setPassword(e.target.value)}
-        />
-                </div>
-                <div className="formInput">
-
-        <label className="labelClass">gender</label>
-        <select
-          id="gender"
-          name="gender "
-          className="selectClass"
-          onChange={(e) => setGender(e.target.value)}
+        <div
+          className="alertContainer"
+          style={{
+            margin: "15px",
+            width: "50%",
+            minWidth: "500px",
+            borderRadius: "25px",
+          }}
         >
-          <option value="male">male</option>
-          <option value="female">female</option>
-        </select>
+          {flag && (
+            <Alert severity={alert} style={{ fontSize: "20px" }}>
+              {alert == "success"
+                ? "Instructor added successfully"
+                : "username already taken"}
+            </Alert>
+          )}
         </div>
-
-        <button className="buttonClass">Send</button>
-      </form>
-      </div>
-      </div>
       </div>
     </div>
   );

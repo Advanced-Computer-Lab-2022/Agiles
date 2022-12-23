@@ -13,8 +13,8 @@
     font-size: small;
 }
 .subtitleView{
-    background-color: white;
-    color: #a00407    ;
+    background-color: inherit;
+    color: #a00407;
     border: none;
 }
 .videoDesc{

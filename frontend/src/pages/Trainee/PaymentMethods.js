@@ -71,8 +71,8 @@ const PaymentMethods = () => {
       const res = await axios.get(fetchUrl, { params: { id: id } });
       setData(res.data);
       setRows(res.data.creditCard)
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
     }
     setIsLoading(false);
   };
