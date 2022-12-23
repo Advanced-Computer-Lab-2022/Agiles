@@ -10,6 +10,7 @@ const CreditCard = require("../models/CreditCard");
 const CourseSubscriptionRequest = require("../models/CourseSubscriptionRequest");
 const Course = require("../models/Course");
 const CourseRefundRequest = require("../models/CourseRefundRequest");
+const TraineeCourse = require("../models/TraineeCourse");
 const bcrypt = require("bcrypt");
 const resetPassword = require("./ResetPassword");
 require("dotenv").config();
@@ -133,7 +134,7 @@ const getAllItemsCourse = async (req, res) => {
 const updateLinkProgress = async (req, res) => {
   const courseId = req.body.courseId;
   const linkId = req.body.linkId;
-  const studentId = req.body.studentId;
+  const studentId = req.user.id;
   const subtitle = req.body.subtitle;
   
   const completedItems = req.body.completedItems;
