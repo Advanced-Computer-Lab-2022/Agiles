@@ -3,12 +3,16 @@
   padding: 20px;
 }
 .inputClass {
+  border-radius: 25px;
   width: 100%;
   max-width: 300px;
-  padding: 5px;
+  padding: 10px;
   border: none;
   font-size: 20px;
-  border-bottom: 1px solid gray;
+  margin-top: 15px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  background-color: white;
+  border: 1px solid rgb(rgb(228, 228, 228), green, blue);
 }
 .labelClass {
   font-size: 25px;
@@ -78,6 +82,7 @@
   font-weight: bold;
   height: 50px;
   cursor: pointer;
+  border-radius: 25px;
   /* display: inline-block; */
   /* margin: auto; */
 }
@@ -102,23 +107,24 @@
 .bottom-admin {
   border-radius: 25px;
   background-color: #f2f2f2;
-  width: 50%;
-  min-width: 500px;
+  width: 70%;
+  max-width: 500px;
   padding: 30px;
   margin: 20px;
   /* display: flex; */
 }
 
 .formClassAdmin {
-  display: flex;
+  /* display: flex; */
   flex-wrap: wrap;
   gap: 30px;
 }
 
 .buttonContAdmin {
-  margin: auto 0;
+  margin: 30px;
 }
 
 .formInputAdmin {
   width: 100%;
+  margin-bottom: 15px;
 }

@@ -4,6 +4,7 @@ const { isAuthTrainee } = require("../controllers/authContext");
 const {
   reportProblem,
   viewReportedProblems,
+  addFollowUp,
 } = require("../controllers/CourseController");
 const {
   courseExam,
@@ -34,7 +35,6 @@ const {
   getNotes,
   deleteCourseRating,
   getTraineeProgress,
-  fullFill,
   getTraineeExams,
 } = require("../controllers/IndividualTraineeController");
 const { verifyItraineeJWT } = require("../middleware/authMiddleware");
@@ -102,7 +102,6 @@ IndividualTraineeRouter.post(
   verifyItraineeJWT,
   CreateCheckout
 );
-IndividualTraineeRouter.post('/webhook',fullFill);
 IndividualTraineeRouter.get(
   "/viewReportedProblems",
   verifyItraineeJWT,
@@ -124,6 +123,7 @@ IndividualTraineeRouter.post("/forgotpassword", forgetPassword);
 IndividualTraineeRouter.post("/verifyCode", verifyCode);
 IndividualTraineeRouter.post("/requestAccess", requestAccess);
 IndividualTraineeRouter.post("/requestRefund", requestRefund);
+IndividualTraineeRouter.patch("/addFollowUp", verifyItraineeJWT, addFollowUp);
 IndividualTraineeRouter.get("/isAuth", isAuthTrainee);
 
 

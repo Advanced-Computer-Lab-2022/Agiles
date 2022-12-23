@@ -330,7 +330,23 @@ const reportProblem = async (req, res) => {
   }
 };
 
+
+const addFollowUp = async (req, res) => {
+  const { reportId , followUpArr} = req.body;
+  const userId = req.user.id;
+  try {
+    const report = await Report.findByIdAndUpdate(reportId, {
+      followUp: followUpArr,
+    });
+    res.status(200).json("updated");
+  } catch (err) {
+    res.status(500).json({ msg: "can't Add this Follow Up" });
+  }
+};
+
+
 const viewReportedProblems = async (req, res) => {
+
   const userId = req.user.id;
   try {
     const reportedProblems = await Report.find({ userId: userId });
@@ -354,5 +370,8 @@ module.exports = {
   reportProblem,
   popularCourses,
   viewReportedProblems,
+
+  addFollowUp,
+
   addCoursePromotionMulti,
 };
