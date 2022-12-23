@@ -82,6 +82,7 @@
   font-weight: bold;
   height: 50px;
   cursor: pointer;
+  border-radius: 25px;
   /* display: inline-block; */
   /* margin: auto; */
 }

@@ -5,14 +5,18 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Alert from "@mui/material/Alert";
+
 const AddCorporate = () => {
+  const [alert, setAlert] = useState("");
+  const [flag, setFlag] = useState(false);
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
-  const handleSumbit = async (event) => {
+  const handleSubmit = async (event) => {
     const corporate = {
       firstname: firstname,
       lastname: lastname,
@@ -30,9 +34,16 @@ const AddCorporate = () => {
     };
     try {
       const res = await axios.post("/admin/addCorporate", corporate, config);
+      setAlert("success");
+      setFlag(true);
     } catch (e) {
       console.log(e);
+      setAlert("error");
+      setFlag(true);
     }
+    setTimeout(() => {
+      setFlag(false);
+    }, 3000);
   };
   return (
     <div className="new">
@@ -42,10 +53,10 @@ const AddCorporate = () => {
         </div>
         <div className="bottom">
           <div className="right">
-            <form className="formClass" onSubmit={handleSumbit}>
+            <form className="formClass" onSubmit={handleSubmit}>
               <div className="formInput">
                 <label className="labelClass">
-                  First name <span className="required">*</span>
+                  First Name <span className="required">*</span>
                 </label>
                 <input
                   type="text"
@@ -58,7 +69,7 @@ const AddCorporate = () => {
               </div>
               <div className="formInput">
                 <label className="labelClass">
-                  Last name <span className="required">*</span>
+                  Last Name <span className="required">*</span>
                 </label>
                 <input
                   type="text"
@@ -84,7 +95,7 @@ const AddCorporate = () => {
               </div>
               <div className="formInput">
                 <label className="labelClass">
-                  username <span className="required">*</span>
+                  Username <span className="required">*</span>
                 </label>
                 <input
                   type="text"
@@ -97,7 +108,7 @@ const AddCorporate = () => {
               </div>
               <div className="formInput">
                 <label className="labelClass">
-                  password <span className="required">*</span>
+                  Password <span className="required">*</span>
                 </label>
                 <input
                   type="password"
@@ -124,10 +135,27 @@ const AddCorporate = () => {
                 </Select>
               </div>
               <div className="buttonContainer">
-                <button className="buttonClass">Sumbit</button>
+                <button className="buttonClass">Submit</button>
               </div>
             </form>
           </div>
+        </div>
+        <div
+          className="alertContainer"
+          style={{
+            margin: "15px",
+            width: "50%",
+            minWidth: "500px",
+            borderRadius: "25px",
+          }}
+        >
+          {flag && (
+            <Alert severity={alert} style={{ fontSize: "20px" }}>
+              {alert == "success"
+                ? "Corporate Trainee added successfully"
+                : "username already taken"}
+            </Alert>
+          )}
         </div>
       </div>
     </div>

@@ -5,6 +5,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Alert from "@mui/material/Alert";
+
 const AddInstructor = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -12,12 +14,9 @@ const AddInstructor = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
-  const [age, setAge] = useState("");
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-
-  const handleSumbit = async (event) => {
+  const [alert, setAlert] = useState("");
+  const [flag, setFlag] = useState(false);
+  const handleSubmit = async (event) => {
     const instructor = {
       firstname: firstname,
       lastname: lastname,
@@ -35,19 +34,26 @@ const AddInstructor = () => {
     };
     try {
       const res = await axios.post("/admin/addInstructor", instructor, config);
+      setAlert("success");
+      setFlag(true);
     } catch (e) {
       console.log(e);
+      setAlert("error");
+      setFlag(true);
     }
+    setTimeout(() => {
+      setFlag(false);
+    }, 3000);
   };
   return (
     <div className="new">
       <div className="newContainer">
         <div className="top">
-          <h1 className="h1Class">Add new instructor</h1>
+          <h1 className="h1Class">Add New Instructor</h1>
         </div>
         <div className="bottom">
           <div className="right">
-            <form className="formClass" onSubmit={handleSumbit}>
+            <form className="formClass" onSubmit={handleSubmit}>
               <div className="formInput">
                 <label className="labelClass">
                   First Name <span className="required">*</span>
@@ -146,6 +152,23 @@ const AddInstructor = () => {
               </div>
             </form>
           </div>
+        </div>
+        <div
+          className="alertContainer"
+          style={{
+            margin: "15px",
+            width: "50%",
+            minWidth: "500px",
+            borderRadius: "25px",
+          }}
+        >
+          {flag && (
+            <Alert severity={alert} style={{ fontSize: "20px" }}>
+              {alert == "success"
+                ? "Instructor added successfully"
+                : "username already taken"}
+            </Alert>
+          )}
         </div>
       </div>
     </div>
