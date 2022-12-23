@@ -38,7 +38,7 @@ const PrevReports = () => {
            title: "Your Follow Up has been added Successfully",
            showConfirmButton: false,
            timer: 1500,
-         });
+         });     
      } catch (e) {
        Swal.fire({
          position: "top-end",
@@ -48,14 +48,13 @@ const PrevReports = () => {
          timer: 1500,
        });
      }
-     
+   
      };
     
     
     useEffect(() => {
-        
-        const fetchData = async() => {
-            const res = await fetch("/instructor/viewReportedProblems");
+      const fetchData = async() => {
+        const res = await fetch("/instructor/viewReportedProblems");
             let jsondata = await res.json();
             if(res.ok){
                 setReports(jsondata);
