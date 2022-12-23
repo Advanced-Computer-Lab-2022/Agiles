@@ -5,6 +5,7 @@
   min-height: 100vh;
   background-color: #1c2d40;
 }
+
 .top {
   height: 50px;
   margin-top: 1rem;
@@ -12,6 +13,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .logo {
   font-size: 2rem;
   font-weight: bold;
@@ -22,6 +24,7 @@
   height: 0;
   border: 0.5px solid rgb(230, 227, 227);
 }
+
 .center {
   margin-top: 2rem;
   display: grid;
@@ -29,10 +32,12 @@
   width: 80%;
   padding-left: 20px;
 }
+
 ul {
   list-style: none;
   width: 100%;
 }
+
 .main {
   font-size: 20px;
   font-weight: 500;
