@@ -76,7 +76,6 @@ const CoursContent = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    
     if(cookies.get("status") !== 1){
       try{
       const res = await axios.post("/individualtrainee/updateLinkProgress", {
