@@ -2,9 +2,13 @@ import { useState } from "react";
 import axios from "axios";
 import "./AddInstructor.css";
 import AdminImg from "../../static/Admin.png";
+import Alert from "react-bootstrap/Alert";
+
 const AddAdmin = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [alert, setAlert] = useState("");
+  const [flag, setFlag] = useState(false);
   const handleSumbit = async (event) => {
     const admin = { username: username, password: password };
     event.preventDefault();
@@ -16,8 +20,12 @@ const AddAdmin = (props) => {
     };
     try {
       const res = await axios.post("/admin/addAdmin", admin, config);
+      setAlert("Success");
+      setFlag(true);
     } catch (e) {
       console.log(e);
+      setAlert("Danger");
+      setFlag(false);
     }
     setUsername("");
     setPassword("");
@@ -62,6 +70,15 @@ const AddAdmin = (props) => {
               </div>
               <div className="buttonContainer">
                 <button className="buttonClass">Send</button>
+              </div>
+              <div className="alertContainer">
+                {flag && (
+                  <Alert key={alert} variant={alert}>
+                    {alert == "success"
+                      ? "admin added successfully"
+                      : "error happened"}
+                  </Alert>
+                )}
               </div>
             </form>
           </div>
