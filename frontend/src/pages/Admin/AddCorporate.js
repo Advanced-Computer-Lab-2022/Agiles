@@ -12,7 +12,7 @@ const AddCorporate = () => {
   const handleSumbit = async (event) => {
     const corporate = {
       firstname: firstname,
-      lastname :lastname,
+      lastname: lastname,
       username: username,
       password: password,
       email: email,
@@ -27,14 +27,12 @@ const AddCorporate = () => {
     };
     try {
       const res = await axios.post("/admin/addCorporate", corporate, config);
- 
     } catch (e) {
       console.log(e);
     }
   };
   return (
     <div className="new">
-   
       <div className="newContainer">
         <div className="top">
           <h1 className="h1Class">Add New Corporate Trainee</h1>
@@ -122,8 +120,9 @@ const AddCorporate = () => {
                   <option value="female">female</option>
                 </select>
               </div>
-
-              <button className="buttonClass">Send</button>
+              <div className="buttonContainer">
+                <button className="buttonClass">Send</button>
+              </div>
             </form>
           </div>
         </div>

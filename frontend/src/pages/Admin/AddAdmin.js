@@ -60,8 +60,9 @@ const AddAdmin = (props) => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-
-              <button className="buttonClass">Send</button>
+              <div className="buttonContainer">
+                <button className="buttonClass">Send</button>
+              </div>
             </form>
           </div>
         </div>
