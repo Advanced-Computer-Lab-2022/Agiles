@@ -98,7 +98,7 @@ function SetPromotion(props) {
         );
         setCourses(data);
       }
-      if (props.filter) {
+      if (action == 2) {
         let url = "/course/listCourses/filter" + location.search;
         let res = await axios.get(url);
         setCourses(res.data);
@@ -208,98 +208,115 @@ function SetPromotion(props) {
           </form>
         </div>
       </div>
-
-      <Table style={{ width: "100%" }}>
-        <TableHead>
-          <TableRow style={{ verticalAlign: "text-top" }}>
-            <TableCell
-              style={{
-                fontWeight: "600",
-                fontSize: "20px",
-              }}
-            >
-              Course Title
-            </TableCell>
-            <TableCell
-              align="middle"
-              style={{
-                fontWeight: "600",
-                fontSize: "20px",
-              }}
-            >
-              Instructor Name
-            </TableCell>
-            <TableCell
-              align="middle"
-              style={{
-                fontWeight: "600",
-                fontSize: "20px",
-              }}
-            >
-              Current Price ($)
-            </TableCell>
-            <TableCell
-              align="middle"
-              style={{
-                fontWeight: "600",
-                fontSize: "20px",
-              }}
-            >
-              Current Discount (%)
-            </TableCell>
-            <TableCell
-              align="middle"
-              style={{
-                fontWeight: "600",
-                fontSize: "20px",
-              }}
-            >
-              discount enddate
-            </TableCell>
-            <TableCell
-              align="middle"
-              style={{
-                fontWeight: "600",
-                fontSize: "20px",
-              }}
-            >
-              select{" "}
-              <Checkbox
-                defaultChecked={selectAll}
-                onChange={(event) => {
-                  setSelectAll(event.target.checked);
-                  setChange(!change);
+      <div
+        style={{
+          border: "1px solid rgba(230, 230, 230)",
+          borderRadius: "25px",
+          width: "100%",
+          margin: "100px 20px 20px 0 ",
+          display: "flex",
+          boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+        }}
+      >
+        <Table>
+          <TableHead>
+            <TableRow style={{ verticalAlign: "text-top" }}>
+              <TableCell
+                style={{
+                  fontWeight: "600",
+                  fontSize: "20px",
                 }}
-              ></Checkbox>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {courses.map((el) => {
-            return (
-              <TableRow>
-                <TableCell>{el.title}</TableCell>
-                <TableCell>{el.instructorname}</TableCell>
-                <TableCell>{el.price}</TableCell>
-                <TableCell>{el.discount}</TableCell>
-                <TableCell>
-                  {new Date(el.discount_enddate).toDateString() +
-                    " " +
-                    new Date(el.discount_enddate).toLocaleTimeString()}
-                </TableCell>
-                <TableCell>
-                  <Checkbox
-                    defaultChecked={selectAll}
-                    onChange={() => {
-                      addOrRemove(el._id);
-                    }}
-                  />
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
+              >
+                Course Title
+              </TableCell>
+              <TableCell
+                align="middle"
+                style={{
+                  fontWeight: "600",
+                  fontSize: "20px",
+                }}
+              >
+                Instructor Name
+              </TableCell>
+              <TableCell
+                align="middle"
+                style={{
+                  fontWeight: "600",
+                  fontSize: "20px",
+                }}
+              >
+                Current Price ($)
+              </TableCell>
+              <TableCell
+                align="middle"
+                style={{
+                  fontWeight: "600",
+                  fontSize: "20px",
+                }}
+              >
+                Current Discount (%)
+              </TableCell>
+              <TableCell
+                align="middle"
+                style={{
+                  fontWeight: "600",
+                  fontSize: "20px",
+                }}
+              >
+                discount enddate
+              </TableCell>
+              <TableCell
+                align="middle"
+                style={{
+                  fontWeight: "600",
+                  fontSize: "20px",
+                }}
+              >
+                select{" "}
+                <Checkbox
+                  defaultChecked={selectAll}
+                  onChange={(event) => {
+                    setSelectAll(event.target.checked);
+                    setChange(!change);
+                  }}
+                ></Checkbox>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody style={{ border: "none" }}>
+            {courses.map((el) => {
+              if (!el._id) return "";
+              return (
+                <TableRow
+                  style={{
+                    border: "none",
+                    verticalAlign: "text-top",
+                    lineHeight: "100px",
+                  }}
+                >
+                  <TableCell>{el.title}</TableCell>
+                  <TableCell>{el.instructorname}</TableCell>
+                  <TableCell>{el.price}</TableCell>
+                  <TableCell>{el.discount}</TableCell>
+                  <TableCell>
+                    {new Date(el.discount_enddate).toDateString() +
+                      " " +
+                      new Date(el.discount_enddate).toLocaleTimeString()}
+                  </TableCell>
+                  <TableCell>
+                    <Checkbox
+                      defaultChecked={selectAll}
+                      onChange={() => {
+                        addOrRemove(el._id);
+                      }}
+                    />
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }

@@ -29,6 +29,9 @@ const reportSchema = new Schema(
       type: Boolean,
       default: true,
     },
+    followUp: {
+      type: [String],
+    },
   },
   { timestamps: true }
 );

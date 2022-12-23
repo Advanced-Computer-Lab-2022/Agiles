@@ -16,7 +16,6 @@ require("dotenv").config();
 const endpointSecret = "whsec_c69d6e1b76c6a80ef78977e1f65d1caad055b7e0b3d4c3e9d1ed66309647865c";
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-const TraineeCourse = require("../models/TraineeCourse");
 var nodemailer = require("nodemailer");
 
 const getNotes = async (req, res) => {
@@ -134,8 +133,9 @@ const getAllItemsCourse = async (req, res) => {
 const updateLinkProgress = async (req, res) => {
   const courseId = req.body.courseId;
   const linkId = req.body.linkId;
-  const studentId = req.user.id;
-  const subtitle = req.body.subtitleId;
+  const studentId = req.body.studentId;
+  const subtitle = req.body.subtitle;
+  
   const completedItems = req.body.completedItems;
   let numberOfItems = 0;
   try {

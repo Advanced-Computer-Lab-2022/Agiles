@@ -1,4 +1,4 @@
-.h1{
+.h1 {
     padding-left: 20%;
     padding-right: 5%;
     color: #A00407;
@@ -12,7 +12,8 @@
 .card {
     padding-left: 2%;
 }
-.mainlabel{
+
+.mainlabel {
     color: rgb(97, 94, 94);
     font-size: 1.5rem;
     margin-top: 2rem;

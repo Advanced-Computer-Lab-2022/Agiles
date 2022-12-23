@@ -4,6 +4,7 @@ const { isAuthTrainee } = require("../controllers/authContext");
 const {
   reportProblem,
   viewReportedProblems,
+  addFollowUp,
 } = require("../controllers/CourseController");
 const {
   courseExam,
@@ -116,6 +117,7 @@ IndividualTraineeRouter.post("/forgotpassword", forgetPassword);
 IndividualTraineeRouter.post("/verifyCode", verifyCode);
 IndividualTraineeRouter.post("/requestAccess", requestAccess);
 IndividualTraineeRouter.post("/requestRefund", requestRefund);
+IndividualTraineeRouter.patch("/addFollowUp", verifyItraineeJWT, addFollowUp);
 IndividualTraineeRouter.get("/isAuth", isAuthTrainee);
 
 
