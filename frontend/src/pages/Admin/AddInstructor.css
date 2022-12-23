@@ -3,12 +3,16 @@
   padding: 20px;
 }
 .inputClass {
+  border-radius: 25px;
   width: 100%;
   max-width: 300px;
-  padding: 5px;
+  padding: 10px;
   border: none;
   font-size: 20px;
-  border-bottom: 1px solid gray;
+  margin-top: 15px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  background-color: white;
+  border: 1px solid rgb(rgb(228, 228, 228), green, blue);
 }
 .labelClass {
   font-size: 25px;

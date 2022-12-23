@@ -24,13 +24,17 @@ const AdminSidebar = () => {
       <div className={style["center"]}>
         <ul style={{ paddingLeft: "0" }}>
           <p className={style["main"]}>Main</p>
-          <Link  className={style["link"]}   style={{ textDecorationLine: "none", color: "black" }} to = "dashboard">
-          <li className={style["sub"]}>
-            <DashboardIcon />
-            <span>dashboard</span>
-          </li>
+          <Link
+            className={style["link"]}
+            style={{ textDecorationLine: "none", color: "black" }}
+            to="dashboard"
+          >
+            <li className={style["sub"]}>
+              <DashboardIcon />
+              <span>Dashboard</span>
+            </li>
           </Link>
-          <p className={style["main"]}>AddUsers</p>
+          <p className={style["main"]}>Add Users</p>
           <Link
             className={style["link"]}
             to="addAdmin"
@@ -49,7 +53,7 @@ const AdminSidebar = () => {
             {" "}
             <li className={style["sub"]}>
               <CorporateFareIcon />
-              <span>CorporateTrainee</span>
+              <span>Corporate Trainee</span>
             </li>
           </Link>
           <Link
@@ -120,7 +124,7 @@ const AdminSidebar = () => {
               <FormatListBulletedIcon
                 className={style["icon"]}
               ></FormatListBulletedIcon>
-              <span>add Promotion(s)</span>
+              <span>Add Promotion(s)</span>
             </li>
           </Link>
         </ul>

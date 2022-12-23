@@ -1,6 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 import "./AddInstructor.css";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 const AddCorporate = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -105,16 +109,19 @@ const AddCorporate = () => {
                 />
               </div>
               <div className="formInput">
-                <label className="labelClass">gender</label>
-                <select
+                <label className="labelClass">Gender</label>
+                <Select
+                  style={{ padding: "0", borderRadius: "25px" }}
+                  className="inputClass"
+                  labelId="gender"
                   id="gender"
-                  name="gender "
-                  className="selectClass"
+                  value={gender}
+                  label="Gender"
                   onChange={(e) => setGender(e.target.value)}
                 >
-                  <option value="male">male</option>
-                  <option value="female">female</option>
-                </select>
+                  <MenuItem value={"male"}>male</MenuItem>
+                  <MenuItem value={"female"}>female</MenuItem>
+                </Select>
               </div>
               <div className="buttonContainer">
                 <button className="buttonClass">Sumbit</button>

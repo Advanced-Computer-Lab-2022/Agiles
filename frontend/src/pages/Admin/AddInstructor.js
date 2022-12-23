@@ -1,7 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 import "./AddInstructor.css";
-
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 const AddInstructor = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -9,6 +12,11 @@ const AddInstructor = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+
   const handleSumbit = async (event) => {
     const instructor = {
       firstname: firstname,
@@ -34,13 +42,15 @@ const AddInstructor = () => {
   return (
     <div className="new">
       <div className="newContainer">
-          <h1 >Add new instructor</h1>
+        <div className="top">
+          <h1 className="h1Class">Add new instructor</h1>
+        </div>
         <div className="bottom">
           <div className="right">
             <form className="formClass" onSubmit={handleSumbit}>
               <div className="formInput">
                 <label className="labelClass">
-                  First name <span className="required">*</span>
+                  First Name <span className="required">*</span>
                 </label>
                 <input
                   type="text"
@@ -53,7 +63,7 @@ const AddInstructor = () => {
               </div>
               <div className="formInput">
                 <label className="labelClass">
-                  Last name <span className="required">*</span>
+                  Last Name <span className="required">*</span>
                 </label>
                 <input
                   type="text"
@@ -79,7 +89,7 @@ const AddInstructor = () => {
               </div>
               <div className="formInput">
                 <label className="labelClass">
-                  username <span className="required">*</span>
+                  Username <span className="required">*</span>
                 </label>
                 <input
                   type="text"
@@ -92,7 +102,7 @@ const AddInstructor = () => {
               </div>
               <div className="formInput">
                 <label className="labelClass">
-                  password <span className="required">*</span>
+                  Password <span className="required">*</span>
                 </label>
                 <input
                   type="password"
@@ -104,7 +114,20 @@ const AddInstructor = () => {
                 />
               </div>
               <div className="formInput">
-                <label className="labelClass">gender</label>
+                <label className="labelClass">Gender</label>
+                <Select
+                  style={{ padding: "0", borderRadius: "25px" }}
+                  className="inputClass"
+                  labelId="gender"
+                  id="gender"
+                  value={gender}
+                  label="Age"
+                  onChange={(e) => setGender(e.target.value)}
+                >
+                  <MenuItem value={"male"}>male</MenuItem>
+                  <MenuItem value={"female"}>female</MenuItem>
+                </Select>
+                {/* <label className="labelClass">gender</label>
                 <select
                   id="gender"
                   name="gender "
@@ -113,10 +136,10 @@ const AddInstructor = () => {
                     setGender(e.target.value);
                     console.log(gender);
                   }}
-                >
-                  <option value="male">male</option>
-                  <option value="female">female</option>
-                </select>
+                > */}
+                {/* <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select> */}
               </div>
               <div className="buttonContainer">
                 <button className="buttonClass">Submit</button>
