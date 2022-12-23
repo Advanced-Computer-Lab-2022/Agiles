@@ -2,14 +2,20 @@ import axios from "axios";
 import Accordion from "react-bootstrap/Accordion";
 import Report from "./Report";
 import React, { useState, useEffect } from "react";
+import LoadingScreen from "react-loading-screen";
+import spinner from "../../../static/download.gif";
+
 function ViewReports() {
   const [reports, setReports] = useState([]);
   const [change, setChange] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = async () => {
+    setIsLoading(true);
     const url = "/admin/getReports";
     const res = await axios.get(url);
     setReports(res.data);
+    setIsLoading(false);
   };
   useEffect(() => {
     fetchData();
@@ -27,6 +33,7 @@ function ViewReports() {
       console.log(e);
     }
   };
+  if (isLoading) return <LoadingScreen loading={true} logoSrc={spinner} />;
 
   return (
     <Accordion style={{ margin: "0 5px" }} defaultActiveKey={-1}>

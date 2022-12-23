@@ -2,15 +2,19 @@ import { TableCell, TableRow, TableHead, Table } from "@mui/material";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
+import LoadingScreen from "react-loading-screen";
+import spinner from "../../../static/download.gif";
 
 function ViewRequests() {
   const [reports, setReports] = useState([]);
   const [change, setChange] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
   const fetchData = async () => {
+    setIsLoading(true);
     const url = "/admin/accessRequests";
     const res = await axios.get(url);
     setReports(res.data);
+    setIsLoading(false);
   };
   useEffect(() => {
     fetchData();
@@ -26,6 +30,7 @@ function ViewRequests() {
       console.log(e);
     }
   };
+  if (isLoading) return <LoadingScreen loading={true} logoSrc={spinner} />;
   return (
     <Table>
       <TableHead
