@@ -1,9 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
 import "./AddInstructor.css";
+import Alert from "@mui/material/Alert";
+
 const AddAdmin = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [alert, setAlert] = useState("");
+  const [flag, setFlag] = useState(false);
   const handleSumbit = async (event) => {
     const admin = { username: username, password: password };
     event.preventDefault();
@@ -15,9 +19,13 @@ const AddAdmin = (props) => {
     };
     try {
       const res = await axios.post("/admin/addAdmin", admin, config);
+      setAlert("success");
     } catch (e) {
       console.log(e);
+      setAlert("error");
     }
+    setFlag(true);
+
     setUsername("");
     setPassword("");
   };
@@ -53,7 +61,22 @@ const AddAdmin = (props) => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <button className="buttonClass">Send</button>
+              <div className="buttonContainer">
+                <button className="buttonClass">Send</button>
+              </div>
+              <div className="alertContainer">
+                {flag && (
+                  <Alert
+                    severity={alert}
+                    key={alert}
+                    style={{ fontSize: "20px" }}
+                  >
+                    {alert == "success"
+                      ? "admin added successfully"
+                      : "username already taken"}
+                  </Alert>
+                )}
+              </div>
             </form>
       </div>
     </div>

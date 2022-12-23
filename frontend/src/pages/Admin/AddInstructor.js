@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import "./AddInstructor.css";
-import Instimg from "../../static/Instructor.png"
+import Instimg from "../../static/Instructor.png";
 
 const AddInstructor = () => {
   const [firstname, setFirstname] = useState("");
@@ -13,7 +13,7 @@ const AddInstructor = () => {
   const handleSumbit = async (event) => {
     const instructor = {
       firstname: firstname,
-      lastname :lastname,
+      lastname: lastname,
       username: username,
       password: password,
       email: email,
@@ -38,8 +38,8 @@ const AddInstructor = () => {
           <h1 >Add new instructor</h1>
         <div className="bottom">
           <div className="right">
-      <form  className = "formClass" onSubmit={handleSumbit}>
-      <div className="formInput">
+            <form className="formClass" onSubmit={handleSumbit}>
+              <div className="formInput">
                 <label className="labelClass">
                   First name <span className="required">*</span>
                 </label>
@@ -64,69 +64,67 @@ const AddInstructor = () => {
                   className="inputClass"
                   onChange={(e) => setLastname(e.target.value)}
                 />
+              </div>
+              <div className="formInput">
+                <label className="labelClass">
+                  Email <span className="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="email"
+                  placeholder="Email.."
+                  required
+                  className="inputClass"
+                  onChange={(e) => setEmail(e.target.value)}
+                />{" "}
+              </div>
+              <div className="formInput">
+                <label className="labelClass">
+                  username <span className="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="username"
+                  required
+                  placeholder="username.."
+                  className="inputClass"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+              <div className="formInput">
+                <label className="labelClass">
+                  password <span className="required">*</span>
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  required
+                  placeholder="password.."
+                  className="inputClass"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <div className="formInput">
+                <label className="labelClass">gender</label>
+                <select
+                  id="gender"
+                  name="gender "
+                  className="selectClass"
+                  onChange={(e) => {
+                    setGender(e.target.value);
+                    console.log(gender);
+                  }}
+                >
+                  <option value="male">male</option>
+                  <option value="female">female</option>
+                </select>
+              </div>
+              <div className="buttonContainer">
+                <button className="buttonClass">Submit</button>
+              </div>
+            </form>
+          </div>
         </div>
-        <div className="formInput">
-        <label  className="labelClass">
-          Email <span className="required">*</span>
-        </label>
-        <input
-          type="text"
-          name="email"
-          placeholder="Email.."
-          required
-          className="inputClass"
-
-          onChange={(e) => setEmail(e.target.value)}
-        />        </div>
-        <div className="formInput">
-
-
-        <label className="labelClass">
-          username <span className="required">*</span>
-        </label>
-        <input
-          type="text"
-          name="username"
-          required
-          placeholder="username.."
-          className="inputClass"
-
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        </div>
-        <div className="formInput">
-
-        <label className="labelClass">
-          password <span className="required">*</span>
-        </label>
-        <input
-          type="password"
-          name="password"
-          required
-          placeholder="password.."
-          className="inputClass"
-
-          onChange={(e) => setPassword(e.target.value)}
-        />
-                </div>
-                <div className="formInput">
-
-        <label className="labelClass">gender</label>
-        <select
-          id="gender"
-          name="gender "
-          className="selectClass"
-          onChange={(e) => setGender(e.target.value)}
-        >
-          <option value="male">male</option>
-          <option value="female">female</option>
-        </select>
-        </div>
-
-        <button className="buttonClass">Send</button>
-      </form>
-      </div>
-      </div>
       </div>
     </div>
   );
