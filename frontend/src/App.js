@@ -34,7 +34,6 @@ import Inprogress from "./components/Inprogress";
 import InstructorOwnCourses from "./pages/Instructor/InstructorOwnCourses";
 import ReportProblem from "./pages/Course/ReportProblem";
 import PrevReports from "./pages/Course/PrevReports";
-import ReportProblemTrainee from "./pages/Course/ReportProblemTrainee";
 import PrevReportsTrainee from "./pages/Course/PrevReportsTrainee";
 import ViewRequests from "./pages/Admin/adminComponents/ViewRequests";
 import RefundRequests from "./pages/Admin/adminComponents/RefundRequests";

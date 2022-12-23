@@ -35,7 +35,6 @@ const {
   getNotes,
   deleteCourseRating,
   getTraineeProgress,
-  fullFill,
 } = require("../controllers/IndividualTraineeController");
 const { verifyItraineeJWT } = require("../middleware/authMiddleware");
 
@@ -97,7 +96,6 @@ IndividualTraineeRouter.post(
   verifyItraineeJWT,
   CreateCheckout
 );
-IndividualTraineeRouter.post('/webhook',fullFill);
 IndividualTraineeRouter.get(
   "/viewReportedProblems",
   verifyItraineeJWT,

@@ -12,6 +12,8 @@ const AddInstructor = () => {
   const [lastname, setLastname] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
   const [alert, setAlert] = useState("");
