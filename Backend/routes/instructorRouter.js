@@ -21,7 +21,8 @@ const {
   uploadSubLink,
   uploadPreLink,
   deletLink,
-  profit
+  profit,
+  firstLoginReset
 } = require("../controllers/InstructorController");
 const { verifyInstructorJWT } = require("../middleware/authMiddleware");
 instructorRouter.post("/addCourse", verifyInstructorJWT, createCourse);
@@ -41,5 +42,6 @@ instructorRouter.post("/reportProblem", verifyInstructorJWT, reportProblem);
 instructorRouter.get("/viewReportedProblems",verifyInstructorJWT,viewReportedProblems);
 instructorRouter.get("/instructorbyid", getInstructorbyId);
 instructorRouter.patch("/addFollowUp", verifyInstructorJWT, addFollowUp);
+instructorRouter.post("/firstLoginReset",verifyInstructorJWT,firstLoginReset)
 instructorRouter.get("/isAuth",isAuthInstructor);
 module.exports = instructorRouter;

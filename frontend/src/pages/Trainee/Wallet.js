@@ -15,17 +15,19 @@ const Wallet = () => {
     const [wallet, setWallet] = useState(null);
     const [isloading, setIsLoading] = useState(false);
     const [pastWallet , setPastWallet] = useState([]);
+    const [currentWallet , setCurrentWallet] = useState("0.00");
     const currentMonth = new Date().getMonth();
     const monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"];
-
+  "July", "August", "September", "October", "November", "December"];      
     const fetchData = async () => {
         setIsLoading(true);
         try{
            const res = await axios.get(profitURL);
            setWallet(res.data);
-           console.log(res.data);
            setPastWallet(res.data.filter(el=>el.month!=currentMonth));
+           if (res.data.length>0){
+             setCurrentWallet(res.data?.filter((el=>el.month==currentMonth))[0].amount)
+           }
         }
         catch (e){
            console.log(e);
@@ -40,7 +42,7 @@ const Wallet = () => {
         <h1>Ballance</h1>
         <div className={style['currentBalance']}>
           <h2>Your Current Month Balance :</h2>
-          <h3>USD {wallet?.length>0?wallet?.filter((el=>el.month==currentMonth))[0].amount:"0.00"}</h3>
+          <h3>{`USD ${currentWallet}`}</h3>
         </div>
         <div className={style['profit']}>
         <h2>Your Past Months Balance :</h2>

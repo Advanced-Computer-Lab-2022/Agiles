@@ -104,7 +104,7 @@ const ReportProblem = () => {
       borderRadius: '4px',
       cursor: 'pointer',
       float: 'right',
-      width:'10%',
+      width:'20%',
     },
   };
   const state = cookies.get("status");

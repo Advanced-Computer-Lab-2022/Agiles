@@ -96,6 +96,7 @@
 .discount{
   color: white;
   font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
   font-weight: medium;
   color: rgb(102, 100, 100);
   border:none ;
@@ -168,7 +169,8 @@
 }
 .isDisabled {
   color: currentColor;
-  cursor: not-allowed;
+  background-color: inherit;
+  border: none;
   opacity: 0.5;
   text-decoration: none;
 }
