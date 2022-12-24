@@ -35,7 +35,7 @@ const {
   getNotes,
   deleteCourseRating,
   getTraineeProgress,
-  fullFill,
+  getTraineeExams,
 } = require("../controllers/IndividualTraineeController");
 const { verifyItraineeJWT } = require("../middleware/authMiddleware");
 
@@ -58,6 +58,11 @@ IndividualTraineeRouter.get(
   "/getIndividualExerciseGrade",
   verifyItraineeJWT,
   getExerciseGrade
+);
+IndividualTraineeRouter.post(
+  "/getTraineeExams",
+  verifyItraineeJWT,
+  getTraineeExams
 );
 IndividualTraineeRouter.get(
   "/getIndividualAnswers",
@@ -97,7 +102,6 @@ IndividualTraineeRouter.post(
   verifyItraineeJWT,
   CreateCheckout
 );
-IndividualTraineeRouter.post('/webhook',fullFill);
 IndividualTraineeRouter.get(
   "/viewReportedProblems",
   verifyItraineeJWT,

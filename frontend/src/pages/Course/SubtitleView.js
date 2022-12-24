@@ -16,6 +16,8 @@ import jsPDF from "jspdf";
 import Box from "@mui/material/Box";
 import { Content, ContextualHelp, Heading } from "@adobe/react-spectrum";
 import {AiOutlineCheck} from "react-icons/ai";
+import Badge from 'react-bootstrap/Badge';
+
 
 
 
@@ -33,6 +35,8 @@ const Subtitle = () => {
   //const subtitles2 = location.state.data;
   const [isloading, setIsLoading] = useState(false);
   const [grade, setGrade] = useState([]);
+  const [finalgrade, setFinalGrade] = useState(-1);
+  const [finalquestions, setFinalQuestions] = useState(0);
   const [questions, setQuestions] = useState(0);
   const [show, setShow] = useState(false);
   const [done, setDone] = useState([]);
@@ -52,6 +56,31 @@ const Subtitle = () => {
       courseId: location.state.courseId,
     });
   };
+
+  
+  const getFinishedExams = async (e) => {
+    if(cookies.get("status") !== 1){
+      try{
+        let res = await axios.post("/individualtrainee/getTraineeExams",
+      {   
+        courseId: location.state.courseId,
+      }) 
+      let finalexam = await axios.get(
+        `/individualtrainee/getFinalExamGrade?studentId=${cookies.get(
+          "currentUser"
+        )}&courseId=${location.state.courseId}`
+      );
+
+        setGrade(res.data);
+        setFinalGrade(finalexam.data.result);
+        setFinalQuestions(finalexam.data.studentChoices.length);
+        console.log(res);
+        
+      }catch (e) {
+        console.log(e);
+      }
+    } 
+  }
 
   const getFinishedItems = async (e) => {
     console.log("yes")
@@ -257,6 +286,7 @@ const Subtitle = () => {
   useEffect(() => {
     FetchData();
     getFinishedItems();
+    getFinishedExams();
     // return () => {
     //   clearInterval(progress.current);
     // };
@@ -342,38 +372,33 @@ const Subtitle = () => {
 
                           </ListGroup.Item>
                         ))}
-                        <ListGroup.Item key={"exam"}>
-                          <button
-                            id={subtitle._id}
-                            name={"exam"}
-                            onClick={handleExamClick}
-                            className={style["subtitleView"]}
-                          >
-                            Exam
-                          </button>
-                          <Modal
-                            backdrop={false}
-                            show={show}
-                            onHide={handleClose}
-                          >
-                            <Modal.Header closeButton>
-                              <Modal.Title>Grade</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                              <div className={style["rating-box"]}>
-                                {grade == null ? (
-                                  <h3>Not Graded Yet</h3>
-                                ) : (
-                                  <h3>Grade: {grade}</h3>
-                                )}
-                              </div>
-                            </Modal.Body>
-                            <Modal.Footer>
-                              <Button variant="secondary" onClick={handleClose}>
-                                close
-                              </Button>
-                            </Modal.Footer>
-                          </Modal>
+                         <ListGroup.Item key={"exam"} className="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+                          {grade.find((item) => item.subtitleId === subtitle._id)? (
+                            <><button
+                              id={subtitle._id}
+                              name={"exam"}
+                              onClick={handleExamClick}
+                              className={style["subtitleView"]}
+                              disabled
+                            >
+                              Quiz
+                            </button>
+                            <h5>
+                            <Badge bg="primary" className={style["gradeBadge"]} pill>
+                                {grade.find((item) => item.subtitleId === subtitle._id).result + "/" + grade.find((item) => item.subtitleId === subtitle._id).studentChoices.length}
+                              </Badge>
+                              </h5></>
+                          ):(
+                            <button
+                                id={subtitle._id}
+                                name={"exam"}
+                                onClick={handleExamClick}
+                                className={style["subtitleView"]}
+                              >
+                                Quiz
+                              </button>
+                                  )}
+                            
                         </ListGroup.Item>
                       </ListGroup>
                     </Accordion.Body>
@@ -381,36 +406,29 @@ const Subtitle = () => {
                 ))}
               <div>
                 <Accordion.Item key={"finalExam"} className="d-grid gap-2">
-                  <Button
+                {finalgrade !== -1? (
+                            <><h5 className="d-flex justify-content-center mt-2 ">
+                              Final Exam Grade
+                            </h5>
+                            <h3  className="d-flex justify-content-center">
+                                {finalgrade + "/" +  finalquestions}
+                              </h3>
+                              </>
+                          ):(
+                            <Button
                     id={location.state.courseId}
                     name={"finalexam"}
                     onClick={handleFinalExamClick}
                     size="lg"
-                    variant="light"
+                    style={{
+                      backgroundColor: "#a00407",
+                      borderRadius: 0,
+                      border: "none",
+                    }}  
                   >
                     Final Exam
                   </Button>
-                  <Modal backdrop={false} show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                      <Modal.Title>Grade</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <div className={style["rating-box"]}>
-                        {grade == null ? (
-                          <h3>Not Graded Yet</h3>
-                        ) : (
-                          <h3>
-                            Grade: {grade} / {questions}
-                          </h3>
-                        )}
-                      </div>
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button variant="secondary" onClick={handleClose}>
-                        close
-                      </Button>
-                    </Modal.Footer>
-                  </Modal>
+                                  )}
                 </Accordion.Item>
               </div>
             </Accordion>

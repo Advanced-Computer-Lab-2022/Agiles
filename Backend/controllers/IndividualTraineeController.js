@@ -1,6 +1,5 @@
 const IndividualTrainee = require("../models/IndividualTrainee");
 const ExamResult = require("../models/ExamResult");
-const Instructor = require("../models/Instructor");
 const Rating = require("../models/Rating");
 const FinalExamResult = require("../models/FinalExamResult");
 const FinalExam = require("../models/FinalExam");
@@ -10,10 +9,10 @@ const CreditCard = require("../models/CreditCard");
 const CourseSubscriptionRequest = require("../models/CourseSubscriptionRequest");
 const Course = require("../models/Course");
 const CourseRefundRequest = require("../models/CourseRefundRequest");
+const TraineeCourse = require("../models/TraineeCourse");
 const bcrypt = require("bcrypt");
 const resetPassword = require("./ResetPassword");
 require("dotenv").config();
-const endpointSecret = "whsec_c69d6e1b76c6a80ef78977e1f65d1caad055b7e0b3d4c3e9d1ed66309647865c";
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 var nodemailer = require("nodemailer");
@@ -74,7 +73,7 @@ const addNotesToTrainee = async (req, res) => {
 };
 
 const getTraineebyID = async (req, res) => {
-  const id = req.query.id;
+  const id = req.user.id;
   const Itrainee = await IndividualTrainee.findById(id).populate("creditCard");
   return res.status(200).json(Itrainee);
 };
@@ -133,7 +132,7 @@ const getAllItemsCourse = async (req, res) => {
 const updateLinkProgress = async (req, res) => {
   const courseId = req.body.courseId;
   const linkId = req.body.linkId;
-  const studentId = req.body.studentId;
+  const studentId = req.user.id;
   const subtitle = req.body.subtitle;
   
   const completedItems = req.body.completedItems;
@@ -323,7 +322,7 @@ const getFinalExamGrade = async (req, res) => {
   const { studentId, courseId } = req.query;
   const finalExam = await FinalExamResult.findOne(
     { studentId: studentId, courseId: courseId },
-    { result: 1, studentChoices: 1 }
+    
   );
 
   try {
@@ -363,11 +362,26 @@ const getExerciseGrade = async (req, res) => {
       studentId: studentId,
       subtitleId: subtitleId,
     },
-    { result: 1, studentChoices: 1 }
   ).exec();
 
   try {
     res.status(200).json(exercise);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const getTraineeExams = async (req, res) => {
+  const studentId = req.user.id;
+  const courseId = req.body.courseId;
+  const exams = await ExamResult.find(
+    {
+      studentId: studentId,
+      courseId: courseId
+    },
+  ).exec();
+  try{
+    res.status(200).json(exams);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -660,6 +674,10 @@ const CreateCheckout = async (req, res) => {
           quantity: 1,
         },
       ],
+      metadata:{
+        courseId:courseId,
+      },
+      client_reference_id:req.user.id,
       mode: "payment",
       custom_text: {
         submit: { message: "30-Day Money-Back Guarantee" },
@@ -672,61 +690,6 @@ const CreateCheckout = async (req, res) => {
     return res.status(500).json("server error");
   }
 };
-const fullFill =  async(request, response) => {
-  const sig = request.headers['stripe-signature'];
-
-  let event;
-
-  try {
-    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
-  } catch (err) {
-    response.status(400).send(`Webhook Error: ${err.message}`);
-    return;
-  }
-
-  switch (event.type) {
-    case 'payment_intent.succeeded':
-      const paymentIntent = event.data.object;
-      // Then define and call a function to handle the event payment_intent.succeeded
-      break;
-    // ... handle other event types
-    default:
-      console.log(`Unhandled event type ${event.type}`);
-  }
-
-  response.send();
-};
-const payForCourse = async (courseId, userId) => {
-  if (!courseId) {
-    return;
-  }
-  const course = await Course.findById(courseId);
-  const profit =
-    parseInt(course.price) -
-    (parseInt(course.price) * parseInt(course.discount)) / 100;
-  try {
-    await IndividualTrainee.findByIdAndUpdate(userId, {
-      $push: { registered_courses: { courseId: courseId } },
-    });
-    const month = new Date().getMonth();
-    const exists = await Instructor.findOne({ _id: course.instructor,"wallet.month": month});
-    if(!exists){
-      await Instructor.updateOne( {_id: course.instructor},{$push:{wallet:{amount:profit*70/100,month:month}},$inc:{studentCount:1}});
-    }
-    else{
-      await Instructor.updateOne({_id: course.instructor,"wallet.month": month},{$inc:{"wallet.$.amount":profit*70/100}});
-      await Instructor.updateOne({_id: course.instructor},{$inc:{studentCount:1}});
-    }
-    await Course.updateOne(
-      { _id: courseId },
-      { studentCount: course.studentCount + 1 }
-    );
-    return;
-  } catch (error) {
-    return;
-  }
-};
-
 const requestAccess = async (req, res) => {
   const { courseId, traineeId } = req.body;
   if (!courseId || !traineeId) {
@@ -787,12 +750,12 @@ module.exports = {
   createCredit,
   deleteCredit,
   CreateCheckout,
-  fullFill,
   requestRefund,
   getAllItemsCourse,
   addNotesToTrainee,
   getNotes,
   courseExam,
   courseFinalExam,
-  getTraineeProgress
+  getTraineeProgress,
+  getTraineeExams,
 };

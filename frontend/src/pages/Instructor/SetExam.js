@@ -1,14 +1,52 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import styled from "./SetExam.module.css";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import Swal from "sweetalert2";
+
 
 const SetExam = () => {
   // const [subtitleId, setSubtitleId] = useState("");
   //const [courseId, setCourseId] = useState("");
+
+  const styles = {
+    form: {
+      display: 'flex',
+      flexDirection: 'column',
+      width: '50%',
+      margin: '0 auto',
+      padding: '20px',
+      border: '1px solid #ccc',
+      borderRadius: '5px',
+    },
+    label: {
+      fontSize: '16px',
+      fontWeight: 'bold',
+      marginBottom: '8px',
+    },
+    input: {
+      width: '100%',
+      padding: '12px',
+      border: '1px solid #ccc',
+      borderRadius: '4px',
+      boxSizing: 'border-box',
+      resize: 'vertical',
+    },
+    button: {
+      backgroundColor: '#a00407',
+      color: 'white',
+      padding: '12px 20px',
+      border: 'none',
+      borderRadius: '4px',
+      cursor: 'pointer',
+      float: 'right',
+    },
+  };
+
+
+
   const [questions, setQuestions] = useState([
     {
       content: "",
@@ -42,8 +80,21 @@ const SetExam = () => {
 
     try {
       const res = await axios.post("/instructor/setExam", exam, config);
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Your Quiz has been added successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } catch (e) {
-      console.log(e);
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Please Fill all Fields",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
 
@@ -95,26 +146,28 @@ const SetExam = () => {
 */
 
   return (
-    <div className={styled["course"]}>
-      <Form onSubmit={handleSubmit}>
-        <h1>Add Quiz</h1>
+    <div>
+
+      <Form onSubmit={handleSubmit} style={styles.form}>
+        <h1 style={{color:'#a00407',display: 'flex',justifyContent: 'center'}}>Add Quiz</h1>
 
         {questions.map((element, index) => (
           <div>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Question {index + 1}</Form.Label>
+              <Form.Label style={styles.label}>Question {index + 1}</Form.Label>
               <Form.Control
                 required
                 type="text"
                 name="content"
                 placeholder="write your question here ..."
                 value={element.content || ""}
+                style={styles.input}
                 onChange={(e) => handleChange(index, e)}
               />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>First choice</Form.Label>
+              <Form.Label style={styles.label}>First choice</Form.Label>
               <Form.Control
                 required
                 type="text"
@@ -122,46 +175,50 @@ const SetExam = () => {
                 placeholder="write first choice here ..."
                 value={element.firstChoice || ""}
                 onChange={(e) => handleChange(index, e)}
+                style={styles.input}
               />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Second Choice</Form.Label>
+              <Form.Label style={styles.label}>Second Choice</Form.Label>
               <Form.Control
                 required
                 type="text"
                 name="secondChoice"
                 placeholder="write second choice here ..."
                 value={element.secondChoice || ""}
+                style={styles.input}
                 onChange={(e) => handleChange(index, e)}
               />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Third Choice</Form.Label>
+              <Form.Label style={styles.label}>Third Choice</Form.Label>
               <Form.Control
                 required
                 type="text"
                 name="thirdChoice"
                 placeholder="write third choice here ..."
                 value={element.thirdChoice || ""}
+                style={styles.input}
                 onChange={(e) => handleChange(index, e)}
-              />
+                />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Fourth Choice</Form.Label>
+              <Form.Label style={styles.label}>Fourth Choice</Form.Label>
               <Form.Control
                 required
                 type="text"
                 name="fourthChoice"
                 placeholder="write fourth choice here ..."
                 value={element.fourthChoice || ""}
+                style={styles.input}
                 onChange={(e) => handleChange(index, e)}
-              />
+                />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Answer of the question</Form.Label>
+              <Form.Label style={styles.label}>Answer of the question</Form.Label>
 
               <Form.Control
                 required
@@ -171,15 +228,16 @@ const SetExam = () => {
                 max="4"
                 min="1"
                 value={element.answer || ""}
+                style={styles.input}
                 onChange={(e) => handleChange(index, e)}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               {index ? (
                 <Button
-                  variant="danger"
-                  type="button"
-                  className="button remove"
+                variant="danger"
+                type="button"
+                className="button remove"
                   onClick={() => removeFormFields(index)}
                 >
                   Remove Question
@@ -191,7 +249,7 @@ const SetExam = () => {
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <span className="button-section">
             <Button
-              variant="dark"
+              variant="primary"
               className="button add"
               type="button"
               onClick={() => addFormFields()}
@@ -201,7 +259,7 @@ const SetExam = () => {
           </span>
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Button variant="dark" type="submit">
+          <Button variant="dark" type="submit" style={styles.button}>
             create Exam{" "}
           </Button>
         </Form.Group>

@@ -62,3 +62,10 @@
     gap: 2rem;
     margin-bottom: 2rem;
 }
+
+.progress-left{
+    display: flex;
+    margin-left: 1rem;
+}
+
+

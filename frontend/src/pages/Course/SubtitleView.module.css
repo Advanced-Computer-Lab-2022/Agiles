@@ -44,6 +44,11 @@
     
 
 }
+
 .check{
-    justify-content: end;
+    color: #a00407;
+    justify-content: right;
+}
+.gradeBadge{
+    background-color: #a00407 !important;
 }

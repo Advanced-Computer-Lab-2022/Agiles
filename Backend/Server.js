@@ -1,35 +1,70 @@
-const stripe = require('stripe');
+require("dotenv").config();
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const express = require('express');
 const app = express();
+const endpointSecret = process.env.ENDPOINT_SECRET;
+const bodyParser = require('body-parser');
+const mongoose = require("mongoose");
+const Course = require("./models/Course");
+const Instructor = require("./models/Instructor");
+const IndividualTrainee = require("./models/IndividualTrainee");
 
-// This is your Stripe CLI webhook secret for testing your endpoint locally.
-const endpointSecret = "whsec_c69d6e1b76c6a80ef78977e1f65d1caad055b7e0b3d4c3e9d1ed66309647865c";
+mongoose
+  .connect(process.env.MongoUri)
+  .then(() => {
+    console.log("MongoDB is now connected!");
+    // Starting server
+    app.listen(4242, () => {
+      console.log(`Listening to requests on http://localhost:4242`);
+    });
+  })
+  .catch((e) => console.log(e));
 
-app.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {
-  const sig = request.headers['stripe-signature'];
-  console.log(sig);
-  let event;
-
+const payForCourse = async (session) => {
+  const courseId = session.metadata.courseId;
+  const userId = session.client_reference_id;
+  const course = await Course.findOne({ _id: courseId });
+  const profit =
+    parseInt(course.price) -
+    (parseInt(course.price) * parseInt(course.discount)) / 100;
   try {
-    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
-  } catch (err) {
-    response.status(400).send(`Webhook Error: ${err.message}`);
+    await IndividualTrainee.findByIdAndUpdate(userId, {
+      $push: { registered_courses: { courseId: courseId } },
+    });
+    const month = new Date().getMonth();
+    const exists = await Instructor.findOne({ _id: course.instructor,"wallet.month": month});
+    if(!exists){
+      await Instructor.updateOne( {_id: course.instructor},{$push:{wallet:{amount:profit*70/100,month:month}},$inc:{studentCount:1}});
+    }
+    else{
+      await Instructor.updateOne({_id: course.instructor,"wallet.month": month},{$inc:{"wallet.$.amount":profit*70/100}});
+      await Instructor.updateOne({_id: course.instructor},{$inc:{studentCount:1}});
+    }
+    await Course.updateOne(
+      { _id: courseId },
+      { studentCount: course.studentCount + 1 }
+    );
+    return;
+  } catch (error) {
     return;
   }
+};
 
-  // Handle the event
-  switch (event.type) {
-    case 'payment_intent.succeeded':
-      const paymentIntent = event.data.object;
-        console.log('PaymentIntent was successful!');
-      break;
-    // ... handle other event types
-    default:
-      console.log(`Unhandled event type ${event.type}`);
+app.post('/webhook',bodyParser.raw({type: 'application/json'}), async(request, response) => {
+  const payload = request.body;
+  const sig = request.headers['stripe-signature'];
+  let event;
+  try {
+    event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
+  } catch (err) {
+    return response.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  // Return a 200 response to acknowledge receipt of the event
-  response.send();
+  // Handle the checkout.session.completed event
+  if (event.type === 'checkout.session.completed') {
+    const session = event.data.object;
+    await payForCourse(session);
+  }
+  response.status(200);
 });
 
-app.listen(4242, () => console.log('Running on port 4242'));

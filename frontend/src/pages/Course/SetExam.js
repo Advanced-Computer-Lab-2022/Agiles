@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 import CreateCourseStyles from "./SetExam.module.css";
 import { Link } from "react-router-dom";
 const SetExam = () => {
@@ -30,8 +31,21 @@ const SetExam = () => {
 
     try {
       const res = await axios.post("/instructor/setExam", exam, config);
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Your Quiz has been added successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } catch (e) {
-      console.log(e);
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Please Fill all Fields",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
 

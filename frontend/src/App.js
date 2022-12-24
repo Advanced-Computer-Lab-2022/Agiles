@@ -34,7 +34,6 @@ import Inprogress from "./components/Inprogress";
 import InstructorOwnCourses from "./pages/Instructor/InstructorOwnCourses";
 import ReportProblem from "./pages/Course/ReportProblem";
 import PrevReports from "./pages/Course/PrevReports";
-import ReportProblemTrainee from "./pages/Course/ReportProblemTrainee";
 import PrevReportsTrainee from "./pages/Course/PrevReportsTrainee";
 import ViewRequests from "./pages/Admin/adminComponents/ViewRequests";
 import RefundRequests from "./pages/Admin/adminComponents/RefundRequests";
@@ -48,7 +47,7 @@ import Cancel from "./components/Cancel";
 import RequireAuth from "./RequireAuth";
 import Forbidden from "./pages/Forbidden";
 import SetPromotion from "./pages/Admin/adminComponents/SetPromotion";
-
+import Certificate from "./pages/Course/Certificate";
 function App() {
   const [showNav, setShowNav] = useState(true);
   const ROLES = {
@@ -106,6 +105,7 @@ function App() {
               <Route path="/success" element={<Sucess />} />
               <Route path="/cancel" element={<Cancel />} />
               <Route path="/PrevReportsTrainee" element={<PrevReportsTrainee />}/>
+              <Route path="/certificate" element={<Certificate />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES.INSTRUCTOR]} />}>

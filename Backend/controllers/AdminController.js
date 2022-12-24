@@ -5,7 +5,6 @@ const Instructor = require("..//models/Instructor");
 const Course = require("../models/Course");
 const Report = require("../models/Report");
 const CourseRefundRequest = require("../models/CourseRefundRequest");
-const TraineeCourse = require("../models/TraineeCourse");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const {
