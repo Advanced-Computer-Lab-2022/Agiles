@@ -4,9 +4,8 @@ import NavbarStyles from "./SearchStyles.module.css";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-
+import MyCheckbox from "./MyCheckbox";
 import {
-  Checkbox,
   Table,
   TableBody,
   TableCell,
@@ -36,8 +35,10 @@ function SetPromotion(props) {
   const PROMO_URL = "/course/addPromotionMulti";
   const location = useLocation();
   const query = new URLSearchParams(location.search);
-
+  const [isCheckAll, setIsCheckAll] = useState(false);
+  const [isCheck, setIsCheck] = useState([]);
   const [IDsArr, setIDsArr] = useState([]);
+  const [submit, setSubmit] = useState(false);
   const addOrRemove = async (name) => {
     const newIDsArr = [...IDsArr];
     const index = newIDsArr.indexOf(name);
@@ -62,9 +63,10 @@ function SetPromotion(props) {
   };
   const handleSubmit = async (e, IDsArr) => {
     e.preventDefault();
+    setSubmit(true);
     try {
       const data = {
-        idArr: IDsArr,
+        idArr: isCheck,
         promo: promotion,
         enddate: enddate,
       };
@@ -80,31 +82,8 @@ function SetPromotion(props) {
     setEnddate("");
   };
 
-  const handleChildCheck = (event) => {
-    let newc = courses;
-    newc.forEach((course) => {
-      if (course._id === event.target.value) {
-        course.checked = event.target.checked;
-      }
-    });
-    setCourses(newc);
-  };
-  const handleSelectAll = (event) => {
-    console.log(event.target.checked);
-    let newc = courses;
-    newc.forEach((course) => {
-      if (event.target.checked) course.checked = true;
-      else course.checked = false;
-    });
-    setCourses(newc);
-    setAction(-1);
-    setChange(!change);
-    // if (event.target.checked) setSelectAll(true);
-    // else setSelectAll(false);
-  };
-
   const fetchData = async () => {
-    setIsLoading(true);
+    if (!submit) setIsLoading(true);
     let url;
     if (action == 0) {
       url = `/course/listCourses/details`;
@@ -123,21 +102,22 @@ function SetPromotion(props) {
       fetchData();
     }
   }, [change]);
-  // useEffect(() => {
-  //   let newCourses = courses;
-  //   if (selectAll) {
-  //     newCourses.forEach((course) => (course.checked = true));
-  //     setIDsArr(
-  //       courses.map((el) => {
-  //         return el._id;
-  //       })
-  //     );
-  //   } else {
-  //     newCourses.forEach((course) => (course.checked = false));
-  //     setIDsArr([]);
-  //   }
-  //   setCourses(newCourses);
-  // }, [selectAll]);
+
+  const handleSelectAll = (e) => {
+    setIsCheckAll(!isCheckAll);
+    setIsCheck(courses.map((li) => li._id));
+    if (isCheckAll) {
+      setIsCheck([]);
+    }
+  };
+
+  const handleClick = (e) => {
+    const { id, checked } = e.target;
+    setIsCheck([...isCheck, id]);
+    if (!checked) {
+      setIsCheck(isCheck.filter((item) => item !== id));
+    }
+  };
   if (isloading) return <LoadingScreen loading={true} logoSrc={spinner} />;
   return (
     <div className={NavbarStyles["promo-container"]}>
@@ -292,10 +272,13 @@ function SetPromotion(props) {
                 }}
               >
                 select{" "}
-                <Checkbox
-                  defaultChecked={selectAll}
-                  onChange={handleSelectAll}
-                ></Checkbox>
+                <MyCheckbox
+                  type="Checkbox"
+                  name="selectAll"
+                  id="selectAll"
+                  handleClick={handleSelectAll}
+                  isChecked={isCheckAll}
+                ></MyCheckbox>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -319,10 +302,12 @@ function SetPromotion(props) {
                       new Date(el.discount_enddate).toLocaleTimeString()}
                   </TableCell>
                   <TableCell>
-                    <Checkbox
-                      checked={el.checked}
-                      value={el._id}
-                      onChange={handleChildCheck}
+                    <MyCheckbox
+                      key={el._id}
+                      type="Checkbox"
+                      id={el._id}
+                      handleClick={handleClick}
+                      isChecked={isCheck.includes(el._id)}
                     />
                   </TableCell>
                 </TableRow>
