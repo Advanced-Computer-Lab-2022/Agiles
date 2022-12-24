@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Courses from "../../Course/Courses";
 import { BsSearch } from "react-icons/bs";
 import NavbarStyles from "./SearchStyles.module.css";
-import { DataGrid } from "@mui/x-data-grid";
-import Box from "@mui/material/Box";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-import { format } from "date-fns";
-
+import MyCheckbox from "./MyCheckbox";
 import {
-  Checkbox,
   Table,
   TableBody,
   TableCell,
@@ -40,7 +35,10 @@ function SetPromotion(props) {
   const PROMO_URL = "/course/addPromotionMulti";
   const location = useLocation();
   const query = new URLSearchParams(location.search);
+  const [isCheckAll, setIsCheckAll] = useState(false);
+  const [isCheck, setIsCheck] = useState([]);
   const [IDsArr, setIDsArr] = useState([]);
+  const [submit, setSubmit] = useState(false);
   const addOrRemove = async (name) => {
     const newIDsArr = [...IDsArr];
     const index = newIDsArr.indexOf(name);
@@ -49,13 +47,11 @@ function SetPromotion(props) {
     } else {
       newIDsArr.splice(index, 1);
     }
-    await setIDsArr(newIDsArr);
-    console.log(newIDsArr);
+    setIDsArr(newIDsArr);
   };
 
   const handleSearch = async (event) => {
     event.preventDefault();
-    console.log(searchString);
     setAction(1);
     setChange(!change);
   };
@@ -67,9 +63,10 @@ function SetPromotion(props) {
   };
   const handleSubmit = async (e, IDsArr) => {
     e.preventDefault();
+    setSubmit(true);
     try {
       const data = {
-        idArr: IDsArr,
+        idArr: isCheck,
         promo: promotion,
         enddate: enddate,
       };
@@ -85,40 +82,42 @@ function SetPromotion(props) {
     setEnddate("");
   };
 
+  const fetchData = async () => {
+    if (!submit) setIsLoading(true);
+    let url;
+    if (action == 0) {
+      url = `/course/listCourses/details`;
+    } else if (action == 1) {
+      url = `/course/listCourses/search?search=${searchString}`;
+    } else if (action == 2) {
+      url = "/course/listCourses/filter" + location.search;
+    }
+    let { data } = await axios.get(url);
+    setCourses(data.map((obj) => ({ ...obj, checked: false })));
+
+    setIsLoading(false);
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      if (action == 0) {
-        const { data } = await axios.get(`/course/listCourses/details`);
-        setCourses(data);
-      }
-      if (action == 1) {
-        const { data } = await axios.get(
-          `/course/listCourses/search?search=${searchString}`
-        );
-        setCourses(data);
-      }
-      if (action == 2) {
-        let url = "/course/listCourses/filter" + location.search;
-        let res = await axios.get(url);
-        setCourses(res.data);
-      }
-      if (selectAll) {
-        setIDsArr(
-          courses.map((el) => {
-            return el._id;
-          })
-        );
-      } else {
-        setIDsArr([]);
-      }
+    if (action > -1) {
+      fetchData();
+    }
+  }, [change]);
 
-      setIsLoading(false);
-    };
+  const handleSelectAll = (e) => {
+    setIsCheckAll(!isCheckAll);
+    setIsCheck(courses.map((li) => li._id));
+    if (isCheckAll) {
+      setIsCheck([]);
+    }
+  };
 
-    fetchData();
-  }, [alert, change]);
-
+  const handleClick = (e) => {
+    const { id, checked } = e.target;
+    setIsCheck([...isCheck, id]);
+    if (!checked) {
+      setIsCheck(isCheck.filter((item) => item !== id));
+    }
+  };
   if (isloading) return <LoadingScreen loading={true} logoSrc={spinner} />;
   return (
     <div className={NavbarStyles["promo-container"]}>
@@ -230,7 +229,7 @@ function SetPromotion(props) {
                 Course Title
               </TableCell>
               <TableCell
-                align="middle"
+                // align="middle"
                 style={{
                   fontWeight: "600",
                   fontSize: "20px",
@@ -239,7 +238,7 @@ function SetPromotion(props) {
                 Instructor Name
               </TableCell>
               <TableCell
-                align="middle"
+                // align="middle"
                 style={{
                   fontWeight: "600",
                   fontSize: "20px",
@@ -248,7 +247,7 @@ function SetPromotion(props) {
                 Current Price ($)
               </TableCell>
               <TableCell
-                align="middle"
+                // align="middle"
                 style={{
                   fontWeight: "600",
                   fontSize: "20px",
@@ -257,7 +256,7 @@ function SetPromotion(props) {
                 Current Discount (%)
               </TableCell>
               <TableCell
-                align="middle"
+                // align="middle"
                 style={{
                   fontWeight: "600",
                   fontSize: "20px",
@@ -266,26 +265,25 @@ function SetPromotion(props) {
                 discount enddate
               </TableCell>
               <TableCell
-                align="middle"
+                // align="middle"
                 style={{
                   fontWeight: "600",
                   fontSize: "20px",
                 }}
               >
                 select{" "}
-                <Checkbox
-                  defaultChecked={selectAll}
-                  onChange={(event) => {
-                    setSelectAll(event.target.checked);
-                    setChange(!change);
-                  }}
-                ></Checkbox>
+                <MyCheckbox
+                  type="Checkbox"
+                  name="selectAll"
+                  id="selectAll"
+                  handleClick={handleSelectAll}
+                  isChecked={isCheckAll}
+                ></MyCheckbox>
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody style={{ border: "none" }}>
             {courses.map((el) => {
-              if (!el._id) return "";
               return (
                 <TableRow
                   style={{
@@ -304,11 +302,12 @@ function SetPromotion(props) {
                       new Date(el.discount_enddate).toLocaleTimeString()}
                   </TableCell>
                   <TableCell>
-                    <Checkbox
-                      defaultChecked={selectAll}
-                      onChange={() => {
-                        addOrRemove(el._id);
-                      }}
+                    <MyCheckbox
+                      key={el._id}
+                      type="Checkbox"
+                      id={el._id}
+                      handleClick={handleClick}
+                      isChecked={isCheck.includes(el._id)}
                     />
                   </TableCell>
                 </TableRow>
