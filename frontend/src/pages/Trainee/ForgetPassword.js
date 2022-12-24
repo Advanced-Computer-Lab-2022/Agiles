@@ -16,36 +16,35 @@ const ForgetPassword = () => {
   const [result5, setResult5] = useState(0);
   const [email, setEmail] = useState("");
   const [show, setShow] = useState(false);
-  const handleClose = ()=>setShow (false);
-  const handleSend = async(e) => {
+  const handleClose = () => setShow(false);
+  const handleSend = async (e) => {
     e.preventDefault();
-    const data = ""+result0+result1+result2+result3+result4+result5;
+    const data = "" + result0 + result1 + result2 + result3 + result4 + result5;
     const body = {
-      email : email,
-      code :data
-    }
-    try{
-      const res = await axios.post(VERIFY_URL,body);
+      email: email,
+      code: data,
+    };
+    try {
+      const res = await axios.post(VERIFY_URL, body);
       const Toast = Swal.mixin({
         toast: true,
-        position: 'top-end',
+        position: "top-end",
         showConfirmButton: false,
         timer: 3000,
         timerProgressBar: true,
         didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-      })
-      
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
       Toast.fire({
-        icon: 'success',
-        title: 'correct code'
-      })
+        icon: "success",
+        title: "correct code",
+      });
       setShow(false);
-      navigate("/updateforgotpassword",{state:{email:email}});
-    }
-    catch(err){
+      navigate("/updateforgotpassword", { state: { email: email } });
+    } catch (err) {
       if (!err?.response) {
         Swal.fire({
           icon: "error",
@@ -57,26 +56,22 @@ const ForgetPassword = () => {
           icon: "error",
           title: "incorrect Code !..",
           text: "try again",
-          
         });
+      } else if (err.response?.status === 498) {
+        Swal.fire({
+          icon: "error",
+          title: "Code Expired !..",
+          text: "try again",
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      }
     }
-    else if (err.response?.status === 498) {
-      Swal.fire({
-        icon: "error",
-        title: "Code Expired !..",
-        text: "try again",
-        
-      });
-  }
-  else{
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Something went wrong!",
-    });
-  }
-  }
-}
+  };
   const handleSumbit = async (event) => {
     event.preventDefault();
     try {
@@ -119,85 +114,98 @@ const ForgetPassword = () => {
           <Modal.Title>Verify Code </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <form style={{display:'grid' ,justifyContent:'center'}}>
-        <div style={{display:'grid' , gridTemplateColumns:'3rem 3rem 3rem 3rem 3rem 3rem' ,gap:'0.5rem' ,marginBottom:'1rem'}}>
-        
-        <input
-            type='text'
-            inputMode="numeric"
-            pattern="[0-9]{1}"
-            min="0"
-            max ="9"
-            maxLength="1"
-            autoComplete="off"
-            onChange={(e)=>setResult0(e.target.value)}
-            required
-          />
-           <input
-            type='text'
-            inputMode="numeric"
-            pattern="[0-9]{1}"
-            min="0"
-            max ="9"
-            maxLength="1"
-            autoComplete="off"
-            onChange={(e)=>setResult1(e.target.value)}
-            required
-          />
-           <input
-            type='text'
-            inputMode="numeric"
-            pattern="[0-9]{1}"
-            min="0"
-            max ="9"
-            maxLength="1"
-            autoComplete="off"
-            required
-            onChange={(e)=>setResult2(e.target.value)}
-          />
-           <input
-            type='text'
-            inputMode="numeric"
-            pattern="[0-9]{1}"
-            min="0"
-            max ="9"
-            maxLength="1"
-            autoComplete="off"
-            required
-            onChange={(e)=>setResult3(e.target.value)}
-          />
-           <input
-            type='text'
-            inputMode="numeric"
-            pattern="[0-9]{1}"
-            min="0"
-            max ="9"
-            maxLength="1"
-            autoComplete="off"
-            onChange={(e)=>setResult4(e.target.value)}
-            required
-          />
-           <input
-            type='text'
-            inputMode="numeric"
-            pattern="[0-9]{1}"
-            min="0"
-            max ="9"
-            maxLength="1"
-            autoComplete="off"
-            onChange={(e)=>setResult5(e.target.value)}
-            required
-          />
-          </div> 
-         
-          <button style = {{backgroundColor:'#1c1d1f' , color :'White' ,marginBottom:'0.25rem'}}  onClick={handleSend}>
-            Send Code
-          </button>
-          <p className="footForm">
-            Back to Log In? <Link to="/logIn">Log In</Link>
-          </p>
-          <p className="footForm">code expires in 15 min</p>
-      </form>
+          <form style={{ display: "grid", justifyContent: "center" }}>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "3rem 3rem 3rem 3rem 3rem 3rem",
+                gap: "0.5rem",
+                marginBottom: "1rem",
+              }}
+            >
+              <input
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]{1}"
+                min="0"
+                max="9"
+                maxLength="1"
+                autoComplete="off"
+                onChange={(e) => setResult0(e.target.value)}
+                required
+              />
+              <input
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]{1}"
+                min="0"
+                max="9"
+                maxLength="1"
+                autoComplete="off"
+                onChange={(e) => setResult1(e.target.value)}
+                required
+              />
+              <input
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]{1}"
+                min="0"
+                max="9"
+                maxLength="1"
+                autoComplete="off"
+                required
+                onChange={(e) => setResult2(e.target.value)}
+              />
+              <input
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]{1}"
+                min="0"
+                max="9"
+                maxLength="1"
+                autoComplete="off"
+                required
+                onChange={(e) => setResult3(e.target.value)}
+              />
+              <input
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]{1}"
+                min="0"
+                max="9"
+                maxLength="1"
+                autoComplete="off"
+                onChange={(e) => setResult4(e.target.value)}
+                required
+              />
+              <input
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]{1}"
+                min="0"
+                max="9"
+                maxLength="1"
+                autoComplete="off"
+                onChange={(e) => setResult5(e.target.value)}
+                required
+              />
+            </div>
+
+            <button
+              style={{
+                backgroundColor: "#a00407",
+                color: "White",
+                marginBottom: "0.25rem",
+              }}
+              onClick={handleSend}
+            >
+              Send Code
+            </button>
+            <p className="footForm">
+              Back to Log In? <Link to="/logIn">Log In</Link>
+            </p>
+            <p className="footForm">code expires in 15 min</p>
+          </form>
         </Modal.Body>
       </Modal>
       <form className="Auth-form" onSubmit={handleSumbit}>
@@ -216,13 +224,16 @@ const ForgetPassword = () => {
           <button
             disabled={!email ? true : false}
             className="btn btn-primary mt-1"
-            style={{backgroundColor:'#a00407',border:'none'}}
+            style={{ backgroundColor: "#a00407", border: "none" }}
           >
             sumbit
           </button>
 
           <p className="footForm">
-            Back to Log In? <Link to="/logIn" style={{color:'#a00407 '}}>Log In</Link>
+            Back to Log In?{" "}
+            <Link to="/logIn" style={{ color: "#a00407 " }}>
+              Log In
+            </Link>
           </p>
         </div>
       </form>

@@ -124,7 +124,7 @@ const UpdateForgottenPassword = () => {
             />
           </div>
           <div className="d-grid gap-2 mt-2">
-            <button
+            <button 
               disabled={
                 !password || !confirmPassword || !validPwd ? true : false
               }
