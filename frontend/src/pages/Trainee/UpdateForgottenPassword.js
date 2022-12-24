@@ -11,6 +11,7 @@ import axios from "axios";
 import { Link, useLocation,useNavigate } from "react-router-dom";
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const CHANGE_PASSWORD = "individualtrainee/changePassword";
+const CHANGE_INST = "instructor/firstLoginReset"
 const UpdateForgottenPassword = () => {
   const location = useLocation();
   const navigate = useNavigate();

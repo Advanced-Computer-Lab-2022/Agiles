@@ -66,6 +66,7 @@ const Navbar = () => {
   const navigateprevReportsTrainee = () => navigate("/PrevReportsTrainee");
   const navigateAccountSettings = () => navigate("/accountsettings");
   const navigatePaymentMethods = () => navigate("/paymentmethods");
+  const handleBalance = ()=> navigate("/wallet")
   const navigateTerms = () => {
     if (isTrainee()) {
       navigate("/user/terms");
@@ -161,6 +162,7 @@ const Navbar = () => {
               <>
                 <MenuItem onClick={hanldleMycourses}> my courses </MenuItem>
                 <MenuItem onClick={handleCreateCourse}>create course</MenuItem>
+                <MenuItem onClick={handleBalance}>money balance</MenuItem>
                 <MenuItem onClick={handlePrevReports}>
                   reported problems
                 </MenuItem>

@@ -4,7 +4,6 @@ import styled from "./Course.module.css";
 import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif";
 import Rating from "@mui/material/Rating";
-import Button from "react-bootstrap/Button";
 import StarsIcon from "@mui/icons-material/Stars";
 import ReviewsIcon from "@mui/icons-material/Reviews";
 import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
@@ -31,11 +30,33 @@ const Course = () => {
   const [instructor, setInstructor] = useState([]);
   const [courseHour,setCourseHour] = useState(0);
   const [courseMin,setCourseMin] = useState(0);
+  const [video,setVideo]=useState("");
+  const [modaTitlel,setModalTitle]= useState("");
   const traineeId = cookies.get("currentUser");
   const [isloading, setIsLoading] = useState(false);
   const location = useLocation();
   const courseId = new URLSearchParams(location.search).get("cid");
+  const navigatetoCourse=()=>{
+    if (state == 1){
+      navigate('/mycourses');
+    }
+    else{
+      navigate("/mylearning")
+    }
+  }
+  const handlePreview = ()=>{
+    setModalTitle(course.title);
+    setVideo(course.coursePreviewUrl);
+    setShow(true);
 
+  }
+  const handleLink = (e)=>{
+    console.log(e.target.name);
+    console.log(e.target.id)
+    setModalTitle(e.target.name);
+    setVideo(e.target.id)
+    setShow(true);
+  }
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navigateCheckout = async () => {
@@ -66,6 +87,7 @@ const Course = () => {
       console.log(e);
     }
   };
+  
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -136,27 +158,32 @@ const Course = () => {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
-              <button className={styled["preview"]} onClick={handleShow}>
+              <button className={styled["preview"]} onClick={handlePreview}>
                 &nbsp;preview this course
               </button>
-              <Modal show={show} onHide={handleClose}>
+              <Modal show={show} size = {"lg"}onHide={handleClose}>
                 <Modal.Header closeButton>
-                  <Modal.Title>Course Preview</Modal.Title>
+                  <Modal.Title><h6>Course Preview</h6>
+                  <h5 style={{fontWeight:'bold'}}>{modaTitlel}</h5></Modal.Title>
                 </Modal.Header>
-                <Modal.Body>will preview here the course content</Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleClose}>
-                    close
-                  </Button>
-                </Modal.Footer>
+                <Modal.Body>
+                  <iframe 
+                    width="100%"
+                    height="400px"
+                    src={video}
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </Modal.Body>
               </Modal>
               {course.price === 0
-                ? state != 2 && (
+                ? state != 2 &&!paid (
                     <div className={styled["price"]}>
                       <label className={styled["time"]}>Free</label>
                     </div>
                   )
-                : state != 2 && (
+                : state != 2 &&!paid&& (
                     <>
                       {!window.sessionStorage.getItem("factor") ? (
                         <div>
@@ -184,11 +211,17 @@ const Course = () => {
                               .getItem("currency")
                               .toUpperCase()}
                           </label>
+                          <label className={styled["discount"]}>
+                            &nbsp;
+                            {course.discount > 0
+                              ? `${course.discount}% off`
+                              : ""}
+                          </label>
                         </div>
                       )}
                     </>
                   )}
-              {course.discount > 0 && state != 2 && (
+              {course.discount > 0 && state != 2 && !paid&& (
                 <div>
                   <AccessAlarmIcon
                     style={{ color: "red" }}
@@ -209,8 +242,8 @@ const Course = () => {
                   {state == 2 ? "request access" : "Buy now"}
                 </button>
               )}
-              {(paid) && (
-                <button className={styled["buyme"]} onClick={(e)=>window.location.href="/mylearning"}>Go to course</button>
+              {((paid)||(course?.instructor?._id==traineeId)) && (
+                <button className={styled["buyme"]} onClick={navigatetoCourse}>Go to course</button>
               )}
             </section>
           </section>
@@ -231,7 +264,7 @@ const Course = () => {
                     {course.subtitles.map((subtitle, index) => (
                       <Accordion.Item eventKey={index}>
                         <Accordion.Header>
-                          <h5>
+                          <h5 style={{fontWeight:'bold',fontSize:'1.1rem'}}>
                             Section {index + 1}: {subtitle.subtitle}
                           </h5>
                         </Accordion.Header>
@@ -240,18 +273,20 @@ const Course = () => {
                             {subtitle.link?.map((link, index) => (
                               <ListGroup.Item className="list-group-item list-group-item-action">
                                 {link.allowed ? (
-                                  <Link
-                                    to={link.linkUrl}
-                                    style={{ color: "#a00407" ,textDecoration:"none"}}
+                                  <button
+                                    id={link.linkUrl}
+                                    name = {link.linkDesc}
+                                    onClick={handleLink}
+                                    style={{ color: "#a00407" ,textDecoration:"none",background:'inherit',border:'none'}}
                                   >
-                                    {" "}
+                                    
                                     {link.linkDesc}{" "}
-                                  </Link>
+                                  </button>
                                 ) : (
-                                  <Link className={styled["isDisabled"]}>
-                                    {" "}
+                                <button style={{cursor:'default'}} className={styled["isDisabled"]}>
+                                   
                                     {link.linkDesc}
-                                  </Link>
+                                  </button>
                                 )}
                               </ListGroup.Item>
                             ))}

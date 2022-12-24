@@ -230,7 +230,7 @@ const CoursContent = () => {
                 subtitles.map((subtitle, index0) => (
                   <Accordion.Item eventKey={index0} key={index0}>
                     <Accordion.Header>
-                      <h5>
+                    <h5 style={{fontWeight:'bold',fontSize:'1.1rem'}}>
                         Section {index0 + 1}: {subtitle.subtitle}
                       </h5>
                     </Accordion.Header>
