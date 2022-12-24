@@ -44,6 +44,7 @@ const Inprogress = () => {
             {courses.map((el, index) => {
               return <RegCourseCard  data={el.courseId} progress={ Math.floor((el.progress/el.courseId.numberOfItems)*100)} courseRating = {el.courseRating?el.courseRating.userRating:0} courseReview={el.courseRating?el.courseRating.userReview:""}index={index} key={index} />;
             })}
+            {courses.length==0 &&<h6 style={{fontWeight:'bold'}}>no courses inprogress</h6>}
           </div> 
           </section>
         </section>
