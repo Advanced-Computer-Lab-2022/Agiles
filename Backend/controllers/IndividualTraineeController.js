@@ -1,6 +1,5 @@
 const IndividualTrainee = require("../models/IndividualTrainee");
 const ExamResult = require("../models/ExamResult");
-const Instructor = require("../models/Instructor");
 const Rating = require("../models/Rating");
 const FinalExamResult = require("../models/FinalExamResult");
 const FinalExam = require("../models/FinalExam");
@@ -13,7 +12,6 @@ const CourseRefundRequest = require("../models/CourseRefundRequest");
 const bcrypt = require("bcrypt");
 const resetPassword = require("./ResetPassword");
 require("dotenv").config();
-const endpointSecret = "whsec_c69d6e1b76c6a80ef78977e1f65d1caad055b7e0b3d4c3e9d1ed66309647865c";
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 var nodemailer = require("nodemailer");
@@ -660,6 +658,10 @@ const CreateCheckout = async (req, res) => {
           quantity: 1,
         },
       ],
+      metadata:{
+        courseId:courseId,
+      },
+      client_reference_id:req.user.id,
       mode: "payment",
       custom_text: {
         submit: { message: "30-Day Money-Back Guarantee" },
@@ -672,37 +674,6 @@ const CreateCheckout = async (req, res) => {
     return res.status(500).json("server error");
   }
 };
-const payForCourse = async (courseId, userId) => {
-  if (!courseId) {
-    return;
-  }
-  const course = await Course.findById(courseId);
-  const profit =
-    parseInt(course.price) -
-    (parseInt(course.price) * parseInt(course.discount)) / 100;
-  try {
-    await IndividualTrainee.findByIdAndUpdate(userId, {
-      $push: { registered_courses: { courseId: courseId } },
-    });
-    const month = new Date().getMonth();
-    const exists = await Instructor.findOne({ _id: course.instructor,"wallet.month": month});
-    if(!exists){
-      await Instructor.updateOne( {_id: course.instructor},{$push:{wallet:{amount:profit*70/100,month:month}},$inc:{studentCount:1}});
-    }
-    else{
-      await Instructor.updateOne({_id: course.instructor,"wallet.month": month},{$inc:{"wallet.$.amount":profit*70/100}});
-      await Instructor.updateOne({_id: course.instructor},{$inc:{studentCount:1}});
-    }
-    await Course.updateOne(
-      { _id: courseId },
-      { studentCount: course.studentCount + 1 }
-    );
-    return;
-  } catch (error) {
-    return;
-  }
-};
-
 const requestAccess = async (req, res) => {
   const { courseId, traineeId } = req.body;
   if (!courseId || !traineeId) {
