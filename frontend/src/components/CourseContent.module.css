@@ -21,3 +21,11 @@
     width: 80%;
     margin-top: 1rem;
 }
+
+.check{
+    color: #a00407;
+    justify-content: right;
+}
+.gradeBadge{
+    background-color: #a00407 !important;
+}
