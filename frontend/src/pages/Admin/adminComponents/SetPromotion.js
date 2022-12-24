@@ -90,18 +90,18 @@ function SetPromotion(props) {
       setIsLoading(true);
       if (action == 0) {
         const { data } = await axios.get(`/course/listCourses/details`);
-        setCourses(data);
+        setCourses(data.map((obj) => ({ ...obj, checked: false })));
       }
       if (action == 1) {
         const { data } = await axios.get(
           `/course/listCourses/search?search=${searchString}`
         );
-        setCourses(data);
+        setCourses(data.map((obj) => ({ ...obj, checked: false })));
       }
       if (action == 2) {
         let url = "/course/listCourses/filter" + location.search;
         let res = await axios.get(url);
-        setCourses(res.data);
+        setCourses(res.data.map((obj) => ({ ...obj, checked: false })));
       }
       if (selectAll) {
         setIDsArr(
@@ -276,6 +276,7 @@ function SetPromotion(props) {
                 <Checkbox
                   defaultChecked={selectAll}
                   onChange={(event) => {
+                    setAction(-1);
                     setSelectAll(event.target.checked);
                     setChange(!change);
                   }}
