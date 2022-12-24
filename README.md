@@ -6,8 +6,8 @@
 - [Features](#features)
   * [Admin Functionalities](#administrator)
   * [Instructor Functinalities](#instructor)
-  * [Corporate Trainee Functinalities)(#corporatetrainee)
-  * [Individual Trainee Functinalities)(#individual trainee)
-  * [guest Functionalities)(#guest)
+  * [Corporate Trainee Functinalities](#corporatetrainee)
+  * [Individual Trainee Functinalities](#individual trainee)
+  * [guest Functionalities](#guest)
 - [API References](#api-references)
 
