@@ -14,7 +14,7 @@
 ## Project Description
 
 ### Course 
-Advanced Computer Lab (CSEN 704/ DMET 706), Winter 2022
+Advanced Computer Lab (CSEN 704), Winter 2022
 
 ### Theme
 The theme of the project, is to create a complete Online Learning System. An Online
