@@ -211,7 +211,12 @@ const profit = async(req,res)=>{
    const instructor = await Instructor.findById(user.id);
    res.status(200).json(instructor.wallet);
 }
-
+const firstLoginReset = async(req,res)=>{
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(req.body.password, salt);
+  await Instructor.findByIdAndUpdate(req.user.id,{password:hashedPassword,firstLogIn:false});
+  res.status(200).json("ok")
+}
 //---------------
 
 module.exports = {
@@ -225,5 +230,6 @@ module.exports = {
   uploadSubLink,
   uploadPreLink,
   deletLink,
-  profit
+  profit,
+  firstLoginReset
 };
