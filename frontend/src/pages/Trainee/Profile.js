@@ -9,7 +9,7 @@ import axios from "axios";
 import { useEffect } from "react";
 const cookie = new Cookie();
 const fetchUrl = "/individualtrainee/getIndividualTraineebyId";
-const fetchInstUrl = "/instructor/instructorbyid"
+const fetchInstUrl = "/instructor/instructorbyid";
 const updateUrl = "/individualtrainee/updateBasics";
 const updateInstUrl = "/instructor/updateBasics";
 const Profile = () => {
@@ -21,16 +21,15 @@ const Profile = () => {
   const [minibio, setMiniBio] = useState("");
   const fetchData = async () => {
     setIsLoading(true);
-    const fetch = cookie.get("status")==1?fetchInstUrl:fetchUrl;
+    const fetch = cookie.get("status") == 1 ? fetchInstUrl : fetchUrl;
     try {
       const res = await axios.get(fetch, { params: { id: id } });
-      if (cookie.get("status")==1){
+      if (cookie.get("status") == 1) {
         setData(res.data.firstField);
         setFirstname(res.data.firstField.firstname);
         setLastname(res.data.firstField.lastname);
         setMiniBio(res.data.firstField.mini_bio);
-      }
-      else{
+      } else {
         setData(res.data);
         setFirstname(res.data.firstname);
         setLastname(res.data.lastname);
@@ -51,7 +50,7 @@ const Profile = () => {
       lastname: lastname,
       minibio: minibio,
     };
-    const update = cookie.get("status")==1?updateInstUrl:updateUrl;
+    const update = cookie.get("status") == 1 ? updateInstUrl : updateUrl;
     try {
       const res = axios.patch(update, body);
       window.location.reload();
@@ -91,7 +90,11 @@ const Profile = () => {
                   placeholder={minibio == "" ? "write your mini bio" : minibio}
                   onChange={(e) => setMiniBio(e.target.value)}
                 ></input>
-                <Button variant="dark" type="submit">
+                <Button
+                  style={{ backgroundColor: "#a00407", border: "none" }}
+                  variant="dark"
+                  type="submit"
+                >
                   {" "}
                   save
                 </Button>

@@ -10,35 +10,35 @@ const SetFinalExam = () => {
   // const [courseId, setCourseId] = useState("");
   const styles = {
     form: {
-      display: 'flex',
-      flexDirection: 'column',
-      width: '50%',
-      margin: '0 auto',
-      padding: '20px',
-      border: '1px solid #ccc',
-      borderRadius: '5px',
+      display: "flex",
+      flexDirection: "column",
+      width: "50%",
+      margin: "0 auto",
+      padding: "20px",
+      border: "1px solid #ccc",
+      borderRadius: "5px",
     },
     label: {
-      fontSize: '16px',
-      fontWeight: 'bold',
-      marginBottom: '8px',
+      fontSize: "16px",
+      fontWeight: "bold",
+      marginBottom: "8px",
     },
     input: {
-      width: '100%',
-      padding: '12px',
-      border: '1px solid #ccc',
-      borderRadius: '4px',
-      boxSizing: 'border-box',
-      resize: 'vertical',
+      width: "100%",
+      padding: "12px",
+      border: "1px solid #ccc",
+      borderRadius: "4px",
+      boxSizing: "border-box",
+      resize: "vertical",
     },
     button: {
-      backgroundColor: '#a00407',
-      color: 'white',
-      padding: '12px 20px',
-      border: 'none',
-      borderRadius: '4px',
-      cursor: 'pointer',
-      float: 'right',
+      backgroundColor: "#a00407",
+      color: "white",
+      padding: "12px 20px",
+      border: "none",
+      borderRadius: "4px",
+      cursor: "pointer",
+      float: "right",
     },
   };
 
@@ -86,7 +86,8 @@ const SetFinalExam = () => {
         title: "Please Fill all Fields",
         showConfirmButton: false,
         timer: 1500,
-      });    }
+      });
+    }
   };
 
   let addFormFields = () => {
@@ -117,7 +118,15 @@ const SetFinalExam = () => {
   return (
     <div>
       <Form onSubmit={handleSubmit} style={styles.form}>
-        <h1 style={{color:'#a00407',display: 'flex',justifyContent: 'center'}}>Add Final Exam</h1>
+        <h1
+          style={{
+            color: "#a00407",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          Add Final Exam
+        </h1>
 
         {questions.map((element, index) => (
           <div>
@@ -186,7 +195,9 @@ const SetFinalExam = () => {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label style={styles.label}>Answer of the question</Form.Label>
+              <Form.Label style={styles.label}>
+                Answer of the question
+              </Form.Label>
 
               <Form.Control
                 required
@@ -220,6 +231,7 @@ const SetFinalExam = () => {
               variant="primary"
               className="button add"
               type="button"
+              style={{ backgroundColor: "#a00407", border: "none" }}
               onClick={() => addFormFields()}
             >
               Add Question

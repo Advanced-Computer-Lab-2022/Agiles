@@ -40,32 +40,27 @@ const CoursePreview = () => {
   };
 
   const handleCertificate = async (e) => {
-    try{
-    const res = await axios.get("individualtrainee/getIndividualTraineebyId");
-    console.log(res);
-    if(res){
-    navigate("/certificate", {
-      state: {
-        progress: progress,
-          course_id: course_id,
-          course_img: course.imgUrl,
-          course_title: course.title,
-          course_inst: course.instructorname,
-          idx: index,
-          fname: res.data.firstname,
-          lname: res.data.lastname
-
+    try {
+      const res = await axios.get("individualtrainee/getIndividualTraineebyId");
+      console.log(res);
+      if (res) {
+        navigate("/certificate", {
+          state: {
+            progress: progress,
+            course_id: course_id,
+            course_img: course.imgUrl,
+            course_title: course.title,
+            course_inst: course.instructorname,
+            idx: index,
+            fname: res.data.firstname,
+            lname: res.data.lastname,
+          },
+        });
       }
-    })
-    }}
-    catch(e){
+    } catch (e) {
       console.log(e);
     }
-  }
-
-        
-        
-
+  };
 
   const fetchdata = async () => {
     setIsLoading(true);
@@ -87,7 +82,10 @@ const CoursePreview = () => {
       );
       setCompletedItems(res.data.firstField.registered_courses[index].progress);
       setAllItems(items.data.numberOfItems);
-      if(res.data.firstField.registered_courses[index].progress === items.data.numberOfItems - 11){
+      if (
+        res.data.firstField.registered_courses[index].progress ===
+        items.data.numberOfItems - 11
+      ) {
         setCertificate(true);
       }
       setCourse(res.data.firstField.registered_courses[index].courseId);
@@ -159,23 +157,23 @@ const CoursePreview = () => {
             ></ProgressBar>
             <div className={style["progress"]}>
               <div className={style["progress-left"]}>
-                <h6 style={
-                  {marginLeft: "0.5rem",
-                  marginTop: "0.5rem",}
-                }>
+                <h6 style={{ marginLeft: "0.5rem", marginTop: "0.5rem" }}>
                   {completedItems} of {allItems} items completed
-                  </h6>
-                  {certificate ?
-                  <Button variant="text" style={{
-                    borderRadius: "1rem",
-                    width: "10rem",
-                    border: "none",
-                    color: "#a00407",
-                    
-                    }
-                  } onClick={handleCertificate}
-                    >Get Certificate</Button> : null}
-                  
+                </h6>
+                {certificate ? (
+                  <Button
+                    variant="text"
+                    style={{
+                      borderRadius: "1rem",
+                      width: "10rem",
+                      border: "none",
+                      color: "#a00407",
+                    }}
+                    onClick={handleCertificate}
+                  >
+                    Get Certificate
+                  </Button>
+                ) : null}
               </div>
             </div>
 
