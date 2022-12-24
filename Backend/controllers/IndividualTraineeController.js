@@ -51,7 +51,7 @@ const addNotesToTrainee = async (req, res) => {
   const courseId = req.body.courseId;
   const traineeId = req.user.id;
   const linkId = req.body.linkId;
-
+  console.log(req.body);
   if (!subtitleId || !linkId || !courseId || !traineeId || !notes) {
     return res.status(500).json("bad request");
   }
@@ -134,7 +134,7 @@ const updateLinkProgress = async (req, res) => {
   const linkId = req.body.linkId;
   const studentId = req.user.id;
   const subtitle = req.body.subtitle;
-  
+
   const completedItems = req.body.completedItems;
   let numberOfItems = 0;
   try {
@@ -165,8 +165,8 @@ const updateLinkProgress = async (req, res) => {
     );
     if (linkprogress) {
       if (linkprogress.progress === 1)
-        res.status(200).json({ progress: -1,numberOfItems: numberOfItems });
-        console.log(linkprogress);
+        res.status(200).json({ progress: -1, numberOfItems: numberOfItems });
+      console.log(linkprogress);
       return;
     }
 
@@ -207,22 +207,20 @@ const updateLinkProgress = async (req, res) => {
 const getTraineeProgress = async (req, res) => {
   const traineeId = req.user.id;
   const courseId = req.body.courseId;
-  try{
-    const progress = await TraineeCourse.find(
-      { traineeId: traineeId, "registered_courses.courseId": courseId }
-    );
+  try {
+    const progress = await TraineeCourse.find({
+      traineeId: traineeId,
+      "registered_courses.courseId": courseId,
+    });
     if (progress) {
       res.status(200).json({ progress: progress });
-    }
-    else{
+    } else {
       res.status(200).json({ progress: 0 });
     }
-  }catch(err){
+  } catch (err) {
     res.status(403).json({ msg: err.message });
-    
   }
-  }
-
+};
 
 const submitExam = async (req, res) => {
   const answers = req.body.answers;
@@ -320,10 +318,10 @@ const submitExam = async (req, res) => {
 
 const getFinalExamGrade = async (req, res) => {
   const { studentId, courseId } = req.query;
-  const finalExam = await FinalExamResult.findOne(
-    { studentId: studentId, courseId: courseId },
-    
-  );
+  const finalExam = await FinalExamResult.findOne({
+    studentId: studentId,
+    courseId: courseId,
+  });
 
   try {
     res.status(200).json(finalExam);
@@ -357,12 +355,10 @@ const courseFinalExam = async (req, res) => {
 const getExerciseGrade = async (req, res) => {
   const studentId = req.query["id"];
   const subtitleId = req.query["subtitleId"];
-  const exercise = await ExamResult.findOne(
-    {
-      studentId: studentId,
-      subtitleId: subtitleId,
-    },
-  ).exec();
+  const exercise = await ExamResult.findOne({
+    studentId: studentId,
+    subtitleId: subtitleId,
+  }).exec();
 
   try {
     res.status(200).json(exercise);
@@ -374,13 +370,11 @@ const getExerciseGrade = async (req, res) => {
 const getTraineeExams = async (req, res) => {
   const studentId = req.user.id;
   const courseId = req.body.courseId;
-  const exams = await ExamResult.find(
-    {
-      studentId: studentId,
-      courseId: courseId
-    },
-  ).exec();
-  try{
+  const exams = await ExamResult.find({
+    studentId: studentId,
+    courseId: courseId,
+  }).exec();
+  try {
     res.status(200).json(exams);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -496,21 +490,20 @@ const changePassword = async (req, res) => {
   }
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
-  const oldUser = await IndividualTrainee.findOne({ email: email});
+  const oldUser = await IndividualTrainee.findOne({ email: email });
   try {
-    if (oldUser){
+    if (oldUser) {
       const data = await IndividualTrainee.findOneAndUpdate(
         { email: email },
         { password: hashedPassword }
       );
-    }
-    else{
+    } else {
       const data = await Instructor.findOneAndUpdate(
         { email: email },
         { password: hashedPassword }
       );
     }
-  
+
     return res.status(200).json("success");
   } catch (err) {
     return res.status(406).json(err);
@@ -529,18 +522,20 @@ const rateInstructor = async (req, res) => {
     let x = parseInt(userRating);
     const exists = await Rating.findOne({
       userId: userId,
-      instId:instId,
+      instId: instId,
       state: false,
     }).exec();
     if (exists) {
       let currentRating = parseInt(exists.userRating);
       let newRating = oldRating - currentRating + x;
       const updateRating = await Rating.findOneAndUpdate(
-        { userId: userId,instId:instId },
+        { userId: userId, instId: instId },
         { userRating: userRating, userReview: userReview },
         { new: true }
-      ).exec(); 
-      const updateInstructor = await Instructor.findByIdAndUpdate(instId,{$set:{rating:newRating}})
+      ).exec();
+      const updateInstructor = await Instructor.findByIdAndUpdate(instId, {
+        $set: { rating: newRating },
+      });
       return res.status(200).json({ msg: "Rating updated" });
     } else {
       let newRating = oldRating + x;
@@ -550,9 +545,11 @@ const rateInstructor = async (req, res) => {
         userRating: userRating,
         userReview: userReview,
         instId: instId,
-        state:false
+        state: false,
       });
-      const updateInstructor = await Instructor.findByIdAndUpdate(instId,{$set:{rating:newRating,ratingCount:newCount}})
+      const updateInstructor = await Instructor.findByIdAndUpdate(instId, {
+        $set: { rating: newRating, ratingCount: newCount },
+      });
       const updateIndvidual = await IndividualTrainee.updateOne(
         { _id: userId, "registered_courses.courseId": courseId },
         { $set: { "registered_courses.$.instRating": newRatingObj._id } }
@@ -563,24 +560,44 @@ const rateInstructor = async (req, res) => {
     res.status(500).json({ msg: "can't update rating" });
   }
 };
-const deleteInstRating = async(req,res)=>{
-  const instId=req.query.instId;
+const deleteInstRating = async (req, res) => {
+  const instId = req.query.instId;
   const userId = req.user.id;
-  const rating = await Rating.findOneAndDelete({userId:userId,instId:instId ,state :false});
-  const oldRating = rating?rating.userRating:0;
-  const REMOVERATING = await Instructor.findOneAndUpdate({_id:instId},{$inc:{rating:-oldRating}});
-  const REOMVECOUNT = await Instructor.findOneAndUpdate({_id:instId},{$inc:{ratingCount:-1}});
-  res.status(200).json("deleted")
-}
-const deleteCourseRating = async(req,res)=>{
-  const courseId=req.query.courseId;
+  const rating = await Rating.findOneAndDelete({
+    userId: userId,
+    instId: instId,
+    state: false,
+  });
+  const oldRating = rating ? rating.userRating : 0;
+  const REMOVERATING = await Instructor.findOneAndUpdate(
+    { _id: instId },
+    { $inc: { rating: -oldRating } }
+  );
+  const REOMVECOUNT = await Instructor.findOneAndUpdate(
+    { _id: instId },
+    { $inc: { ratingCount: -1 } }
+  );
+  res.status(200).json("deleted");
+};
+const deleteCourseRating = async (req, res) => {
+  const courseId = req.query.courseId;
   const userId = req.user.id;
-  const rating = await Rating.findOneAndDelete({userId:userId,courseId:courseId ,state :true});
-  const oldRating = rating?rating.userRating:0;
-  const REMOVERATING = await Course.findOneAndUpdate({_id:courseId},{$inc:{rating:-oldRating}});
-  const REOMVECOUNT = await Course.findOneAndUpdate({_id:courseId},{$inc:{ratingCount:-1}});
-  res.status(200).json("deleted")
-}
+  const rating = await Rating.findOneAndDelete({
+    userId: userId,
+    courseId: courseId,
+    state: true,
+  });
+  const oldRating = rating ? rating.userRating : 0;
+  const REMOVERATING = await Course.findOneAndUpdate(
+    { _id: courseId },
+    { $inc: { rating: -oldRating } }
+  );
+  const REOMVECOUNT = await Course.findOneAndUpdate(
+    { _id: courseId },
+    { $inc: { ratingCount: -1 } }
+  );
+  res.status(200).json("deleted");
+};
 const updateITraineePassword = async (req, res) => {
   const { oldPass, newPass } = req.body;
   if (!oldPass || !newPass) {
@@ -674,10 +691,10 @@ const CreateCheckout = async (req, res) => {
           quantity: 1,
         },
       ],
-      metadata:{
-        courseId:courseId,
+      metadata: {
+        courseId: courseId,
       },
-      client_reference_id:req.user.id,
+      client_reference_id: req.user.id,
       mode: "payment",
       custom_text: {
         submit: { message: "30-Day Money-Back Guarantee" },
