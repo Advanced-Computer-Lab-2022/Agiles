@@ -24,6 +24,7 @@ const getNotes = async (req, res) => {
   const subtitleId = req["query"].subtitleId;
   const courseId = req["query"].courseId;
   const linkId = req["query"].linkId;
+  console.log(req["query"]);
   if (!subtitleId || !linkId || !courseId || !traineeId) {
     return res.status(500).json("bad request");
   }

@@ -100,6 +100,7 @@ const Subtitle = () => {
     try {
       let res = await axios.get("/individualtrainee/getNote", {
         params: {
+          subtitleId: subtitleId,
           linkId: id,
           courseId: location.state.courseId,
         },
