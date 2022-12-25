@@ -226,42 +226,6 @@ const Subtitle = () => {
     }
   };
 
-  // const handleProgress = async (event) => {
-  //   let progresser = 0;
-  //   if (event.data == 1) {
-  //     progress.current = setInterval(async () => {
-  //       const player = event.target;
-  //       const currentTime = player.getCurrentTime();
-  //       const duration = player.getDuration();
-  //       progresser = Math.floor((currentTime / duration) * 100);
-  //       if (progresser >= 80) {
-  //         progresser = 100;
-  //       }
-  //       let res = await axios.post("/individualtrainee/updateLinkProgress", {
-  //         linkId: link._id,
-  //         courseId: location.state.courseId,
-  //         completedItems: progresser,
-  //       });
-  //     }, 5000);
-  //   } else if (event.data == 2 || event.data == 0) {
-  //     const player = event.target;
-  //     const currentTime = player.getCurrentTime();
-  //     const duration = player.getDuration();
-  //     progresser = Math.floor((currentTime / duration) * 100);
-  //     if (progresser >= 80) {
-  //       progresser = 100;
-  //     }
-  //     let res = await axios.post("/individualtrainee/updateLinkProgress", {
-  //       id: cookies.get("currentUser"),
-  //       courseId: location.state.courseId,
-  //       completedItems: progresser,
-  //     });
-  //   }
-  //   return () => {
-  //     clearInterval(progress.current);
-  //   };
-  // };
-
   const FetchData = async () => {
     setIsLoading(true);
     try {
@@ -291,21 +255,15 @@ const Subtitle = () => {
         <section className={style["main-section"]}>
           <section className={style["main-section-left"]}>
             <section className={style["main-section-left-top"]}>
-              <Youtube
-                videoId={link.linkUrl.substring(30, 41)}
-                opts={{
-                  width: "800",
-                  height: "450",
-                  title: "YouTube video player",
-                  frameBorder: "0",
-                  allow:
-                    "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
-                  playerVars: {
-                    fs: 1,
-                    autoplay: 0,
-                  },
-                }}
-              />
+              <div className={style["iframe-container"]}>
+                <iframe
+                  className={style["responsive-iframe"]}
+                  src={link.linkUrl}
+                  title="YouTube video player"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
             </section>
 
             <section className={style["main-section-left-bottom"]}>
@@ -315,33 +273,45 @@ const Subtitle = () => {
               <hr className={style["mainRight-hr"]}></hr>
             </section>
             <section className={style["main-section-left-bottom"]}>
-              <h3>Notes</h3>
-              <div class="form-group">
-                <label for="exampleFormControlTextarea1">
-                  Write Your Notes Here
-                </label>
-                <textarea
-                  class="form-control"
-                  id="exampleFormControlTextarea1"
-                  rows="8"
-                  value={notes}
-                  onChange={handleNotesChange}
-                ></textarea>
-                <div className="d-grid gap-2 mt-2">
-                  <button
-                    onClick={saveNotes}
-                    className="btn btn-primary"
-                    style={{ backgroundColor: "#a00407", border: "none" }}
+              <div
+                style={{
+                  border: "1px solid rgb(230,230,230)",
+                  padding: "20px",
+                  boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+                }}
+              >
+                <h3>Notes</h3>
+                <div class="form-group">
+                  <textarea
+                    class="form-control"
+                    id="exampleFormControlTextarea1"
+                    rows="8"
+                    value={notes}
+                    onChange={handleNotesChange}
+                  ></textarea>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-around",
+                      margin: "20px",
+                    }}
                   >
-                    Save Notes
-                  </button>
-                  <button
-                    onClick={downloadPDFFile}
-                    className="btn btn-primary"
-                    style={{ backgroundColor: "#a00407", border: "none" }}
-                  >
-                    Download Notes
-                  </button>
+                    <button
+                      onClick={saveNotes}
+                      className="btn btn-primary"
+                      style={{ backgroundColor: "#a00407", border: "none" }}
+                    >
+                      Save for later
+                    </button>
+
+                    <button
+                      onClick={downloadPDFFile}
+                      className="btn btn-primary"
+                      style={{ backgroundColor: "#a00407", border: "none" }}
+                    >
+                      Download
+                    </button>
+                  </div>
                 </div>
               </div>
             </section>
