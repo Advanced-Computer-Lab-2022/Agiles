@@ -86,9 +86,8 @@ const CourseExam = () => {
       let jsondata = await res.json();
       if (res.ok) {
         setCourseExam(jsondata["questions"]);
-        for(let i=0;i<jsondata["questions"].length;i++){
-          answers.push("1");
-        }
+        //fill array answers with 1 using .fill
+        setAnswers(Array(jsondata["questions"].length).fill("1"));
       }
 
 
@@ -128,7 +127,8 @@ const CourseExam = () => {
     const indexname = event.target.name;
     //get last char from name
     let index = indexname.charAt(indexname.length - 1);
-    if (answers[index] !== null && event.target.checked) {
+    console.log(answers);
+    if (answers[index] !== 1 && event.target.checked && answers[index] !== event.target.value) {
       answers[index] = event.target.value;
     } else if (event.target.checked) {
       setAnswers((oldArray) => [...oldArray, event.target.value]);
