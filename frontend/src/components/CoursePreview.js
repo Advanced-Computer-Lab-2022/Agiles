@@ -41,9 +41,17 @@ const CoursePreview = () => {
 
   const handleCertificate = async (e) => {
     try {
-      const res = await axios.get("individualtrainee/getIndividualTraineebyId");
-      console.log(res);
+      const res = await axios.get("individualtrainee/getIndividualTraineebyId")
+      .then((response) => {
+        let email = response.data.email;
+        return axios.post("individualtrainee/sendCertificate",{
+          email: email,
+          courseName: course.title,
+        })
+      });
       if (res) {
+        
+
         navigate("/certificate", {
           state: {
             progress: progress,
@@ -54,8 +62,10 @@ const CoursePreview = () => {
             idx: index,
             fname: res.data.firstname,
             lname: res.data.lastname,
+            email: res.data.email,
           },
         });
+
       }
     } catch (e) {
       console.log(e);
@@ -84,7 +94,7 @@ const CoursePreview = () => {
       setAllItems(items.data.numberOfItems);
       if (
         res.data.firstField.registered_courses[index].progress ===
-        items.data.numberOfItems - 11
+        items.data.numberOfItems
       ) {
         setCertificate(true);
       }
