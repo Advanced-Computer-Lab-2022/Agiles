@@ -82,8 +82,8 @@ const CoursContent = () => {
   
         linkId: e.target.id.substring(7,31),
         courseId: course_id,
+        subtitle: e.target.value,
         completedItems: 1,
-        subtitleId: e.target.value,
       
   
         
@@ -246,8 +246,8 @@ const CoursContent = () => {
                                 "subtitleId=" +
                                 subtitle._id
                               }
-                              name={index0 + " " + index1}
                               value = {subtitle._id}
+                              name={index0 + " " + index1}
                               onClick={handleClick}
                               className={style["subtitleView"]}
                             >

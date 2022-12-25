@@ -21,7 +21,7 @@ const CourseExam = () => {
   const [CourseExam, setCourseExam] = useState([]);
   const [isloading, setIsLoading] = useState(false);
   const [examState, setExam] = useState(false);
-  const [answers, setAnswers] = useState(["1"]);
+  const [answers, setAnswers] = useState([]);
   const [result, setResult] = useState([]);
   const [grade, setGrade] = useState(0);
   const final = location.state.final;
@@ -86,7 +86,12 @@ const CourseExam = () => {
       let jsondata = await res.json();
       if (res.ok) {
         setCourseExam(jsondata["questions"]);
+        for(let i=0;i<jsondata["questions"].length;i++){
+          answers.push("1");
+        }
       }
+
+
       setIsLoading(false);
     };
     fetchData();
@@ -293,7 +298,7 @@ const CourseExam = () => {
             ) : (
               <>
                 <h1>
-                  Grade: {grade} / {answers.length}
+                  Grade: {grade} / {CourseExam.length}
                 </h1>
               </>
             )}

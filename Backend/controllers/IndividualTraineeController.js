@@ -229,6 +229,7 @@ const submitExam = async (req, res) => {
   const final = req.body.final;
   let result = [];
   let resultno = 0;
+  let questions = 0;
   const { studentId, subtitleId, courseId } = req.query;
   let exerciseAnswers = {};
   if (final == "false") {
@@ -236,11 +237,13 @@ const submitExam = async (req, res) => {
       { subtitleId: subtitleId },
       { questions: 1 }
     );
+    questions = exerciseAnswers.questions.length;
   } else {
     exerciseAnswers = await FinalExam.findOne(
       { courseId: courseId },
       { questions: 1 }
     );
+    questions = exerciseAnswers.questions.length;
   }
   exerciseAnswers.questions.forEach((question, index) => {
     if (question.answer === answers[index]) {
@@ -312,7 +315,7 @@ const submitExam = async (req, res) => {
     );
     res
       .status(200)
-      .json({ result: result, resultno: resultno, progress: progress + 1 });
+      .json({ questions: questions, result: result, resultno: resultno, progress: progress + 1 });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
