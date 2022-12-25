@@ -24,7 +24,7 @@
     "jspdf": "^2.5.1",
     "react": "^18.2.0",
     "react-auth-code-input": "^3.2.1",
-    "react-bootstrap": "^2.6.0",
+    "react-bootstrap": "^2.7.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "react-loading-screen": "^0.0.17",

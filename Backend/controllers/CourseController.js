@@ -314,13 +314,14 @@ const rateCourse = async (req, res) => {
 };
 
 const reportProblem = async (req, res) => {
-  const { courseId, reportType, description } = req.body;
+  const { courseId, reportType, description ,title } = req.body;
   const userId = req.user.id;
   const newProblem = new Report({
     userId: userId,
     courseId: courseId,
     reportType: reportType,
     description: description,
+    title: title,
   });
   try {
     const problem = await Report.create(newProblem);

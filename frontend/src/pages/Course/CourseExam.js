@@ -28,7 +28,43 @@ const CourseExam = () => {
 
   let corporate = false;
   const navigate = useNavigate();
-
+  const styles = {
+    form: {
+      display: 'flex',
+      flexDirection: 'column',
+      width: '50%',
+      margin: '15px',
+      padding: '20px',
+      border: '1px solid #ccc',
+      borderRadius: '5px',
+    },
+    label: {
+      fontSize: '16px',
+      fontWeight: 'bold',
+      marginBottom: '8px',
+    },
+    radio: {
+      marginRight: '8px',
+    },
+    input: {
+      width: '100%',
+      padding: '12px',
+      border: '1px solid #ccc',
+      borderRadius: '4px',
+      boxSizing: 'border-box',
+      resize: 'vertical',
+    },
+    button: {
+      backgroundColor: '#a00407',
+      color: 'white',
+      padding: '12px 20px',
+      border: 'none',
+      borderRadius: '4px',
+      cursor: 'pointer',
+      float: 'right',
+      width:'20%',
+    },
+  };
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -96,20 +132,21 @@ const CourseExam = () => {
 
   return (
     <div>
-      <h1>Exam</h1>
+      <h1 style={{textAlign: "center",color: "#A00407"}}>Quiz</h1>
       <div class="d-grid gap-3">
+
         <Form>
           {CourseExam.map((exam, index) => {
             return (
-              <div class="p-2 bg-light border">
-                <Card border="primary" style={{ width: "135rem" }}>
+              <div>
+                <Card border="primary" style={{ width: "50%" ,marginLeft:"25%" ,marginBottom: "2%"}}>
                   <Card.Body>
                     <Card.Title>
                       {" "}
-                      <Form.Label>Question {index + 1} </Form.Label>
+                      <Form.Label style={{color: "#A00407"}}>Question {index + 1} </Form.Label>
                     </Card.Title>
                     <Card.Text>
-                      <Form.Label>{exam["content"]} </Form.Label>
+                      <Form.Label><b>{exam["content"]}</b></Form.Label>
                     </Card.Text>
                     <ListGroup className="list-group-flush">
                       <ListGroup.Item>
@@ -131,15 +168,18 @@ const CourseExam = () => {
                               <Form.Label>- {exam["firstChoice"]}</Form.Label>
                             </>
                           )
-                        ) : (
+                          ) : (
                           <InputGroup>
-                            <InputGroup.Radio
+                            <Form.Check
                               value={1}
+                              type="radio"
                               name={`Choices${index}`}
                               onChange={handleRadioChange}
+                              required
                               defaultChecked
+                              
                             />
-                            <Form.Label>- {exam["firstChoice"]} </Form.Label>
+                            <Form.Label><div style={{marginLeft : "10px"}}> {exam["firstChoice"]}</div> </Form.Label>
                           </InputGroup>
                         )}
                       </ListGroup.Item>
@@ -164,12 +204,14 @@ const CourseExam = () => {
                           )
                         ) : (
                           <InputGroup>
-                            <InputGroup.Radio
+                            <Form.Check
                               value={2}
+                              type="radio"
                               name={`Choices${index}`}
                               onChange={handleRadioChange}
+                              required
                             />
-                            <Form.Label>- {exam["secondChoice"]} </Form.Label>
+                            <Form.Label><div style={{marginLeft : "10px"}}> {exam["secondChoice"]} </div></Form.Label>
                           </InputGroup>
                         )}
                       </ListGroup.Item>
@@ -194,12 +236,14 @@ const CourseExam = () => {
                           )
                         ) : (
                           <InputGroup>
-                            <InputGroup.Radio
+                            <Form.Check
                               value={3}
+                              type="radio"
                               name={`Choices${index}`}
                               onChange={handleRadioChange}
+                              required
                             />
-                            <Form.Label>- {exam["thirdChoice"]} </Form.Label>
+                            <Form.Label><div style={{marginLeft : "10px"}}> {exam["thirdChoice"]} </div></Form.Label>
                           </InputGroup>
                         )}
                       </ListGroup.Item>
@@ -222,14 +266,16 @@ const CourseExam = () => {
                               <Form.Label>- {exam["fourthChoice"]}</Form.Label>
                             </>
                           )
-                        ) : (
+                          ) : (
                           <InputGroup>
-                            <InputGroup.Radio
+                            <Form.Check
                               value={4}
+                              type="radio"
                               name={`Choices${index}`}
                               onChange={handleRadioChange}
+                              required
                             />
-                            <Form.Label>- {exam["fourthChoice"]} </Form.Label>
+                            <Form.Label><div style={{marginLeft : "10px"}}> {exam["fourthChoice"]} </div></Form.Label>
                           </InputGroup>
                         )}
                       </ListGroup.Item>

@@ -69,6 +69,7 @@ const ReportProblem = () => {
   */ 
   const [reportType, setReportType] = useState("");
   const [description, setDescription] = useState("");
+  const [title, setTitle] = useState("");
 
   const styles = {
     form: {
@@ -128,6 +129,7 @@ const ReportProblem = () => {
       courseId: course_id,
       reportType: reportType,
       description: description,
+      title: title,
     };
     try {
       const res = await axios.post(reportUrl, problem);
@@ -221,6 +223,12 @@ const ReportProblem = () => {
           />
 
 <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label style={styles.label}>Title of the Problem </Form.Label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"  type="txt"
+            placeholder="write a title for your problem"
+            style={styles.input}
+            onChange={(e) => setTitle(e.target.value)}
+            required></textarea>
           <Form.Label style={styles.label}>Whats Is Your Problem ?</Form.Label>
         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"  type="txt"
             placeholder="descripe your problem"
