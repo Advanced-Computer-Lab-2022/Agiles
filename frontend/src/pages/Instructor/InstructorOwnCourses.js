@@ -7,12 +7,12 @@ import spinner from "../../static/download.gif";
 import InprogressStyles from "../../components/Inprogress.module.css";
 import RegCourseCardStyles from "../../components/RegCourseCard.module.css";
 import { CourseCard } from "../../components/CourseCard";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 const cookies = new Cookies();
-const FetchUrl = '/instructor/listCourseTitles';
-const Search_URL = '/instructor/searchCourses'
+const FetchUrl = "/instructor/listCourseTitles";
+const Search_URL = "/instructor/searchCourses";
 function InstructorOwnCourses() {
-  const currentUser = cookies.get('currentUser');
+  const currentUser = cookies.get("currentUser");
   const [isloading, setIsLoading] = useState(true);
   const [courses, setCourses] = useState([]);
   const [searchString, setSearchString] = useState("");
@@ -33,82 +33,70 @@ function InstructorOwnCourses() {
   const handleSearchChange = (event) => {
     setSearchString(event.target.value);
   };
-  const handleSearch = async(event)=>{
+  const handleSearch = async (event) => {
     event.preventDefault();
     setIsLoading(true);
     try {
-      const res = await axios.get(Search_URL ,{ params: { search:searchString , instructor :currentUser }});
-      setCourses(res.data)
+      const res = await axios.get(Search_URL, {
+        params: { search: searchString, instructor: currentUser },
+      });
+      setCourses(res.data);
     } catch (e) {
       console.log(e);
     }
     setIsLoading(false);
-  
-  }
+  };
 
-  const fetchData = async()=>{
+  const fetchData = async () => {
     setIsLoading(true);
     try {
       const res = await axios.get(FetchUrl + "/" + currentUser);
-      setCourses(res.data)
+      setCourses(res.data);
     } catch (e) {
       console.log(e);
     }
     setIsLoading(false);
-  }
-  useEffect(()=>{
+  };
+  useEffect(() => {
     fetchData();
-  },[]);
+  }, []);
 
   return (
     <>
-    {isloading ? (
-      <LoadingScreen loading={true} logoSrc={spinner} />
-    ) : (
-      <div>
-       {/* <nav className="smallNav" >
-            <div>
-              <Link to="/">
+      {isloading ? (
+        <LoadingScreen loading={true} logoSrc={spinner} />
+      ) : (
+        <div>
+          <section className={InprogressStyles["Wrapper"]}>
+            <section className={InprogressStyles["main-section"]}>
+              <h1>My Courses</h1>
+            </section>
+
+            <section className={InprogressStyles["courses"]}>
+              <div style={{ width: "100%", paddingBottom: "50px" }}>
                 <button
-                
-                  className="notPressed"
+                  className={InprogressStyles["main-btn"]}
+                  onClick={() => (window.location.href = "/createcourse")}
                 >
-                  Explore{" "}
+                  Create Course
                 </button>
-              </Link>
-              <Link to="/mycourses">
-                <button
-                
-                className={"Inprogress"}
-                >
-                  My Courses{" "}
-                </button>
-              </Link>
-              <Link to="/createcourse">
-                <button
-                 
-                  className={"notPressed"}
-                >
-                  Create new course{" "}
-                </button>
-              </Link>
-            </div>
-          </nav>*/}
-    <section className={InprogressStyles["Wrapper"]}>
-           <section className={InprogressStyles["main-section"]}>
-              <h1>My Courses</h1>          
-           </section>
-       
-      <section className={InprogressStyles['courses']}>
-      <button  className={InprogressStyles['main-btn']} onClick={()=>window.location.href="/createcourse"}>Create Course</button>
-      <div className={RegCourseCardStyles["cardgrid"]}>
-        {courses.length>0 ?(<>{courses.map((el,index) => {
-          return <CourseCard data={el} key={index}></CourseCard>;
-        })}</>):<h3>No courses found</h3>}
+              </div>
+              <div className={RegCourseCardStyles["cardgrid"]}>
+                {courses.length > 0 ? (
+                  <>
+                    {courses.map((el, index) => {
+                      return <CourseCard data={el} key={index}></CourseCard>;
+                    })}
+                  </>
+                ) : (
+                  <h3>No courses found</h3>
+                )}
+              </div>
+            </section>
+          </section>
         </div>
-        </section>
-    </section>
-    </div>)}</>
+      )}
+    </>
   );
 }
 
