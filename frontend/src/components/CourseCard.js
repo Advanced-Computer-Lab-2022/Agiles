@@ -1,23 +1,20 @@
 import React, { useState } from "react";
 import style from "./CourseCard.module.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import Rating from "@mui/material/Rating";
 import YouTubeIcon from "@mui/icons-material/YouTube";
-import { Checkbox } from "@mui/material";
 const cookies = new Cookies();
 export const CourseCard = (props) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const status = cookies.get("status");
   const hours = Math.floor(props.data.totalHoursOfCourse/60);
   const min = props.data.totalHoursOfCourse%60;
-  const [checked, setChecked] = useState(
-    props.checked == null ? false : props.checked
-  );
   const courseId = props.data._id;
   const onCourses =
-    window.location.href == "http://localhost:3000/courses" ||
-    window.location.href == "http://localhost:3000/";
+    location.pathname == "/courses" ||
+    location.pathname == "/";
   const handleClick = () => {
     if (props.admin) {
       return;

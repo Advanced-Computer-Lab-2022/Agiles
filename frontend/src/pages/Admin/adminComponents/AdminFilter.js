@@ -1,7 +1,6 @@
 import FilterStyles from "./AdminFilter.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Cookies from "universal-cookie";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import Accordion from "react-bootstrap/Accordion";
 import { subjectList } from "../../Course/subjectList.js";
