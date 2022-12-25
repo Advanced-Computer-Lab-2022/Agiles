@@ -33,7 +33,7 @@ function SetPromotion(props) {
   const [flag, setFlag] = useState(false);
   const PROMO_URL = "/course/addPromotionMulti";
   const location = useLocation();
-  const [messages ,setMessages] = useState([]);
+  const [messages, setMessages] = useState([]);
   const changeMessage = (message) => {
     setMessages(message);
   };
@@ -92,7 +92,9 @@ function SetPromotion(props) {
       url = `/course/listCourses/details`;
     } else if (action == 1) {
       url = `/course/listCourses/search?search=${searchString}`;
-    } 
+      setIsCheck([]);
+      setIsCheckAll(false);
+    }
     let { data } = await axios.get(url);
     setCourses(data.map((obj) => ({ ...obj, checked: false })));
     setMessages(data.map((obj) => ({ ...obj, checked: false })));
@@ -144,8 +146,10 @@ function SetPromotion(props) {
           <div>
             <AdminFilter
               changeMessage={changeMessage}
-              courses = {courses}
-              currentMessage = {messages}
+              courses={courses}
+              currentMessage={messages}
+              setIsCheck={setIsCheck}
+              setIsCheckAll={setIsCheckAll}
             />
           </div>
         </div>
