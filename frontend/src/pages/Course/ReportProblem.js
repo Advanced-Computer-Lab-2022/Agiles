@@ -96,6 +96,7 @@ const ReportProblem = () => {
       borderRadius: "4px",
       boxSizing: "border-box",
       resize: "vertical",
+      marginBottom: "10px",
     },
     button: {
       backgroundColor: "#a00407",
@@ -191,7 +192,7 @@ const ReportProblem = () => {
           </h1>
 
           <Form onSubmit={handleSubmit} style={styles.form}>
-            <Form.Label style={styles.label}>Type of your problem ?</Form.Label>
+            <Form.Label style={styles.label}>Problem Title</Form.Label>
 
             <Form.Check
               name="subject"
@@ -225,28 +226,24 @@ const ReportProblem = () => {
             />
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label style={styles.label}>
-                Title of the Problem{" "}
-              </Form.Label>
+              <Form.Label style={styles.label}>Problem Title </Form.Label>
               <textarea
                 class="form-control"
                 id="exampleFormControlTextarea1"
                 rows="1"
                 type="txt"
-                placeholder="write a title for your problem"
+                placeholder="title"
                 style={styles.input}
                 onChange={(e) => setTitle(e.target.value)}
                 required
               ></textarea>
-              <Form.Label style={styles.label}>
-                Whats Is Your Problem ?
-              </Form.Label>
+              <Form.Label style={styles.label}>Problem Description</Form.Label>
               <textarea
                 class="form-control"
                 id="exampleFormControlTextarea1"
                 rows="3"
                 type="txt"
-                placeholder="descripe your problem"
+                placeholder="describe your problem"
                 style={styles.input}
                 onChange={(e) => setDescription(e.target.value)}
                 required

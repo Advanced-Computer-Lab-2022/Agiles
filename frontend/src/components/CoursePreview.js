@@ -150,109 +150,120 @@ const CoursePreview = () => {
                 </Button>
               </Modal.Footer>
             </Modal>
-            <label className={style["mainlabel"]}>Overview</label>
-            <ProgressBar
-              now={progress}
-              className={style["progressbar"]}
-            ></ProgressBar>
-            <div className={style["progress"]}>
-              <div className={style["progress-left"]}>
-                <h6 style={{ marginLeft: "0.5rem", marginTop: "0.5rem" }}>
-                  {completedItems} of {allItems} items completed
-                </h6>
-                {certificate ? (
-                  <Button
-                    variant="text"
-                    style={{
-                      borderRadius: "1rem",
-                      width: "10rem",
-                      border: "none",
-                      color: "#a00407",
-                    }}
-                    onClick={handleCertificate}
-                  >
-                    Get Certificate
-                  </Button>
-                ) : null}
+            <div className={style["progress-container"]}>
+              <label className={style["mainlabel"]}>Overview</label>
+              <div className={style["progressbar-container"]}>
+                <ProgressBar
+                  now={progress}
+                  className={style["progressbar"]}
+                ></ProgressBar>
+              </div>
+              <div className={style["progress"]}>
+                <div className={style["progress-left"]}>
+                  <h6 style={{ marginLeft: "0.5rem", marginTop: "0.5rem" }}>
+                    {completedItems} of {allItems} items completed
+                  </h6>
+                  {certificate ? (
+                    <Button
+                      variant="text"
+                      style={{
+                        borderRadius: "1rem",
+                        width: "10rem",
+                        border: "none",
+                        color: "#a00407",
+                      }}
+                      onClick={handleCertificate}
+                    >
+                      Get Certificate
+                    </Button>
+                  ) : null}
+                </div>
               </div>
             </div>
 
-            <h1>Welcome to the {course.title} Course</h1>
             <div className={style["video"]}>
+              <h1>Welcome to the {course.title} Course</h1>
+
               {course.coursePreviewUrl != "" ? (
-                <iframe
-                  width="1000"
-                  height="500"
-                  src={course.coursePreviewUrl}
-                  title="YouTube video player"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
+                <div className={style["iframe-container"]}>
+                  <iframe
+                    className={style["responsive-iframe"]}
+                    src={course.coursePreviewUrl}
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
               ) : (
                 <h6 style={{ textAlign: "center" }}>
                   <DoNotDisturbIcon /> No Preview Video for this Course
                 </h6>
               )}
+              <hr className={style["mainRight-hr"]}></hr>
             </div>
-            <hr className={style["mainRight-hr"]}></hr>
-            <h3>About this course</h3>
-            <p>
-              Description : {course.description}
-              <br></br>
-              <span>Subject : {course.subject}</span>
-            </p>
-            <hr className={style["mainRight-hr"]}></hr>
-            <h3>Rate Instructor</h3>
-            <InstructorRating
-              id={instId}
-              instRating={instRating}
-              courseId={course_id}
-              instReview={instReview}
-            />
-            <hr className={style["mainRight-hr"]}></hr>
-            <div className={style["mainRight-rating"]}>
-              <h3>
-                <Rating
-                  name="rating"
-                  readOnly
-                  value={
-                    !course.rating
-                      ? 0
-                      : Math.round(course.rating / course.ratingCount)
-                  }
-                  className={style["rating"]}
-                />{" "}
-                <span>
-                  {Math.round(course.rating / course.ratingCount)} course rating{" "}
-                  <CircleIcon style={{ fontSize: "0.5rem" }} /> (
-                  {course.ratingCount - 1} ratings)
-                </span>
-              </h3>
-              <div className={style["rating-box"]}>
-                {reviews
-                  .filter((review, idx) => idx < 5)
-                  .map((review, index) => {
-                    return (
-                      <ReviewCard
-                        index={index}
-                        username={review.userId.username}
-                        rating={review.userRating}
-                        review={review.userReview}
-                      ></ReviewCard>
-                    );
-                  })}
+
+            <div className={style["about-container"]}>
+              <h3>About this course</h3>
+              <p>
+                Description : {course.description}
+                <br></br>
+                <span>Subject : {course.subject}</span>
+              </p>
+            </div>
+            <div className={style["rating-container"]}>
+              <hr className={style["mainRight-hr"]}></hr>
+              <h3>Rate Instructor</h3>
+              <InstructorRating
+                id={instId}
+                instRating={instRating}
+                courseId={course_id}
+                instReview={instReview}
+              />
+              <hr className={style["mainRight-hr"]}></hr>
+              <div className={style["mainRight-rating"]}>
+                <h3>
+                  <Rating
+                    name="rating"
+                    readOnly
+                    value={
+                      !course.rating
+                        ? 0
+                        : Math.round(course.rating / course.ratingCount)
+                    }
+                    className={style["rating"]}
+                  />{" "}
+                  <span>
+                    {Math.round(course.rating / course.ratingCount)} course
+                    rating <CircleIcon style={{ fontSize: "0.5rem" }} /> (
+                    {course.ratingCount - 1} ratings)
+                  </span>
+                </h3>
+                <div className={style["rating-box"]}>
+                  {reviews
+                    .filter((review, idx) => idx < 5)
+                    .map((review, index) => {
+                      return (
+                        <ReviewCard
+                          index={index}
+                          username={review.userId.username}
+                          rating={review.userRating}
+                          review={review.userReview}
+                        ></ReviewCard>
+                      );
+                    })}
+                </div>
+                <Button
+                  onClick={handleShow}
+                  style={{
+                    backgroundColor: "#a00407",
+                    borderRadius: 0,
+                    width: "10rem",
+                    border: "none",
+                  }}
+                >
+                  show all reviews
+                </Button>
               </div>
-              <Button
-                onClick={handleShow}
-                style={{
-                  backgroundColor: "#a00407",
-                  borderRadius: 0,
-                  width: "10rem",
-                  border: "none",
-                }}
-              >
-                show all reviews
-              </Button>
             </div>
           </div>
         </div>
