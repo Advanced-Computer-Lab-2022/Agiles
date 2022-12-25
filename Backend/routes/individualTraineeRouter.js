@@ -12,6 +12,7 @@ const {
   requestAccess,
   getTraineebyID,
   InprogressCourses,
+  sendCertificate,
   getExerciseGrade,
   compareAnswers,
   updateITraineePassword,
@@ -38,6 +39,8 @@ const {
   getTraineeExams,
 } = require("../controllers/IndividualTraineeController");
 const { verifyItraineeJWT } = require("../middleware/authMiddleware");
+
+IndividualTraineeRouter.post("/sendCertificate", verifyItraineeJWT,sendCertificate);
 
 IndividualTraineeRouter.get(
   "/getIndividualTraineebyId",

@@ -39,6 +39,13 @@ const Inprogress = () => {
               <h1>My Learning</h1>
             </section>
             <section className={InprogressStyles["courses"]}>
+              <button
+                className={InprogressStyles["main-btn"]}
+                style={{ marginBottom: "50px" }}
+                onClick={() => (window.location.href = "/courses")}
+              >
+                Browse All Courses
+              </button>
               <div className={RegCourseCardStyles["cardgrid"]}>
                 {courses.map((el, index) => {
                   return (
@@ -63,13 +70,6 @@ const Inprogress = () => {
                 )}
               </div>
             </section>
-            <button
-              className={InprogressStyles["main-btn"]}
-              style={{ marginBottom: "1rem" }}
-              onClick={() => (window.location.href = "/courses")}
-            >
-              Browse All Courses
-            </button>
           </section>
         </div>
       )}

@@ -433,6 +433,50 @@ const compareAnswers = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+const sendCertificate = async (req, res) => {
+  const  email = req.body.email;
+  const courseName = req.body.courseName;
+  console.log(email);
+  if(!email){
+    return res.status(500).json("bad request");
+  }
+  const oldUser = await IndividualTrainee.findOne({ email: email });
+
+  if (!oldUser) {
+    return res.status(406).json("user not exists!!");
+  }
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.NO_REPLY_EMAIL,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+
+  const mailOptions = {
+    from: "canadian_chamber_of_commerce@gmail.com",
+    to: email,
+    subject: courseName,
+    html: `<div>
+    <h1>Dear ${oldUser.firstname} ${oldUser.lastname}</h1>
+    <p>Thank you for completing the course ${courseName}.</p>
+    <p>Here is your certificate.</p>
+    <p>Best regards,</p>
+    <p>Canadian Chamber of Commerce</p>
+    <a href="https://ibb.co/2gpkhXb"><img src="https://i.ibb.co/TmNg2zC/certificate.png" alt="certificate" border="0"></a>
+    </div>`,
+  };
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) return res.status(403).json("operation not supported");
+    else return res.status(200).json("emailSet");
+  });
+}
+
+
+
+
 const forgetPassword = async (req, res) => {
   const { email } = req.body;
   if (!email) {
@@ -780,4 +824,5 @@ module.exports = {
   courseFinalExam,
   getTraineeProgress,
   getTraineeExams,
+  sendCertificate
 };
