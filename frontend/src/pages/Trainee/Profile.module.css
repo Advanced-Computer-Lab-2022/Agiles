@@ -11,6 +11,7 @@
 .side-bar {
   border-right: 1px solid #e0e0e0;
   display: grid;
+  min-width: 100px;
 }
 .side-bar-top {
   display: grid;
@@ -22,10 +23,12 @@
 .side-bar-top img {
   width: 140px;
   max-width: 100%;
+  margin-bottom: 20px;
 }
 
 .side-bar-top label {
   font-weight: bold;
+  text-align: center;
 }
 .side-bar-bottom {
   display: grid;
@@ -34,6 +37,7 @@
   font-weight: 500;
   margin-bottom: 0.5rem;
   cursor: pointer;
+  padding: 10px;
 }
 .side-bar-bottomClicked {
   font-weight: 500;
@@ -41,6 +45,7 @@
   cursor: pointer;
   color: white;
   background-color: rgb(78, 77, 77);
+  padding: 10px;
 }
 .side-bar-bottom ul {
   list-style: none;

@@ -41,14 +41,16 @@ const CoursePreview = () => {
 
   const handleCertificate = async (e) => {
     try {
-      const res = await axios.get("individualtrainee/getIndividualTraineebyId")
+      const res =  await axios.get("individualtrainee/getIndividualTraineebyId")
       .then((response) => {
-        let email = response.data.email;
-        return axios.post("individualtrainee/sendCertificate",{
-          email: email,
+          axios.post("individualtrainee/sendCertificate",{
+          email: response.data.email,
           courseName: course.title,
-        })
+          })
+          return response;
+          
       });
+      console.log(res.data);
       if (res) {
         
 
@@ -62,7 +64,6 @@ const CoursePreview = () => {
             idx: index,
             fname: res.data.firstname,
             lname: res.data.lastname,
-            email: res.data.email,
           },
         });
 
