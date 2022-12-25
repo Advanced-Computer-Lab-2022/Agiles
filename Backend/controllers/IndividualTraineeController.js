@@ -437,7 +437,6 @@ const compareAnswers = async (req, res) => {
 const sendCertificate = async (req, res) => {
   const  email = req.body.email;
   const courseName = req.body.courseName;
-  console.log(email);
   if(!email){
     return res.status(500).json("bad request");
   }

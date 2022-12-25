@@ -44,7 +44,7 @@ const Inprogress = () => {
                 style={{ marginBottom: "50px" }}
                 onClick={() => (window.location.href = "/courses")}
               >
-                Browse All Courses
+                Learn more
               </button>
               <div className={RegCourseCardStyles["cardgrid"]}>
                 {courses.map((el, index) => {
