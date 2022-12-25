@@ -16,7 +16,6 @@ import SetExam from "./pages/Instructor/SetExam";
 import SetFinalExam from "./pages/Instructor/SetFinalExam";
 import SearchResults from "./pages/Course/SearchResults";
 import Course from "./pages/Course/Course";
-import FilterResults from "./pages/Course/FilterResults";
 import InstructorTerms from "./pages/Instructor/InstructorTerms";
 import CourseExam from "./pages/Course/CourseExam";
 import Profile from "./pages/Trainee/Profile";
@@ -74,7 +73,6 @@ function App() {
             <Route path="/courses" element={<Courses />} />
             <Route path="/course" element={<Course />} />
             <Route path="/search" element={<SearchResults />} />
-            <Route path="/courses/filter" element={<FilterResults />} />
             <Route path="/previewprofile" element={<PreviewProfile />} />
             <Route path="/instructor/terms" element={<InstructorTerms />} />
             <Route path="/user/terms" element={<UserTerms />} />

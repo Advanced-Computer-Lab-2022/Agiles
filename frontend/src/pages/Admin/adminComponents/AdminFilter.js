@@ -1,21 +1,17 @@
 import FilterStyles from "./AdminFilter.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Rating from "@mui/material/Rating";
 import Cookies from "universal-cookie";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import Accordion from "react-bootstrap/Accordion";
 import { subjectList } from "../../Course/subjectList.js";
+import Swal from "sweetalert2";
 import Form from "react-bootstrap/Form";
-const cookies = new Cookies();
-const AdminFilter = (props) => {
-  const status = cookies.get("status");
+const AdminFilter = ({ changeMessage, currentMessage, courses }) => {
   const [disapled, setDisapled] = useState(false);
   const [minPrice, setMinPrice] = useState();
   const [maxPrice, setMaxPrice] = useState();
   const [subject, setSubject] = useState("");
-  const [rating, setRating] = useState();
-  const [value, setValue] = useState(0);
   const navigate = useNavigate();
   const handleChangePrice1 = (event) => {
     if (window.sessionStorage.getItem("factor")) {
@@ -35,10 +31,6 @@ const AdminFilter = (props) => {
       setMaxPrice(event.target.value);
     }
   };
-  const handleChangeRating = async (event) => {
-    setValue(event.target.value);
-    setRating(event.target.value);
-  };
   const handleChangePriceFree = async (event) => {
     if (event.target.checked) {
       setMinPrice(0);
@@ -55,40 +47,35 @@ const AdminFilter = (props) => {
   };
 
   const handleSubmit = async () => {
-    if (
-      subject == "" &&
-      minPrice == null &&
-      maxPrice == null &&
-      rating == null
-    ) {
-      alert("please fill in at least one filter cell");
-    } else {
-      let url = "";
-      if (!(minPrice == null)) {
-        url += "lowerBound=" + minPrice + "&";
-      } else if (maxPrice != null) {
-        setMinPrice(0);
-        url += "lowerBound=" + 0 + "&";
-      }
-      if (!(maxPrice == null)) {
-        url += "upperBound=" + maxPrice + "&";
-      } else if (minPrice != null) {
-        setMaxPrice(Number.MAX_SAFE_INTEGER);
-        url += "upperBound=" + Number.MAX_SAFE_INTEGER + "&";
-      }
-      if (subject != "") {
-        url += "subject=" + subject + "&";
-      }
-      if (rating != null) {
-        url += "rating=" + rating + "&";
-      }
-
-      navigate({
-        pathname: "/admin/filter",
-        search: url,
+    if (subject == "" && minPrice == null && maxPrice == null) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
       });
-      props.actionState.setAction(2);
-      props.changeState.setChange(!props.changeState.change);
+
+      Toast.fire({
+        icon: "error",
+        title: "please fill at least one field ",
+      });
+    } else {
+      let newMessage = [];
+      currentMessage.forEach((el) => {
+        if (
+          (subject == "" || el.subject == subject) &&
+          (minPrice == null || el.price >= minPrice) &&
+          (maxPrice == null || el.price <= maxPrice)
+        ) {
+          newMessage.push(el);
+        }
+      });
+      changeMessage(newMessage);
     }
   };
   return (
@@ -113,50 +100,45 @@ const AdminFilter = (props) => {
               ))}
             </Accordion.Body>
           </Accordion.Item>
-          <Accordion.Item eventKey="1">
-            <Accordion.Header>Rating</Accordion.Header>
-            <Accordion.Body>
-              <Rating
-                name="rating"
-                value={value}
-                onChange={handleChangeRating}
+          <Accordion.Item eventKey="2">
+            <Accordion.Header>Price</Accordion.Header>
+            <Accordion.Body style={{ display: "flex" }}>
+              <Form.Control
+                type="number"
+                placeholder="Min"
+                disabled={disapled}
+                onChange={handleChangePrice1}
+                className={FilterStyles["inpt"]}
+              />
+              <Form.Control
+                type="number"
+                placeholder="Max"
+                disabled={disapled}
+                className={FilterStyles["inpt"]}
+                onChange={handleChangePrice2}
+              />
+              <Form.Check
+                type="checkbox"
+                label="Free"
+                className={FilterStyles["check"]}
+                onClick={handleChangePriceFree}
               />
             </Accordion.Body>
           </Accordion.Item>
-          {status != 2 && (
-            <Accordion.Item eventKey="2">
-              <Accordion.Header>Price</Accordion.Header>
-              <Accordion.Body style={{ display: "flex" }}>
-                <Form.Control
-                  type="number"
-                  placeholder="Min"
-                  disabled={disapled}
-                  onChange={handleChangePrice1}
-                  className={FilterStyles["inpt"]}
-                />
-                <Form.Control
-                  type="number"
-                  placeholder="Max"
-                  disabled={disapled}
-                  className={FilterStyles["inpt"]}
-                  onChange={handleChangePrice2}
-                />
-                <Form.Check
-                  type="checkbox"
-                  label="Free"
-                  className={FilterStyles["check"]}
-                  onClick={handleChangePriceFree}
-                />
-              </Accordion.Body>
-            </Accordion.Item>
-          )}
         </Accordion>
       </div>
+      <div style={{display:'flex',gap:'1rem'}}>
       <button className={FilterStyles["logo"]} onClick={handleSubmit}>
         <span>
           <FilterListIcon /> Filter
         </span>
       </button>
+      <button className={FilterStyles["logo"]} onClick={()=>changeMessage(courses)}>
+        <span>
+         clear filter
+        </span>
+      </button>
+      </div>
     </div>
   );
 };

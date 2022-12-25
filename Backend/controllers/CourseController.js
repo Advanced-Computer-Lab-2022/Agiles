@@ -7,63 +7,6 @@ const Rating = require("../models/Rating");
 const Instructor = require("../models/Instructor");
 const Report = require("../models/Report");
 require("dotenv").config();
-const filterCourses = async (req, res) => {
-  const lowerBound = req.query["lowerBound"];
-  const upperBound = req.query["upperBound"];
-  const subjects = req.query["subject"];
-  const ratings = req.query["rating"];
-
-  let courses = [];
-
-  if (subjects && lowerBound && ratings) {
-    courses = await Course.find({
-      $and: [{ price: { $gte: lowerBound } }, { price: { $lte: upperBound } }],
-      rating: ratings,
-      subject: { $regex: new RegExp(subjects, "i") },
-    })
-      .sort({ price: 1 })
-      .exec();
-  } else if (subjects && lowerBound) {
-    courses = await Course.find({
-      $and: [{ price: { $gte: lowerBound } }, { price: { $lte: upperBound } }],
-      subject: { $regex: new RegExp(subjects, "i") },
-    })
-      .sort({ price: 1 })
-      .exec();
-  } else if (lowerBound && ratings) {
-    courses = await Course.find({
-      $and: [{ price: { $gte: lowerBound } }, { price: { $lte: upperBound } }],
-      rating: ratings,
-    })
-      .sort({ price: 1 })
-      .exec();
-  } else if (subjects && ratings) {
-    courses = await Course.find({
-      rating: ratings,
-      subject: { $regex: new RegExp(subjects, "i") },
-    })
-      .sort({ price: 1 })
-      .exec();
-  } else if (subjects) {
-    courses = await Course.find({
-      subject: { $regex: new RegExp(subjects, "i") },
-    }).exec();
-  } else if (ratings) {
-    courses = await Course.find({
-      rating: ratings,
-    }).exec();
-  } else if (lowerBound) {
-    courses = await Course.find({
-      $and: [{ price: { $gte: lowerBound } }, { price: { $lte: upperBound } }],
-    }).exec();
-  }
-
-  if (!courses) {
-    res.status(400).json({ error: "Empty" });
-  } else {
-    res.status(200).json(courses);
-  }
-};
 const popularCourses = async (req, res) => {
   const courses = await Course.find().sort({ studentCount: -1 }).limit(10);
   if (!courses) {
@@ -360,7 +303,6 @@ module.exports = {
   addCoursePromotion,
   createCourse,
   getCourses,
-  filterCourses,
   courseSearch,
   getCourseById,
   setExam,
@@ -370,8 +312,6 @@ module.exports = {
   reportProblem,
   popularCourses,
   viewReportedProblems,
-
   addFollowUp,
-
   addCoursePromotionMulti,
 };

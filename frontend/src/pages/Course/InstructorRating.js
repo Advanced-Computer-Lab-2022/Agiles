@@ -46,7 +46,7 @@ function InstructorRating({ id, instRating, instReview, courseId }) {
         toast: true,
         position: "top-end",
         showConfirmButton: false,
-        timer: 3000,
+        timer: 2000,
         timerProgressBar: true,
         didOpen: (toast) => {
           toast.addEventListener("mouseenter", Swal.stopTimer);
@@ -96,7 +96,7 @@ function InstructorRating({ id, instRating, instReview, courseId }) {
         toast: true,
         position: "top-end",
         showConfirmButton: false,
-        timer: 3000,
+        timer: 2000,
         timerProgressBar: true,
         didOpen: (toast) => {
           toast.addEventListener("mouseenter", Swal.stopTimer);
@@ -150,7 +150,7 @@ function InstructorRating({ id, instRating, instReview, courseId }) {
           variant="dark"
           type="submit"
           style={{
-            backgroundColor: "#a00407",
+            backgroundColor: 'green',
             borderRadius: 0,
             width: "7rem",
             borderRadius: "0.5rem",
