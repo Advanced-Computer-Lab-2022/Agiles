@@ -10,7 +10,6 @@ import LoadingScreen from "react-loading-screen";
 import spinner from "../static/download.gif";
 import RegCourse from "../pages/Course/RegCourse";
 import axios from "axios";
-import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { AiOutlineCheck } from "react-icons/ai";
 import Badge from "react-bootstrap/Badge";
