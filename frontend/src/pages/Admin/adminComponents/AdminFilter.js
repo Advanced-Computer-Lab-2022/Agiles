@@ -6,7 +6,13 @@ import Accordion from "react-bootstrap/Accordion";
 import { subjectList } from "../../Course/subjectList.js";
 import Swal from "sweetalert2";
 import Form from "react-bootstrap/Form";
-const AdminFilter = ({ changeMessage, currentMessage, courses }) => {
+const AdminFilter = ({
+  changeMessage,
+  currentMessage,
+  courses,
+  setIsCheck,
+  setIsCheckAll,
+}) => {
   const [disapled, setDisapled] = useState(false);
   const [minPrice, setMinPrice] = useState();
   const [maxPrice, setMaxPrice] = useState();
@@ -75,6 +81,8 @@ const AdminFilter = ({ changeMessage, currentMessage, courses }) => {
         }
       });
       changeMessage(newMessage);
+      setIsCheck([]);
+      setIsCheckAll(false);
     }
   };
   return (
@@ -126,17 +134,18 @@ const AdminFilter = ({ changeMessage, currentMessage, courses }) => {
           </Accordion.Item>
         </Accordion>
       </div>
-      <div style={{display:'flex',gap:'1rem'}}>
-      <button className={FilterStyles["logo"]} onClick={handleSubmit}>
-        <span>
-          <FilterListIcon /> Filter
-        </span>
-      </button>
-      <button className={FilterStyles["logo"]} onClick={()=>changeMessage(courses)}>
-        <span>
-         clear filter
-        </span>
-      </button>
+      <div style={{ display: "flex", gap: "1rem" }}>
+        <button className={FilterStyles["logo"]} onClick={handleSubmit}>
+          <span>
+            <FilterListIcon /> Filter
+          </span>
+        </button>
+        <button
+          className={FilterStyles["logo"]}
+          onClick={() => changeMessage(courses)}
+        >
+          <span>clear filter</span>
+        </button>
       </div>
     </div>
   );

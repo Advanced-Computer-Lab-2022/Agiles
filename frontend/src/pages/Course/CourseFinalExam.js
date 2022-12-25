@@ -58,17 +58,17 @@ const CourseFinalExam = () => {
             course_inst={location.state.course_inst}
             name={"exam"}
           />
-          <h1>Final Exam</h1>
+      <h1 style={{textAlign: "center",color: "#A00407"}}>Final Exam</h1>
           <div class="d-grid gap-3">
             <Form>
               {CourseFinalExam.map((exam, index) => {
                 return (
-                  <div class="p-2 bg-light border">
-                    <Card border="primary" style={{ width: "100rem" }}>
+                  <div >
+                <Card border="primary" style={{ width: "50%" ,marginLeft:"25%" ,marginBottom: "2%"}}>
                       <Card.Body>
                         <Card.Title>
                           {" "}
-                          <Form.Label>Question {index + 1} </Form.Label>
+                      <Form.Label style={{color: "#A00407"}}>Question {index + 1} </Form.Label>
                         </Card.Title>
                         <Card.Text>
                           <Form.Label>{exam["content"]} </Form.Label>

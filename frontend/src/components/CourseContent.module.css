@@ -1,31 +1,36 @@
-.mainlabel{
-    color: rgb(97, 94, 94);
-    font-size: 1.5rem;
-    margin-top: 2rem;
+.mainlabel {
+  color: rgb(97, 94, 94);
+  font-size: 1.5rem;
+  margin-top: 2rem;
+}
+.mainRight {
+  width: 80%;
+  max-width: 700px;
+  margin: 20px 0;
+}
+.subtitles {
+  margin-top: 2rem;
+  width: 80%;
+  min-width: 400px;
 }
 
-.subtitles{
-    margin-top: 2rem;
-    width: 80%;
+.icon {
+  font-size: small;
+}
+.subtitleView {
+  background-color: inherit;
+  color: #a00407;
+  border: none;
+}
+.videoDesc {
+  width: 80%;
+  margin-top: 1rem;
 }
 
-.icon{
-    font-size: small;
+.check {
+  color: #a00407;
+  justify-content: right;
 }
-.subtitleView{
-    background-color: inherit;
-    color: #a00407;
-    border: none;
-}
-.videoDesc{
-    width: 80%;
-    margin-top: 1rem;
-}
-
-.check{
-    color: #a00407;
-    justify-content: right;
-}
-.gradeBadge{
-    background-color: #a00407 !important;
+.gradeBadge {
+  background-color: #a00407 !important;
 }
