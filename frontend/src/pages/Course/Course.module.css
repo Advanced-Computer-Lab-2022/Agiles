@@ -1,57 +1,58 @@
- .course {
+.course {
   width: 100%;
   display: inline-block;
-  min-height: 200vh;
+  /* min-height: 200vh; */
 }
 .mainSection {
   width: 100%;
-  min-height:45vh;
+  /* min-height: 45vh; */
   margin-top: 10px;
-  display: grid;
+  /* display: grid; */
   grid-template-columns: 70% 35%;
   align-items: center;
   background-color: rgb(70, 70, 70);
-  background-position:center ;
+  background-position: center;
+  padding: 50px 30px;
 }
-.mainSection-left{
+/* .mainSection-left{
   padding-left: 15rem;
-  padding-top: 1.3rem;
-}
-.mainSection h1{
+  padding-top: 1.3rem; */
+/* } */
+.mainSection h1 {
   color: #fff;
   font-size: 3.1rem;
   font-weight: bold;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
-.mainSection h2{
+.mainSection h2 {
   color: #fff;
   font-size: 1.2rem;
   font-weight: 100;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   margin-bottom: 0.5rem;
 }
-.mainSection-left-rating{
+.mainSection-left-rating {
   display: flex;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   color: white;
   margin-bottom: 0.5rem;
 }
-.mainSection-left-rating label{
+.mainSection-left-rating label {
   color: white;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   margin-bottom: 0.5rem;
 }
-.mainSection-left-language label{
+.mainSection-left-language label {
   color: white;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   margin-bottom: 0.5rem;
 }
-.instlabel{
+.instlabel {
   color: white;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   margin-bottom: 0.5rem;
 }
-.mainSection-right{
+.mainSection-right {
   width: 60%;
   padding: 0;
   margin-top: 0.5rem;
@@ -59,15 +60,15 @@
   display: grid;
   background-color: rgb(255, 255, 255);
 }
-.preview{
+.preview {
   color: white;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-weight: bold;
   background-color: white;
   color: black;
-  border:none ;
+  border: none;
 }
-.buyme{
+.buyme {
   width: 90%;
   margin-left: 5%;
   border-radius: 0.25rem;
@@ -80,87 +81,90 @@
   color: white;
   border: 0.5px solid rgb(111, 109, 109);
 }
-.buyme:hover{
+.buyme:hover {
   background-color: #680406;
   color: white;
 }
-.price{
+.price {
   color: white;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 1.3rem;
   font-weight: bold;
   color: rgb(0, 0, 0);
-  margin-left:1rem;
-  border:none ;
+  margin-left: 1rem;
+  border: none;
 }
-.discount{
+.discount {
   color: white;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 1rem;
   font-weight: medium;
   color: rgb(102, 100, 100);
-  border:none ;
+  border: none;
 }
-.enddate{
-  margin-left:1rem;
+.enddate {
+  margin-left: 1rem;
   font-size: 0.8rem;
   margin-bottom: 0.2rem;
 }
-.enddatelabel{
-  font-family: 'Open Sans', sans-serif;
+.enddatelabel {
+  font-family: "Open Sans", sans-serif;
   font-weight: bold;
   font-size: 0.9rem;
   color: red;
 }
-.middle{
-  display: grid;
-  grid-template-columns: 70% 20%;
+.middle {
+  display: flex;
+  width: 100%;
+  max-width: 1500px;
+  margin: auto;
 }
-.middle-right{
+.middle-right {
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  margin-top: 2rem;
-  max-height: 18rem;
+  margin: auto 25px;
+  width: 30%;
+  min-width: 20%;
+  height: fit-content;
 }
-.middle-right label{
+.middle-right label {
   margin-top: 1rem;
   margin-left: 1rem;
   margin-bottom: 1rem;
   font-weight: bold;
 }
-.middle-left{
-  margin-left: 5rem;
+.middle-left {
+  /* margin-left: 5rem; */
 }
-.middle-top{
+.middle-top {
   width: 80%;
   margin-top: 2rem;
   margin-left: 5rem;
   align-items: center;
-  background-position:center ;
+  background-position: center;
   margin-bottom: 2rem;
-
 }
-.middle-top label{
+.middle-top label {
   font-size: 1.5rem;
   font-weight: bold;
   font-family: Tahoma, sans-serif;
   color: rgb(33, 32, 32);
   margin-bottom: 1rem;
 }
-.middle-top h2{
+.middle-top h2 {
   font-size: 0.9rem;
   color: rgb(121, 121, 121);
   font-weight: bold;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
-.middle-bottom{
+.middle-bottom {
   width: 80%;
   margin-left: 5rem;
   align-items: center;
-  background-position:center ;
+  background-position: center;
   margin-bottom: 2rem;
 }
-.middle-bottom label{
+.middle-bottom label {
   font-size: 1.5rem;
   font-weight: bold;
   font-family: Tahoma, sans-serif;
@@ -176,15 +180,14 @@
 }
 .isDisabled:hover {
   color: currentColor;
-
 }
-.rating-box{
+.rating-box {
   display: grid;
   gap: 2rem;
   margin-bottom: 1rem;
 }
-.middle-bottom-content{
-  display:  flex;
+.middle-bottom-content {
+  display: flex;
   gap: 2rem;
 }
 .middle-bottom-content img {
@@ -193,30 +196,46 @@
   margin-left: 0.25rem;
   border-radius: 50%;
 }
-.middle-bottom-content-right{
+.middle-bottom-content-right {
   margin-bottom: 1rem;
-  
 }
-.middle-bottom-content-right label{
+.middle-bottom-content-right label {
   font-size: 0.9rem;
   margin-left: 0.25rem;
   color: rgb(121, 121, 121);
 }
-.middle-bottom-content-label2{
+.middle-bottom-content-label2 {
   margin-top: 1rem;
   font-size: 0.8rem;
   font-weight: bold;
-  margin-left:2rem;
+  margin-left: 2rem;
   color: rgb(121, 121, 121);
 }
-.middle-bottom-content-label1{
+.middle-bottom-content-label1 {
   font-size: 1.3rem;
   margin-left: 0.25rem;
   font-weight: bold;
   font-family: Tahoma, sans-serif;
   color: rgb(121, 121, 121);
 }
-.listItem:hover{
+.listItem:hover {
   color: rgb(121, 121, 121);
+}
 
+.mainSectionCont {
+  display: flex;
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  gap: 100px;
+}
+
+@media screen and (max-width: 900px) {
+  .middle {
+    flex-direction: column-reverse;
+  }
+
+  .middle-right {
+    margin: 25px auto;
+  }
 }
