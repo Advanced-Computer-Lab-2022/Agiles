@@ -21,4 +21,11 @@
   color: rgb(97, 94, 94);
   font-size: 1.5rem;
   margin-top: 2rem;
+  margin-left: 2rem;
+}
+
+@media screen and (max-width: 720px) {
+  .mainRight {
+    width: 100%;
+  }
 }
