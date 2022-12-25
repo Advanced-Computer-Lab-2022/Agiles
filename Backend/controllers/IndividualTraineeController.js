@@ -24,7 +24,7 @@ const getNotes = async (req, res) => {
   const subtitleId = req["query"].subtitleId;
   const courseId = req["query"].courseId;
   const linkId = req["query"].linkId;
-  console.log(req["query"]);
+
   if (!subtitleId || !linkId || !courseId || !traineeId) {
     return res.status(500).json("bad request");
   }
@@ -53,7 +53,6 @@ const addNotesToTrainee = async (req, res) => {
   const courseId = req.body.courseId;
   const traineeId = req.user.id;
   const linkId = req.body.linkId;
-  console.log(req.body);
   if (!subtitleId || !linkId || !courseId || !traineeId || !notes) {
     return res.status(500).json("bad request");
   }
@@ -197,7 +196,6 @@ const updateLinkProgress = async (req, res) => {
         course: regcourse1,
         numberOfItems: numberOfItems,
       });
-      console.log(progress);
     } else {
       res.status(400).json({ msg: "bad request" });
     }

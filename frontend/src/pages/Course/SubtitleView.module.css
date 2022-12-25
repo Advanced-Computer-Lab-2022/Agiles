@@ -10,12 +10,16 @@
   display: flex;
   justify-content: center;
   width: 90%;
-  margin: 40px;
+  margin: 40px 40px 10px 40px;
 }
 .main-section-left-bottom {
   margin-left: 4rem;
   max-width: 500px;
   margin-bottom: 50px;
+}
+.main-section-left-bottom p{
+  font-weight: bold;
+
 }
 .main-section-left-bottom h3 {
   font-size: 1.3rem;
@@ -29,7 +33,6 @@
   height: 3px;
   width: 80%;
   background-color: #000;
-  margin-top: 2rem;
 }
 .main-section-right {
   min-width: 250px;

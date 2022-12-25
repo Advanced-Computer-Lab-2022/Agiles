@@ -186,7 +186,6 @@ const addCoursePromotionMulti = async (req, res) => {
         },
         { new: true }
       );
-      console.log(course.discount);
     });
 
     res.status(200).json("updated");

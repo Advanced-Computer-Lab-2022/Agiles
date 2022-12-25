@@ -242,8 +242,6 @@ const refundRequests = async (req, res) => {
 };
 const grantAccess = async (req, res) => {
   const { traineeId, courseId } = req.body;
-  console.log(traineeId);
-  console.log(courseId);
   const course = await Course.findById(courseId);
   const instructor = await Instructor.findById(course.instructor);
   const profit =
