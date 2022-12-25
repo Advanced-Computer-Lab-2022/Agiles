@@ -14,7 +14,6 @@ const {
 
 courserouter.get("/listCourses/details", getCourses);
 courserouter.get("/:id", getCourseById);
-courserouter.get("/listCourses/filter", filterCourses);
 courserouter.get("/most/popular", popularCourses);
 courserouter.get("/listCourses/search", courseSearch);
 courserouter.patch("/addPromotion", addCoursePromotion);

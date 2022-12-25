@@ -27,13 +27,16 @@ function SetPromotion(props) {
   const [action, setAction] = useState(0);
   const [isloading, setIsLoading] = useState(true);
   const [searchString, setSearchString] = useState("");
-  const [selectAll, setSelectAll] = useState(false);
   const [promotion, setPromotion] = useState();
   const [enddate, setEnddate] = useState("");
   const [alert, setAlert] = useState("");
   const [flag, setFlag] = useState(false);
   const PROMO_URL = "/course/addPromotionMulti";
   const location = useLocation();
+  const [messages ,setMessages] = useState([]);
+  const changeMessage = (message) => {
+    setMessages(message);
+  };
   const query = new URLSearchParams(location.search);
   const [isCheckAll, setIsCheckAll] = useState(false);
   const [isCheck, setIsCheck] = useState([]);
@@ -89,12 +92,10 @@ function SetPromotion(props) {
       url = `/course/listCourses/details`;
     } else if (action == 1) {
       url = `/course/listCourses/search?search=${searchString}`;
-    } else if (action == 2) {
-      url = "/course/listCourses/filter" + location.search;
-    }
+    } 
     let { data } = await axios.get(url);
     setCourses(data.map((obj) => ({ ...obj, checked: false })));
-
+    setMessages(data.map((obj) => ({ ...obj, checked: false })));
     setIsLoading(false);
   };
   useEffect(() => {
@@ -142,8 +143,9 @@ function SetPromotion(props) {
           <h5>Filter Courses</h5>
           <div>
             <AdminFilter
-              changeState={{ change, setChange }}
-              actionState={{ action, setAction }}
+              changeMessage={changeMessage}
+              courses = {courses}
+              currentMessage = {messages}
             />
           </div>
         </div>
@@ -283,7 +285,7 @@ function SetPromotion(props) {
             </TableRow>
           </TableHead>
           <TableBody style={{ border: "none" }}>
-            {courses.map((el) => {
+            {messages.map((el) => {
               return (
                 <TableRow
                   style={{

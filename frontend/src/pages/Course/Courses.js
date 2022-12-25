@@ -6,10 +6,10 @@ import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif";
 const Courses = () => {
   const [courses, setCourses] = useState([]);
-  const [message, setMessage] = useState(true);
+  const [messages, setMessages] = useState([]);
   const [isloading, setIsLoading] = useState(false);
   const chooseMessage = (message) => {
-    setMessage(message);
+    setMessages(message);
   };
   useEffect(() => {
     const fetchData = async () => {
@@ -18,6 +18,7 @@ const Courses = () => {
       let jsondata = await res.json();
       if (res.ok) {
         setCourses(jsondata);
+        setMessages(jsondata);
       }
       setIsLoading(false);
     };
@@ -30,15 +31,16 @@ const Courses = () => {
         <LoadingScreen loading={true} logoSrc={spinner} />
       ) : (
         <div className={style['wrapper']}>
-          <Filter className={style['wrapper-left']} chooseMessage={chooseMessage} currentMessage={message}/>
+          <Filter className={style['wrapper-left']} chooseMessage={chooseMessage} currentMessage={messages} courses={courses}/>
           <section className={style["wrapper-right"]}>
             <h1>Courses</h1>
             <h2>courses to get you started</h2>
             <hr></hr>
           <div className={style["course-list"]}>
-            {courses.map((el, index) => {
+            {messages.map((el, index) => {
               return <CourseCard  data={el} key={index} />;
             })}
+            {messages.length === 0 && (<h5>no courses found</h5>)}
           </div>
           </section>
           </div>
