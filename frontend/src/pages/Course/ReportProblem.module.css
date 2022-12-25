@@ -1,20 +1,24 @@
 .h1 {
-    padding-left: 20%;
-    padding-right: 5%;
-    color: #A00407;
+  padding-left: 20%;
+  padding-right: 5%;
+  color: #a00407;
 }
 
 .button {
-    background-color: #A00407;
+  background-color: #a00407;
 }
 
 .card {
-    padding-left: 2%;
-    margin-top: 3rem;
+  padding-left: 2%;
+  margin-top: 3rem;
+}
+
+.mainRight {
+  width: 70%;
 }
 
 .mainlabel {
-    color: rgb(97, 94, 94);
-    font-size: 1.5rem;
-    margin-top: 2rem;
+  color: rgb(97, 94, 94);
+  font-size: 1.5rem;
+  margin-top: 2rem;
 }

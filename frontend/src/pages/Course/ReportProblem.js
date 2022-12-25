@@ -13,8 +13,6 @@ import regStyles from "./RegCourse.module.css";
 const cookies = new Cookies();
 
 const ReportProblem = () => {
-
-
   /*
   
           <Form onSubmit={handleSubmit}>
@@ -66,46 +64,48 @@ const ReportProblem = () => {
         </div>
     </div>
 >>>>>>> b8dd001e26cffa81b987188763e951cd7fe6f2ee
-  */ 
+  */
   const [reportType, setReportType] = useState("");
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
 
   const styles = {
     form: {
-      display: 'flex',
-      flexDirection: 'column',
-      width: '50%',
-      margin: '15px',
-      padding: '20px',
-      border: '1px solid #ccc',
-      borderRadius: '5px',
+      display: "flex",
+      flexDirection: "column",
+      width: "90%",
+      maxWidth: "550px",
+      margin: "15px",
+      padding: "20px",
+      border: "1px solid #ccc",
+      borderRadius: "5px",
     },
     label: {
-      fontSize: '16px',
-      fontWeight: 'bold',
-      marginBottom: '8px',
+      fontSize: "16px",
+      fontWeight: "bold",
+      marginBottom: "8px",
     },
     radio: {
-      marginRight: '8px',
+      marginRight: "8px",
     },
     input: {
-      width: '100%',
-      padding: '12px',
-      border: '1px solid #ccc',
-      borderRadius: '4px',
-      boxSizing: 'border-box',
-      resize: 'vertical',
+      width: "100%",
+      maxWidth: "400px",
+      padding: "12px",
+      border: "1px solid #ccc",
+      borderRadius: "4px",
+      boxSizing: "border-box",
+      resize: "vertical",
     },
     button: {
-      backgroundColor: '#a00407',
-      color: 'white',
-      padding: '12px 20px',
-      border: 'none',
-      borderRadius: '4px',
-      cursor: 'pointer',
-      float: 'right',
-      width:'20%',
+      backgroundColor: "#a00407",
+      color: "white",
+      padding: "12px 20px",
+      border: "none",
+      borderRadius: "4px",
+      cursor: "pointer",
+      float: "right",
+      width: "100px",
     },
   };
   const state = cookies.get("status");
@@ -161,7 +161,7 @@ const ReportProblem = () => {
   useEffect(() => {
     fetchdata();
   }, []);
-  return (   
+  return (
     <div className={regStyles["mainreg"]}>
       {state == 1 ? (
         <MyCourseInst
@@ -183,69 +183,82 @@ const ReportProblem = () => {
           idx={index}
         />
       )}
-<div className={style["mainRight"]}>
-      <label className={style["mainlabel"]}>Support Center</label>
+      <div className={style["mainRight"]}>
+        <label className={style["mainlabel"]}>Support Center</label>
         <div className={style["card"]}>
-        <h1 style={{color:'#a00407',marginLeft:'15px' }}>Report a problem</h1>
+          <h1 style={{ color: "#a00407", marginLeft: "15px" }}>
+            Report a problem
+          </h1>
 
-      <Form onSubmit={handleSubmit} style={styles.form}>
-      <Form.Label style={styles.label}>Type of your problem ?</Form.Label>
+          <Form onSubmit={handleSubmit} style={styles.form}>
+            <Form.Label style={styles.label}>Type of your problem ?</Form.Label>
 
-        <Form.Check
-          name="subject"
-          type="radio"
-          id={"Technical"}
-          value={"Technical"}
-          style={styles.radio}
-          onChange={handleChangeSubject}
-          label={"Technical"}
-          required
-          />
-        <Form.Check
-          name="subject"
-          type="radio"
-          id={"Financial"}
-          value={"Financial"}
-          style={styles.radio}
-          onChange={handleChangeSubject}
-          label={"Financial"}
-          required
-        />
-        <Form.Check
-          name="subject"
-          type="radio"
-          id={"Other"}
-          value={"Other"}
-          style={styles.radio}
-          onChange={handleChangeSubject}
-          label={"Other"}
-          required
-          />
+            <Form.Check
+              name="subject"
+              type="radio"
+              id={"Technical"}
+              value={"Technical"}
+              style={styles.radio}
+              onChange={handleChangeSubject}
+              label={"Technical"}
+              required
+            />
+            <Form.Check
+              name="subject"
+              type="radio"
+              id={"Financial"}
+              value={"Financial"}
+              style={styles.radio}
+              onChange={handleChangeSubject}
+              label={"Financial"}
+              required
+            />
+            <Form.Check
+              name="subject"
+              type="radio"
+              id={"Other"}
+              value={"Other"}
+              style={styles.radio}
+              onChange={handleChangeSubject}
+              label={"Other"}
+              required
+            />
 
-<Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label style={styles.label}>Title of the Problem </Form.Label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"  type="txt"
-            placeholder="write a title for your problem"
-            style={styles.input}
-            onChange={(e) => setTitle(e.target.value)}
-            required></textarea>
-          <Form.Label style={styles.label}>Whats Is Your Problem ?</Form.Label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"  type="txt"
-            placeholder="descripe your problem"
-            style={styles.input}
-            onChange={(e) => setDescription(e.target.value)}
-            required></textarea>
-        </Form.Group>
-        <Button variant="dark" type="submit" style={styles.button}>
-          Send
-        </Button>
-      </Form>
-            </div>
-            </div>
-            </div>
-
-
-    
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label style={styles.label}>
+                Title of the Problem{" "}
+              </Form.Label>
+              <textarea
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="1"
+                type="txt"
+                placeholder="write a title for your problem"
+                style={styles.input}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+              ></textarea>
+              <Form.Label style={styles.label}>
+                Whats Is Your Problem ?
+              </Form.Label>
+              <textarea
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="3"
+                type="txt"
+                placeholder="descripe your problem"
+                style={styles.input}
+                onChange={(e) => setDescription(e.target.value)}
+                required
+              ></textarea>
+            </Form.Group>
+            <Button variant="dark" type="submit" style={styles.button}>
+              Send
+            </Button>
+          </Form>
+        </div>
+      </div>
+    </div>
   );
 };
 export default ReportProblem;
