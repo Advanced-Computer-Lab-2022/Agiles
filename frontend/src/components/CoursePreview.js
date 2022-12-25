@@ -184,6 +184,7 @@ const CoursePreview = () => {
                         color: "#a00407",
                       }}
                       onClick={handleCertificate}
+                      
                     >
                       Get Certificate
                     </Button>
@@ -263,6 +264,7 @@ const CoursePreview = () => {
                       );
                     })}
                 </div>
+                {course.ratingCount>1&&
                 <Button
                   onClick={handleShow}
                   style={{
@@ -273,7 +275,7 @@ const CoursePreview = () => {
                   }}
                 >
                   show all reviews
-                </Button>
+                </Button>}
               </div>
             </div>
           </div>

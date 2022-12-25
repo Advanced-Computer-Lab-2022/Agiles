@@ -13,6 +13,7 @@ import axios from "axios";
 import Button from "react-bootstrap/Button";
 import { AiOutlineCheck } from "react-icons/ai";
 import Badge from "react-bootstrap/Badge";
+import courseContent from "../static/courseContent.svg"
 const cookies = new Cookies();
 const CoursContent = () => {
   const location = useLocation();
@@ -209,7 +210,8 @@ const CoursContent = () => {
             idx={index}
           />
           <div className={style["mainRight"]}>
-            <label className={style["mainlabel"]}>Course Content</label>
+            <div className={style["main-right-left"]}>
+          <label className={style["mainlabel"]}>Course Content</label>
             <Accordion
               defaultActiveKey="0"
               className={style["subtitles"]}
@@ -328,6 +330,10 @@ const CoursContent = () => {
                 </Accordion.Item>
               </div>
             </Accordion>
+            </div>
+            <div className={style["main-right-right"]}>
+              <img src={courseContent} alt="courseContent" width="400px"></img>
+            </div>
           </div>
         </div>
       )}

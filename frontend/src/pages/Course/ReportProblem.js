@@ -13,58 +13,6 @@ import regStyles from "./RegCourse.module.css";
 const cookies = new Cookies();
 
 const ReportProblem = () => {
-  /*
-  
-          <Form onSubmit={handleSubmit}>
-            <Form.Check
-              name="subject"
-              type="radio"
-              id={"Technical"}
-              value={"Technical"}
-              onChange={handleChangeSubject}
-              label={"Technical"}
-              required
-            />
-            <Form.Check
-              name="subject"
-              type="radio"
-              id={"Financial"}
-              value={"Financial"}
-              onChange={handleChangeSubject}
-              label={"Financial"}
-              required
-            />
-            <Form.Check
-              name="subject"
-              type="radio"
-              id={"Other"}
-              value={"Other"}
-              onChange={handleChangeSubject}
-              label={"Other"}
-              required
-            />
-
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Whats Is Your Problem</Form.Label>
-              <textarea
-                class="form-control"
-                id="exampleFormControlTextarea1"
-                style={{width:'50%'}}
-                rows="3"
-                type="txt"
-                placeholder="descripe your problem"
-                onChange={(e) => setDescription(e.target.value)}
-                required
-              ></textarea>
-            </Form.Group>
-            <Button variant="dark" type="submit" className={style["button"]}>
-              Send
-            </Button>
-          </Form>
-        </div>
-    </div>
->>>>>>> b8dd001e26cffa81b987188763e951cd7fe6f2ee
-  */
   const [reportType, setReportType] = useState("");
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
@@ -75,7 +23,7 @@ const ReportProblem = () => {
       flexDirection: "column",
       width: "90%",
       maxWidth: "550px",
-      margin: "15px",
+      marginLeft: "5%",
       padding: "20px",
       border: "1px solid #ccc",
       borderRadius: "5px",
@@ -187,7 +135,7 @@ const ReportProblem = () => {
       <div className={style["mainRight"]}>
         <label className={style["mainlabel"]}>Support Center</label>
         <div className={style["card"]}>
-          <h1 style={{ color: "#a00407", marginLeft: "15px" }}>
+          <h1 >
             Report a problem
           </h1>
 

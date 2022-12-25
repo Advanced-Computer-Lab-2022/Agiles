@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import Explore from "../components/Explore";
 import Thumbnail from "../components/Thumbnail";
 import ThumbnailLog from "../components/ThumbnailLog";
+import Footer from "../components/Footer";
 const cookies = new Cookies();
 const Home = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const Home = () => {
           </nav>
           <ThumbnailLog></ThumbnailLog>
           <Explore></Explore>
-          <footer></footer>
+          <Footer/>
         </div>
       );
     } else if (status==1) {

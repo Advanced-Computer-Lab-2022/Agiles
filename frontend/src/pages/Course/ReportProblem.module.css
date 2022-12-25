@@ -1,6 +1,8 @@
-.h1 {
-  padding-left: 20%;
-  padding-right: 5%;
+.card h1 {
+  padding-left: 5%;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
   color: #a00407;
 }
 
@@ -10,7 +12,7 @@
 
 .card {
   padding-left: 2%;
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 
 .mainRight {
