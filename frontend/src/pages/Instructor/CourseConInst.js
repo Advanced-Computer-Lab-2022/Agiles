@@ -13,6 +13,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import MyCourseInst from "./MyCourseInst";
 import regStyles from "../Course/RegCourse.module.css";
+import courseContent from "../../static/courseContent.svg"
 let UPLOAD_URL = "/instructor/updateSubtitle";
 const CourseConInst = () => {
   const location = useLocation();
@@ -104,6 +105,7 @@ const CourseConInst = () => {
             name={"content"}
           />
           <div className={style["mainRight"]}>
+          <div className={style["main-right-left"]}>
             <label className={style["mainlabel"]}>Course Content</label>
             <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>
@@ -207,6 +209,10 @@ const CourseConInst = () => {
                 ))}
             </Accordion>
           </div>
+          <div className={style["main-right-right"]}>
+              <img src={courseContent} alt="courseContent" width="400px"></img>
+            </div>
+        </div>
         </div>
       )}
     </>

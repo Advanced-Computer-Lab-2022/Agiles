@@ -58,11 +58,13 @@ const ReportProblem = () => {
     },
   };
   const state = cookies.get("status");
-  const [course, setCourse] = useState([]);
   const location = useLocation();
   const progress = state != 1 && location.state.progress;
   const index = state != 1 && new URLSearchParams(location.search).get("idx");
   const course_id = new URLSearchParams(location.search).get("courseId");
+  const course_img = localStorage.getItem("course_img");
+  const course_title = localStorage.getItem("course_title");
+  const course_inst = localStorage.getItem("course_inst");
   const reportUrl =
     state == 1
       ? "/instructor/reportProblem"
@@ -99,35 +101,24 @@ const ReportProblem = () => {
       });
     }
   };
-  const fetchdata = async () => {
-    try {
-      const res = await axios.get(`/course/${course_id}`);
-      setCourse(res.data.firstField);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  useEffect(() => {
-    fetchdata();
-  }, []);
   return (
     <div className={regStyles["mainreg"]}>
       {state == 1 ? (
         <MyCourseInst
           className={regStyles["mainreg"]}
           course_id={course_id}
-          course_img={course.imgUrl}
-          course_title={course.title}
-          course_inst={course.instructorname}
+          course_img={course_img}
+          course_title={course_title}
+          course_inst={course_inst}
           name={"supportCenter"}
         />
       ) : (
         <RegCourse
           course_id={course_id}
-          course_img={course.imgUrl}
+          course_img={course_img}
           progress={progress}
-          course_title={course.title}
-          course_inst={course.instructorname}
+          course_title={course_title}
+          course_inst={course_inst}
           name={"supportCenter"}
           idx={index}
         />

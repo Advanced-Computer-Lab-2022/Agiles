@@ -49,8 +49,6 @@ const Course = () => {
     setShow(true);
   };
   const handleLink = (e) => {
-    console.log(e.target.name);
-    console.log(e.target.id);
     setModalTitle(e.target.name);
     setVideo(e.target.id);
     setShow(true);

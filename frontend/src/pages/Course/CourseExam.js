@@ -35,7 +35,7 @@ const CourseExam = () => {
       width: '50%',
       margin: '15px',
       padding: '20px',
-      border: '1px solid #ccc',
+      border: '1px solid #a00407',
       borderRadius: '5px',
     },
     label: {
@@ -127,7 +127,6 @@ const CourseExam = () => {
     const indexname = event.target.name;
     //get last char from name
     let index = indexname.charAt(indexname.length - 1);
-    console.log(answers);
     if (answers[index] !== 1 && event.target.checked && answers[index] !== event.target.value) {
       answers[index] = event.target.value;
     } else if (event.target.checked) {
@@ -292,7 +291,7 @@ const CourseExam = () => {
           })}
           <div class="col-md-12 text-center">
             {!examState ? (
-              <Button variant="primary" onClick={handleSubmit} size="lg">
+              <Button variant="primary" style={{backgroundColor:'#a00407'}} onClick={handleSubmit} size="lg">
                 Submit
               </Button>
             ) : (
