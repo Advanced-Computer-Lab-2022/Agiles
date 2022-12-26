@@ -22,13 +22,10 @@ const CoursContent = () => {
   const index = new URLSearchParams(location.search).get("idx");
   const [course, setCourse] = useState([]);
   const [subtitles, setSubtitles] = useState([]);
-  const [subtitleId, setSubtitleId] = useState("");
   const [isloading, setIsLoading] = useState(false);
   const [grade, setGrade] = useState([]);
   const [finalgrade, setFinalGrade] = useState(-1);
   const [finalquestions, setFinalQuestions] = useState(0);
-  const [questions, setQuestions] = useState([]);
-  const [show, setShow] = useState(false);
   const [done, setDone] = useState([]);
   const navigate = useNavigate();
 
@@ -43,12 +40,11 @@ const CoursContent = () => {
             "currentUser"
           )}&courseId=${course_id}`
         );
-
         setGrade(res.data);
-        setFinalGrade(finalexam.data.result);
-        setFinalQuestions(finalexam.data.studentChoices.length);
-        console.log(res);
-        console.log(course_id);
+        if (finalexam.data){
+          setFinalGrade(finalexam.data.result);
+          setFinalQuestions(finalexam?.data?.studentChoices.length);
+        }
       } catch (e) {
         console.log(e);
       }
@@ -130,7 +126,6 @@ const CoursContent = () => {
     getFinishedExams();
   }, []);
 
-  const handleClose = () => setShow(false);
 
   const handleFinalExamClick = async (e) => {
     try {
@@ -153,9 +148,8 @@ const CoursContent = () => {
           { state: { final: "true" } }
         );
       } else {
-        setShow(true);
         setGrade(exam.data.result);
-        setQuestions(exam.data.studentChoices.length);
+
       }
     } catch (e) {
       console.log(e);
@@ -185,9 +179,7 @@ const CoursContent = () => {
           { state: { final: "false" } }
         );
       } else {
-        setShow(true);
         setGrade(exam.data.result);
-        setQuestions(exam.data.studentChoices.length);
       }
     } catch (e) {
       console.log(e);
@@ -303,7 +295,7 @@ const CoursContent = () => {
                 ))}
               <div>
                 <Accordion.Item key={"finalExam"} className="d-grid gap-2">
-                  {finalgrade !== -1 ? (
+                  {finalgrade !==-1 ? (
                     <>
                       <h5 className="d-flex justify-content-center mt-2 ">
                         Final Exam Grade

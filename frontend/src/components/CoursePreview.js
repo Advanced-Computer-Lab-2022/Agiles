@@ -50,7 +50,6 @@ const CoursePreview = () => {
           return response;
           
       });
-      console.log(res.data);
       if (res) {
         
 
@@ -100,6 +99,9 @@ const CoursePreview = () => {
         setCertificate(true);
       }
       setCourse(res.data.firstField.registered_courses[index].courseId);
+      localStorage.setItem("course_title",res.data.firstField.registered_courses[index].courseId.title);
+      localStorage.setItem("course_img",res.data.firstField.registered_courses[index].courseId.imgUrl);
+      localStorage.setItem("course_inst",res.data.firstField.registered_courses[index].courseId.instructorname);
       setInstId(
         res.data.firstField.registered_courses[index].courseId.instructor
       );
