@@ -72,6 +72,15 @@ const RegCourse = ({
           >
             Support Center
           </li>
+          <li
+            id="/requestrefund"
+            className={
+              name == "requestRefund" ? regStyles["leftsection-liclicked"] : ""
+            }
+            onClick={name === "requestrefund" ? () => {} : handleClick}
+          >
+            Request Refund
+          </li>
           {/* <li
             id="/conReg"
             className={

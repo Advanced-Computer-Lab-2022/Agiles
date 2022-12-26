@@ -47,6 +47,7 @@ import RequireAuth from "./RequireAuth";
 import Forbidden from "./pages/Forbidden";
 import SetPromotion from "./pages/Admin/adminComponents/SetPromotion";
 import Certificate from "./pages/Course/Certificate";
+import Refund from "./pages/Course/Refund";
 function App() {
   const [showNav, setShowNav] = useState(true);
   const ROLES = {
@@ -104,6 +105,7 @@ function App() {
               <Route path="/cancel" element={<Cancel />} />
               <Route path="/PrevReportsTrainee" element={<PrevReportsTrainee />}/>
               <Route path="/certificate" element={<Certificate />} />
+              <Route path="/requestrefund" element={<Refund />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES.INSTRUCTOR]} />}>
