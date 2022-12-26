@@ -57,16 +57,7 @@ const Course = () => {
   const handleShow = () => setShow(true);
   const navigateCheckout = async () => {
     if (state == 0) {
-      try {
-        const res = await axios.post(
-          "/individualtrainee/create-checkout-session",
-          { courseId: courseId }
-        );
-        const url = res.data.url;
-        window.location.href = url;
-      } catch (e) {
-        console.log(e);
-      }
+      navigate({pathname:"/course/checkout",search:`cid=${courseId}`}, { state: { price: course.price,discount:course.discount } });
     } else {
       navigate("/signUp");
     }
