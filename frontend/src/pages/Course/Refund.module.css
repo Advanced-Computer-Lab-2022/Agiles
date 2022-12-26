@@ -12,9 +12,30 @@
     gap: 25px;
   }
 
-.mainLeft{
-    display: flex;
-  flex-direction: column;
-  margin-top: 2rem;
-  gap: 25px;
+.right{
+    margin-top: 1rem;
+
+}
+
+.card h3 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #a00407;
+}
+.card {
+    padding-left: 2%;
+    margin-top: 2rem;
+  }
+
+.sorry{
+    /* create grey box */
+    background-color: #f2f2f2;
+    padding: 20px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    max-width: 700px;
+    /* create grey box */
+
 }

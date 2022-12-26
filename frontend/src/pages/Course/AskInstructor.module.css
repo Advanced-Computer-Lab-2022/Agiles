@@ -1,0 +1,9 @@
+.mainRight {
+    max-width: 1200px;
+    width: 75%;
+  }
+
+
+.container{
+    display: flex;
+}
