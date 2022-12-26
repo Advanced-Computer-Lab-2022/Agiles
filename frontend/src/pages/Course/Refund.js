@@ -15,14 +15,12 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 
 const Refund = () => {
-    const cookies = new Cookies();
-    const navigate = useNavigate();
     const location = useLocation();
     const index = new URLSearchParams(location.search).get("idx");
     const [reason, setReason] = useState("");
-  const [isloading, setIsLoading] = useState(false);
-  const [eligible, setEligible] = useState(true);
-  const styles = {
+    const [isloading, setIsLoading] = useState(false);
+    const [eligible, setEligible] = useState(true);
+    const styles = {
     form: {
       display: "flex",
       flexDirection: "column",
@@ -102,13 +100,22 @@ const Refund = () => {
         reason: reason
       });
       if(res.data === "success"){
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Your request has been submitted successfully",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+  
+        Toast.fire({
+          icon: "success",
+          title: "your request has been sent",
+        });
     }
     else if(res.data === "already requested"){
         Swal.fire({

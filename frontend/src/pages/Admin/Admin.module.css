@@ -1,6 +1,6 @@
 .admin {
   display: flex;
-  font-family: "tahoma";
+  font-family: "Roboto", sans-serif;
 }
 .admin-content {
   /* display: grid; */

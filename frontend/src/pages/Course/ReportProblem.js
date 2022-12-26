@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import style from "./ReportProblem.module.css";
 import Cookies from "universal-cookie";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import MyCourseInst from "../Instructor/MyCourseInst";
 import RegCourse from "./RegCourse";
 import regStyles from "./RegCourse.module.css";
@@ -65,6 +65,7 @@ const ReportProblem = () => {
   const course_img = localStorage.getItem("course_img");
   const course_title = localStorage.getItem("course_title");
   const course_inst = localStorage.getItem("course_inst");
+  const reportProblemUrl = state == 1 ?"/PrevReports":'/PrevReportsTrainee';
   const reportUrl =
     state == 1
       ? "/instructor/reportProblem"
@@ -75,6 +76,7 @@ const ReportProblem = () => {
   };
 
   const handleSubmit = async (event) => {
+    event.target.reset();
     event.preventDefault();
     const problem = {
       courseId: course_id,
@@ -84,12 +86,21 @@ const ReportProblem = () => {
     };
     try {
       const res = await axios.post(reportUrl, problem);
-      Swal.fire({
+      const Toast = Swal.mixin({
+        toast: true,
         position: "top-end",
-        icon: "success",
-        title: "Your problem has been submitted successfully",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
+      Toast.fire({
+        icon: "success",
+        title: "your problem has been reported ",
       });
     } catch (e) {
       Swal.fire({
@@ -129,7 +140,6 @@ const ReportProblem = () => {
           <h1 >
             Report a problem
           </h1>
-
           <Form onSubmit={handleSubmit} style={styles.form}>
             <Form.Label style={styles.label}>Problem Title</Form.Label>
 
@@ -192,6 +202,7 @@ const ReportProblem = () => {
               Send
             </Button>
           </Form>
+          <Link to={reportProblemUrl}>View reported problems</Link> 
         </div>
       </div>
     </div>

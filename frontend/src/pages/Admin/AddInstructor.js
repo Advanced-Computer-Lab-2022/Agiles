@@ -124,7 +124,7 @@ const AddInstructor = () => {
               <div className="formInput">
                 <label className="labelClass">Gender</label>
                 <Select
-                  style={{ padding: "0", borderRadius: "25px" }}
+                  style={{ padding: "0", borderRadius: "5px" }}
                   className="inputClass"
                   labelId="gender"
                   id="gender"

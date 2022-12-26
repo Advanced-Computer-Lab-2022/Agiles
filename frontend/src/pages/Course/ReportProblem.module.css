@@ -6,8 +6,17 @@
   color: #a00407;
 }
 
+.card a{
+  background-color: inherit;
+  border: none;
+  color: #df3c3c;
+  font-weight: bold;
+  padding-left: 40%;
+  margin-bottom: 0.5rem;
+}
 .button {
   background-color: #a00407;
+  
 }
 
 .card {

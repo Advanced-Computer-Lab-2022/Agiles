@@ -1,8 +1,6 @@
 import style from "./AdminSidebar.module.css";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import CorporateFareIcon from "@mui/icons-material/CorporateFare";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
@@ -68,12 +66,6 @@ const AdminSidebar = () => {
             </li>
           </Link>
           <p className={style["main"]}>Services</p>
-          <li className={style["sub"]}>
-            <NotificationsNoneIcon
-              className={style["icon"]}
-            ></NotificationsNoneIcon>
-            <span>Notfications</span>
-          </li>
           <Link
             className={style["link"]}
             to="viewReports"
@@ -108,13 +100,6 @@ const AdminSidebar = () => {
               <span>Refund Requests</span>
             </li>
           </Link>
-          <li className={style["sub"]}>
-            <SettingsApplicationsIcon
-              className={style["icon"]}
-            ></SettingsApplicationsIcon>
-            <span>Settings</span>
-          </li>
-
           <Link
             className={style["link"]}
             to="setPromotion"

@@ -136,7 +136,7 @@ const AddCorporate = () => {
               <div className="formInput">
                 <label className="labelClass">Gender</label>
                 <Select
-                  style={{ padding: "0", borderRadius: "25px" }}
+                  style={{ padding: "0", borderRadius: "5px" }}
                   className="inputClass"
                   labelId="gender"
                   id="gender"
@@ -160,7 +160,7 @@ const AddCorporate = () => {
             margin: "15px",
             width: "50%",
             minWidth: "500px",
-            borderRadius: "25px",
+            borderRadius: "5px",
           }}
         >
           {flag && (

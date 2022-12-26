@@ -40,14 +40,15 @@ ul {
 
 .main {
   font-size: 20px;
-  font-weight: 500;
-  color: #696969;
+  font-weight: bold;
+  color: #eedada;
   padding: 0.5rem;
   margin-bottom: 0;
 }
 
 .sub {
   color: #696969;
+  font-weight: bold
 }
 
 .center li {
@@ -67,11 +68,11 @@ ul {
 }
 
 .center li:hover span {
-  color: #960018;
+  color: #e9383b;
 }
 
 .center li:hover {
-  color: #960018;
+  color: #e9383b;
 }
 
 .spam {
