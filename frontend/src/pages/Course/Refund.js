@@ -76,7 +76,7 @@ const Refund = () => {
       if (res && items) {
         if (
           res.data.firstField.registered_courses[index].progress >=
-          items.data.numberOfItems
+          items.data.numberOfItems / 2
         ) {
           setEligible(false);
           console.log("not eligible");
