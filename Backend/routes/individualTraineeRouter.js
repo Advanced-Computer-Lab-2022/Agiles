@@ -40,6 +40,7 @@ const {
   getQuestions,
   addReply,
   askInstructor,
+  payWithWallet,
 } = require("../controllers/IndividualTraineeController");
 const { verifyItraineeJWT } = require("../middleware/authMiddleware");
 IndividualTraineeRouter.get(
@@ -166,6 +167,9 @@ IndividualTraineeRouter.post(
   verifyItraineeJWT,
   getAllItemsCourse
 );
+
+IndividualTraineeRouter.post("/payWithWallet", verifyItraineeJWT, payWithWallet);
+
 IndividualTraineeRouter.get(
   "/getTraineeProgress",
   verifyItraineeJWT,

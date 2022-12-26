@@ -1,6 +1,7 @@
 .main {
     display: grid;
     grid-template-columns: 60% 40%;
+    min-height: 88vh;
   }
   .left {
     display: inline-block;
@@ -36,6 +37,18 @@
     margin-left: 0.5rem;
     font-size: 1rem;
     font-weight: bold;
+  }
+  .error{
+    color:#a00407;
+    font-weight: bold;
+    margin-left: auto;
+    font-size: 0.8rem;
+  }
+  .success{
+    color:green;
+    font-weight: bold;
+    margin-left: auto;
+    font-size: 0.8rem;
   }
   .left h1 {
     font-size: 2rem;

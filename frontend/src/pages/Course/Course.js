@@ -103,13 +103,14 @@ const Course = () => {
       ) : (
         <div className={styled["course"]}>
           <section className={styled["mainSection"]}>
-            <div className={styled["mainSectionCont"]}>
+            
               <section className={styled["mainSection-left"]}>
                 <h1>{course.title}</h1>
                 <h2>{course.description}</h2>
                 <div className={styled["mainSection-left-rating"]}>
                   <Rating
                     name="rating"
+                    style={{ fontSize:'1.5vw',marginRight:'1vw' }}
                     readOnly
                     value={Math.round(course.rating / course.ratingCount)}
                   />
@@ -235,15 +236,19 @@ const Course = () => {
                   </button>
                 )}
                 {(paid || course?.instructor?._id == traineeId) && (
+                  <>
+                    <label className={styled["purchase"]}>
+                       you purchased this course
+                  </label>
                   <button
                     className={styled["buyme"]}
                     onClick={navigatetoCourse}
                   >
                     Go to course
                   </button>
+                  </>
                 )}
               </section>
-            </div>
           </section>
           <section className={styled["middle"]}>
             <section className={styled["middle-left"]}>
@@ -340,8 +345,7 @@ const Course = () => {
                       {" "}
                       <ReviewsIcon></ReviewsIcon>
                       <label>
-                        {instructor.reviews ? instructor.reviews.length : 0}{" "}
-                        Reviews
+                        {instructor.ratingCount-1} reviews
                       </label>
                     </div>
                     <div>

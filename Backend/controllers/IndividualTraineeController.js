@@ -754,6 +754,27 @@ const CreateCheckout = async (req, res) => {
     return res.status(500).json("server error");
   }
 };
+const payWithWallet = async (req, res) => {
+  const { courseId } = req.body;
+  const id = req.user.id;
+  if (!courseId) {
+    return res.status(500).json("bad request");
+  }
+  const course = await Course.findById(courseId);
+  const user = await IndividualTrainee.findById(id);
+  let price = course.price-course.discount*course.price/100;
+  if (!user) {
+    return res.status(500).json("bad request");
+  }
+  try{
+    await IndividualTrainee.updateOne({_id:id},{$push:{registered_courses:{courseId:courseId}},$inc:{wallet:-price}})
+    return res.status(200).json("success");
+  }
+  catch(err){
+    return res.status(500).json("server error");
+  }
+};
+
 const requestAccess = async (req, res) => {
   const { courseId, traineeId } = req.body;
   if (!courseId || !traineeId) {
@@ -884,6 +905,7 @@ module.exports = {
   getAllItemsCourse,
   addNotesToTrainee,
   getNotes,
+  payWithWallet,
   courseExam,
   courseFinalExam,
   getTraineeProgress,

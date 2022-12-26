@@ -66,7 +66,12 @@ const individualTraineeSchema = new Schema(
     creditCard : [{
       type : mongoose.SchemaTypes.ObjectId,
       ref : 'creditCard'
-    }]
+    }],
+    wallet :{
+      type:Number,
+      default:0
+    } 
+      
   },
   { timestamps: true }
 );

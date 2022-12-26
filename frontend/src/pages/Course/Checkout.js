@@ -4,23 +4,28 @@ import DataSaverOffIcon from "@mui/icons-material/DataSaverOff";
 import LoadingScreen from "react-loading-screen";
 import spinner from "../../static/download.gif";
 import ListGroup from "react-bootstrap/ListGroup";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Cookie from "universal-cookie";
 import Swal from "sweetalert2";
+const cookie = new Cookie();
+const fetchUrl = "/individualtrainee/getIndividualTraineebyId";
 
 const Checkout = () => {
+  const id = cookie.get("currentUser");
   const [isloading, setIsLoading] = useState(false);
   const location = useLocation();
   const price = location.state.price;
   const discount = location.state.discount;
   const courseId = new URLSearchParams(location.search).get("cid");
+  const [wallet, setWallet] = useState(0);
   const [selected, setSelected] = useState("creditcard");
   const navigate = useNavigate();
 
   const handleComplete = async () => {
-       if (selected === "creditcard") {
-         try {
+    if (selected === "creditcard") {
+      try {
         const res = await axios.post(
           "/individualtrainee/create-checkout-session",
           { courseId: courseId }
@@ -30,13 +35,44 @@ const Checkout = () => {
       } catch (e) {
         console.log(e);
       }
-       }
-      else if (selected === "wallet") {
+    } else if (selected === "wallet") {
+      try {
+        const res = await axios.post("/individualtrainee/payWithWallet", {
+          courseId: courseId,
+        });
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
 
-        }
-
+        Toast.fire({
+          icon: "success",
+          title: "congratulations course successfully purchased ",
+        });
+        navigate("/myLearning");
+      } catch (e) {
+        console.log(e);
+      }
+    }
   };
-
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const res = await axios.get(fetchUrl, { params: { id: id } });
+      setWallet(res.data.wallet);
+    } catch (err) {}
+    setIsLoading(false);
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <>
       {isloading ? (
@@ -59,11 +95,9 @@ const Checkout = () => {
                       className={style["radio"]}
                     ></input>
                     <CreditCardIcon />
-                    <label className={style["header"]}>
-                      Credit/Debit Card
-                    </label>
+                    <label className={style["header"]}>Credit/Debit Card</label>
                   </ListGroup.Item>
-                  <ListGroup.Item  className={style["listGroup"]}>
+                  <ListGroup.Item className={style["listGroup"]}>
                     <input
                       type="radio"
                       id="wallet"
@@ -74,6 +108,16 @@ const Checkout = () => {
                     ></input>
                     <DataSaverOffIcon />
                     <label className={style["header"]}> Wallet</label>
+                    {wallet < price - (price * discount) / 100 && (
+                      <label className={style["error"]}>
+                        sorry you don't have enough amount
+                      </label>
+                    )}
+                    {wallet >= price - (price * discount) / 100 && (
+                      <label className={style["success"]}>
+                        current amount : {Math.floor(wallet)} USD
+                      </label>
+                    )}
                   </ListGroup.Item>
                 </ListGroup>
               </div>
@@ -101,7 +145,17 @@ const Checkout = () => {
                 By completing your purchase you agree to these{" "}
                 <Link to="/user/terms">Terms of Service</Link>
               </label>
-              <button onClick={handleComplete}>Proceed</button>
+              <button
+                disabled={
+                  wallet < price - (price * discount) / 100 &&
+                  selected == "wallet"
+                }
+                className="btn btn-primary"
+                style={{ backgroundColor: "#a00407", border: "none" }}
+                onClick={handleComplete}
+              >
+                Proceed
+              </button>
               <span>30-Day Money-Back Guarantee</span>
             </div>
           </section>
