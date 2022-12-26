@@ -5,12 +5,13 @@ const FinalExamResult = require("../models/FinalExamResult");
 const FinalExam = require("../models/FinalExam");
 const Exam = require("../models/Exam");
 const OTP = require("../models/OTP.js");
-const Instructor = require("../models/Instructor")
+const Instructor = require("../models/Instructor");
 const CreditCard = require("../models/CreditCard");
 const CourseSubscriptionRequest = require("../models/CourseSubscriptionRequest");
 const Course = require("../models/Course");
 const CourseRefundRequest = require("../models/CourseRefundRequest");
 const TraineeCourse = require("../models/TraineeCourse");
+const TraineeQuestion = require("../models/TraineeQuestion");
 const bcrypt = require("bcrypt");
 const resetPassword = require("./ResetPassword");
 require("dotenv").config();
@@ -311,9 +312,12 @@ const submitExam = async (req, res) => {
       { $set: { "registered_courses.$.progress": progress + 1 } },
       { new: true, upsert: true }
     );
-    res
-      .status(200)
-      .json({ questions: questions, result: result, resultno: resultno, progress: progress + 1 });
+    res.status(200).json({
+      questions: questions,
+      result: result,
+      resultno: resultno,
+      progress: progress + 1,
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -371,17 +375,17 @@ const getExerciseGrade = async (req, res) => {
 };
 
 const getTraineeExams = async (req, res) => {
-    const studentId = req.user.id;
-    const courseId = req.body.courseId;
-    const exams = await ExamResult.find({
-      studentId: studentId,
-      courseId: courseId,
-    }).exec();
-    try {
-      res.status(200).json(exams);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
+  const studentId = req.user.id;
+  const courseId = req.body.courseId;
+  const exams = await ExamResult.find({
+    studentId: studentId,
+    courseId: courseId,
+  }).exec();
+  try {
+    res.status(200).json(exams);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
 const updateFieldUser = async (req, res) => {
@@ -433,9 +437,9 @@ const compareAnswers = async (req, res) => {
 };
 
 const sendCertificate = async (req, res) => {
-  const  email = req.body.email;
+  const email = req.body.email;
   const courseName = req.body.courseName;
-  if(!email){
+  if (!email) {
     return res.status(500).json("bad request");
   }
   const oldUser = await IndividualTrainee.findOne({ email: email });
@@ -469,10 +473,7 @@ const sendCertificate = async (req, res) => {
     if (error) return res.status(403).json("operation not supported");
     else return res.status(200).json("emailSet");
   });
-}
-
-
-
+};
 
 const forgetPassword = async (req, res) => {
   const { email } = req.body;
@@ -791,7 +792,65 @@ const requestRefund = async (req, res) => {
     return res.status(406).json(err);
   }
 };
+
+const askInstructor = async (req, res) => {
+  const { courseId, traineeId, instructorId, question } = req.body;
+  if (!courseId || !traineeId || !instructorId || !question) {
+    return res.status(500).json("bad request");
+  }
+  const newRequest = {
+    traineeId: traineeId,
+    courseId: courseId,
+    instructorId: instructorId,
+    question: question,
+  };
+  try {
+    await TraineeQuestion.create(newRequest);
+    return res.status(200).json("success");
+  } catch (err) {
+    return res.status(406).json(err);
+  }
+};
+
+const addReply = async (req, res) => {
+  const { questionId, reply } = req.body;
+  console.log(reply);
+  if (!questionId || !reply) {
+    return res.status(500).json("bad request");
+  }
+  try {
+    await TraineeQuestion.findByIdAndUpdate(questionId, {
+      $push: { replies: { reply: reply, isInstructor: false } },
+    });
+    return res.status(200).json("success");
+  } catch (err) {
+    return res.status(406).json(err);
+  }
+};
+
+const getQuestions = async (req, res) => {
+  const { courseId, traineeId } = req["query"];
+  if (!courseId || !traineeId) {
+    return res.status(500).json("bad request");
+  }
+
+  try {
+    const questions = await TraineeQuestion.find({
+      courseId: courseId,
+      traineeId: traineeId,
+    })
+      .populate("traineeId courseId instructorId")
+      .exec();
+    res.status(200).send(questions);
+  } catch (err) {
+    return res.status(406).json(err);
+  }
+};
+
 module.exports = {
+  getQuestions,
+  addReply,
+  askInstructor,
   requestAccess,
   getTraineebyID,
   InprogressCourses,
@@ -821,5 +880,5 @@ module.exports = {
   courseFinalExam,
   getTraineeProgress,
   getTraineeExams,
-  sendCertificate
+  sendCertificate,
 };

@@ -81,16 +81,16 @@ const RegCourse = ({
           >
             Request Refund
           </li>
-          {/* <li
-            id="/conReg"
+          <li
+            id="/AskInstructor"
             className={
-              name == "content" ? regStyles["leftsection-liclicked"] : ""
+              name == "AskInstructor" ? regStyles["leftsection-liclicked"] : ""
             }
-            onClick={name === "content" ? () => {} : handleClick}
+            onClick={name === "AskInstructor" ? () => {} : handleClick}
           >
             {" "}
             Ask Instructor{" "}
-          </li> */}
+          </li>
         </ul>
       </div>
     </section>

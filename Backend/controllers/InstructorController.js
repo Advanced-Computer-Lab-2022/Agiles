@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const Course = require("../models/Course");
 const Link = require("../models/Link");
 const Rating = require("../models/Rating");
+const TraineeQuestion = require("../models/TraineeQuestion");
 
 const courseByinst = async (req, res) => {
   const id = req.params["id"];
@@ -91,7 +92,7 @@ const courseSearchByInstructor = async (req, res) => {
 
 const getInstructorbyId = async (req, res) => {
   try {
-    const instructor = await Instructor.findById(req.query["id"])
+    const instructor = await Instructor.findById(req.query["id"]);
     const reviews = await Rating.find({
       state: false,
       instId: req.query["id"],
@@ -108,7 +109,7 @@ const getInstructorbyId = async (req, res) => {
 
 const updateFieldUser = async (req, res) => {
   const person = req.user;
-  const {firstname, lastname, minibio } = req.body;
+  const { firstname, lastname, minibio } = req.body;
   try {
     const user = await Instructor.findByIdAndUpdate(person.id, {
       firstname: firstname,
@@ -122,7 +123,7 @@ const updateFieldUser = async (req, res) => {
 };
 
 const updateEmail = async (req, res) => {
-  const {email } = req.body;
+  const { email } = req.body;
   try {
     const user = await Instructor.findByIdAndUpdate(req.user.id, {
       email: email,
@@ -133,14 +134,14 @@ const updateEmail = async (req, res) => {
   }
 };
 const uploadSubLink = async (req, res) => {
-  const { courseId, subId, linkDesc, linkUrl, allowed,duration } = req.body;
+  const { courseId, subId, linkDesc, linkUrl, allowed, duration } = req.body;
   if (!courseId || !subId) {
     return res.status(400).json({ msg: "missing data" });
   }
   const newlink = new Link({
     linkUrl: linkUrl,
     linkDesc: linkDesc,
-    duration :duration,
+    duration: duration,
     allowed: allowed,
   });
 
@@ -148,7 +149,12 @@ const uploadSubLink = async (req, res) => {
     const data = await Link.create(newlink);
     const dataFinal = await Course.updateOne(
       { _id: courseId, "subtitles._id": subId },
-      { $push: { "subtitles.$.link": data._id } , $inc: {numberOfItems: 1},$inc:{"subtitles.$.time":duration},$inc:{totalHoursOfCourse:duration} },
+      {
+        $push: { "subtitles.$.link": data._id },
+        $inc: { numberOfItems: 1 },
+        $inc: { "subtitles.$.time": duration },
+        $inc: { totalHoursOfCourse: duration },
+      },
       { new: true }
     );
     res.status(200).json(dataFinal);
@@ -186,7 +192,7 @@ const uploadPreLink = async (req, res) => {
 };
 const updateInstructorPassword = async (req, res) => {
   const { oldPass, newPass } = req.body;
-  if (!oldPass || !newPass ) {
+  if (!oldPass || !newPass) {
     return res.status(500);
   } else {
     const salt = await bcrypt.genSalt(10);
@@ -206,20 +212,60 @@ const updateInstructorPassword = async (req, res) => {
     });
   }
 };
-const profit = async(req,res)=>{
-   const user = req.user;
-   const instructor = await Instructor.findById(user.id);
-   res.status(200).json(instructor.wallet);
-}
-const firstLoginReset = async(req,res)=>{
+const profit = async (req, res) => {
+  const user = req.user;
+  const instructor = await Instructor.findById(user.id);
+  res.status(200).json(instructor.wallet);
+};
+const firstLoginReset = async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
-  await Instructor.findByIdAndUpdate(req.user.id,{password:hashedPassword,firstLogIn:false});
-  res.status(200).json("ok")
-}
+  await Instructor.findByIdAndUpdate(req.user.id, {
+    password: hashedPassword,
+    firstLogIn: false,
+  });
+  res.status(200).json("ok");
+};
+
+const addReply = async (req, res) => {
+  const { questionId, reply } = req.body;
+  if (!questionId) {
+    return res.status(500).json("bad request");
+  }
+
+  try {
+    await TraineeQuestion.findByIdAndUpdate(questionId, {
+      $push: { replies: { reply: reply, isInstructor: true } },
+    });
+    return res.status(200).json("success");
+  } catch (err) {
+    return res.status(406).json(err);
+  }
+};
+
+const getQuestions = async (req, res) => {
+  const { courseId, instructorId } = req.body;
+  if (!courseId || !instructorId) {
+    return res.status(500).json("bad request");
+  }
+
+  try {
+    const questions = await TraineeQuestion.find({
+      courseId: courseId,
+      instructorId: instructorId,
+    })
+      .populate("traineeId courseId instructorId")
+      .exec();
+    res.status(200).send(questions);
+  } catch (err) {
+    return res.status(406).json(err);
+  }
+};
 //---------------
 
 module.exports = {
+  getQuestions,
+  addReply,
   courseByinst,
   courseSearchByInstructor,
   filterCoursesByInstructor,
@@ -231,5 +277,5 @@ module.exports = {
   uploadPreLink,
   deletLink,
   profit,
-  firstLoginReset
+  firstLoginReset,
 };
