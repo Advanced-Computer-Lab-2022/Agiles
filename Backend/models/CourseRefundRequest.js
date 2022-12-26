@@ -17,6 +17,10 @@ const refundSchema = new Schema(
       type: String,
       default: "pending",
     },
+    reason: {
+      type: String,
+      required: true,
+    }
   },
   { timestamps: true }
 );

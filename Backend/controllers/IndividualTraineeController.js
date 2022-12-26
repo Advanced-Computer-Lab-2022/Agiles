@@ -373,17 +373,17 @@ const getExerciseGrade = async (req, res) => {
 };
 
 const getTraineeExams = async (req, res) => {
-  const studentId = req.user.id;
-  const courseId = req.body.courseId;
-  const exams = await ExamResult.find({
-    studentId: studentId,
-    courseId: courseId,
-  }).exec();
-  try {
-    res.status(200).json(exams);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
+    const studentId = req.user.id;
+    const courseId = req.body.courseId;
+    const exams = await ExamResult.find({
+      studentId: studentId,
+      courseId: courseId,
+    }).exec();
+    try {
+      res.status(200).json(exams);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
 };
 
 const updateFieldUser = async (req, res) => {
