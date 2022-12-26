@@ -1,10 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap");
 .Wrapper {
-  min-height: 50rem;
+  margin-bottom: 2rem;
 }
 .courses {
   max-width: 1500px;
-  width: 90%;
+  width: 75%;
   margin: 50px auto;
 }
 .main-section {
@@ -17,7 +17,7 @@
   font-size: 2.5rem;
   color: white;
   max-width: 1500px;
-  width: 90%;
+  width: 75%;
   margin: 50px auto;
   padding-left: 15px;
 }
@@ -28,7 +28,7 @@
   padding: 0.5rem;
   color: white;
   margin-right: 70px;
-  margin-top: 50px;
+  margin-top: 5px;
 }
 .main-btn:hover {
   background-color: #670204;

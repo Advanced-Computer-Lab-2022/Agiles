@@ -119,8 +119,7 @@ const Navbar = () => {
             </Link>
           </>
         )}
-      </div>
-      {role && (
+        {role && (
         <div className={NavbarStyles["dropUser"]}>
           <IconButton
             onClick={handleClick}
@@ -180,6 +179,8 @@ const Navbar = () => {
           </Menu>
         </div>
       )}
+      </div>
+      
     </nav>
   );
 };

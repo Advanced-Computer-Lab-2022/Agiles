@@ -89,7 +89,6 @@ function App() {
                 <Route path="RefundRequests" element={<RefundRequests />} />
                 <Route path="ViewReports" element={<ViewReports />} />
                 <Route path="setPromotion" element={<SetPromotion />} />
-                <Route path="filter" element={<SetPromotion filter={true} />} />
               </Route>
             </Route>
 

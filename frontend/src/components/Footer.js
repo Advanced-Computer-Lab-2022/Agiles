@@ -1,42 +1,25 @@
-import React from 'react';
-
-function Footer () {
-    return (
-
-        <footer>
-        <div class="container">
-          <div class="row">
-            <div style={{marginTop:"1.5%"}} class="col-lg-8">
-              <h2 wi>
-                About The Company
-              </h2>
-              <p style={{width:"85%", margin:"1%" , textAlign:"left"}}>
-              GUC AIR is the largest airline and one of two flag carriers of Egypt. Based in Cairo, the airline is a subsidiary of GUC Air, which is owned by the ACL Corporation.
-              GUC AIR was founded as an airline in 2021. It now flies to 157 destinations in 83 countries across six continents. 
-              </p>
-            </div>
-            <div class="col-lg-4" style={{marginTop:"3%"}}>
-              <div style={{marginTop:"2%", width: '50%',margin: 'auto',height: 'auto'}}>
-              <i className="icon bi-envelope" style={{fontColor:"#FFFFFF" , fontSize:"25px"}}></i>
-              <a href="contact" style={{fontSize:"20px"}} class="btn btn-">CONTACT US</a>
-              </div>
-              <div style={{marginTop:"2%", width: '50%',margin: 'auto',height: 'auto'}}>
-              <i className="icon bi-book-half" style={{fontColor:"#FFFFFF" , fontSize:"25px"}}></i>
-              <a style={{fontSize:"20px"}} href="services" class="btn btn-">SERVICES</a> 
-              </div>
-            </div>
-          </div>
-          <hr />
-          <div class="row">
-            <div  class="col-lg-12">
-              <p style={{fontSize:"15px"}}>Copyright © 2022 GUC Air Co., Ltd. All Rights Reserved. 
-              <br/>ACL </p>
-            </div>
-          </div>
-        </div>
-      </footer>
- 
-    );
+import React from "react";
+import { Link } from "react-router-dom";
+function Footer() {
+  return (
+    <footer className="footer">
+      <div className="footer-content">
+        <h3>Canadian Chamber of Commerce</h3>
+        <p>I will write description here</p>
+      </div>
+      <hr></hr>
+      <div class="footer-bottom">
+      <p>copyright &copy;2022 Canadian Chamber of Commerce </p>
+      </div>
+      {/* <p className="footer-title">Copyrights 	&copy; <span>Canadian Chamber of Commerce</span></p>
+      <div className="social-icons">
+          <Link to="https://www.linkedin.com/in/hosam-elfar-152a541b3/"><i class="fab fa-linkedin"></i></Link>
+          <Link to="https://github.com/Terror-1"><i class="fab fa-github"></i></Link>
+          <Link to="https://www.facebook.com/hosam.far.3/"><i class="fab fa-facebook"></i></Link>
+          <Link to="https://twitter.com/HosamELfar4"><i class="fab fa-twitter"></i></Link>
+      </div> */}
+    </footer>
+  );
 }
 
-export default Footer ;
+export default Footer;

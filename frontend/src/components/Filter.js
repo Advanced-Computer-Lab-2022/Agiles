@@ -2,10 +2,10 @@ import FilterStyles from "./Filter.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Rating from "@mui/material/Rating";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Swal from "sweetalert2";
 import Cookies from "universal-cookie";
 import FilterListIcon from "@mui/icons-material/FilterList";
@@ -13,7 +13,7 @@ import Accordion from "react-bootstrap/Accordion";
 import { subjectList } from "../pages/Course/subjectList";
 import Form from "react-bootstrap/Form";
 const cookies = new Cookies();
-const Filter = ({ chooseMessage, currentMessage,courses }) => {
+const Filter = ({ chooseMessage, currentMessage, courses }) => {
   const status = cookies.get("status");
   const [disapled, setDisapled] = useState(false);
   const [minPrice, setMinPrice] = useState();
@@ -70,20 +70,20 @@ const Filter = ({ chooseMessage, currentMessage,courses }) => {
     ) {
       const Toast = Swal.mixin({
         toast: true,
-        position: 'top-end',
+        position: "top-end",
         showConfirmButton: false,
         timer: 2000,
         timerProgressBar: true,
         didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-      })
-      
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
       Toast.fire({
-        icon: 'error',
-        title: 'please fill at least one field '
-      })
+        icon: "error",
+        title: "please fill at least one field ",
+      });
     } else {
       let newMessage = [];
       currentMessage.forEach((el) => {
@@ -99,29 +99,33 @@ const Filter = ({ chooseMessage, currentMessage,courses }) => {
       chooseMessage(newMessage);
     }
   };
+  const clearFilter = () => {
+    chooseMessage(courses);
+    setCount(0);
+    setValue(0);
+  }
   const handleSort = (event) => {
     let newMessage = [];
-    const value =(event.target.value);
+    const value = event.target.value;
     if (value == 1) {
-    currentMessage.forEach((el) => {
-      newMessage.push(el);
-    });
-    newMessage.sort((a, b) => b.studentCount - a.studentCount);
-    chooseMessage(newMessage);
-  } else if (value == 2) {
-    currentMessage.forEach((el) => {
-      newMessage.push(el);
-    });
-    newMessage.sort((a, b) => b.rating - a.rating);
-    chooseMessage(newMessage);
-  }
-  else if (value == 3) {
-    currentMessage.forEach((el) => {
-      newMessage.unshift(el);
-    });
-    newMessage.sort((a, b) => b.id - a.id);
-    chooseMessage(newMessage);
-  } 
+      currentMessage.forEach((el) => {
+        newMessage.push(el);
+      });
+      newMessage.sort((a, b) => b.studentCount - a.studentCount);
+      chooseMessage(newMessage);
+    } else if (value == 2) {
+      currentMessage.forEach((el) => {
+        newMessage.push(el);
+      });
+      newMessage.sort((a, b) => b.rating - a.rating);
+      chooseMessage(newMessage);
+    } else if (value == 3) {
+      currentMessage.forEach((el) => {
+        newMessage.unshift(el);
+      });
+      newMessage.sort((a, b) => b.id - a.id);
+      chooseMessage(newMessage);
+    }
   };
   return (
     <div className={FilterStyles["filter"]}>
@@ -205,7 +209,7 @@ const Filter = ({ chooseMessage, currentMessage,courses }) => {
         {count > 0 && (
           <button
             className={FilterStyles["edit"]}
-            onClick={() => chooseMessage(courses)}
+            onClick={clearFilter}
           >
             Clear filters{" "}
           </button>

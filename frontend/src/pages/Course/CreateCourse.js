@@ -178,7 +178,6 @@ const CreateCourse = () => {
               ) : null}
             </>
           ))}
-          backgroundColor: "#a00407"
           <span className="button-section">
             <button
               className="button add"

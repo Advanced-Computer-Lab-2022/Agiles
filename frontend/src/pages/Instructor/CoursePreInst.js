@@ -211,12 +211,12 @@ const CoursePreInst = () => {
                       );
                     })}
                 </div>
-        <Button
+       {course.ratingCount>1&& <Button
           onClick={handleShowRatings}
           style={{backgroundColor:'#a00407',borderRadius: 0, width: '10rem' ,border: 'none' }}
           >
           show all reviews
-        </Button>
+        </Button>}
       </div>
     </div>
     </div>)} </>

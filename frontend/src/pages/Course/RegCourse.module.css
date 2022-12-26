@@ -39,9 +39,9 @@
 .leftsection-bottom {
   font-size: 1rem;
   font-weight: bolder;
-  margin-right: 2rem;
-  align-items: center;
-  justify-content: center;
+}
+.leftsection-bottom ul {
+  padding: 0;
 }
 .leftsection-bottom li {
   min-width: 15rem;
