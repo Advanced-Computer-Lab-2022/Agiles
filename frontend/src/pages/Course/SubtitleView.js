@@ -54,7 +54,6 @@ const Subtitle = () => {
       courseId: location.state.courseId,
       subtitleId: subtitleId,
     });
-    console.log(res.status);
   };
 
   const getFinishedExams = async (e) => {
@@ -80,7 +79,6 @@ const Subtitle = () => {
   };
 
   const getFinishedItems = async (e) => {
-    console.log("yes");
     if (cookies.get("status") !== 1) {
       try {
         let res = await axios.get("/individualtrainee/getTraineeProgress", {
@@ -88,7 +86,6 @@ const Subtitle = () => {
         });
         setDone(res.data.progress);
         setNotes(res.data.notes);
-        console.log(res.data.progress);
       } catch (e) {
         console.log(e);
       }
@@ -117,9 +114,6 @@ const Subtitle = () => {
   };
   const handleClick = async (e, url, linkId, subtitleId) => {
     e.preventDefault();
-    console.log(url);
-    console.log(linkId);
-    console.log(subtitleId);
     if (cookies.get("status") !== 1) {
       try {
         const res = await axios.post("/individualtrainee/updateLinkProgress", {
@@ -128,7 +122,6 @@ const Subtitle = () => {
           completedItems: 1,
           subtitleId: subtitleId,
         }); //status 1 means instructor 2c,0 means trainee 3 means admin
-        console.log(res);
         if (res) {
           navigate(
             {

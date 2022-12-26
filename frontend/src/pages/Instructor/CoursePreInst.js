@@ -52,6 +52,9 @@ const CoursePreInst = () => {
         try {
           const res = await axios.get(`/course/${course_id}`);
           setCourse(res.data.firstField);
+          localStorage.setItem("course_title",res.data.firstField.title);
+          localStorage.setItem("course_img",res.data.firstField.imgUrl);
+          localStorage.setItem("course_inst",res.data.firstField.instructorname);
           setReviews(res.data.secondField);
           setIsLoading(false);
         } catch (e) {

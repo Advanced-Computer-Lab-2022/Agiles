@@ -776,18 +776,26 @@ const requestAccess = async (req, res) => {
 };
 
 const requestRefund = async (req, res) => {
-  const { courseId, traineeId } = req.body;
-  if (!courseId || !traineeId) {
+  const { courseId,reason } = req.body;
+  if (!courseId  || !reason) {
     return res.status(500).json("bad request");
   }
-  const trainee = await IndividualTrainee.findById(traineeId);
   const newRequest = {
-    traineeId: trainee._id,
+    traineeId: req.user.id,
     courseId: courseId,
+    reason: reason,
   };
   try {
+    const request = await CourseRefundRequest.findOne({traineeId:newRequest.traineeId,courseId:newRequest.courseId});
+
+    if(request){
+      return res.status(200).json("already requested");
+    }
+    else{
+
     await CourseRefundRequest.create(newRequest);
     return res.status(200).json("success");
+    }
   } catch (err) {
     return res.status(406).json(err);
   }

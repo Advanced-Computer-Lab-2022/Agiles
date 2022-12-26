@@ -175,7 +175,7 @@ IndividualTraineeRouter.get(
 IndividualTraineeRouter.post("/forgotpassword", forgetPassword);
 IndividualTraineeRouter.post("/verifyCode", verifyCode);
 IndividualTraineeRouter.post("/requestAccess", requestAccess);
-IndividualTraineeRouter.post("/requestRefund", requestRefund);
+IndividualTraineeRouter.post("/requestRefund",verifyItraineeJWT, requestRefund);
 IndividualTraineeRouter.patch("/addFollowUp", verifyItraineeJWT, addFollowUp);
 IndividualTraineeRouter.get("/isAuth", isAuthTrainee);
 
