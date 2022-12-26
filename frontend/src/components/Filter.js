@@ -108,19 +108,19 @@ const Filter = ({ chooseMessage, currentMessage, courses }) => {
     let newMessage = [];
     const value = event.target.value;
     if (value == 1) {
-      currentMessage.forEach((el) => {
+      courses.forEach((el) => {
         newMessage.push(el);
       });
       newMessage.sort((a, b) => b.studentCount - a.studentCount);
       chooseMessage(newMessage);
     } else if (value == 2) {
-      currentMessage.forEach((el) => {
+      courses.forEach((el) => {
         newMessage.push(el);
       });
       newMessage.sort((a, b) => b.rating - a.rating);
       chooseMessage(newMessage);
     } else if (value == 3) {
-      currentMessage.forEach((el) => {
+      courses.forEach((el) => {
         newMessage.unshift(el);
       });
       newMessage.sort((a, b) => b.id - a.id);
