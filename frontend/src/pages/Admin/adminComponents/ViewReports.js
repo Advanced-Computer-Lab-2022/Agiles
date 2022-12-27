@@ -21,18 +21,6 @@ function ViewReports() {
     fetchData();
   }, [change]);
 
-  const handleApprove = async (traineeId, courseId, index) => {
-    const url = "/admin/grantAccess";
-    try {
-      const res = await axios.post(url, {
-        traineeId: traineeId,
-        courseId: courseId,
-      });
-      setChange(!change);
-    } catch (e) {
-      console.log(e);
-    }
-  };
   if (isLoading) return <LoadingScreen loading={true} logoSrc={spinner} />;
 
   return (

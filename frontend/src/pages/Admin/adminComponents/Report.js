@@ -9,25 +9,7 @@ function Report(props) {
   let initialSeen = el.isSeen ? "seen " : "not seen yet ";
   const [seen, setSeen] = useState(initialSeen);
   const [status, setStatus] = useState(el["status"]);
-  const [resbutton, setResbutton] = useState(
-    status == "pending" ? (
-      <Button
-        onClick={async () => {
-          await axios
-            .post("/admin/ResolveReport", {
-              reportId: el._id,
-            })
-            .then(setStatus("resolved"))
-            .then(setResbutton(""));
-        }}
-      >
-        {" "}
-        Mark as Resolved{" "}
-      </Button>
-    ) : (
-      ""
-    )
-  );
+
   return (
     <Accordion.Item
       eventKey={props.index}
@@ -53,7 +35,24 @@ function Report(props) {
         style={{ display: "flex", justifyContent: "space-between" }}
       >
         <div>Description : {el.description}</div>
-        <div style={{ width: "50%" }}>{resbutton}</div>
+        {status == "pending" ? (
+          <div style={{ width: "50%" }}>
+            <Button
+              onClick={async () => {
+                await axios
+                  .post("/admin/resolveReport", {
+                    reportId: el._id,
+                  })
+                  .then(setStatus("resolved"));
+              }}
+            >
+              {" "}
+              Mark as Resolved{" "}
+            </Button>
+          </div>
+        ) : (
+          ""
+        )}
       </Accordion.Body>
     </Accordion.Item>
   );
