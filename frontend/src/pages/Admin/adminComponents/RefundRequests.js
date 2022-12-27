@@ -4,6 +4,8 @@ import { TableCell, TableRow, TableHead, Table } from "@mui/material";
 import Button from "react-bootstrap/Button";
 import LoadingScreen from "react-loading-screen";
 import spinner from "../../../static/download.gif";
+import Request from "./Request";
+
 function RefundRequests() {
   const [reports, setReports] = useState([]);
   const [change, setChange] = useState(false);
@@ -20,18 +22,6 @@ function RefundRequests() {
     fetchData();
   }, [change]);
 
-  const handleApprove = async (traineeId, courseId, index) => {
-    const url = "/admin/acceptRefund";
-    try {
-      const res = await axios.post(url, {
-        traineeId: traineeId,
-        courseId: courseId,
-      });
-      setChange(!change);
-    } catch (e) {
-      console.log(e);
-    }
-  };
   if (isLoading) return <LoadingScreen loading={true} logoSrc={spinner} />;
 
   return (
@@ -67,32 +57,38 @@ function RefundRequests() {
           </TableCell>
         </TableHead>
         {reports.map((el, index) => {
-          return el.userId == null ? (
+          return el.traineeId == null ? (
             ""
           ) : (
-            <TableRow style={{ verticalAlign: "text-top" }} key={index}>
-              <TableCell>{el.email}</TableCell>
-              <TableCell>
-                {el.traineeId.firstname + " " + el.traineeId.lastname}
-              </TableCell>
-              <TableCell>{el.courseId.title}</TableCell>{" "}
-              <TableCell style={{ textAlign: "center" }}>
-                {el.status}
-                {el.status == "pending" ? (
-                  <Button
-                    style={{ marginLeft: "15px" }}
-                    onClick={() =>
-                      handleApprove(el.traineeId._id, el.courseId._id, index)
-                    }
-                  >
-                    {" "}
-                    Approve
-                  </Button>
-                ) : (
-                  ""
-                )}
-              </TableCell>
-            </TableRow>
+            <Request
+              url={"/admin/acceptRefund"}
+              data={el}
+              index={index}
+              email={el.traineeId.email}
+            />
+            // <TableRow style={{ verticalAlign: "text-top" }} key={index}>
+            //   <TableCell>{el.traineeId.email}</TableCell>
+            //   <TableCell>
+            //     {el.traineeId.firstname + " " + el.traineeId.lastname}
+            //   </TableCell>
+            //   <TableCell>{el.courseId.title}</TableCell>{" "}
+            //   <TableCell style={{ textAlign: "center" }}>
+            //     {el.status}
+            //     {el.status == "pending" ? (
+            //       <Button
+            //         style={{ marginLeft: "15px" }}
+            //         onClick={() =>
+            //           handleApprove(el.traineeId._id, el.courseId._id, index)
+            //         }
+            //       >
+            //         {" "}
+            //         Approve
+            //       </Button>
+            //     ) : (
+            //       ""
+            //     )}
+            //   </TableCell>
+            // </TableRow>
           );
         })}
       </Table>

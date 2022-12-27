@@ -56,7 +56,7 @@ function ViewRequests() {
         {reports.map((el, index) => {
           if (el.traineeId == null || el.courseId == null) return "";
 
-          return <Request data={el} index={index} />;
+          return <Request data={el} index={index} url={"/admin/grantAccess"} />;
         })}
       </Table>
     </>

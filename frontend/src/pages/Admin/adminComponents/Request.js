@@ -8,11 +8,11 @@ import spinner from "../../../static/download.gif";
 function Request(props) {
   const el = props.data;
   const index = el.index;
+  const url = props.url;
+  const email = el.email ? el.email : el.traineeId.email;
   const [status, setStatus] = useState(el.status);
 
   const handleApprove = async (traineeId, courseId, index) => {
-    const url = "/admin/grantAccess";
-
     try {
       await axios
         .post(url, { traineeId: traineeId, courseId: courseId })
@@ -23,7 +23,7 @@ function Request(props) {
   };
   return (
     <TableRow style={{ verticalAlign: "text-top" }} key={index}>
-      <TableCell>{el.email}</TableCell>
+      <TableCell>{email}</TableCell>
       <TableCell>
         {el.traineeId.firstname + " " + el.traineeId.lastname}
       </TableCell>
