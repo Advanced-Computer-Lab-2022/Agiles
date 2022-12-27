@@ -844,6 +844,7 @@ const askInstructor = async (req, res) => {
 const addReply = async (req, res) => {
   const { questionId, reply } = req.body;
   console.log(reply);
+  console.log(questionId);
   if (!questionId || !reply) {
     return res.status(500).json("bad request");
   }
