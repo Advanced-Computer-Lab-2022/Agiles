@@ -38,7 +38,7 @@ function ViewReports() {
   return (
     <>
       <h2 style={{ marginLeft: "25px", marginBottom: "25px" }}>Reports</h2>
-      <Accordion style={{ margin: "0 5px" }} defaultActiveKey={-1}>
+      <Accordion style={{ margin: "0 5px" }}>
         <div
           style={{
             display: "flex",
@@ -59,6 +59,7 @@ function ViewReports() {
         </div>
 
         {reports.map((el, index) => {
+          console.log(el.isSeen);
           return el.userId == null ? (
             ""
           ) : (

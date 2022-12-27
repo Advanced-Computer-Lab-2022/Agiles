@@ -1,16 +1,24 @@
 import axios from "axios";
 import React, { useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
-
+import style from "./Report.module.css";
 function Report(props) {
   let el = props.data;
-  const [seen, setSeen] = useState(el["isSeen"] ? "seen " : "not seen yet ");
+  let initialSeen = el.isSeen ? "seen " : "not seen yet ";
+  const [seen, setSeen] = useState(initialSeen);
   const [status, setStatus] = useState(el["status"]);
   const [resbutton, setResbutton] = useState(
     status == "pending" ? (
       <button
+        // style={{
+        //   padding: "10px",
+        //   backgroundColor: "rgb(15, 233, 8)",
+        //   fontWeight: 500,
+        //   border: "none",
+        // }}
+        className={style["success"]}
         onClick={async () => {
-          axios
+          await axios
             .post("/admin/ResolveReport", {
               reportId: el._id,
             })
@@ -27,8 +35,9 @@ function Report(props) {
   );
   return (
     <Accordion.Item
+      eventKey={props.index}
       onClick={async () => {
-        axios
+        await axios
           .post("/admin/viewReport", {
             reportId: el._id,
           })
@@ -42,12 +51,14 @@ function Report(props) {
           </div>
           <div style={{ width: "25%" }}> {el.courseId.title}</div>{" "}
           <div style={{ width: "25%" }}> {status}</div>
-          <div style={{ width: "25%" }}>{seen ? "Yes" : "No"}</div>
+          <div style={{ width: "25%" }}>{seen}</div>
         </div>
       </Accordion.Header>
-      <Accordion.Body>
+      <Accordion.Body
+        style={{ display: "flex", justifyContent: "space-between" }}
+      >
         <div>Description : {el.description}</div>
-        <div>{resbutton}</div>
+        <div style={{ width: "50%" }}>{resbutton}</div>
       </Accordion.Body>
     </Accordion.Item>
   );
