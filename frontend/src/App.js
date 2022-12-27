@@ -71,7 +71,10 @@ function App() {
             <Route index element={<Home />}></Route>
             <Route path="/login" element={<Login />} />
             <Route path="/forgotpassword" element={<ForgetPassword />} />
-            <Route path="/updateforgotpassword" element={<UpdateForgottenPassword />} />
+            <Route
+              path="/updateforgotpassword"
+              element={<UpdateForgottenPassword />}
+            />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/course" element={<Course />} />
@@ -94,7 +97,11 @@ function App() {
               </Route>
             </Route>
 
-            <Route element={<RequireAuth allowedRoles={[ROLES.TRAINEE, ROLES.CORPORATE]} />}>
+            <Route
+              element={
+                <RequireAuth allowedRoles={[ROLES.TRAINEE, ROLES.CORPORATE]} />
+              }
+            >
               <Route path="/mylearning" element={<Inprogress />} />
               <Route path="/grades" element={<CourseContent />} />
               <Route path="/preReg" element={<CoursePreview />} />
@@ -104,16 +111,21 @@ function App() {
               <Route path="/CourseExam" element={<CourseExam />} />
               <Route path="/success" element={<Sucess />} />
               <Route path="/cancel" element={<Cancel />} />
-              <Route path="/PrevReportsTrainee" element={<PrevReportsTrainee />} />
+              <Route
+                path="/PrevReportsTrainee"
+                element={<PrevReportsTrainee />}
+              />
               <Route path="/certificate" element={<Certificate />} />
               <Route path="/requestrefund" element={<Refund />} />
-              <Route path="/askInstructor" element={<AskInstructor />} />
               <Route path="/course/checkout" element={<Checkout />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES.INSTRUCTOR]} />}>
               <Route path="/createcourse" element={<CreateCourse />} />
-              <Route  path="/mycourses"element={<InstructorOwnCourses />}></Route>
+              <Route
+                path="/mycourses"
+                element={<InstructorOwnCourses />}
+              ></Route>
               <Route path="/setExam" element={<SetExam />} />
               <Route path="/preInst" element={<CoursePreInst />} />
               <Route path="/conInst" element={<CourseConInst />} />
@@ -121,7 +133,18 @@ function App() {
               <Route path="/PrevReports" element={<PrevReports />} />
             </Route>
 
-            <Route element={<RequireAuth  allowedRoles={[ ROLES.INSTRUCTOR, ROLES.TRAINEE,ROLES.CORPORATE]} />}>
+            <Route
+              element={
+                <RequireAuth
+                  allowedRoles={[
+                    ROLES.INSTRUCTOR,
+                    ROLES.TRAINEE,
+                    ROLES.CORPORATE,
+                  ]}
+                />
+              }
+            >
+              <Route path="/askInstructor" element={<AskInstructor />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/accountsettings" element={<AccountSecurity />} />
               <Route path="/reviews" element={<Reviews />} />

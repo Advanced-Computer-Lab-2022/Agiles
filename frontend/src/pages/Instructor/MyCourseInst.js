@@ -65,6 +65,16 @@ const MyCourseInst = ({
           >
             Support Center
           </li>
+          <li
+            id="/AskInstructor"
+            className={
+              name == "AskInstructor" ? regStyles["leftsection-liclicked"] : ""
+            }
+            onClick={name === "AskInstructor" ? () => {} : handleClick}
+          >
+            {" "}
+            Questions{" "}
+          </li>
         </ul>
       </div>
     </section>
