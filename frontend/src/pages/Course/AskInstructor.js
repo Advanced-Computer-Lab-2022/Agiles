@@ -21,9 +21,9 @@ function AskInstructor() {
   const userId = cookies.get("currentUser");
   console.log(location.state);
 
-  const handleSubmitReply = async (e) => {
+  const handleSubmitReply = async (qID) => {
     let res = await axios.patch("/individualtrainee/addReply", {
-      questionId: questionId,
+      questionId: qID,
       reply: newReply,
     });
   };
@@ -142,7 +142,8 @@ function AskInstructor() {
                     <Button
                       className={style["button"]}
                       type="send"
-                     // onClick={handleSubmitReply}
+                      onClick={() => handleSubmitReply(el._id)}
+                      // onClick={handleSubmitReply}
                     >
                       Send
                     </Button>
