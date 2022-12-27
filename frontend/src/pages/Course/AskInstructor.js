@@ -11,16 +11,28 @@ const cookies = new Cookies();
 
 function AskInstructor() {
   const [questions, setQuestions] = useState([]);
+  const [question, setQuestion] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [newReply, setNewReply] = useState("");
+  const [traineeId, setTraineeId] = useState("");
+  const [courseId, setCourseId] = useState("");
+  const [instructorId, setInstructorId] = useState("");
   const [instructorName, setInstructorName] = useState("");
   const [studentName, setStudentName] = useState("");
   const [questionId, setQuestionId] = useState("");
   const location = useLocation();
   const index = new URLSearchParams(location.search).get("idx");
   const userId = cookies.get("currentUser");
-  console.log(location.state);
+  //console.log(location.state);
 
+  const handleSubmitNewQuestion = async (qID) => {
+    let res = await axios.post("/individualtrainee/askInstructor", {
+      traineeId: traineeId,
+      courseId: courseId,
+      instructorId: instructorId,
+      question: question,
+    });
+  };
   const handleSubmitReply = async (qID) => {
     let res = await axios.patch("/individualtrainee/addReply", {
       questionId: qID,
@@ -41,6 +53,7 @@ function AskInstructor() {
           },
         });
         setQuestions(res.data);
+        console.log(res.data);
       } else {
         const url = "individualtrainee/getQuestions";
         const res = await axios.get(url, {
@@ -51,11 +64,17 @@ function AskInstructor() {
         });
         setQuestions(res.data);
         console.log(res.data);
+        setInstructorId(res.data[0].instructorId._id);
+        setTraineeId(res.data[0].traineeId._id);
+        setCourseId(res.data[0].courseId._id);
+        console.log(res.data);
         setInstructorName("Prof " + location.state.course_inst + " ");
         setStudentName(
           res.data[0].traineeId.firstname + " " + res.data[0].traineeId.lastname
         );
       }
+
+      setInstructorId(questions[0].instructorId._id);
 
       setIsLoading(false);
     } catch (e) {
@@ -141,7 +160,7 @@ function AskInstructor() {
                   <div>
                     <Button
                       className={style["button"]}
-                      type="send"
+                      type="reply"
                       onClick={() => handleSubmitReply(el._id)}
                       // onClick={handleSubmitReply}
                     >
@@ -153,6 +172,33 @@ function AskInstructor() {
             </div>
           );
         })}
+        <div>
+          <h2>Ask new question</h2>
+          <div>
+            <form>
+              <textarea
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="3"
+                type="txt"
+                placeholder="Reply"
+                //style={styles.input}
+                onChange={(e) => setQuestion(e.target.value)}
+                required
+              ></textarea>
+              <div>
+                <Button
+                  className={style["button"]}
+                  type="send"
+                  onClick={() => handleSubmitNewQuestion()}
+                  // onClick={handleSubmitReply}
+                >
+                  Send
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   );
