@@ -4,10 +4,9 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import LoadingScreen from "react-loading-screen";
 import spinner from "../../../static/download.gif";
-
+import Request from "./Request";
 function ViewRequests() {
   const [reports, setReports] = useState([]);
-  const [change, setChange] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const fetchData = async () => {
     setIsLoading(true);
@@ -18,18 +17,8 @@ function ViewRequests() {
   };
   useEffect(() => {
     fetchData();
-  }, [change]);
+  }, []);
 
-  const handleApprove = async (traineeId, courseId, index) => {
-    const url = "/admin/grantAccess";
-    try {
-      axios
-        .post(url, { traineeId: traineeId, courseId: courseId })
-        .then(setChange(!change));
-    } catch (e) {
-      console.log(e);
-    }
-  };
   if (isLoading) return <LoadingScreen loading={true} logoSrc={spinner} />;
   return (
     <>
@@ -67,31 +56,7 @@ function ViewRequests() {
         {reports.map((el, index) => {
           if (el.traineeId == null || el.courseId == null) return "";
 
-          return (
-            <TableRow style={{ verticalAlign: "text-top" }} key={index}>
-              <TableCell>{el.email}</TableCell>
-              <TableCell>
-                {el.traineeId.firstname + " " + el.traineeId.lastname}
-              </TableCell>
-              <TableCell>{el.courseId.title}</TableCell>{" "}
-              <TableCell style={{ textAlign: "center" }}>
-                {el.status}
-                {el.status == "pending" ? (
-                  <Button
-                    style={{ marginLeft: "15px" }}
-                    onClick={() =>
-                      handleApprove(el.traineeId._id, el.courseId._id, index)
-                    }
-                  >
-                    {" "}
-                    Approve
-                  </Button>
-                ) : (
-                  ""
-                )}
-              </TableCell>
-            </TableRow>
-          );
+          return <Request data={el} index={index} />;
         })}
       </Table>
     </>
