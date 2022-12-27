@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import style from "./Report.module.css";
+import Button from "react-bootstrap/Button";
+
 function Report(props) {
   let el = props.data;
   let initialSeen = el.isSeen ? "seen " : "not seen yet ";
@@ -9,14 +11,7 @@ function Report(props) {
   const [status, setStatus] = useState(el["status"]);
   const [resbutton, setResbutton] = useState(
     status == "pending" ? (
-      <button
-        // style={{
-        //   padding: "10px",
-        //   backgroundColor: "rgb(15, 233, 8)",
-        //   fontWeight: 500,
-        //   border: "none",
-        // }}
-        className={style["success"]}
+      <Button
         onClick={async () => {
           await axios
             .post("/admin/ResolveReport", {
@@ -28,7 +23,7 @@ function Report(props) {
       >
         {" "}
         Mark as Resolved{" "}
-      </button>
+      </Button>
     ) : (
       ""
     )
