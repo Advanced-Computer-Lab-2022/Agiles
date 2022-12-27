@@ -12,7 +12,10 @@ const cookies = new Cookies();
 function AskInstructor() {
   const [questions, setQuestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [newReply, setNewReply] = useState(false);
+  const [newReply, setNewReply] = useState("");
+  const [instructorName, setInstructorName] = useState("");
+  const [studentName, setStudentName] = useState("");
+  const [questionId, setQuestionId] = useState("");
   const location = useLocation();
   const index = new URLSearchParams(location.search).get("idx");
   const userId = cookies.get("currentUser");
@@ -20,7 +23,7 @@ function AskInstructor() {
 
   const handleSubmitReply = async (e) => {
     let res = await axios.patch("/individualtrainee/addReply", {
-      questionId: questions.id,
+      questionId: questionId,
       reply: newReply,
     });
   };
@@ -47,6 +50,11 @@ function AskInstructor() {
           },
         });
         setQuestions(res.data);
+        console.log(res.data);
+        setInstructorName("Prof " + location.state.course_inst + " ");
+        setStudentName(
+          res.data[0].traineeId.firstname + " " + res.data[0].traineeId.lastname
+        );
       }
 
       setIsLoading(false);
@@ -73,54 +81,77 @@ function AskInstructor() {
         />
       </div>
       <div className={style["mainRight"]}>
-        {questions.map((el) => {
-          console.log(el.replies[0].reply);
+        {questions.map((el, index) => {
+          // setQuestionId(el._id);
+          console.log(el._id);
           return (
             <div>
-              <div>{el.question}</div>
-
               <div>
-                {el.replies.map((replies) => {
-                  if (replies.isInstructor == false)
-                    return (
-                      <div>
-                        <div>{replies.reply}</div>
-                      </div>
-                    );
-                })}
+                {" "}
+                <h1>
+                  Q{index + 1}: {el.question}
+                </h1>
               </div>
               <div>
                 {el.replies.map((replies) => {
-                  if (replies.isInstructor == true)
+                  if (replies.isInstructor == false) {
                     return (
                       <div>
-                        <div>{replies.reply}</div>
+                        <div>
+                          <h5>
+                            {studentName} {": "}
+                          </h5>
+                          <h5>
+                            {"-"}
+                            {replies.reply}
+                          </h5>
+                        </div>
                       </div>
                     );
+                  } else {
+                    return (
+                      <div>
+                        <div>
+                          <h5>
+                            <h5>
+                              {instructorName}
+                              {":  "}
+                            </h5>
+                            {"-"}
+                            {replies.reply}
+                          </h5>
+                        </div>
+                      </div>
+                    );
+                  }
                 })}
+              </div>
+              <div>
+                <form>
+                  <textarea
+                    class="form-control"
+                    id="exampleFormControlTextarea1"
+                    rows="3"
+                    type="txt"
+                    placeholder="Reply"
+                    //style={styles.input}
+                    onChange={(e) => setNewReply(e.target.value)}
+                    required
+                  ></textarea>
+                  <div>
+                    <Button
+                      className={style["button"]}
+                      type="send"
+                     // onClick={handleSubmitReply}
+                    >
+                      Send
+                    </Button>
+                  </div>
+                </form>
               </div>
             </div>
           );
         })}
-      </div>
-      <div>
-        <form on onSubmit={handleSubmitReply}>
-          <textarea
-            class="form-control"
-            id="exampleFormControlTextarea1"
-            rows="3"
-            type="txt"
-            placeholder="Reply"
-            //style={styles.input}
-            onChange={(e) => setNewReply(e.target.value)}
-            required
-          ></textarea>
-          <div>
-            <Button className={style["button"]} type="submit">
-              Send
-            </Button>
-          </div>
-        </form>
       </div>
     </div>
   );
