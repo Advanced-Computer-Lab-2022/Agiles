@@ -66,7 +66,7 @@ const PrevReports = () => {
           textAlign: "center",
         }}
       >
-        Previous Reports
+       Reported problems
       </h1>
       <div style={{ width: "75%", marginLeft: "10%" }}>
         <Accordion defaultActiveKey="0">

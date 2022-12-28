@@ -74,15 +74,6 @@ const RegCourse = ({
             Support Center
           </li>
           <li
-            id="/requestrefund"
-            className={
-              name == "requestRefund" ? regStyles["leftsection-liclicked"] : ""
-            }
-            onClick={name === "requestRefund" ? () => {} : handleClick}
-          >
-            Request Refund
-          </li>
-          <li
             id="/AskInstructor"
             className={
               name == "AskInstructor" ? regStyles["leftsection-liclicked"] : ""
@@ -92,6 +83,16 @@ const RegCourse = ({
             {" "}
             Ask Instructor{" "}
           </li>
+          <li
+            id="/requestrefund"
+            className={
+              name == "requestRefund" ? regStyles["leftsection-liclicked"] : ""
+            }
+            onClick={name === "requestRefund" ? () => {} : handleClick}
+          >
+            Request Refund
+          </li>
+        
         </ul>
       </div>
     </section>
