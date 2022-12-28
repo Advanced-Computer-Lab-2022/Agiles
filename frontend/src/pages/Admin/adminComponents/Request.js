@@ -14,9 +14,8 @@ function Request(props) {
 
   const handleApprove = async (traineeId, courseId, index) => {
     try {
-      await axios
-        .post(url, { traineeId: traineeId, courseId: courseId })
-        .then(setStatus("Approved"));
+      setStatus("Approved");
+      await axios.post(url, { traineeId: traineeId, courseId: courseId });
     } catch (e) {
       console.log(e);
     }

@@ -39,11 +39,10 @@ function Report(props) {
           <div style={{ width: "50%" }}>
             <Button
               onClick={async () => {
-                await axios
-                  .post("/admin/resolveReport", {
-                    reportId: el._id,
-                  })
-                  .then(setStatus("resolved"));
+                setStatus("resolved");
+                await axios.post("/admin/resolveReport", {
+                  reportId: el._id,
+                });
               }}
             >
               {" "}
