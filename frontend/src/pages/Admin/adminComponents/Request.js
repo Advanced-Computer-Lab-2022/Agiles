@@ -44,6 +44,11 @@ function Request(props) {
           ""
         )}
       </TableCell>
+      {el.reason ? (
+        <TableCell style={{ textAlign: "center" }}>{el.reason}</TableCell>
+      ) : (
+        ""
+      )}
     </TableRow>
   );
 }

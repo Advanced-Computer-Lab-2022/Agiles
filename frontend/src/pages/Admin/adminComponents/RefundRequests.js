@@ -55,6 +55,11 @@ function RefundRequests() {
           >
             Status
           </TableCell>
+          <TableCell
+            style={{ fontSize: "20px", fontWeight: "600", textAlign: "center" }}
+          >
+            Reason
+          </TableCell>
         </TableHead>
         {reports.map((el, index) => {
           return el.traineeId == null ? (
