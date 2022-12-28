@@ -1,19 +1,23 @@
 .mainRight {
-    max-width: 1200px;
-    width: 75%;
-  }
+  max-width: 1200px;
+  width: 75%;
+}
 
+.right {
+  width: 70%;
+  margin: 20px auto;
+}
 
-.container{
-    display: flex;
+.container {
+  display: flex;
 }
 .button {
-    background-color: "#a00407";
-    color: "white";
-    padding: "12px 20px";
-    border: "none";
-    border-radius: "4px";
-    cursor: "pointer";
-    float: "right";
-    width: "100px";
-  }
+  background-color: "#a00407";
+  color: "white";
+  padding: "12px 20px";
+  border: "none";
+  border-radius: "4px";
+  cursor: "pointer";
+  float: "right";
+  width: "100px";
+}

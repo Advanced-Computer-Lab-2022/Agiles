@@ -13,12 +13,7 @@ const questionSchena = new Schema(
       required: true,
       ref: "Course",
     },
-    instructorId: {
-      type: mongoose.Types.ObjectId,
-      required: true,
 
-      ref: "Instructor",
-    },
     question: {
       type: String,
       required: true,
