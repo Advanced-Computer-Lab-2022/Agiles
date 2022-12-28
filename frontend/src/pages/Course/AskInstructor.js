@@ -23,7 +23,7 @@ function AskInstructor() {
   const location = useLocation();
   const index = new URLSearchParams(location.search).get("idx");
   const userId = cookies.get("currentUser");
-  //console.log(location.state);
+  console.log(location.state);
 
   const handleSubmitNewQuestion = async (qID) => {
     let res = await axios.post("/individualtrainee/askInstructor", {

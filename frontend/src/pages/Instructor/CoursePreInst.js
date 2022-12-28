@@ -1,9 +1,9 @@
 import style from "../../components/CoursePreview.module.css";
-import regStyles from "../Course/RegCourse.module.css"
+import regStyles from "../Course/RegCourse.module.css";
 import Rating from "@mui/material/Rating";
 import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
 import CircleIcon from "@mui/icons-material/Circle";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -19,7 +19,7 @@ import CoursePromo from "./CoursePromo";
 const UPLOAD_URL = "/instructor/updatePreview";
 const CoursePreInst = () => {
   const location = useLocation();
-  const course_id = new URLSearchParams(location.search).get('courseId');;
+  const course_id = new URLSearchParams(location.search).get("courseId");
   const [isloading, setIsLoading] = useState(false);
   const [course, setCourse] = useState([]);
   const [coursePreviewUrl, setCoursePreviewUrl] = useState("");
@@ -29,7 +29,10 @@ const CoursePreInst = () => {
   const handleClose = () => setShow(false);
   const handleCloseRatings = () => setShowRating(false);
   const handleShow = () => setShow(true);
-  const handleShowRatings = () => {setReviews(reviews);setShowRating(true);};
+  const handleShowRatings = () => {
+    setReviews(reviews);
+    setShowRating(true);
+  };
   const handleSave = async () => {
     let config = {
       headers: {
@@ -45,44 +48,53 @@ const CoursePreInst = () => {
         window.location.reload();
       },
       (e) => {
-        console.log(e);  
-      });};
-      const fetchdata = async () => {
-        setIsLoading(true);
-        try {
-          const res = await axios.get(`/course/${course_id}`);
-          setCourse(res.data.firstField);
-          localStorage.setItem("course_title",res.data.firstField.title);
-          localStorage.setItem("course_img",res.data.firstField.imgUrl);
-          localStorage.setItem("course_inst",res.data.firstField.instructorname);
-          setReviews(res.data.secondField);
-          setIsLoading(false);
-        } catch (e) {
-          console.log(e);
-        }
-      };
-      useEffect(()=>{
-        fetchdata();
-      },[]);
+        console.log(e);
+      }
+    );
+  };
+  const fetchdata = async () => {
+    setIsLoading(true);
+    try {
+      const res = await axios.get(`/course/${course_id}`);
+      setCourse(res.data.firstField);
+      localStorage.setItem("course_title", res.data.firstField.title);
+      localStorage.setItem("course_img", res.data.firstField.imgUrl);
+      localStorage.setItem("course_inst", res.data.firstField.instructorname);
+      setReviews(res.data.secondField);
+      setIsLoading(false);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    fetchdata();
+  }, []);
   return (
     <>
-    {isloading ? (
-      <LoadingScreen loading={true} logoSrc={spinner} />
-    ) : (
-    <div className={regStyles["mainreg"]}>
-    <MyCourseInst course_id={course_id} course_img={course.imgUrl} course_title={course.title} course_inst={course.instructorname} name={'preview'}/>
-    <div className={style["mainRight"]}>
-      <Modal show={showRatings} onHide={handleCloseRatings}>
-        <Modal.Header closeButton>
-          <Modal.Title>Course Reviews</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <div className={style["rating-box"]}>
-                  {reviews.filter((review, idx) => idx < 5)
-                    .map((review,index) => {
+      {isloading ? (
+        <LoadingScreen loading={true} logoSrc={spinner} />
+      ) : (
+        <div className={regStyles["mainreg"]}>
+          <MyCourseInst
+            course_id={course_id}
+            course_img={course.imgUrl}
+            course_title={course.title}
+            course_inst={course.instructorname}
+            name={"preview"}
+          />
+          <div className={style["mainRight"]}>
+            <Modal show={showRatings} onHide={handleCloseRatings}>
+              <Modal.Header closeButton>
+                <Modal.Title>Course Reviews</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div className={style["rating-box"]}>
+                  {reviews
+                    .filter((review, idx) => idx < 5)
+                    .map((review, index) => {
                       return (
                         <ReviewCard
-                          index = {index}
+                          index={index}
                           username={review.userId.username}
                           rating={review.userRating}
                           review={review.userReview}
@@ -90,139 +102,161 @@ const CoursePreInst = () => {
                       );
                     })}
                 </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseRatings}>
-            close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <label className={style["mainlabel"]}>Overview</label>
-      <h1>Welcome to the {course.title} Course</h1>
-      <div className={style["video"]}>
-        {course.coursePreviewUrl != "" ? (
-          <>
-            <iframe
-              width="1000"
-              height="500"
-              src={course.coursePreviewUrl}
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-            <br></br>
-            <Button  onClick={handleShow} style={{borderRadius:'0',border:'none',backgroundColor:'#a00407'}}>
-               Edit
-            </Button>
-            <Modal show={show} onHide={handleClose}>
-              <Modal.Header closeButton>
-                <Modal.Title>Edit Course Preview </Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <InputGroup className="mb-2">
-                  <InputGroup.Text id="basic-addon3">
-                    youtube Url
-                  </InputGroup.Text>
-                  <Form.Control
-                    id="basic-url"
-                    aria-describedby="basic-addon3"
-                    onChange={(e) => setCoursePreviewUrl(e.target.value)}
-                  />
-                </InputGroup>
               </Modal.Body>
               <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
+                <Button variant="secondary" onClick={handleCloseRatings}>
                   close
-                </Button>
-                <Button variant="primary" onClick={handleSave}>
-                  save changes
                 </Button>
               </Modal.Footer>
             </Modal>
-          </>
-        ) : (
-          <div className={style["notFound"]}>
-            <h6 style={{ textAlign: "center" }}>
-              <DoNotDisturbIcon /> No Preview Video for this Course
-            </h6>
-            <Button variant="dark" onClick={handleShow}>
-              <UploadIcon /> Upload Video from Youtube
-            </Button>
-            <Modal show={show} onHide={handleClose}>
-              <Modal.Header closeButton>
-                <Modal.Title>Upload Course Preview </Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <InputGroup className="mb-2">
-                  <InputGroup.Text id="basic-addon3">
-                    youtube Url
-                  </InputGroup.Text>
-                  <Form.Control
-                    id="basic-url"
-                    aria-describedby="basic-addon3"
-                    onChange={(e) => setCoursePreviewUrl(e.target.value)}
-                  />
-                </InputGroup>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                  close
+            <label className={style["mainlabel"]}>Overview</label>
+            <h1>Welcome to the {course.title} Course</h1>
+            <div className={style["video"]}>
+              {course.coursePreviewUrl != "" ? (
+                <>
+                  <iframe
+                    width="1000"
+                    height="500"
+                    src={course.coursePreviewUrl}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                  <br></br>
+                  <Button
+                    onClick={handleShow}
+                    style={{
+                      borderRadius: "0",
+                      border: "none",
+                      backgroundColor: "#a00407",
+                    }}
+                  >
+                    Edit
+                  </Button>
+                  <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Edit Course Preview </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <InputGroup className="mb-2">
+                        <InputGroup.Text id="basic-addon3">
+                          youtube Url
+                        </InputGroup.Text>
+                        <Form.Control
+                          id="basic-url"
+                          aria-describedby="basic-addon3"
+                          onChange={(e) => setCoursePreviewUrl(e.target.value)}
+                        />
+                      </InputGroup>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleClose}>
+                        close
+                      </Button>
+                      <Button variant="primary" onClick={handleSave}>
+                        save changes
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                </>
+              ) : (
+                <div className={style["notFound"]}>
+                  <h6 style={{ textAlign: "center" }}>
+                    <DoNotDisturbIcon /> No Preview Video for this Course
+                  </h6>
+                  <Button variant="dark" onClick={handleShow}>
+                    <UploadIcon /> Upload Video from Youtube
+                  </Button>
+                  <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Upload Course Preview </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <InputGroup className="mb-2">
+                        <InputGroup.Text id="basic-addon3">
+                          youtube Url
+                        </InputGroup.Text>
+                        <Form.Control
+                          id="basic-url"
+                          aria-describedby="basic-addon3"
+                          onChange={(e) => setCoursePreviewUrl(e.target.value)}
+                        />
+                      </InputGroup>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleClose}>
+                        close
+                      </Button>
+                      <Button onClick={handleSave}>save changes</Button>
+                    </Modal.Footer>
+                  </Modal>
+                </div>
+              )}
+            </div>
+            <hr className={style["mainRight-hr"]}></hr>
+            <h3>About this course</h3>
+            <p>
+              Description : {course.description}
+              <br></br>
+              <span>Subject : {course.subject}</span>
+              <br></br>
+              <span style={{ color: "#a00407", fontWeight: "bold" }}>
+                Enrolled students : {course.studentCount} students
+              </span>
+            </p>
+            <hr className={style["mainRight-hr"]}></hr>
+            <h3>Define promotion</h3>
+            <CoursePromo course_id={course_id}></CoursePromo>
+            <hr className={style["mainRight-hr"]}></hr>
+            <div className={style["mainRight-rating"]}>
+              <h3>
+                <Rating
+                  name="rating"
+                  readOnly
+                  value={
+                    !course.rating
+                      ? 0
+                      : Math.round(course.rating / course.ratingCount)
+                  }
+                  className={style["rating"]}
+                />{" "}
+                {Math.round(course.rating / course.ratingCount)} course rating{" "}
+                <CircleIcon style={{ fontSize: "0.5rem" }} /> (
+                {course.ratingCount - 1} ratings)
+              </h3>
+              <div className={style["rating-box"]}>
+                {reviews
+                  .filter((review, idx) => idx < 5)
+                  .map((review, index) => {
+                    return (
+                      <ReviewCard
+                        index={index}
+                        username={review.userId.username}
+                        rating={review.userRating}
+                        review={review.userReview}
+                      ></ReviewCard>
+                    );
+                  })}
+              </div>
+              {course.ratingCount > 1 && (
+                <Button
+                  onClick={handleShowRatings}
+                  style={{
+                    backgroundColor: "#a00407",
+                    borderRadius: 0,
+                    width: "10rem",
+                    border: "none",
+                  }}
+                >
+                  show all reviews
                 </Button>
-                <Button  onClick={handleSave}>
-                  save changes
-                </Button>
-              </Modal.Footer>
-            </Modal>
+              )}
+            </div>
           </div>
-        )}
-      </div>
-      <hr className={style["mainRight-hr"]}></hr>
-      <h3>About this course</h3>
-      <p>Description : {course.description}
-      <br></br>
-      <span>Subject : {course.subject}</span>
-      <br></br>
-      <span style={{color:'#a00407',fontWeight:'bold'}}>Enrolled students : {course.studentCount} students</span>
-      </p>
-      <hr className={style["mainRight-hr"]}></hr>
-      <h3>Define promotion</h3>
-      <CoursePromo course_id={course_id}></CoursePromo>
-      <hr className={style["mainRight-hr"]}></hr>
-      <div className={style["mainRight-rating"]}>
-        <h3>
-          <Rating
-            name="rating"
-            readOnly
-            value={!course.rating ? 0 : Math.round(course.rating/course.ratingCount)}
-            className={style["rating"]}
-          />{" "}
-          {Math.round(course.rating/course.ratingCount)} course rating{" "}
-          <CircleIcon style={{ fontSize: "0.5rem" }} /> ({course.ratingCount-1}{" "}
-          ratings)
-        </h3>
-        <div className={style["rating-box"]}>
-                  {reviews.filter((review, idx) => idx < 5)
-                    .map((review,index) => {
-                      return (
-                        <ReviewCard
-                          index = {index}
-                          username={review.userId.username}
-                          rating={review.userRating}
-                          review={review.userReview}
-                        ></ReviewCard>
-                      );
-                    })}
-                </div>
-       {course.ratingCount>1&& <Button
-          onClick={handleShowRatings}
-          style={{backgroundColor:'#a00407',borderRadius: 0, width: '10rem' ,border: 'none' }}
-          >
-          show all reviews
-        </Button>}
-      </div>
-    </div>
-    </div>)} </>
+        </div>
+      )}{" "}
+    </>
   );
 };
 
