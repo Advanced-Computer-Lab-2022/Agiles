@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 
 function Report(props) {
   let el = props.data;
-  let initialSeen = el.isSeen ? "seen " : "not seen yet ";
+  let initialSeen = el.isSeen ? "seen" : "not seen yet ";
   const [seen, setSeen] = useState(initialSeen);
   const [status, setStatus] = useState(el["status"]);
 
@@ -14,11 +14,11 @@ function Report(props) {
     <Accordion.Item
       eventKey={props.index}
       onClick={async () => {
-        await axios
-          .post("/admin/viewReport", {
-            reportId: el._id,
-          })
-          .then(setSeen("seen"));
+        if (seen == "seen") return;
+        setSeen("seen");
+        await axios.post("/admin/viewReport", {
+          reportId: el._id,
+        });
       }}
     >
       <Accordion.Header>
