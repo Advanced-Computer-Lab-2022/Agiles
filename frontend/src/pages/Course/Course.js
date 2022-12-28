@@ -112,10 +112,10 @@ const Course = () => {
                     name="rating"
                     style={{ fontSize:'1.5vw',marginRight:'1vw' }}
                     readOnly
-                    value={Math.round(course.rating / course.ratingCount)}
+                    value={Math.round(course.rating / (course.ratingCount==0?1:course.ratingCount))}
                   />
                   <label>
-                    ({course.ratingCount - 1} ratings) {course.studentCount}{" "}
+                    ({course.ratingCount} ratings) {course.studentCount}{" "}
                     students{" "}
                   </label>
                 </div>
@@ -337,7 +337,7 @@ const Course = () => {
                       {" "}
                       <StarsIcon></StarsIcon>
                       <label>
-                        {instructor.rating / instructor.ratingCount} Instructor
+                        {instructor.rating / (instructor.ratingCount==0?1:instructor.ratingCount)} Instructor
                         Rating
                       </label>
                     </div>
@@ -345,7 +345,7 @@ const Course = () => {
                       {" "}
                       <ReviewsIcon></ReviewsIcon>
                       <label>
-                        {instructor.ratingCount-1} reviews
+                        {instructor.ratingCount} reviews
                       </label>
                     </div>
                     <div>

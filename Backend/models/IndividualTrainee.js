@@ -47,7 +47,8 @@ const individualTraineeSchema = new Schema(
           default: 0,
         },
         courseRating :{type:mongoose.Schema.Types.ObjectId,ref:"Rating"},
-        instRating:{type:mongoose.Schema.Types.ObjectId,ref:"Rating"}
+        instRating:{type:mongoose.Schema.Types.ObjectId,ref:"Rating"},
+        purchasedPrice : {type:Number,required:true},
       },
     ],
     verficationCode :{

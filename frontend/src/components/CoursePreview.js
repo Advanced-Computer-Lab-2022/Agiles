@@ -242,14 +242,14 @@ const CoursePreview = () => {
                     value={
                       !course.rating
                         ? 0
-                        : Math.round(course.rating / course.ratingCount)
+                        : Math.round(course.rating / (course.ratingCount==0?1:course.ratingCount))
                     }
                     className={style["rating"]}
                   />{" "}
                   <span>
-                    {Math.round(course.rating / course.ratingCount)} course
+                    {Math.round(course.rating /(course.ratingCount==0?1:course.ratingCount))} course
                     rating <CircleIcon style={{ fontSize: "0.5rem" }} /> (
-                    {course.ratingCount - 1} ratings)
+                    {course.ratingCount} ratings)
                   </span>
                 </h3>
                 <div className={style["rating-box"]}>
@@ -266,7 +266,7 @@ const CoursePreview = () => {
                       );
                     })}
                 </div>
-                {course.ratingCount>1&&
+                {course.ratingCount>0&&
                 <Button
                   onClick={handleShow}
                   style={{

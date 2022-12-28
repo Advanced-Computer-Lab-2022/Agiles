@@ -770,9 +770,22 @@ const payWithWallet = async (req, res) => {
     await IndividualTrainee.updateOne(
       { _id: id },
       {
-        $push: { registered_courses: { courseId: courseId } },
+        $push: { registered_courses: { courseId: courseId,purchasedPrice:price } },
         $inc: { wallet: -price },
       }
+    );
+    const month = new Date().getMonth();
+    const exists = await Instructor.findOne({ _id: course.instructor,"wallet.month": month});
+    if(!exists){
+      await Instructor.updateOne( {_id: course.instructor},{$push:{wallet:{amount:price*70/100,month:month}},$inc:{studentCount:1}});
+    }
+    else{
+      await Instructor.updateOne({_id: course.instructor,"wallet.month": month},{$inc:{"wallet.$.amount":price*70/100}});
+      await Instructor.updateOne({_id: course.instructor},{$inc:{studentCount:1}});
+    }
+    await Course.updateOne(
+      { _id: courseId },
+      { studentCount: course.studentCount + 1 }
     );
     return res.status(200).json("success");
   } catch (err) {
@@ -830,7 +843,6 @@ const requestRefund = async (req, res) => {
 
 const askInstructor = async (req, res) => {
   const { courseId, traineeId, question } = req.body;
-  console.log(req.body);
   if (!courseId || !traineeId || !question) {
     return res.status(500).json("bad request");
   }

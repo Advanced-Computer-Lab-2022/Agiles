@@ -217,13 +217,13 @@ const CoursePreInst = () => {
                   value={
                     !course.rating
                       ? 0
-                      : Math.round(course.rating / course.ratingCount)
+                      : Math.round(course.rating / (course.ratingCount===0?1:course.ratingCount))
                   }
                   className={style["rating"]}
                 />{" "}
-                {Math.round(course.rating / course.ratingCount)} course rating{" "}
+                {Math.round(course.rating / (course.ratingCount==0?1:course.ratingCount))} course rating{" "}
                 <CircleIcon style={{ fontSize: "0.5rem" }} /> (
-                {course.ratingCount - 1} ratings)
+                {course.ratingCount } ratings)
               </h3>
               <div className={style["rating-box"]}>
                 {reviews
@@ -239,7 +239,7 @@ const CoursePreInst = () => {
                     );
                   })}
               </div>
-              {course.ratingCount > 1 && (
+              {course.ratingCount > 0 && (
                 <Button
                   onClick={handleShowRatings}
                   style={{

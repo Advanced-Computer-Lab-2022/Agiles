@@ -29,7 +29,7 @@ const payForCourse = async (session) => {
     (parseInt(course.price) * parseInt(course.discount)) / 100;
   try {
     await IndividualTrainee.findByIdAndUpdate(userId, {
-      $push: { registered_courses: { courseId: courseId } },
+      $push: { registered_courses: { courseId: courseId,purchasedPrice:price } },
     });
     const month = new Date().getMonth();
     const exists = await Instructor.findOne({ _id: course.instructor,"wallet.month": month});

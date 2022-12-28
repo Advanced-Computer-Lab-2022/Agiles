@@ -26,12 +26,12 @@ const courseSchema = new Schema(
     rating: {
       type: Number,
       required: false,
-      default: 3,
+      default: 0,
     },
     ratingCount: {
       type: Number,
       required: false,
-      default: 1,
+      default: 0,
     },
     description: {
       type: String,
