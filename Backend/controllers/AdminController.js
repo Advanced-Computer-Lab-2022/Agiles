@@ -307,15 +307,25 @@ const acceptRefund = async (req, res) => {
 };
 const viewReport = async (req, res) => {
   const { reportId } = req.body;
-  Report.findByIdAndUpdate(reportId, {
-    isSeen: false,
-  });
+  try {
+    const rep = await Report.findByIdAndUpdate(reportId, {
+      isSeen: true,
+    });
+    return res.status(200);
+  } catch (e) {
+    return res.status(500);
+  }
 };
 const resolveReport = async (req, res) => {
   const { reportId } = req.body;
-  await Report.findByIdAndUpdate(reportId, {
-    status: "resolved",
-  });
+  try {
+    await Report.findByIdAndUpdate(reportId, {
+      status: "resolved",
+    });
+    res.status(200);
+  } catch (e) {
+    return res.status(500);
+  }
 };
 module.exports = {
   resolveReport,

@@ -9,10 +9,26 @@ const MyCourseInst = ({
 }) => {
   const navigate = useNavigate();
   const handleClick = (e) => {
-    navigate({
-      pathname: e.target.id,
-      search: `?courseId=${course_id}`,
-    });
+    console.log(course_id);
+    console.log(course_img);
+    console.log(course_title);
+    console.log(course_inst);
+    console.log(name);
+    navigate(
+      {
+        pathname: e.target.id,
+        search: `?courseId=${course_id}`,
+      },
+      {
+        state: {
+          course_id: course_id,
+          course_img: course_img,
+          course_title: course_title,
+          course_inst: course_inst,
+          name: name,
+        },
+      }
+    );
   };
   return (
     <section className={regStyles["leftsection"]}>
@@ -64,6 +80,16 @@ const MyCourseInst = ({
             onClick={name === "reportproblem" ? () => {} : handleClick}
           >
             Support Center
+          </li>
+          <li
+            id="/AskInstructor"
+            className={
+              name == "AskInstructor" ? regStyles["leftsection-liclicked"] : ""
+            }
+            onClick={name === "AskInstructor" ? () => {} : handleClick}
+          >
+            {" "}
+            Questions{" "}
           </li>
         </ul>
       </div>

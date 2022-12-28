@@ -1,34 +1,20 @@
 import axios from "axios";
 import React, { useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
+import style from "./Report.module.css";
+import Button from "react-bootstrap/Button";
 
 function Report(props) {
   let el = props.data;
-  const [seen, setSeen] = useState(el["isSeen"] ? "seen " : "not seen yet ");
+  let initialSeen = el.isSeen ? "seen " : "not seen yet ";
+  const [seen, setSeen] = useState(initialSeen);
   const [status, setStatus] = useState(el["status"]);
-  const [resbutton, setResbutton] = useState(
-    status == "pending" ? (
-      <button
-        onClick={async () => {
-          axios
-            .post("/admin/ResolveReport", {
-              reportId: el._id,
-            })
-            .then(setStatus("resolved"))
-            .then(setResbutton(""));
-        }}
-      >
-        {" "}
-        Mark as Resolved{" "}
-      </button>
-    ) : (
-      ""
-    )
-  );
+
   return (
     <Accordion.Item
+      eventKey={props.index}
       onClick={async () => {
-        axios
+        await axios
           .post("/admin/viewReport", {
             reportId: el._id,
           })
@@ -42,12 +28,31 @@ function Report(props) {
           </div>
           <div style={{ width: "25%" }}> {el.courseId.title}</div>{" "}
           <div style={{ width: "25%" }}> {status}</div>
-          <div style={{ width: "25%" }}>{seen ? "Yes" : "No"}</div>
+          <div style={{ width: "25%" }}>{seen}</div>
         </div>
       </Accordion.Header>
-      <Accordion.Body>
+      <Accordion.Body
+        style={{ display: "flex", justifyContent: "space-between" }}
+      >
         <div>Description : {el.description}</div>
-        <div>{resbutton}</div>
+        {status == "pending" ? (
+          <div style={{ width: "50%" }}>
+            <Button
+              onClick={async () => {
+                await axios
+                  .post("/admin/resolveReport", {
+                    reportId: el._id,
+                  })
+                  .then(setStatus("resolved"));
+              }}
+            >
+              {" "}
+              Mark as Resolved{" "}
+            </Button>
+          </div>
+        ) : (
+          ""
+        )}
       </Accordion.Body>
     </Accordion.Item>
   );

@@ -10,6 +10,7 @@ const RegCourse = ({
   idx,
 }) => {
   const navigate = useNavigate();
+
   const handleClick = (e) => {
     navigate(
       {
