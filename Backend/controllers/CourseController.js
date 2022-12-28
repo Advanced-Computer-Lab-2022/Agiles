@@ -116,6 +116,14 @@ const setFinalExam = async (req, res) => {
 };
 
 const getCourses = async (req, res) => {
+  let currentDate = new Date().toISOString();
+
+  await Course.updateMany(
+    {
+      discount_enddate: { $lte: currentDate },
+    },
+    { discount: 0 }
+  );
   try {
     const courses = await Course.find({}).populate("instructor");
     res.status(200).send(courses);
@@ -256,7 +264,7 @@ const rateCourse = async (req, res) => {
 };
 
 const reportProblem = async (req, res) => {
-  const { courseId, reportType, description ,title } = req.body;
+  const { courseId, reportType, description, title } = req.body;
   const userId = req.user.id;
   const newProblem = new Report({
     userId: userId,
@@ -273,9 +281,8 @@ const reportProblem = async (req, res) => {
   }
 };
 
-
 const addFollowUp = async (req, res) => {
-  const { reportId , followUpArr} = req.body;
+  const { reportId, followUpArr } = req.body;
   const userId = req.user.id;
   try {
     const report = await Report.findByIdAndUpdate(reportId, {
@@ -287,9 +294,7 @@ const addFollowUp = async (req, res) => {
   }
 };
 
-
 const viewReportedProblems = async (req, res) => {
-
   const userId = req.user.id;
   try {
     const reportedProblems = await Report.find({ userId: userId });
