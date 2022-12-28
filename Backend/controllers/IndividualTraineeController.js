@@ -762,15 +762,20 @@ const payWithWallet = async (req, res) => {
   }
   const course = await Course.findById(courseId);
   const user = await IndividualTrainee.findById(id);
-  let price = course.price-course.discount*course.price/100;
+  let price = course.price - (course.discount * course.price) / 100;
   if (!user) {
     return res.status(500).json("bad request");
   }
-  try{
-    await IndividualTrainee.updateOne({_id:id},{$push:{registered_courses:{courseId:courseId}},$inc:{wallet:-price}})
+  try {
+    await IndividualTrainee.updateOne(
+      { _id: id },
+      {
+        $push: { registered_courses: { courseId: courseId } },
+        $inc: { wallet: -price },
+      }
+    );
     return res.status(200).json("success");
-  }
-  catch(err){
+  } catch (err) {
     return res.status(500).json("server error");
   }
 };
@@ -797,8 +802,8 @@ const requestAccess = async (req, res) => {
 };
 
 const requestRefund = async (req, res) => {
-  const { courseId,reason } = req.body;
-  if (!courseId  || !reason) {
+  const { courseId, reason } = req.body;
+  if (!courseId || !reason) {
     return res.status(500).json("bad request");
   }
   const newRequest = {
@@ -807,15 +812,16 @@ const requestRefund = async (req, res) => {
     reason: reason,
   };
   try {
-    const request = await CourseRefundRequest.findOne({traineeId:newRequest.traineeId,courseId:newRequest.courseId});
+    const request = await CourseRefundRequest.findOne({
+      traineeId: newRequest.traineeId,
+      courseId: newRequest.courseId,
+    });
 
-    if(request){
+    if (request) {
       return res.status(200).json("already requested");
-    }
-    else{
-
-    await CourseRefundRequest.create(newRequest);
-    return res.status(200).json("success");
+    } else {
+      await CourseRefundRequest.create(newRequest);
+      return res.status(200).json("success");
     }
   } catch (err) {
     return res.status(406).json(err);
@@ -823,14 +829,14 @@ const requestRefund = async (req, res) => {
 };
 
 const askInstructor = async (req, res) => {
-  const { courseId, traineeId, instructorId, question } = req.body;
-  if (!courseId || !traineeId || !instructorId || !question) {
+  const { courseId, traineeId, question } = req.body;
+  console.log(req.body);
+  if (!courseId || !traineeId || !question) {
     return res.status(500).json("bad request");
   }
   const newRequest = {
     traineeId: traineeId,
     courseId: courseId,
-    instructorId: instructorId,
     question: question,
   };
   try {
@@ -869,7 +875,8 @@ const getQuestions = async (req, res) => {
       courseId: courseId,
       traineeId: traineeId,
     })
-      .populate("traineeId courseId instructorId")
+      .populate("traineeId courseId")
+      .sort("-createdAt")
       .exec();
     res.status(200).send(questions);
   } catch (err) {

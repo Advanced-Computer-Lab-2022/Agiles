@@ -244,15 +244,14 @@ const addReply = async (req, res) => {
 };
 
 const getQuestions = async (req, res) => {
-  const { courseId, instructorId } = req.body;
-  if (!courseId || !instructorId) {
+  const { courseId } = req.body;
+  if (!courseId) {
     return res.status(500).json("bad request");
   }
 
   try {
     const questions = await TraineeQuestion.find({
       courseId: courseId,
-      instructorId: instructorId,
     })
       .populate("traineeId courseId instructorId")
       .exec();
