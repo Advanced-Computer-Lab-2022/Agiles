@@ -78,10 +78,8 @@ const PrevReportsTrainee = () => {
               <Accordion.Item eventKey={index}>
                 <Accordion.Header>
                   <div
-                    style={{
-                      color:
-                        report["status"] === "pending" ? "#A00407" : "#28D770",
-                    }}
+                    style={{  
+                      fontWeight:'bold'}}
                   >
                     Problem {index + 1} : {report["title"]}
                   </div>

@@ -77,7 +77,7 @@ const RegCourse = ({
             className={
               name == "requestRefund" ? regStyles["leftsection-liclicked"] : ""
             }
-            onClick={name === "requestrefund" ? () => {} : handleClick}
+            onClick={name === "requestRefund" ? () => {} : handleClick}
           >
             Request Refund
           </li>

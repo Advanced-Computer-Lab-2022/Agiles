@@ -150,7 +150,7 @@ const Refund = () => {
                 course_img={location.state.course_img}
                 course_title={location.state.course_title}
                 course_inst={location.state.course_inst}
-                name="refund"
+                name="requestRefund"
                 progress={location.state.progress}
                 idx={index}
               ></RegCourse>
@@ -185,7 +185,7 @@ const Refund = () => {
             course_img={location.state.course_img}
             course_title={location.state.course_title}
             course_inst={location.state.course_inst}
-            name="refund"
+            name="requestRefund"
             progress={location.state.progress}
             idx={location.state.index}
           ></RegCourse>

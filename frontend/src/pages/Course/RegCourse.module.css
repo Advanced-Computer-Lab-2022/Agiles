@@ -2,6 +2,7 @@
   display: flex;
   grid-template-columns: 20% 80%;
   min-height: 100vh;
+  margin-right: 2rem;
 }
 
 .leftsection {
