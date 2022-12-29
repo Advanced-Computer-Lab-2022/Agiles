@@ -50,6 +50,7 @@ import Certificate from "./pages/Course/Certificate";
 import Refund from "./pages/Course/Refund";
 import AskInstructor from "./pages/Course/AskInstructor";
 import Checkout from "./pages/Course/Checkout";
+import AnswerTrainee from "./pages/Instructor/AnswerTrainee";
 function App() {
   const [showNav, setShowNav] = useState(true);
   const ROLES = {
@@ -118,6 +119,7 @@ function App() {
               <Route path="/certificate" element={<Certificate />} />
               <Route path="/requestrefund" element={<Refund />} />
               <Route path="/course/checkout" element={<Checkout />} />
+              <Route path="/askInstructor" element={<AskInstructor />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES.INSTRUCTOR]} />}>
@@ -131,6 +133,7 @@ function App() {
               <Route path="/conInst" element={<CourseConInst />} />
               <Route path="/setFinalExam" element={<SetFinalExam />} />
               <Route path="/PrevReports" element={<PrevReports />} />
+              <Route path="/AnswerQuestions" element={<AnswerTrainee />} />
             </Route>
 
             <Route
@@ -144,7 +147,6 @@ function App() {
                 />
               }
             >
-              <Route path="/askInstructor" element={<AskInstructor />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/accountsettings" element={<AccountSecurity />} />
               <Route path="/reviews" element={<Reviews />} />

@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const questionSchena = new Schema(
+const questionSchema = new Schema(
   {
     traineeId: {
       type: mongoose.Types.ObjectId,
-      required: true,
+      required: false,
       ref: "IndividualTrainee",
     },
     courseId: {
@@ -26,5 +26,5 @@ const questionSchena = new Schema(
   { timestamps: true }
 );
 
-const TraineeQuestion = mongoose.model("TraineeQuestion", questionSchena);
+const TraineeQuestion = mongoose.model("TraineeQuestion", questionSchema);
 module.exports = TraineeQuestion;

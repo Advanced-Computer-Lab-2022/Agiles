@@ -1,59 +1,44 @@
 import Button from "react-bootstrap/Button";
-import style from "./AskInstructor.module.css";
+import style from "./AnswerTrainee";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Reply from "./Reply";
-function Question({
-  el,
-  index,
-  length,
-  isInstructor,
-  instructor,
-  studentName,
-  instructorName,
-}) {
+import Reply from "./InstrucrorReply";
+function InstructorQuestions({ el, index, length }) {
   const [newReply, setNewReply] = useState("");
-  const [replies, setReplies] = useState(el.replies);
 
   const handleSubmitReply = async (e, qID) => {
     e.preventDefault();
-    const url = isInstructor
-      ? "/instructor/addReply"
-      : "/individualtrainee/addReply";
-    let res = await axios.patch(url, {
-      questionId: qID,
-      reply: newReply,
-    });
-    setReplies([...replies, { reply: newReply, isInstructor: isInstructor }]);
-    setNewReply("");
+    try {
+      let res = await axios.patch("/instructor/addReply", {
+        questionId: qID,
+        reply: newReply,
+      });
+      window.location.reload();
+    } catch (e) {
+      console.log(e);
+    }
   };
   return (
-    <div style={{ margin: "15px 0" }}>
+    <div>
       <div>
-        <h3>
+        <h1>
           Q{length - index}: {el.question}
-        </h3>
-        <div style={{ color: "rgb(170,170,170)" }}>
-          {studentName
-            ? "Asked by: " + studentName
-            : "Answered by: " + instructorName}
-        </div>
+        </h1>
       </div>
       <div>
-        {replies.map((reply, index) => {
-          return <Reply instructor={instructor} index={index} reply={reply} />;
+        {el.replies.map((reply) => {
+          return <Reply reply={reply} />;
         })}
       </div>
       <div>
         <form>
           <textarea
-            style={{ margin: "15px 0" }}
             class="form-control"
             id="exampleFormControlTextarea1"
             rows="3"
             type="txt"
             placeholder="Reply"
-            value={newReply}
+            //style={styles.input}
             onChange={(e) => setNewReply(e.target.value)}
             required
           ></textarea>
@@ -63,6 +48,7 @@ function Question({
               className={style["button"]}
               type="reply"
               onClick={(e) => handleSubmitReply(e, el._id)}
+              // onClick={handleSubmitReply}
             >
               Submit
             </Button>
@@ -73,4 +59,4 @@ function Question({
   );
 }
 
-export default Question;
+export default InstructorQuestions;

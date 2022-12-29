@@ -19,6 +19,26 @@ const Profile = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [minibio, setMiniBio] = useState("");
+  const [wallet, setWallet] = useState(0);
+
+  let walletAmount = window.sessionStorage.getItem("factor")
+    ? window.sessionStorage.getItem("factor") * wallet
+    : wallet;
+  walletAmount = (Math.round(walletAmount * 100) / 100).toFixed(2);
+  let walletCurrency = window.sessionStorage.getItem("currency")
+    ? window.sessionStorage.getItem("currency").toUpperCase()
+    : "USD";
+
+  let walletItem =
+    cookie.get("status") == 1 ? (
+      ""
+    ) : (
+      <>
+        <label>Wallet :</label>
+        <div> {walletAmount + " " + walletCurrency}</div>
+      </>
+    );
+
   const fetchData = async () => {
     setIsLoading(true);
     const fetch = cookie.get("status") == 1 ? fetchInstUrl : fetchUrl;
@@ -34,6 +54,7 @@ const Profile = () => {
         setFirstname(res.data.firstname);
         setLastname(res.data.lastname);
         setMiniBio(res.data.mini_bio);
+        setWallet(res.data.wallet);
       }
     } catch (e) {
       console.log(e);
@@ -90,6 +111,7 @@ const Profile = () => {
                   placeholder={minibio == "" ? "write your mini bio" : minibio}
                   onChange={(e) => setMiniBio(e.target.value)}
                 ></input>
+                {walletItem}
                 <Button
                   style={{ backgroundColor: "#a00407", border: "none" }}
                   variant="dark"
