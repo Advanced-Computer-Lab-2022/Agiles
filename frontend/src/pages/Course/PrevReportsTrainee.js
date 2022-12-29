@@ -8,12 +8,15 @@ import "reactjs-popup/dist/index.css";
 import Button from "react-bootstrap/Button";
 import Swal from "sweetalert2";
 import Accordion from "react-bootstrap/Accordion";
+import { BsEyeFill ,BsEyeSlashFill  } from 'react-icons/bs';
+
 
 const PrevReportsTrainee = () => {
   const [reports, setReports] = useState([]);
   const [followUp, setFollowUp] = useState("");
   const [reportId, setReportId] = useState("");
   const [followUpArr, setFollowUpArr] = useState([]);
+  const [flag, setFlag] = useState(false);
 
   const handleSubmit = async (event) => {
     const follow = {
@@ -48,6 +51,7 @@ const PrevReportsTrainee = () => {
         timer: 1500,
       });
     }
+    setFlag(!flag);
   };
 
   useEffect(() => {
@@ -59,7 +63,7 @@ const PrevReportsTrainee = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [flag]);
   return (
     <>
       <h1
@@ -82,6 +86,13 @@ const PrevReportsTrainee = () => {
                       fontWeight:'bold'}}
                   >
                     Problem {index + 1} : {report["title"]}
+                  </div>
+                  <div style={{position: "absolute",right: "0",marginRight:"5%"}}>
+                  {report["isSeen"] === "true" ? (
+                    <span><BsEyeFill /></span>
+                    ) : (
+                      <span><BsEyeSlashFill /></span>
+                  )}
                   </div>
                 </Accordion.Header>
 
