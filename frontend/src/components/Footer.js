@@ -1,15 +1,36 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import a from "../static/logo.png";
+
 function Footer() {
   return (
     <footer className="footer">
       <div className="footer-content">
+      <div className="footer-content-right">
         <h3>Canadian Chamber of Commerce</h3>
-        <p>I will write description here</p>
+        <p>
+          Canadian Chamber of Commerce in Egypt (CanCham) was officially
+          inaugurated on the 31st of May 2006. It was established in Egypt as a
+          non-profit and non-governmental organization. It is an official member
+          at the Canadian Chamber of Commerce in Canada; having access to their
+          members database who mounts to 195,000. CanCham gives you and your
+          company access to information and contacts.
+        </p>
+        </div>
+        <div>
+          <img
+            src={a}
+            width="auto"
+            height="150px"
+            alt="mainImage"
+           
+          ></img>
       </div>
+      </div>
+      
       <hr></hr>
       <div class="footer-bottom">
-      <p>copyright &copy;2022 Canadian Chamber of Commerce </p>
+        <p>copyright &copy;2022 AgilesTeam </p>
+
       </div>
       {/* <p className="footer-title">Copyrights 	&copy; <span>Canadian Chamber of Commerce</span></p>
       <div className="social-icons">

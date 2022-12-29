@@ -66,16 +66,16 @@ const Home = () => {
           </nav>
           <ThumbnailLog></ThumbnailLog>
           <Explore></Explore>
-          <footer></footer>
-        </div>
+          <Footer/>
+         </div>
       );
     }
   } else {
     return (
       <div className="home">
         <Thumbnail></Thumbnail>
-        <footer></footer>
-      </div>
+        <Footer/>
+         </div>
     );
   }
 };

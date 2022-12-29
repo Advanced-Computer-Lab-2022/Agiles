@@ -52,7 +52,6 @@ const CoursContent = () => {
   };
 
   const getFinishedItems = async (e) => {
-    console.log("yes");
     if (cookies.get("status") !== 1) {
       try {
         let res = await axios.get("/individualtrainee/getTraineeProgress", {

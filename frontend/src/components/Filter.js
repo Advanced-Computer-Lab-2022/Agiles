@@ -61,7 +61,7 @@ const Filter = ({ chooseMessage, currentMessage, courses }) => {
   };
 
   const handleSubmit = async () => {
-    setCount(count + 1);
+   
     if (
       subject == "" &&
       minPrice == null &&
@@ -85,6 +85,7 @@ const Filter = ({ chooseMessage, currentMessage, courses }) => {
         title: "please fill at least one field ",
       });
     } else {
+      setCount(count + 1);
       let newMessage = [];
       currentMessage.forEach((el) => {
         if (
@@ -103,6 +104,7 @@ const Filter = ({ chooseMessage, currentMessage, courses }) => {
     chooseMessage(courses);
     setCount(0);
     setValue(0);
+    setRating(0);
   }
   const handleSort = (event) => {
     let newMessage = [];

@@ -237,9 +237,9 @@ const Course = () => {
                 )}
                 {(paid || course?.instructor?._id == traineeId) && (
                   <>
-                    <label className={styled["purchase"]}>
+                    {state!=1&&<label className={styled["purchase"]}>
                        you purchased this course
-                  </label>
+                  </label>}
                   <button
                     className={styled["buyme"]}
                     onClick={navigatetoCourse}

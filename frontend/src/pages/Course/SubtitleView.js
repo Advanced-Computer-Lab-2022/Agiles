@@ -10,12 +10,11 @@ import Accordion from "react-bootstrap/Accordion";
 import { useNavigate } from "react-router-dom";
 import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
 import Youtube from "react-youtube";
+import DeleteIcon from '@mui/icons-material/Delete';
 import Cookies from "universal-cookie";
-import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import jsPDF from "jspdf";
-import Box from "@mui/material/Box";
-import { Content, ContextualHelp, Heading } from "@adobe/react-spectrum";
+import Swal from "sweetalert2";
 import { AiOutlineCheck } from "react-icons/ai";
 import Badge from "react-bootstrap/Badge";
 
@@ -23,14 +22,13 @@ const LINK_URL = "/course/link/view";
 const cookies = new Cookies();
 const Subtitle = () => {
   const progress = useRef(null);
+  const status = cookies.get("status");
   const location = useLocation();
   const navigate = useNavigate();
-  //const history = useHistory();
   const query = location.search;
   const subtitleId = new URLSearchParams(location.search).get("subtitleId");
   const [link, setLink] = useState({ linkUrl: "", linkDesc: "" });
   const [subtitles, setSubtitles] = useState([]);
-  //const subtitles2 = location.state.data;
   const [isloading, setIsLoading] = useState(false);
   const [grade, setGrade] = useState([]);
   const [finalgrade, setFinalGrade] = useState(-1);
@@ -38,23 +36,48 @@ const Subtitle = () => {
   const [questions, setQuestions] = useState(0);
   const [show, setShow] = useState(false);
   const [done, setDone] = useState([]);
-  // const [show, setShow] = useState(false);
-
-  const [notes, setNotes] = useState("Blank");
+  const [notes, setNotes] = useState(" ");
   const downloadPDFFile = () => {
     var doc = new jsPDF("landscape", "px", "a4", "false");
     doc.text(20, 20, notes);
     doc.save("myNotes.pdf");
   };
 
-  const saveNotes = async (e) => {
-    let res = await axios.patch("/individualtrainee/addNotes", {
-      notes: notes,
-      linkId: link._id,
-      courseId: location.state.courseId,
-      subtitleId: subtitleId,
-    });
+  const saveNotes = async () => {  
+    try{
+      let res = await axios.patch("/individualtrainee/addNotes", {
+        notes: notes,
+        linkId: link._id,
+        courseId: location.state.courseId,
+        subtitleId: subtitleId,
+      });
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      
+      Toast.fire({
+        icon: 'success',
+        title: 'notes saved'
+      })
+
+    }
+    catch(e){
+      console.log(e);
+    }
+  
   };
+  const deleteNotes=()=>{
+    setNotes("");
+    saveNotes();
+  }
 
   const getFinishedExams = async (e) => {
     if (cookies.get("status") !== 1) {
@@ -71,7 +94,6 @@ const Subtitle = () => {
         setGrade(res.data);
         setFinalGrade(finalexam.data.result);
         setFinalQuestions(finalexam.data.studentChoices.length);
-        console.log(res);
       } catch (e) {
         console.log(e);
       }
@@ -114,14 +136,14 @@ const Subtitle = () => {
   };
   const handleClick = async (e, url, linkId, subtitleId) => {
     e.preventDefault();
-    if (cookies.get("status") !== 1) {
+    if (status!==1) {
       try {
         const res = await axios.post("/individualtrainee/updateLinkProgress", {
           linkId: linkId,
           courseId: location.state.courseId,
           completedItems: 1,
           subtitleId: subtitleId,
-        }); //status 1 means instructor 2c,0 means trainee 3 means admin
+        }); 
         if (res) {
           navigate(
             {
@@ -218,16 +240,12 @@ const Subtitle = () => {
       console.log(e);
     }
   };
-
+ // const handleBack =()=>{}
   const FetchData = async () => {
     setIsLoading(true);
-    try {
-      const res = await axios.get(LINK_URL + query);
-      setLink(res.data);
-      setSubtitles(location.state.data);
-    } catch (e) {
-      console.log(e);
-    }
+    const indexes = location.state.currentState.split(" ");
+    setSubtitles ( location.state.data);
+    setLink (location.state.data[[indexes[0]]].link[[indexes[1]]]);
     setIsLoading(false);
   };
 
@@ -236,9 +254,6 @@ const Subtitle = () => {
     getOldNotes();
     getFinishedItems();
     getFinishedExams();
-    // return () => {
-    //   clearInterval(progress.current);
-    // };
   }, []);
   return (
     <>
@@ -247,6 +262,7 @@ const Subtitle = () => {
       ) : (
         <section className={style["main-section"]}>
           <section className={style["main-section-left"]}>
+          {/*<button className={style["back"]} onClick={handleBack}>Back</button>*/}
             <section className={style["main-section-left-top"]}>
               <div className={style["iframe-container"]}>
                 <iframe
@@ -259,25 +275,20 @@ const Subtitle = () => {
               </div>
             </section>
 
-            <section className={style["main-section-left-bottom"]}>
+            {/* <section className={style["main-section-left-bottom"]}>
               <h3>Short Summary</h3>
 
               <p>{link.linkDesc}</p>
               <hr className={style["mainRight-hr"]}></hr>
-            </section>
-            <section className={style["main-section-left-bottom"]}>
-              <div
-                style={{
-                  border: "1px solid rgb(230,230,230)",
-                  padding: "20px",
-                  boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-                }}
-              >
-                <h3>Notes</h3>
-                <div class="form-group">
+            </section> */}
+        
+             
+                <div className={style["notes"]}>
+                  <DeleteIcon style={{marginLeft:"auto",cursor:"pointer"}} onClick={deleteNotes}/>
                   <textarea
                     class="form-control"
                     id="exampleFormControlTextarea1"
+                    placeholder="write your notes"
                     rows="8"
                     value={notes}
                     onChange={handleNotesChange}
@@ -285,29 +296,28 @@ const Subtitle = () => {
                   <div
                     style={{
                       display: "flex",
-                      justifyContent: "space-around",
+                      marginLeft:"auto",
                       margin: "20px",
                     }}
                   >
                     <button
                       onClick={saveNotes}
                       className="btn btn-primary"
-                      style={{ backgroundColor: "#a00407", border: "none" }}
+                      style={{ backgroundColor: "#a00407", marginRight:"10px",border: "none" ,borderRadius:0}}
                     >
-                      Save for later
+                      save note
                     </button>
 
                     <button
                       onClick={downloadPDFFile}
                       className="btn btn-primary"
-                      style={{ backgroundColor: "#a00407", border: "none" }}
+                      style={{ backgroundColor: "black", border: "none" ,borderRadius:0}}
                     >
                       Download
                     </button>
                   </div>
                 </div>
-              </div>
-            </section>
+         
           </section>
           <section className={style["main-section-right"]}>
             <Accordion alwaysOpen className={style["subtitles"]}>

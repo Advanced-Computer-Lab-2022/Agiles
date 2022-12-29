@@ -1,20 +1,28 @@
 .main-section {
   display: flex;
 }
-
+.back{
+  margin-left: 10px;
+  background-color: inherit;
+  color: #a00407;
+  font-weight: bold;
+  border: none;
+}
 .main-section-left {
   width: 70%;
 }
+
 .main-section-left-top {
   background-color: #1c1d1f;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   width: 90%;
-  margin: 40px 40px 10px 40px;
+  margin: 0px 40px 10px 40px;
 }
 .main-section-left-bottom {
   margin-left: 4rem;
-  max-width: 500px;
+  width: 80%;
   margin-bottom: 50px;
 }
 .main-section-left-bottom p{
@@ -66,6 +74,13 @@
   padding-top: 56.25%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
 }
 
+
+.notes{
+  display: flex;
+  flex-direction: column;
+  padding-left: 40px;
+  width: 90%;
+}
 /* Then style the iframe to fit in the container div with full height and width */
 .responsive-iframe {
   position: absolute;

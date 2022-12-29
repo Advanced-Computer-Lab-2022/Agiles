@@ -5,15 +5,16 @@
 .mainSection {
   width: 100%;
   display: flex;
-  min-height: 50vh;
-  padding: 50px 0;
-  gap: 100px;
-  justify-content: center;
+  height: 50vh;
+  display: flex;
   align-items: center;
   background-color: rgb(70, 70, 70);
   background-position: center;
 }
-
+.mainSection-left{
+  width: 50%;
+  margin-left: 10%;
+}
 .mainSection h1 {
   color: #fff;
   font-size: 3vw;
@@ -55,6 +56,7 @@
 .mainSection-right {
   padding: 0;
   max-width: 300px;
+  margin-left: 100px;
   width: 100%;
   margin-top: 0.5rem;
   box-shadow: rgba(226, 45, 45, 0.16) 0px 1px 4px;
