@@ -54,7 +54,7 @@ const addNotesToTrainee = async (req, res) => {
   const courseId = req.body.courseId;
   const traineeId = req.user.id;
   const linkId = req.body.linkId;
-  if (!subtitleId || !linkId || !courseId || !traineeId ) {
+  if (!subtitleId || !linkId || !courseId || !traineeId) {
     return res.status(500).json("bad request");
   }
   try {
@@ -770,18 +770,34 @@ const payWithWallet = async (req, res) => {
     await IndividualTrainee.updateOne(
       { _id: id },
       {
-        $push: { registered_courses: { courseId: courseId,purchasedPrice:price } },
+        $push: {
+          registered_courses: { courseId: courseId, purchasedPrice: price },
+        },
         $inc: { wallet: -price },
       }
     );
     const month = new Date().getMonth();
-    const exists = await Instructor.findOne({ _id: course.instructor,"wallet.month": month});
-    if(!exists){
-      await Instructor.updateOne( {_id: course.instructor},{$push:{wallet:{amount:price*70/100,month:month}},$inc:{studentCount:1}});
-    }
-    else{
-      await Instructor.updateOne({_id: course.instructor,"wallet.month": month},{$inc:{"wallet.$.amount":price*70/100}});
-      await Instructor.updateOne({_id: course.instructor},{$inc:{studentCount:1}});
+    const exists = await Instructor.findOne({
+      _id: course.instructor,
+      "wallet.month": month,
+    });
+    if (!exists) {
+      await Instructor.updateOne(
+        { _id: course.instructor },
+        {
+          $push: { wallet: { amount: (price * 70) / 100, month: month } },
+          $inc: { studentCount: 1 },
+        }
+      );
+    } else {
+      await Instructor.updateOne(
+        { _id: course.instructor, "wallet.month": month },
+        { $inc: { "wallet.$.amount": (price * 70) / 100 } }
+      );
+      await Instructor.updateOne(
+        { _id: course.instructor },
+        { $inc: { studentCount: 1 } }
+      );
     }
     await Course.updateOne(
       { _id: courseId },
@@ -852,8 +868,8 @@ const askInstructor = async (req, res) => {
     question: question,
   };
   try {
-    await TraineeQuestion.create(newRequest);
-    return res.status(200).json("success");
+    const model = await TraineeQuestion.create(newRequest);
+    return res.status(200).send(model);
   } catch (err) {
     return res.status(406).json(err);
   }

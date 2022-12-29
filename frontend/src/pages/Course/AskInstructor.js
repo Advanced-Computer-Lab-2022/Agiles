@@ -7,41 +7,42 @@ import regStyles from "./RegCourse.module.css";
 import style from "./AskInstructor.module.css";
 import Question from "./Question";
 import Cookies from "universal-cookie";
+import spinner from "../../static/download.gif";
+import LoadingScreen from "react-loading-screen";
+
 const cookies = new Cookies();
 
 function AskInstructor() {
   const [questions, setQuestions] = useState([]);
   const [question, setQuestion] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [traineeId, setTraineeId] = useState("");
-  const [courseId, setCourseId] = useState("");
-  const [instructorId, setInstructorId] = useState("");
-  const [instructorName, setInstructorName] = useState("");
-  const [studentName, setStudentName] = useState("");
-  const [questionId, setQuestionId] = useState("");
+  const [change, setChange] = useState(false);
+  const [update, setUpdate] = useState(false);
   const location = useLocation();
   const index = new URLSearchParams(location.search).get("idx");
   const userId = cookies.get("currentUser");
-  // console.log(location.state);
 
   const handleSubmitNewQuestion = async (e) => {
     e.preventDefault();
+    setUpdate(true);
     try {
       let res = await axios.post("/individualtrainee/askInstructor", {
         traineeId: userId,
         courseId: location.state.course_id,
         question: question,
       });
-      window.location.reload();
+
+      setChange(!change);
     } catch (e) {
       console.log(e);
     }
   };
 
   const fetchdata = async () => {
-    // console.log(location.state.course_id);
-  
-    setIsLoading(true);
+    if (!update) {
+      setIsLoading(true);
+    }
+
     try {
       const url = "individualtrainee/getQuestions";
       const res = await axios.get(url, {
@@ -50,23 +51,8 @@ function AskInstructor() {
           traineeId: userId,
         },
       });
-      console.log(res.data);
+      setQuestions([]);
       setQuestions(res.data);
-      // setInstructorId(res.data[0].instructorId._id);
-      // setTraineeId(res.data[0].traineeId._id);
-      // setCourseId(res.data[0].courseId._id);
-      // console.log(res.data[0].traineeId.firstname);
-      setInstructorName(
-        "Prof " +
-          res.data[0].instructorId.firstname +
-          res.data[0].instructorId.lastname +
-          " "
-      );
-      setStudentName(
-        res.data[0].traineeId.firstname + " " + res.data[0].traineeId.lastname
-      );
-
-      setInstructorId(questions[0].instructorId._id);
 
       setIsLoading(false);
     } catch (e) {
@@ -76,8 +62,9 @@ function AskInstructor() {
 
   useEffect(() => {
     fetchdata();
-  }, []);
-
+  }, [change]);
+  console.log(questions);
+  if (isLoading) return <LoadingScreen loading={true} logoSrc={spinner} />;
   return (
     <div className={style["container"]}>
       <div className={regStyles["mainreg"]}>
@@ -93,16 +80,16 @@ function AskInstructor() {
       </div>
       <div className={style["right"]}>
         <h2> New Question</h2>
-        <div style={{ marginBottom: "25px" }}>
+        <div style={{ marginBottom: "25px", maxWidth: "1200px", width: "75%" }}>
           <form>
             <textarea
               class="form-control"
               id="exampleFormControlTextarea1"
               rows="3"
               type="txt"
-              placeholder="ask a question"
-              //style={styles.input}
+              placeholder="ask a new question"
               onChange={(e) => setQuestion(e.target.value)}
+              value={question}
               required
             ></textarea>
             <div>
@@ -111,7 +98,6 @@ function AskInstructor() {
                 className={style["button"]}
                 type="send"
                 onClick={(e) => handleSubmitNewQuestion(e)}
-                // onClick={handleSubmitReply}
               >
                 Submit
               </Button>
@@ -120,7 +106,17 @@ function AskInstructor() {
         </div>
         <div className={style["mainRight"]}>
           {questions.map((el, index) => {
-            return <Question el={el} index={index}  length={questions.length}/>;
+            // console.log(el);
+            console.log(el.question);
+            console.log(el.replies);
+            return (
+              <Question
+                el={el}
+                index={index}
+                length={questions.length}
+                isInstructor={false}
+              />
+            );
           })}
         </div>
       </div>

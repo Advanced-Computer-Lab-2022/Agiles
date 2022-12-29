@@ -253,7 +253,10 @@ const getQuestions = async (req, res) => {
   try {
     const questions = await TraineeQuestion.find({
       courseId: courseId,
-    }).exec();
+    })
+      .populate("traineeId courseId")
+      .sort("-createdAt")
+      .exec();
     res.status(200).send(questions);
   } catch (err) {
     return res.status(406).json(err);

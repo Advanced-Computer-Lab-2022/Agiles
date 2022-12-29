@@ -3,38 +3,44 @@ import style from "./AskInstructor.module.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Reply from "./Reply";
-function Question({ el, index, length }) {
+function Question({ el, index, length, isInstructor }) {
   const [newReply, setNewReply] = useState("");
+  const [replies, setReplies] = useState(el.replies);
 
   const handleSubmitReply = async (e, qID) => {
     e.preventDefault();
-    let res = await axios.patch("/individualtrainee/addReply", {
+    const url = isInstructor
+      ? "/instructor/addReply"
+      : "/individualtrainee/addReply";
+    let res = await axios.patch(url, {
       questionId: qID,
       reply: newReply,
     });
-    console.log(el);
+    setReplies([...replies, { reply: newReply, isInstructor: isInstructor }]);
+    setNewReply("");
   };
   return (
-    <div>
+    <div style={{ margin: "15px 0" }}>
       <div>
-        <h1>
+        <h3>
           Q{length - index}: {el.question}
-        </h1>
+        </h3>
       </div>
       <div>
-        {el.replies.map((reply) => {
+        {replies.map((reply) => {
           return <Reply reply={reply} />;
         })}
       </div>
       <div>
         <form>
           <textarea
+            style={{ margin: "15px 0" }}
             class="form-control"
             id="exampleFormControlTextarea1"
             rows="3"
             type="txt"
             placeholder="Reply"
-            //style={styles.input}
+            value={newReply}
             onChange={(e) => setNewReply(e.target.value)}
             required
           ></textarea>
