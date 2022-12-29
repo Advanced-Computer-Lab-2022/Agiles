@@ -27,8 +27,8 @@ function Question({ el, index, length, isInstructor }) {
         </h3>
       </div>
       <div>
-        {replies.map((reply) => {
-          return <Reply reply={reply} />;
+        {replies.map((reply, index) => {
+          return <Reply index={index} reply={reply} />;
         })}
       </div>
       <div>

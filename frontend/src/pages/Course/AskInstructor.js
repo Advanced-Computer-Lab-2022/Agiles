@@ -63,7 +63,6 @@ function AskInstructor() {
   useEffect(() => {
     fetchdata();
   }, [change]);
-  console.log(questions);
   if (isLoading) return <LoadingScreen loading={true} logoSrc={spinner} />;
   return (
     <div className={style["container"]}>
@@ -106,11 +105,9 @@ function AskInstructor() {
         </div>
         <div className={style["mainRight"]}>
           {questions.map((el, index) => {
-            // console.log(el);
-            console.log(el.question);
-            console.log(el.replies);
             return (
               <Question
+                key={el._id}
                 el={el}
                 index={index}
                 length={questions.length}
