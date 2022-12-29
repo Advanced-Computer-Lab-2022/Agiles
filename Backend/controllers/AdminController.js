@@ -271,7 +271,7 @@ const grantAccess = async (req, res) => {
 
 const getReports = async (req, res) => {
   requests = await Report.find({})
-    .populate("userId courseId")
+  .populate("courseId")
     .sort("-createdAt")
     .exec();
   res.send(requests).status(200);

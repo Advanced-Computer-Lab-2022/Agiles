@@ -63,7 +63,7 @@
   border: 0.5px solid rgb(111, 109, 109);
 }
 .pagination{
-  margin-left: auto;
+  margin: auto;
 }
 @media only screen and (max-width: 650px) {
   .wrapper-left {

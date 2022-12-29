@@ -78,16 +78,14 @@ const PrevReports = () => {
             return (
               <Accordion.Item eventKey={index}>
                 <Accordion.Header>
-                  <div
-                    style={{
-                      color:
-                        report["status"] === "pending" ? "#A00407" : "#28D770",
-                    }}
+                <div
+                    style={{  
+                      fontWeight:'bold'}}
                   >
                     Problem {index + 1} : {report["title"]}
                   </div>
                   <div style={{position: "absolute",right: "0",marginRight:"5%"}}>
-                  {report["isSeen"] === "true" ? (
+                  {report["isSeen"] ? (
                     <span><BsEyeFill /></span>
                     ) : (
                       <span><BsEyeSlashFill /></span>
@@ -146,7 +144,6 @@ const PrevReports = () => {
                           >
                             <div>
                               <form onSubmit={handleSubmit}>
-                                <label>Add Follow Up</label>
                                 <input
                                   label="Add Follow Up"
                                   id={index}

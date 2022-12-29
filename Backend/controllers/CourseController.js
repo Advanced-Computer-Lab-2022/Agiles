@@ -266,8 +266,10 @@ const rateCourse = async (req, res) => {
 const reportProblem = async (req, res) => {
   const { courseId, reportType, description, title } = req.body;
   const userId = req.user.id;
+  const trainee = await IndividualTrainee.findOne({ _id: userId });
+  const instructor = await Instructor.findOne({_id: userId});
   const newProblem = new Report({
-    userId: userId,
+    username: instructor?.username || trainee?.username,
     courseId: courseId,
     reportType: reportType,
     description: description,
@@ -277,6 +279,7 @@ const reportProblem = async (req, res) => {
     const problem = await Report.create(newProblem);
     res.status(200).json(problem);
   } catch (error) {
+    console.log(error);
     res.status(400).json({ error: "can't create a problem" });
   }
 };
@@ -296,8 +299,10 @@ const addFollowUp = async (req, res) => {
 
 const viewReportedProblems = async (req, res) => {
   const userId = req.user.id;
+  const trainee = await IndividualTrainee.findOne({ _id: userId });
+  const instructor = await Instructor.findOne({_id: userId});
   try {
-    const reportedProblems = await Report.find({ userId: userId });
+    const reportedProblems = await Report.find({ username: instructor?.username || trainee?.username });
     res.status(200).json(reportedProblems);
   } catch {
     res.status(404).json({ error: "Data Not Found" });

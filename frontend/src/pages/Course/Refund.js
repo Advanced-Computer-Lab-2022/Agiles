@@ -187,7 +187,7 @@ const Refund = () => {
             course_inst={location.state.course_inst}
             name="requestRefund"
             progress={location.state.progress}
-            idx={location.state.index}
+            idx={index}
           ></RegCourse>
           <div className={regStyles["mainRight"]}>
             <label className={style1["mainlabel"]}>Request Refund</label>

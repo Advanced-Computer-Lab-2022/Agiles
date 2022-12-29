@@ -14,6 +14,7 @@ function ViewReports() {
     setIsLoading(true);
     const url = "/admin/getReports";
     const res = await axios.get(url);
+    console.log(res.data);
     setReports(res.data);
     setIsLoading(false);
   };
@@ -39,7 +40,7 @@ function ViewReports() {
             boxShadow: "inset 0 -1px 0 rgb(0 0 0 / 13%)",
           }}
         >
-          <div style={{ width: "25%" }}>Trainee Name</div>
+          <div style={{ width: "25%" }}>username</div>
           <div style={{ width: "25%" }}>Course Title</div>{" "}
           <div style={{ width: "25%" }}>Status</div>
           <div style={{ width: "25%" }}>Seen</div>
@@ -47,12 +48,8 @@ function ViewReports() {
         </div>
 
         {reports.map((el, index) => {
-          console.log(el.isSeen);
-          return el.userId == null ? (
-            ""
-          ) : (
-            <Report data={el} index={index}></Report>
-          );
+          console.log(el);
+          return(<Report data={el} index={index}></Report>) 
         })}
       </Accordion>
     </>

@@ -8,8 +8,8 @@ import "reactjs-popup/dist/index.css";
 import Button from "react-bootstrap/Button";
 import Swal from "sweetalert2";
 import Accordion from "react-bootstrap/Accordion";
-import { BsEyeFill ,BsEyeSlashFill  } from 'react-icons/bs';
-
+import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
+import Badge from "react-bootstrap/Badge";
 
 const PrevReportsTrainee = () => {
   const [reports, setReports] = useState([]);
@@ -35,12 +35,21 @@ const PrevReportsTrainee = () => {
         follow,
         config
       );
-      Swal.fire({
+      const Toast = Swal.mixin({
+        toast: true,
         position: "top-end",
-        icon: "success",
-        title: "Your Follow Up has been added Successfully",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
+      Toast.fire({
+        icon: "success",
+        title: "follow up added successfully ",
       });
     } catch (e) {
       Swal.fire({
@@ -73,42 +82,52 @@ const PrevReportsTrainee = () => {
           textAlign: "center",
         }}
       >
-       Reported problems
+        Reported problems
       </h1>
-      <div style={{ width: "75%", marginLeft: "10%" }}>
+      <div style={{ width: "75%", marginLeft: "5%" }}>
         <Accordion defaultActiveKey="0">
           {reports.map((report, index) => {
             return (
               <Accordion.Item eventKey={index}>
                 <Accordion.Header>
                   <div
-                    style={{  
-                      fontWeight:'bold'}}
+                    style={{
+                      fontWeight: "bold",
+                    }}
                   >
                     Problem {index + 1} : {report["title"]}
                   </div>
-                  <div style={{position: "absolute",right: "0",marginRight:"5%"}}>
-                  {report["isSeen"] === "true" ? (
-                    <span><BsEyeFill /></span>
+
+                  <div
+                    style={{
+                      position: "absolute",
+                      right: "0",
+                      marginRight: "5%",
+                    }}
+                  >
+                    <Badge
+                      bg={report["status"] === "pending" ? "danger" : "success"} style={{marginRight:"10px"}}
+                    >
+                      {" "}
+                      <label> {report["status"]} </label>
+                    </Badge>
+                    {report["isSeen"] ? (
+                      <span>
+                        <BsEyeFill />
+                      </span>
                     ) : (
-                      <span><BsEyeSlashFill /></span>
-                  )}
+                      <span>
+                        <BsEyeSlashFill />
+                      </span>
+                    )}
                   </div>
                 </Accordion.Header>
 
                 <Accordion.Body>
-                  <label
-                    style={{
-                      color:
-                        report["status"] === "pending" ? "#A00407" : "#28D770",
-                    }}
-                  >
-                    Status : {report["status"]}
+                  <label>
+                    <span style={{ color: "#A00407" }}>Description : </span>
+                    {report["description"]}
                   </label>
-                  <br></br>
-                  <label style={{ color: "#A00407" }}>Description :</label>
-                  <br></br>
-                  {report["description"]}
 
                   {report["followUp"].length == 0 ? (
                     <span></span>
@@ -142,15 +161,27 @@ const PrevReportsTrainee = () => {
                       <>
                         <div>
                           <Popup
-                            trigger={<Button>Add Follow Up</Button>}
+                            trigger={
+                              <button
+                                style={{
+                                  backgroundColor: "#a00407",
+                                  color: "white",
+                                  border: "none",
+                                  padding: "5px",
+                                  marginTop: "5px",
+                                }}
+                              >
+                                Add Follow Up
+                              </button>
+                            }
                             position="right center"
                           >
                             <div>
                               <form onSubmit={handleSubmit}>
-                                <label>Add Follow Up</label>
                                 <input
                                   label="Add Follow Up"
                                   id={index}
+                                  style={{ width: "100%" }}
                                   onChange={(e) => {
                                     setReportId(report["_id"]);
                                     setFollowUpArr([
@@ -162,9 +193,15 @@ const PrevReportsTrainee = () => {
                                 <Button
                                   variant="success"
                                   type="submit"
+                                  style={{
+                                    backgroundColor: "inherit",
+                                    color: "#a00407",
+                                    border: "none",
+                                    margin: "auto",
+                                  }}
                                   onClick={handleSubmit}
                                 >
-                                  Add Follow Up
+                                  Add
                                 </Button>
                               </form>
                             </div>

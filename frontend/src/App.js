@@ -149,7 +149,7 @@ function App() {
               <Route path="/accountsettings" element={<AccountSecurity />} />
               <Route path="/reviews" element={<Reviews />} />
               <Route path="/wallet" element={<Wallet />} />
-              <Route path="/subtitleView" element={<Subtitle />} />
+              <Route path="/subtitleView" element={<Subtitle   funcNav={setShowNav}/>} />
               <Route path="/reportproblem" element={<ReportProblem />} />
             </Route>
           </Routes>

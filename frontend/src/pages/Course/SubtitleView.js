@@ -10,7 +10,7 @@ import Accordion from "react-bootstrap/Accordion";
 import { useNavigate } from "react-router-dom";
 import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
 import Youtube from "react-youtube";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 import Cookies from "universal-cookie";
 import Button from "react-bootstrap/Button";
 import jsPDF from "jspdf";
@@ -20,7 +20,8 @@ import Badge from "react-bootstrap/Badge";
 
 const LINK_URL = "/course/link/view";
 const cookies = new Cookies();
-const Subtitle = () => {
+const Subtitle = (props) => {
+  props.funcNav(true);
   const progress = useRef(null);
   const status = cookies.get("status");
   const location = useLocation();
@@ -43,8 +44,8 @@ const Subtitle = () => {
     doc.save("myNotes.pdf");
   };
 
-  const saveNotes = async () => {  
-    try{
+  const saveNotes = async () => {
+    try {
       let res = await axios.patch("/individualtrainee/addNotes", {
         notes: notes,
         linkId: link._id,
@@ -53,31 +54,28 @@ const Subtitle = () => {
       });
       const Toast = Swal.mixin({
         toast: true,
-        position: 'top-end',
+        position: "top-end",
         showConfirmButton: false,
         timer: 1000,
         timerProgressBar: true,
         didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-      })
-      
-      Toast.fire({
-        icon: 'success',
-        title: 'notes saved'
-      })
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
 
-    }
-    catch(e){
+      Toast.fire({
+        icon: "success",
+        title: "notes saved",
+      });
+    } catch (e) {
       console.log(e);
     }
-  
   };
-  const deleteNotes=()=>{
+  const deleteNotes = () => {
     setNotes("");
     saveNotes();
-  }
+  };
 
   const getFinishedExams = async (e) => {
     if (cookies.get("status") !== 1) {
@@ -136,14 +134,14 @@ const Subtitle = () => {
   };
   const handleClick = async (e, url, linkId, subtitleId) => {
     e.preventDefault();
-    if (status!==1) {
+    if (status !== 1) {
       try {
         const res = await axios.post("/individualtrainee/updateLinkProgress", {
           linkId: linkId,
           courseId: location.state.courseId,
           completedItems: 1,
           subtitleId: subtitleId,
-        }); 
+        });
         if (res) {
           navigate(
             {
@@ -240,12 +238,12 @@ const Subtitle = () => {
       console.log(e);
     }
   };
- // const handleBack =()=>{}
+  // const handleBack =()=>{}
   const FetchData = async () => {
     setIsLoading(true);
     const indexes = location.state.currentState.split(" ");
-    setSubtitles ( location.state.data);
-    setLink (location.state.data[[indexes[0]]].link[[indexes[1]]]);
+    setSubtitles(location.state.data);
+    setLink(location.state.data[[indexes[0]]].link[[indexes[1]]]);
     setIsLoading(false);
   };
 
@@ -254,7 +252,16 @@ const Subtitle = () => {
     getOldNotes();
     getFinishedItems();
     getFinishedExams();
-  }, []);
+    return () => {
+      (function () {
+        window.onpageshow = function (event) {
+          if (event.persisted) {
+            window.location.reload();
+          }
+        };
+      })();
+    };
+  }, [query]);
   return (
     <>
       {isloading ? (
@@ -262,7 +269,7 @@ const Subtitle = () => {
       ) : (
         <section className={style["main-section"]}>
           <section className={style["main-section-left"]}>
-          {/*<button className={style["back"]} onClick={handleBack}>Back</button>*/}
+            {/*<button className={style["back"]} onClick={handleBack}>Back</button>*/}
             <section className={style["main-section-left-top"]}>
               <div className={style["iframe-container"]}>
                 <iframe
@@ -281,43 +288,53 @@ const Subtitle = () => {
               <p>{link.linkDesc}</p>
               <hr className={style["mainRight-hr"]}></hr>
             </section> */}
-        
-             
-                <div className={style["notes"]}>
-                  <DeleteIcon style={{marginLeft:"auto",cursor:"pointer"}} onClick={deleteNotes}/>
-                  <textarea
-                    class="form-control"
-                    id="exampleFormControlTextarea1"
-                    placeholder="write your notes"
-                    rows="8"
-                    value={notes}
-                    onChange={handleNotesChange}
-                  ></textarea>
-                  <div
-                    style={{
-                      display: "flex",
-                      marginLeft:"auto",
-                      margin: "20px",
-                    }}
-                  >
-                    <button
-                      onClick={saveNotes}
-                      className="btn btn-primary"
-                      style={{ backgroundColor: "#a00407", marginRight:"10px",border: "none" ,borderRadius:0}}
-                    >
-                      save note
-                    </button>
 
-                    <button
-                      onClick={downloadPDFFile}
-                      className="btn btn-primary"
-                      style={{ backgroundColor: "black", border: "none" ,borderRadius:0}}
-                    >
-                      Download
-                    </button>
-                  </div>
-                </div>
-         
+            <div className={style["notes"]}>
+              <DeleteIcon
+                style={{ marginLeft: "auto", cursor: "pointer" }}
+                onClick={deleteNotes}
+              />
+              <textarea
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                placeholder="write your notes"
+                rows="8"
+                value={notes}
+                onChange={handleNotesChange}
+              ></textarea>
+              <div
+                style={{
+                  display: "flex",
+                  marginLeft: "auto",
+                  margin: "20px",
+                }}
+              >
+                <button
+                  onClick={saveNotes}
+                  className="btn btn-primary"
+                  style={{
+                    backgroundColor: "#a00407",
+                    marginRight: "10px",
+                    border: "none",
+                    borderRadius: 0,
+                  }}
+                >
+                  save note
+                </button>
+
+                <button
+                  onClick={downloadPDFFile}
+                  className="btn btn-primary"
+                  style={{
+                    backgroundColor: "black",
+                    border: "none",
+                    borderRadius: 0,
+                  }}
+                >
+                  Download
+                </button>
+              </div>
+            </div>
           </section>
           <section className={style["main-section-right"]}>
             <Accordion alwaysOpen className={style["subtitles"]}>

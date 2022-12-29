@@ -3,9 +3,8 @@ const Schema = mongoose.Schema;
 
 const reportSchema = new Schema(
   {
-    userId: {
-      type: mongoose.Types.ObjectId,
-      ref: "IndividualTrainee",
+    username: {
+      type: String,
       required: true,
     },
     courseId: {
@@ -31,7 +30,7 @@ const reportSchema = new Schema(
     },
     isSeen: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     followUp: {
       type: [String],

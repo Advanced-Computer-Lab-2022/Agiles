@@ -23,9 +23,7 @@ function Report(props) {
     >
       <Accordion.Header>
         <div style={{ display: "flex", width: "80%" }}>
-          <div style={{ width: "25%" }}>
-            {el.userId.firstname + " " + el.userId.lastname}
-          </div>
+          <div style={{ width: "25%" }}> {el.username} </div>
           <div style={{ width: "25%" }}> {el.courseId.title}</div>{" "}
           <div style={{ width: "25%" }}> {status}</div>
           <div style={{ width: "25%" }}>{seen}</div>

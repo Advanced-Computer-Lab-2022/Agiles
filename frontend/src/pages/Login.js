@@ -210,7 +210,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="d-grid gap-2 mt-2">
+          <div className="d-grid gap-2 mt-3">
             <button
               disabled={!username || !password ? true : false}
               className="btn btn-primary"
