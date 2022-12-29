@@ -31,7 +31,7 @@ const reportSchema = new Schema(
     },
     isSeen: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     followUp: {
       type: [String],
