@@ -6,68 +6,31 @@ import axios from "axios";
 import Button from "react-bootstrap/Button";
 import regStyles from "../Course/RegCourse.module.css";
 import style from "./AnswerTrainee.module.css";
-import Question from "./InstructorQuestions";
+import Question from "../Course/Question";
 import Cookies from "universal-cookie";
+
+import spinner from "../../static/download.gif";
+import LoadingScreen from "react-loading-screen";
 const cookies = new Cookies();
 
 function AnswerTrainee() {
   const [questions, setQuestions] = useState([]);
-  const [question, setQuestion] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [traineeId, setTraineeId] = useState("");
-  const [courseId, setCourseId] = useState("");
-  const [instructorId, setInstructorId] = useState("");
-  const [instructorName, setInstructorName] = useState("");
-  const [studentName, setStudentName] = useState("");
-  const [questionId, setQuestionId] = useState("");
+
   const location = useLocation();
   const index = new URLSearchParams(location.search).get("idx");
   const userId = cookies.get("currentUser");
-  console.log(location.state);
-
-  const handleSubmitNewQuestion = async (e) => {
-    e.preventDefault();
-    try {
-      let res = await axios.post("/individualtrainee/askInstructor", {
-        traineeId: userId,
-        courseId: location.state.course_id,
-        question: question,
-      });
-      window.location.reload();
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   const fetchdata = async () => {
-    // console.log(location.state.course_id);
-
     setIsLoading(true);
     try {
-      //   console.log(location.state.course_id);
       const url = "instructor/getQuestions";
       const res = await axios.get(url, {
         params: {
           courseId: location.state.course_id,
         },
       });
-      console.log(res.data);
       setQuestions(res.data);
-      // setInstructorId(res.data[0].instructorId._id);
-      // setTraineeId(res.data[0].traineeId._id);
-      // setCourseId(res.data[0].courseId._id);
-      // console.log(res.data[0].traineeId.firstname);
-      //   setInstructorName(
-      //     "Prof " +
-      //       res.data[0].instructorId.firstname +
-      //       res.data[0].instructorId.lastname +
-      //       " "
-      //   );
-      //   setStudentName(
-      //     res.data[0].traineeId.firstname + " " + res.data[0].traineeId.lastname
-      //   );
-
-      //   setInstructorId(questions[0].instructorId._id);
 
       setIsLoading(false);
     } catch (e) {
@@ -78,6 +41,7 @@ function AnswerTrainee() {
   useEffect(() => {
     fetchdata();
   }, []);
+  if (isLoading) return <LoadingScreen loading={true} logoSrc={spinner} />;
 
   return (
     <div className={style["container"]}>
@@ -95,7 +59,19 @@ function AnswerTrainee() {
       <div className={style["right"]}>
         <div className={style["mainRight"]}>
           {questions.map((el, index) => {
-            return <Question el={el} index={index} length={questions.length} />;
+            return (
+              <Question
+                studentName={
+                  el.traineeId.firstname + " " + el.traineeId.lastname
+                }
+                key={el._id}
+                el={el}
+                index={index}
+                length={questions.length}
+                isInstructor={true}
+                instructor={true}
+              />
+            );
           })}
         </div>
       </div>

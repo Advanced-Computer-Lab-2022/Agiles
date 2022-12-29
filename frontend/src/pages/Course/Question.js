@@ -3,7 +3,15 @@ import style from "./AskInstructor.module.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Reply from "./Reply";
-function Question({ el, index, length, isInstructor }) {
+function Question({
+  el,
+  index,
+  length,
+  isInstructor,
+  instructor,
+  studentName,
+  instructorName,
+}) {
   const [newReply, setNewReply] = useState("");
   const [replies, setReplies] = useState(el.replies);
 
@@ -25,10 +33,15 @@ function Question({ el, index, length, isInstructor }) {
         <h3>
           Q{length - index}: {el.question}
         </h3>
+        <div style={{ color: "rgb(170,170,170)" }}>
+          {studentName
+            ? "Asked by: " + studentName
+            : "Answered by: " + instructorName}
+        </div>
       </div>
       <div>
         {replies.map((reply, index) => {
-          return <Reply index={index} reply={reply} />;
+          return <Reply instructor={instructor} index={index} reply={reply} />;
         })}
       </div>
       <div>
@@ -50,7 +63,6 @@ function Question({ el, index, length, isInstructor }) {
               className={style["button"]}
               type="reply"
               onClick={(e) => handleSubmitReply(e, el._id)}
-              // onClick={handleSubmitReply}
             >
               Submit
             </Button>

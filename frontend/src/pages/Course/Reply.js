@@ -1,8 +1,10 @@
 import React from "react";
 
-function Reply({ reply }) {
-  let str = reply.isInstructor ? "Professor:" : "You:";
-
+function Reply({ reply, instructor }) {
+  let str = reply.isInstructor ? "Instructor:" : "You:";
+  if (instructor) {
+    str = reply.isInstructor ? "You:" : "Student:";
+  }
   return (
     <div>
       <div>

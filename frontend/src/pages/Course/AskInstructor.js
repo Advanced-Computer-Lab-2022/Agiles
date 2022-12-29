@@ -105,6 +105,7 @@ function AskInstructor() {
         </div>
         <div className={style["mainRight"]}>
           {questions.map((el, index) => {
+            console.log(el.courseId.instructorname);
             return (
               <Question
                 key={el._id}
@@ -112,6 +113,8 @@ function AskInstructor() {
                 index={index}
                 length={questions.length}
                 isInstructor={false}
+                instructor={false}
+                instructorName={el.courseId.instructorname}
               />
             );
           })}
