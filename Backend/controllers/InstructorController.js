@@ -244,7 +244,8 @@ const addReply = async (req, res) => {
 };
 
 const getQuestions = async (req, res) => {
-  const { courseId } = req.body;
+  const { courseId } = req.query;
+
   if (!courseId) {
     return res.status(500).json("bad request");
   }
@@ -252,9 +253,7 @@ const getQuestions = async (req, res) => {
   try {
     const questions = await TraineeQuestion.find({
       courseId: courseId,
-    })
-      .populate("traineeId courseId instructorId")
-      .exec();
+    }).exec();
     res.status(200).send(questions);
   } catch (err) {
     return res.status(406).json(err);

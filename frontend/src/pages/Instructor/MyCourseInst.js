@@ -82,11 +82,11 @@ const MyCourseInst = ({
             Support Center
           </li>
           <li
-            id="/AskInstructor"
+            id="/AnswerQuestions"
             className={
-              name == "AskInstructor" ? regStyles["leftsection-liclicked"] : ""
+              name == "Questions" ? regStyles["leftsection-liclicked"] : ""
             }
-            onClick={name === "AskInstructor" ? () => {} : handleClick}
+            onClick={name === "AnswerQuestions" ? () => {} : handleClick}
           >
             {" "}
             Questions{" "}

@@ -1,18 +1,22 @@
 import Button from "react-bootstrap/Button";
-import style from "./AskInstructor.module.css";
+import style from "./AnswerTrainee";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Reply from "./Reply";
-function Question({ el, index, length }) {
+import Reply from "./InstrucrorReply";
+function InstructorQuestions({ el, index, length }) {
   const [newReply, setNewReply] = useState("");
 
   const handleSubmitReply = async (e, qID) => {
     e.preventDefault();
-    let res = await axios.patch("/individualtrainee/addReply", {
-      questionId: qID,
-      reply: newReply,
-    });
-    console.log(el);
+    try {
+      let res = await axios.patch("/instructor/addReply", {
+        questionId: qID,
+        reply: newReply,
+      });
+      window.location.reload();
+    } catch (e) {
+      console.log(e);
+    }
   };
   return (
     <div>
@@ -55,4 +59,4 @@ function Question({ el, index, length }) {
   );
 }
 
-export default Question;
+export default InstructorQuestions;
