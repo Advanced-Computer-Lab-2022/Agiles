@@ -23,30 +23,41 @@ function Report(props) {
     >
       <Accordion.Header>
         <div style={{ display: "flex", width: "80%" }}>
-          <div style={{ width: "25%" }}> {el.username} </div>
-          <div style={{ width: "25%" }}> {el.courseId.title}</div>{" "}
-          <div style={{ width: "25%" }}> {status}</div>
-          <div style={{ width: "25%" }}>{seen}</div>
+          <div style={{ width: "20%" }}> {el.username} </div>
+          <div style={{ width: "20%" }}>{el.title}</div>
+          <div style={{ width: "20%" }}> {el.courseId.title}</div>{" "}
+          <div style={{ width: "20%" }}> {status}</div>
+          <div style={{ width: "20%" }}>{seen}</div>
         </div>
       </Accordion.Header>
       <Accordion.Body
-        style={{ display: "flex", justifyContent: "space-between" }}
+      // style={{ display: "flex", justifyContent: "space-between" }}
       >
         <div>Description : {el.description}</div>
-        {status == "pending" ? (
-          <div style={{ width: "50%" }}>
-            <Button
-              onClick={async () => {
-                setStatus("resolved");
-                await axios.post("/admin/resolveReport", {
-                  reportId: el._id,
-                });
-              }}
-            >
-              {" "}
-              Mark as Resolved{" "}
-            </Button>
+        {el.followUp.length == 0 ? (
+          ""
+        ) : (
+          <div>
+            Follow ups :{" "}
+            {el.followUp.map((followup, index) => (
+              <div>{index + 1 + ": " + followup}</div>
+            ))}
           </div>
+        )}
+
+        {status == "pending" ? (
+          <Button
+            style={{ margin: "auto", display: "block" }}
+            onClick={async () => {
+              setStatus("resolved");
+              await axios.post("/admin/resolveReport", {
+                reportId: el._id,
+              });
+            }}
+          >
+            {" "}
+            Mark as Resolved{" "}
+          </Button>
         ) : (
           ""
         )}
