@@ -31,7 +31,6 @@ const traineeCourseSchema = new mongoose.Schema({
   },
   notes: {
     type: String,
-    required: true,
   },
 });
 

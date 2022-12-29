@@ -54,7 +54,7 @@ const addNotesToTrainee = async (req, res) => {
   const courseId = req.body.courseId;
   const traineeId = req.user.id;
   const linkId = req.body.linkId;
-  if (!subtitleId || !linkId || !courseId || !traineeId || !notes) {
+  if (!subtitleId || !linkId || !courseId || !traineeId ) {
     return res.status(500).json("bad request");
   }
   try {
