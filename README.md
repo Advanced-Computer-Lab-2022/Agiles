@@ -69,3 +69,40 @@ If your application stores any data (user profiles, content, comments, uploads, 
 
 That’s where MongoDB comes in: JSON documents created in your React.js front end can be sent to the Express.js server, where they can be processed and (assuming they’re valid) stored directly in MongoDB for later retrieval. Again, if you’re building in the cloud, you’ll want to look at Atlas. If you’re looking to set up your own MERN stack, read on!
 
+## Features
+We have four main users in our website:
+
+### Administrator
+- Log in using his email and password.
+
+![log in](https://user-images.githubusercontent.com/83594429/210078803-642f4a78-123c-4543-a33d-5b5c35b62417.PNG)
+
+- Add another admin to the website.
+
+![add admin](https://user-images.githubusercontent.com/83594429/210079303-76a4faf6-3856-4dbf-9a06-ec79b78828d7.PNG)
+
+- Add corporate trainee to the website.
+
+![add corporate trainee](https://user-images.githubusercontent.com/83594429/210079759-09e97b3e-a1ac-4ff6-b375-fd67856b8ff5.PNG)
+
+- Add instructor to the website.
+
+![Add instructor](https://user-images.githubusercontent.com/83594429/210079794-65e12eb2-97a0-41f3-828c-9d5c4ba5f36a.PNG)
+
+- View the reports and solve it.
+
+![solve problems](https://user-images.githubusercontent.com/83594429/210080839-d4e492f1-ff01-42e1-8cea-19c0cb079bd4.PNG)
+
+- View the courses enroll requests and all the details of the request
+
+![Enroll request](https://user-images.githubusercontent.com/83594429/210083256-24ffe185-40ef-4200-b566-837bb5bc019f.PNG)
+
+- View refund requests and approved them or not
+
+![refund requests](https://user-images.githubusercontent.com/83594429/210082781-09110a9c-9d35-41ce-a467-a17622e210f8.PNG)
+
+- Add promotions to any course in the website and specify the percent of discount and the end time of the discount
+
+![add promotions](https://user-images.githubusercontent.com/83594429/210082874-4a58a5da-df01-457c-9257-3a8f154651fc.PNG)
+
+
