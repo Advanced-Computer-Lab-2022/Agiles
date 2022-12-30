@@ -26,7 +26,7 @@ const Wallet = () => {
            setWallet(res.data);
            setPastWallet(res.data.filter(el=>el.month!=currentMonth));
            if (res.data.length>0){
-             setCurrentWallet(res.data?.filter((el=>el.month==currentMonth))[0].amount)
+             setCurrentWallet(res.data?.filter((el=>el.month==currentMonth))[0].amount.toFixed(2))
            }
         }
         catch (e){
@@ -42,7 +42,7 @@ const Wallet = () => {
         <h1>Ballance</h1>
         <div className={style['currentBalance']}>
           <h2>Your Current Month Balance :</h2>
-          <h3>{`USD ${currentWallet}`}</h3>
+          <h3>{`${window.sessionStorage.getItem("currency")?window.sessionStorage.getItem("currency").toUpperCase():'USD'} ${window.sessionStorage.getItem("factor")?(window.sessionStorage.getItem("factor")*currentWallet).toFixed(2):currentWallet}`}</h3>
         </div>
         <div className={style['profit']}>
         <h2>Your Past Months Balance :</h2>
@@ -63,7 +63,7 @@ const Wallet = () => {
             <TableCell component="th" scope="row">
              {monthNames[row.month]}
             </TableCell>
-            <TableCell align="right" style={{color:'green'}}>USD {row.amount}</TableCell>
+            <TableCell align="right" style={{color:'green'}}>{`${window.sessionStorage.getItem("currency")?window.sessionStorage.getItem("currency").toUpperCase():'USD'} ${window.sessionStorage.getItem("factor")?(window.sessionStorage.getItem("factor")*row.amount).toFixed(2):row.amount}`}</TableCell>
           </TableRow>
          ))}
         </TableBody>

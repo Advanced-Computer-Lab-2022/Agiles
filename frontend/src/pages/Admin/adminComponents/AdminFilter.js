@@ -87,10 +87,24 @@ const AdminFilter = ({
   };
   return (
     <div className={FilterStyles["filter"]}>
+        <hr></hr>
+      <div style={{ display: "flex", gap: "1rem" }}>
+        <button className={FilterStyles["logo"]} onClick={handleSubmit}>
+          <span>
+            <FilterListIcon /> Filter
+          </span>
+        </button>
+        <button
+          className={FilterStyles["logo"]}
+          onClick={() => changeMessage(courses)}
+        >
+          <span>clear filter</span>
+        </button>
+      </div>
       <div className={FilterStyles["top"]}></div>
-      <hr />
+      
       <div className="center">
-        <Accordion defaultActiveKey="0" alwaysOpen>
+        <Accordion  alwaysOpen>
           <Accordion.Item eventKey="0">
             <Accordion.Header>Subject</Accordion.Header>
             <Accordion.Body style={{ display: "grid" }}>
@@ -134,19 +148,7 @@ const AdminFilter = ({
           </Accordion.Item>
         </Accordion>
       </div>
-      <div style={{ display: "flex", gap: "1rem" }}>
-        <button className={FilterStyles["logo"]} onClick={handleSubmit}>
-          <span>
-            <FilterListIcon /> Filter
-          </span>
-        </button>
-        <button
-          className={FilterStyles["logo"]}
-          onClick={() => changeMessage(courses)}
-        >
-          <span>clear filter</span>
-        </button>
-      </div>
+     
     </div>
   );
 };

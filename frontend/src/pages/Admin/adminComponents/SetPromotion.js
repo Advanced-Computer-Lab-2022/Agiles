@@ -125,24 +125,20 @@ function SetPromotion(props) {
   return (
     <div className={NavbarStyles["promo-container"]}>
       <div className={NavbarStyles["misc"]}>
-        <div>
-          <h5>Search Courses</h5>
-          <form onSubmit={handleSearch} className={NavbarStyles["search-bar"]}>
-            <BsSearch
-              className={NavbarStyles["search-icon"]}
-              onClick={handleSearch}
-            />
-            <input
-              className={NavbarStyles["inpt"]}
-              placeholder="search for a course"
-              value={searchString}
-              required
-              onChange={(event) => setSearchString(event.target.value)}
-            ></input>
-          </form>
-        </div>
-        <div>
-          <h5>Filter Courses</h5>
+        <form onSubmit={handleSearch} className={NavbarStyles["search-bar"]}>
+          <BsSearch
+            className={NavbarStyles["search-icon"]}
+            onClick={handleSearch}
+          />
+          <input
+            className={NavbarStyles["inpt"]}
+            placeholder="search for a course"
+            value={searchString}
+            required
+            onChange={(event) => setSearchString(event.target.value)}
+          ></input>
+        </form>
+         <div>
           <div>
             <AdminFilter
               changeMessage={changeMessage}
@@ -152,10 +148,10 @@ function SetPromotion(props) {
               setIsCheckAll={setIsCheckAll}
             />
           </div>
-        </div>
+        </div> 
         <div className={NavbarStyles["setPromotion"]}>
           <form onSubmit={(e) => handleSubmit(e, IDsArr)}>
-            <h5>Set Promotion</h5>
+            <h5 style={{fontWeight:'bold'}}>Set Promotion</h5>
             <div>
               {flag && (
                 <Alert key={alert} variant={alert}>
@@ -176,7 +172,7 @@ function SetPromotion(props) {
                   border: "0.5px solid black",
                   borderRadius: "0.25rem",
                   padding: "0.5rem",
-                  width: "10rem",
+                  width: "20rem",
                   margin: "1rem 0",
                 }}
                 onChange={handlePromo}
@@ -193,7 +189,7 @@ function SetPromotion(props) {
                   borderRadius: "0.25rem",
                   margin: "1rem 0",
                   padding: "0.5rem",
-                  width: "10rem",
+                  width: "20rem",
                 }}
                 onChange={handleEnddate}
               ></input>
@@ -202,9 +198,9 @@ function SetPromotion(props) {
               variant="dark"
               type="submit"
               style={{
-                backgroundColor: "#a00407",
+                backgroundColor: '#a00407',
                 borderRadius: 0,
-                width: "10rem",
+                width: "20rem",
                 border: "none",
               }}
             >
@@ -216,10 +212,9 @@ function SetPromotion(props) {
       <div
         style={{
           border: "1px solid rgba(230, 230, 230)",
-          borderRadius: "25px",
-          width: "100%",
-          margin: "100px 20px 20px 0 ",
+          width: "80%",
           display: "flex",
+          marginTop:'20px',
           boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
         }}
       >

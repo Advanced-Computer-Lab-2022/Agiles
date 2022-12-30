@@ -79,7 +79,7 @@ const PrevReportsTrainee = () => {
         style={{
           color: "rgb(160, 4, 7)",
           margin: "20px auto",
-          textAlign: "center",
+          
         }}
       >
         Reported problems

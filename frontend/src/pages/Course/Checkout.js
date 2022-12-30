@@ -115,7 +115,7 @@ const Checkout = () => {
                     )}
                     {wallet >= price - (price * discount) / 100 && (
                       <label className={style["success"]}>
-                        current amount : {Math.floor(wallet)} USD
+                        current amount : {wallet.toFixed(2)} USD
                       </label>
                     )}
                   </ListGroup.Item>

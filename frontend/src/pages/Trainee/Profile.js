@@ -33,10 +33,10 @@ const Profile = () => {
     cookie.get("status") == 1 ? (
       ""
     ) : (
-      <>
+      <div>
         <label>Wallet :</label>
-        <div> {walletAmount + " " + walletCurrency}</div>
-      </>
+        <p style={{fontWeight:'bold',color:'green'}}> {walletAmount + " " + walletCurrency}</p>
+      </div>
     );
 
   const fetchData = async () => {
@@ -111,7 +111,6 @@ const Profile = () => {
                   placeholder={minibio == "" ? "write your mini bio" : minibio}
                   onChange={(e) => setMiniBio(e.target.value)}
                 ></input>
-                {walletItem}
                 <Button
                   style={{ backgroundColor: "#a00407", border: "none" }}
                   variant="dark"
@@ -120,6 +119,7 @@ const Profile = () => {
                   {" "}
                   save
                 </Button>
+                {walletItem}
               </form>
             </section>
           </section>
