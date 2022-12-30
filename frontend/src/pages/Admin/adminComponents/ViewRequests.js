@@ -23,7 +23,7 @@ function ViewRequests() {
   return (
     <>
       <h2 style={{ marginLeft: "25px", marginBottom: "25px" }}>
-        Enroll Requests
+        Course Enroll Requests
       </h2>
 
       <Table>
