@@ -40,16 +40,17 @@ function ViewReports() {
             boxShadow: "inset 0 -1px 0 rgb(0 0 0 / 13%)",
           }}
         >
-          <div style={{ width: "25%" }}>username</div>
-          <div style={{ width: "25%" }}>Course Title</div>{" "}
-          <div style={{ width: "25%" }}>Status</div>
-          <div style={{ width: "25%" }}>Seen</div>
+          <div style={{ width: "20%" }}>username</div>
+          <div style={{ width: "20%" }}>Problem Title</div>{" "}
+          <div style={{ width: "20%" }}>Course Title</div>{" "}
+          <div style={{ width: "20%" }}>Status</div>
+          <div style={{ width: "20%" }}>Seen</div>
           <div style={{ width: "25%" }}></div>
         </div>
 
         {reports.map((el, index) => {
           console.log(el);
-          return(<Report data={el} index={index}></Report>) 
+          return <Report data={el} index={index}></Report>;
         })}
       </Accordion>
     </>
