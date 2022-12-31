@@ -33,9 +33,14 @@
   margin-top: 40px;
   padding: 10px;
   border: 0.5px solid rgb(111, 109, 109);
+}
 
-
-
+.divaya {
+  border: 1px solid rgba(230, 230, 230);
+  width: 80%;
+  display: flex;
+  margin: 20px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 @media only screen and (max-width: 1140px) {
@@ -49,8 +54,13 @@
   }
 
   .setPromotion {
-    margin: 0;
-    max-width: 50%;
+    margin: auto;
+    max-width: 60%;
     gap: 2rem;
+  }
+
+  .divaya {
+    width: 95%;
+    margin: auto;
   }
 }

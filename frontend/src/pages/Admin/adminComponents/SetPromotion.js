@@ -138,7 +138,7 @@ function SetPromotion(props) {
             onChange={(event) => setSearchString(event.target.value)}
           ></input>
         </form>
-         <div>
+        <div>
           <div>
             <AdminFilter
               changeMessage={changeMessage}
@@ -148,10 +148,10 @@ function SetPromotion(props) {
               setIsCheckAll={setIsCheckAll}
             />
           </div>
-        </div> 
+        </div>
         <div className={NavbarStyles["setPromotion"]}>
           <form onSubmit={(e) => handleSubmit(e, IDsArr)}>
-            <h5 style={{fontWeight:'bold'}}>Set Promotion</h5>
+            <h5 style={{ fontWeight: "bold" }}>Set Promotion</h5>
             <div>
               {flag && (
                 <Alert key={alert} variant={alert}>
@@ -194,30 +194,24 @@ function SetPromotion(props) {
                 onChange={handleEnddate}
               ></input>
             </div>
-            <Button
-              variant="dark"
-              type="submit"
-              style={{
-                backgroundColor: '#a00407',
-                borderRadius: 0,
-                width: "20rem",
-                border: "none",
-              }}
-            >
-              Submit
-            </Button>
+            <div style={{ width: "50%", margin: "auto" }}>
+              <Button
+                // variant="dark"
+                type="submit"
+                style={{
+                  //backgroundColor: "#a00407",
+                  borderRadius: 0,
+                  width: "10rem",
+                  border: "none",
+                }}
+              >
+                Submit
+              </Button>
+            </div>
           </form>
         </div>
       </div>
-      <div
-        style={{
-          border: "1px solid rgba(230, 230, 230)",
-          width: "80%",
-          display: "flex",
-          marginTop:'20px',
-          boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-        }}
-      >
+      <div className={NavbarStyles["divaya"]}>
         <Table>
           <TableHead>
             <TableRow style={{ verticalAlign: "text-top" }}>
