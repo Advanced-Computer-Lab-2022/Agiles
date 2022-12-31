@@ -292,9 +292,11 @@ function SetPromotion(props) {
                   <TableCell>{el.price}</TableCell>
                   <TableCell>{el.discount}</TableCell>
                   <TableCell>
-                    {new Date(el.discount_enddate).toDateString() +
-                      " " +
-                      new Date(el.discount_enddate).toLocaleTimeString()}
+                    {el.discount == 0
+                      ? "-"
+                      : new Date(el.discount_enddate).toDateString() +
+                        " " +
+                        new Date(el.discount_enddate).toLocaleTimeString()}
                   </TableCell>
                   <TableCell>
                     <MyCheckbox
