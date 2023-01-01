@@ -40,6 +40,7 @@ software.
 - Learn how to work together as a team on GitHub.
 
 ## Motivation
+
 ## Code Styles
 The project follows the  [ MVC ](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)design pattern ,MVC is a software architectural pattern commonly used for developing user interfaces that divide the related program logic into three interconnected elements. This is done to separate internal representations of information from the ways information is presented to and accepted from the user , So the Files in the backend was divided into the M (models) where the schema of the models exist which represent the core of the database , the C (controller) where the functions needed for the routes exists and the V (views) the view in MERN stack is represented by the react frontend server. Also the routes in our project was abstracted from the controller function as shown in [ API References](#api-references)
 
@@ -240,4 +241,4 @@ We have four main users in our website:
 <img width="1310" alt="image" src="https://user-images.githubusercontent.com/57245606/210165111-f2a20630-f912-42e9-b62a-ee258db0c2f6.png">
 
 ### Licence 
- This project is licenced under [MIT LICENCE](/LICENSE.md)
+ This project is licenced under [MIT LICENCE](/LICENSE.md) ![GitHub](https://img.shields.io/github/license/BEPb/README)
