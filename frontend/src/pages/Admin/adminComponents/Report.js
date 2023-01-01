@@ -23,21 +23,22 @@ function Report(props) {
       }}
     >
       <Accordion.Header>
-        <div style={{ display: "flex", width: "80%" }}>
-          <div style={{ width: "20%" }}> {el.username} </div>
-          <div style={{ width: "20%" }}>{el.title}</div>
-          <div style={{ width: "20%" }}> {el.courseId.title}</div>{" "}
-          <div style={{ width: "20%" }}>
+        <div style={{ display:"inline-flex",   width: "80%" }}>
+          <div style={{ width: "20%", display: "flex", justifyContent:"center" }}>{el.username} </div>
+          <div style={{ width: "20%", display: "flex", justifyContent:"center" }}>{el.title}</div>
+          <div style={{ width: "20%" , display: "flex", justifyContent:"center"  }}> {el.courseId.title}</div>{" "}
+          <div style={{ width: "20%", display: "flex", justifyContent:"center" }}>
               <Badge
               bg={status === "pending" ? "danger" : "success"}
-              style={{ marginRight: "10px" }}
+              style={{  width:"50%",justifyContent:"center",display:"flex" }}
             >
               <label> {status} </label>
             </Badge>
           </div>
-          <div style={{ width: "20%" }}>{seen}</div>
           {/*<div style={{ width: "25%" }}> {el.reportType}</div>*/}
+          <div style={{  width:"20%", display: "flex", justifyContent:"center" }}>{seen}</div>
         </div>
+        <div style={{ width: "25%", display: "flex", justifyContent:"center" }}> {el.reportType}</div>
       </Accordion.Header>
       <Accordion.Body>
         <div>Description : {el.description}</div>
