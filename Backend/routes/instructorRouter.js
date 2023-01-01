@@ -68,5 +68,7 @@ instructorRouter.get(
 instructorRouter.get("/instructorbyid", getInstructorbyId);
 instructorRouter.patch("/addFollowUp", verifyInstructorJWT, addFollowUp);
 instructorRouter.post("/firstLoginReset", verifyInstructorJWT, firstLoginReset);
+
 instructorRouter.get("/isAuth", isAuthInstructor);
+
 module.exports = instructorRouter;

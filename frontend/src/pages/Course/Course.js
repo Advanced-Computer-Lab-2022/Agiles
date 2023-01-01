@@ -34,6 +34,10 @@ const Course = () => {
   const [modaTitlel, setModalTitle] = useState("");
   const traineeId = cookies.get("currentUser");
   const [isloading, setIsLoading] = useState(false);
+  let acc = "";
+
+  const [access, setAccess] = useState("");
+
   const location = useLocation();
   const courseId = new URLSearchParams(location.search).get("cid");
   const navigatetoCourse = () => {
@@ -57,7 +61,10 @@ const Course = () => {
   const handleShow = () => setShow(true);
   const navigateCheckout = async () => {
     if (state == 0) {
-      navigate({pathname:"/course/checkout",search:`cid=${courseId}`}, { state: { price: course.price,discount:course.discount } });
+      navigate(
+        { pathname: "/course/checkout", search: `cid=${courseId}` },
+        { state: { price: course.price, discount: course.discount } }
+      );
     } else {
       navigate("/signUp");
     }
@@ -70,6 +77,7 @@ const Course = () => {
     };
     try {
       const res = await axios.post(url, body);
+      setAccess("pending Access");
     } catch (e) {
       console.log(e);
     }
@@ -92,6 +100,21 @@ const Course = () => {
       } catch (e) {
         console.log(e);
       }
+
+      if (state == 2) {
+        try {
+          let res = await axios.get("/individualtrainee/checkAccess", {
+            params: {
+              courseId: courseId,
+              traineeId: traineeId,
+            },
+          });
+          setAccess(res.data);
+          if (res.data == "request approved") setPaid(true);
+        } catch (e) {
+          console.log(e);
+        }
+      }
     };
     fetchData();
   }, []);
@@ -103,152 +126,157 @@ const Course = () => {
       ) : (
         <div className={styled["course"]}>
           <section className={styled["mainSection"]}>
-            
-              <section className={styled["mainSection-left"]}>
-                <h1>{course.title}</h1>
-                <h2>{course.description}</h2>
-                <div className={styled["mainSection-left-rating"]}>
-                  <Rating
-                    name="rating"
-                    style={{ fontSize:'1.5vw',marginRight:'1vw' }}
-                    readOnly
-                    value={Math.round(course.rating / (course.ratingCount==0?1:course.ratingCount))}
-                  />
-                  <label>
-                    ({course.ratingCount} ratings) {course.studentCount}{" "}
-                    students{" "}
-                  </label>
-                </div>
-                <label className={styled["instlabel"]}>
-                  Created by {instructor.firstname} {instructor.lastname}
+            <section className={styled["mainSection-left"]}>
+              <h1>{course.title}</h1>
+              <h2>{course.description}</h2>
+              <div className={styled["mainSection-left-rating"]}>
+                <Rating
+                  name="rating"
+                  style={{ fontSize: "1.5vw", marginRight: "1vw" }}
+                  readOnly
+                  value={Math.round(
+                    course.rating /
+                      (course.ratingCount == 0 ? 1 : course.ratingCount)
+                  )}
+                />
+                <label>
+                  ({course.ratingCount} ratings) {course.studentCount} students{" "}
                 </label>
+              </div>
+              <label className={styled["instlabel"]}>
+                Created by {instructor.firstname} {instructor.lastname}
+              </label>
 
-                <div className={styled["mainSection-left-language"]}>
-                  <LanguageIcon style={{ color: "white", fontSize: "1rem" }} />
-                  <label>&nbsp;{course.language}</label>
-                </div>
-                <div className={styled["mainSection-left-language"]}>
-                  <SubjectIcon style={{ color: "white", fontSize: "1rem" }} />
-                  <label>&nbsp;{course.subject}</label>
-                </div>
-                <div className={styled["mainSection-left-language"]}>
-                  <UpgradeIcon style={{ color: "white", fontSize: "1rem" }} />
-                  <label>
-                    &nbsp;Last updated at 19/4/2019{" "}
-                    {/*course.updatedAt.split("T")[0]*/}
+              <div className={styled["mainSection-left-language"]}>
+                <LanguageIcon style={{ color: "white", fontSize: "1rem" }} />
+                <label>&nbsp;{course.language}</label>
+              </div>
+              <div className={styled["mainSection-left-language"]}>
+                <SubjectIcon style={{ color: "white", fontSize: "1rem" }} />
+                <label>&nbsp;{course.subject}</label>
+              </div>
+              <div className={styled["mainSection-left-language"]}>
+                <UpgradeIcon style={{ color: "white", fontSize: "1rem" }} />
+                <label>
+                  &nbsp;Last updated at 19/4/2019{" "}
+                  {/*course.updatedAt.split("T")[0]*/}
+                </label>
+              </div>
+            </section>
+            <section className={styled["mainSection-right"]}>
+              <iframe
+                width="100%"
+                src={course.coursePreviewUrl}
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+              <button className={styled["preview"]} onClick={handlePreview}>
+                &nbsp;preview this course
+              </button>
+              <Modal show={show} size={"lg"} onHide={handleClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title>
+                    <h6>Course Preview</h6>
+                    <h5 style={{ fontWeight: "bold" }}>{modaTitlel}</h5>
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <iframe
+                    width="100%"
+                    height="400px"
+                    src={video}
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </Modal.Body>
+              </Modal>
+              {course.price === 0
+                ? state != 2 &&
+                  !paid(
+                    <div className={styled["price"]}>
+                      <label className={styled["time"]}>Free</label>
+                    </div>
+                  )
+                : state != 2 &&
+                  !paid && (
+                    <>
+                      {!window.sessionStorage.getItem("factor") ? (
+                        <div>
+                          <label className={styled["price"]}>
+                            {" "}
+                            {course.price -
+                              (course.price * course.discount) / 100}{" "}
+                            USD{" "}
+                          </label>
+                          <label className={styled["discount"]}>
+                            &nbsp;
+                            {course.discount > 0
+                              ? `${course.discount}% off`
+                              : ""}
+                          </label>
+                        </div>
+                      ) : (
+                        <div className={styled["price"]}>
+                          <label className={styled["time"]}>
+                            {Math.floor(
+                              course.price *
+                                window.sessionStorage.getItem("factor")
+                            )}{" "}
+                            {window.sessionStorage
+                              .getItem("currency")
+                              .toUpperCase()}
+                          </label>
+                          <label className={styled["discount"]}>
+                            &nbsp;
+                            {course.discount > 0
+                              ? `${course.discount}% off`
+                              : ""}
+                          </label>
+                        </div>
+                      )}
+                    </>
+                  )}
+              {course.discount > 0 && state != 2 && !paid && (
+                <div>
+                  <AccessAlarmIcon
+                    style={{ color: "red" }}
+                    className={styled["enddate"]}
+                  />{" "}
+                  <label className={styled["enddatelabel"]}>
+                    Discount ends at {course.discount_enddate.split("T")[0]}
                   </label>
                 </div>
-              </section>
-              <section className={styled["mainSection-right"]}>
-                <iframe
-                  width="100%"
-                  src={course.coursePreviewUrl}
-                  title="YouTube video player"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-                <button className={styled["preview"]} onClick={handlePreview}>
-                  &nbsp;preview this course
+              )}
+              {state != 1 && !paid && (
+                <button
+                  className={styled["buyme"]}
+                  onClick={
+                    state == 2 ? navigateRequestAccess : navigateCheckout
+                  }
+                >
+                  {state == 2 ? access : "Buy now"}
                 </button>
-                <Modal show={show} size={"lg"} onHide={handleClose}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>
-                      <h6>Course Preview</h6>
-                      <h5 style={{ fontWeight: "bold" }}>{modaTitlel}</h5>
-                    </Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <iframe
-                      width="100%"
-                      height="400px"
-                      src={video}
-                      title="YouTube video player"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                  </Modal.Body>
-                </Modal>
-                {course.price === 0
-                  ? state != 2 &&
-                    !paid(
-                      <div className={styled["price"]}>
-                        <label className={styled["time"]}>Free</label>
-                      </div>
-                    )
-                  : state != 2 &&
-                    !paid && (
-                      <>
-                        {!window.sessionStorage.getItem("factor") ? (
-                          <div>
-                            <label className={styled["price"]}>
-                              {" "}
-                              {course.price -
-                                (course.price * course.discount) / 100}{" "}
-                              USD{" "}
-                            </label>
-                            <label className={styled["discount"]}>
-                              &nbsp;
-                              {course.discount > 0
-                                ? `${course.discount}% off`
-                                : ""}
-                            </label>
-                          </div>
-                        ) : (
-                          <div className={styled["price"]}>
-                            <label className={styled["time"]}>
-                              {Math.floor(
-                                course.price *
-                                  window.sessionStorage.getItem("factor")
-                              )}{" "}
-                              {window.sessionStorage
-                                .getItem("currency")
-                                .toUpperCase()}
-                            </label>
-                            <label className={styled["discount"]}>
-                              &nbsp;
-                              {course.discount > 0
-                                ? `${course.discount}% off`
-                                : ""}
-                            </label>
-                          </div>
-                        )}
-                      </>
-                    )}
-                {course.discount > 0 && state != 2 && !paid && (
-                  <div>
-                    <AccessAlarmIcon
-                      style={{ color: "red" }}
-                      className={styled["enddate"]}
-                    />{" "}
-                    <label className={styled["enddatelabel"]}>
-                      Discount ends at {course.discount_enddate.split("T")[0]}
+              )}
+              {(paid || course?.instructor?._id == traineeId) && (
+                <>
+                  {state != 1 && (
+                    <label className={styled["purchase"]}>
+                      {state == 2
+                        ? "access Granted"
+                        : "you purchased this course"}
                     </label>
-                  </div>
-                )}
-                {state != 1 && !paid && (
-                  <button
-                    className={styled["buyme"]}
-                    onClick={
-                      state == 2 ? navigateRequestAccess : navigateCheckout
-                    }
-                  >
-                    {state == 2 ? "request access" : "Buy now"}
-                  </button>
-                )}
-                {(paid || course?.instructor?._id == traineeId) && (
-                  <>
-                    {state!=1&&<label className={styled["purchase"]}>
-                       you purchased this course
-                  </label>}
+                  )}
                   <button
                     className={styled["buyme"]}
                     onClick={navigatetoCourse}
                   >
                     Go to course
                   </button>
-                  </>
-                )}
-              </section>
+                </>
+              )}
+            </section>
           </section>
           <section className={styled["middle"]}>
             <section className={styled["middle-left"]}>
@@ -337,16 +365,17 @@ const Course = () => {
                       {" "}
                       <StarsIcon></StarsIcon>
                       <label>
-                        {instructor.rating / (instructor.ratingCount==0?1:instructor.ratingCount)} Instructor
-                        Rating
+                        {instructor.rating /
+                          (instructor.ratingCount == 0
+                            ? 1
+                            : instructor.ratingCount)}{" "}
+                        Instructor Rating
                       </label>
                     </div>
                     <div>
                       {" "}
                       <ReviewsIcon></ReviewsIcon>
-                      <label>
-                        {instructor.ratingCount} reviews
-                      </label>
+                      <label>{instructor.ratingCount} reviews</label>
                     </div>
                     <div>
                       {" "}

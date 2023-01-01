@@ -271,7 +271,7 @@ const grantAccess = async (req, res) => {
 
 const getReports = async (req, res) => {
   requests = await Report.find({})
-  .populate("courseId")
+    .populate("courseId")
     .sort("-createdAt")
     .exec();
   res.send(requests).status(200);
@@ -281,15 +281,25 @@ const acceptRefund = async (req, res) => {
   const { traineeId, courseId } = req.body;
   const course = await Course.findById(courseId);
   const instructor = await Instructor.findById(course.instructor);
-  const query = await IndividualTrainee.findOne({_id:traineeId,"registered_courses.courseId":courseId}).select("registered_courses.$");
+  const query = await IndividualTrainee.findOne({
+    _id: traineeId,
+    "registered_courses.courseId": courseId,
+  }).select("registered_courses.$");
   const refundAmount = query.registered_courses[0].purchasedPrice;
   try {
-    await IndividualTrainee.findByIdAndUpdate(traineeId, {$pull: { registered_courses: { courseId: courseId }} });
-    await IndividualTrainee.findByIdAndUpdate(traineeId, {$inc: { wallet: refundAmount }});
+    await IndividualTrainee.findByIdAndUpdate(traineeId, {
+      $pull: { registered_courses: { courseId: courseId } },
+    });
+    await IndividualTrainee.findByIdAndUpdate(traineeId, {
+      $inc: { wallet: refundAmount },
+    });
 
     await Instructor.updateOne(
-      { _id: course.instructor ,"wallet.month":new Date().getMonth() },
-      { $inc:{"wallet.$.amount":-refundAmount*(70/100)},studentCount:instructor.studentCount-1}
+      { _id: course.instructor, "wallet.month": new Date().getMonth() },
+      {
+        $inc: { "wallet.$.amount": -refundAmount * (70 / 100) },
+        studentCount: instructor.studentCount - 1,
+      }
     );
     await Course.updateOne(
       { _id: courseId },

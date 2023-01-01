@@ -7,6 +7,7 @@ const {
   addFollowUp,
 } = require("../controllers/CourseController");
 const {
+  checkAccess,
   courseExam,
   courseFinalExam,
   requestAccess,
@@ -43,22 +44,14 @@ const {
   payWithWallet,
 } = require("../controllers/IndividualTraineeController");
 const { verifyItraineeJWT } = require("../middleware/authMiddleware");
-IndividualTraineeRouter.get(
-  "/getQuestions",
-  verifyItraineeJWT,
-  getQuestions
-);
+IndividualTraineeRouter.get("/getQuestions", verifyItraineeJWT, getQuestions);
 
 IndividualTraineeRouter.post(
   "/askInstructor",
   verifyItraineeJWT,
   askInstructor
 );
-IndividualTraineeRouter.patch(
-  "/addReply",
-  verifyItraineeJWT,
-  addReply
-);
+IndividualTraineeRouter.patch("/addReply", verifyItraineeJWT, addReply);
 IndividualTraineeRouter.post(
   "/sendCertificate",
   verifyItraineeJWT,
@@ -168,18 +161,28 @@ IndividualTraineeRouter.post(
   getAllItemsCourse
 );
 
-IndividualTraineeRouter.post("/payWithWallet", verifyItraineeJWT, payWithWallet);
+IndividualTraineeRouter.post(
+  "/payWithWallet",
+  verifyItraineeJWT,
+  payWithWallet
+);
 
 IndividualTraineeRouter.get(
   "/getTraineeProgress",
   verifyItraineeJWT,
   getTraineeProgress
 );
+
+IndividualTraineeRouter.get("/checkAccess", verifyItraineeJWT, checkAccess);
 //no auth
 IndividualTraineeRouter.post("/forgotpassword", forgetPassword);
 IndividualTraineeRouter.post("/verifyCode", verifyCode);
 IndividualTraineeRouter.post("/requestAccess", requestAccess);
-IndividualTraineeRouter.post("/requestRefund",verifyItraineeJWT, requestRefund);
+IndividualTraineeRouter.post(
+  "/requestRefund",
+  verifyItraineeJWT,
+  requestRefund
+);
 IndividualTraineeRouter.patch("/addFollowUp", verifyItraineeJWT, addFollowUp);
 IndividualTraineeRouter.get("/isAuth", isAuthTrainee);
 

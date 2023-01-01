@@ -911,8 +911,35 @@ const getQuestions = async (req, res) => {
     return res.status(406).json(err);
   }
 };
+const checkAccess = async (req, res) => {
+  const { traineeId, courseId } = req["query"];
+  console.log(traineeId);
+  console.log(courseId);
+  let approved = await CourseSubscriptionRequest.exists({
+    traineeId: traineeId,
+    courseId: courseId,
+    status: "approved",
+  });
+  console.log(approved + "approved");
+  if (approved) {
+    res.send("request approved").status(200);
+  } else {
+    let pending = await CourseSubscriptionRequest.exists({
+      traineeId: traineeId,
+      courseId: courseId,
+      status: "pending",
+    });
+    console.log(pending + "pending");
+    if (pending) {
+      res.send("pending Access").status(200);
+    } else {
+      res.send("request Access").status(200);
+    }
+  }
+};
 
 module.exports = {
+  checkAccess,
   getQuestions,
   addReply,
   askInstructor,
