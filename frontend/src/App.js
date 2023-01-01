@@ -24,7 +24,6 @@ import CoursePreInst from "./pages/Instructor/CoursePreInst";
 import CourseConInst from "./pages/Instructor/CourseConInst";
 import CoursePreview from "./components/CoursePreview";
 import CourseContent from "./components/CourseContent";
-import CourseFinalExam from "./pages/Course/CourseFinalExam";
 import AccountSecurity from "./pages/Trainee/AccountSecurity";
 import PaymentMethods from "./pages/Trainee/PaymentMethods";
 import ForgetPassword from "./pages/Trainee/ForgetPassword";
@@ -109,7 +108,6 @@ function App() {
               <Route path="/preReg" element={<CoursePreview />} />
               <Route path="/conReg" element={<CourseContent />} />
               <Route path="/paymentMethods" element={<PaymentMethods />} />
-              <Route path="/finalexam" element={<CourseFinalExam />} />
               <Route path="/CourseExam" element={<CourseExam />} />
               <Route path="/success" element={<Sucess />} />
               <Route path="/cancel" element={<Cancel />} />

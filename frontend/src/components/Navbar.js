@@ -63,6 +63,7 @@ const Navbar = () => {
   const handleCreateCourse = () => navigate("createcourse");
   const navigateMyLearning = () => navigate("/mylearning");
   const handlePrevReports = () => navigate("/PrevReports");
+  const handlereviews= () => navigate("/reviews");
   const navigateprevReportsTrainee = () => navigate("/PrevReportsTrainee");
   const navigateAccountSettings = () => navigate("/accountsettings");
   const navigatePaymentMethods = () => navigate("/paymentmethods");
@@ -162,9 +163,8 @@ const Navbar = () => {
                 <MenuItem onClick={hanldleMycourses}> my courses </MenuItem>
                 <MenuItem onClick={handleCreateCourse}>create course</MenuItem>
                 <MenuItem onClick={handleBalance}>money balance</MenuItem>
-                <MenuItem onClick={handlePrevReports}>
-                  reported problems
-                </MenuItem>
+                <MenuItem onClick={handlePrevReports}>  reported problems </MenuItem>
+                <MenuItem onClick={handlereviews}> my reviews  </MenuItem>
               </>
             )}
             <Divider />

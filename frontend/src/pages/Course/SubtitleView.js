@@ -8,8 +8,6 @@ import style from "./SubtitleView.module.css";
 import ListGroup from "react-bootstrap/ListGroup";
 import Accordion from "react-bootstrap/Accordion";
 import { useNavigate } from "react-router-dom";
-import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
-import Youtube from "react-youtube";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Cookies from "universal-cookie";
 import Button from "react-bootstrap/Button";
@@ -21,7 +19,7 @@ import Badge from "react-bootstrap/Badge";
 const LINK_URL = "/course/link/view";
 const cookies = new Cookies();
 const Subtitle = (props) => {
-  props.funcNav(true);
+  props.funcNav(false);
   const progress = useRef(null);
   const status = cookies.get("status");
   const location = useLocation();
@@ -127,7 +125,15 @@ const Subtitle = (props) => {
       console.log(e);
     }
   };
+  const handleBack = () => {
+    if (status == 1) {
+      navigate("/mycourses");
+    } else {
+      navigate("/mylearning");
+    }
 
+    props.funcNav(true);
+  };
   const handleNotesChange = (event) => {
     // 👇️ access textarea value
     setNotes(event.target.value);
@@ -269,6 +275,13 @@ const Subtitle = (props) => {
       ) : (
         <section className={style["main-section"]}>
           <section className={style["main-section-left"]}>
+            <Button
+              variant="dark"
+              style={{ marginLeft: "3%", marginTop: "1%" }}
+              onClick={handleBack}
+            >
+              Back to courses
+            </Button>
             {/*<button className={style["back"]} onClick={handleBack}>Back</button>*/}
             <section className={style["main-section-left-top"]}>
               <div className={style["iframe-container"]}>

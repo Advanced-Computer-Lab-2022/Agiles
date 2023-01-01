@@ -136,7 +136,8 @@ const CourseExam = () => {
 
   return (
     <div>
-      <h1 style={{textAlign: "center",color: "#A00407"}}>Quiz</h1>
+      {isloading && ( <LoadingScreen loading={true} logoSrc={spinner} />)}
+      <h1 style={{textAlign: "center",color: "#A00407"}}>{final == "false"?'quiz':'Final exam'}</h1>
       <div class="d-grid gap-3">
 
         <Form>

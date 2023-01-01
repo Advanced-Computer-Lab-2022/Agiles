@@ -2,13 +2,12 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Swal from "sweetalert2";
 
 const SetExam = () => {
-  // const [subtitleId, setSubtitleId] = useState("");
-  //const [courseId, setCourseId] = useState("");
+  const navigate = useNavigate();
 
   const styles = {
     form: {
@@ -82,7 +81,7 @@ const SetExam = () => {
         title: "Your Quiz has been added successfully",
         showConfirmButton: false,
         timer: 1500,
-      });
+      }).then(() => {navigate(-1)});
     } catch (e) {
       Swal.fire({
         position: "top-end",
