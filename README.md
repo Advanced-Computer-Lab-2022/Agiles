@@ -575,8 +575,8 @@ Anyone who would like to contribute in the project please send me an E-mail on [
 ## How to use
  After cloning the project or downloading the ZIP folder open the project using the integrated terminal or by using the CMD 
  then run the frontend / backend servers 
- `nodemon app` to run the backend server on port :8000
- `npm start` to run the frontend server on port :3000
+ - `nodemon app` to run the backend server on port :8000
+ - `npm start` to run the frontend server on port :3000
  
 
 ### Licence 
