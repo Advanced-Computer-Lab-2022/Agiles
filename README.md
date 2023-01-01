@@ -199,17 +199,36 @@ We have four main users in our website:
 ### guest/instructor/individual trainee/corporate trainee
 
 - select their country 
+<img width="1041" alt="image" src="https://user-images.githubusercontent.com/57245606/210165011-d9c88eb2-de15-45fd-966b-b20563c8b7dd.png">
+
 - filter the courses based on a subject and/or rating
+<img width="1036" alt="image" src="https://user-images.githubusercontent.com/57245606/210165043-b18a8f5f-eaed-4b77-858c-3599119a4900.png">
+
 - search for a course based on course title or subject or instructor
+<img width="999" alt="image" src="https://user-images.githubusercontent.com/57245606/210165018-dc72fc57-342f-4d43-9830-4f6fd6488d87.png">
+
 - view a preview video of the course and the course outline before registering for it
+<img width="915" alt="image" src="https://user-images.githubusercontent.com/57245606/210165032-46b01163-1686-4aa7-9405-5077f7e3201a.png">
+
 - view the most viewed/ most popular courses
+<img width="1427" alt="image" src="https://user-images.githubusercontent.com/57245606/210165058-71678e3f-b556-46db-a5f0-b2d3dd2fcbf9.png">
+
 - view all the titles of the courses available including the total hours of the course and course rating
+<img width="1190" alt="image" src="https://user-images.githubusercontent.com/57245606/210165065-8ace7c5e-df1c-45b1-97e5-9bc65b734535.png">
 
 
 ### /instructor/individual trainee/corporate trainee
 
 - receive an email to change a forgotten password
 - change his/her password
+<img width="623" alt="image" src="https://user-images.githubusercontent.com/57245606/210165084-a834b749-e554-4586-b130-86d808673098.png">
+
 - report a problem with a course. The problem can be "technical", "financial" or "other"
+<img width="881" alt="image" src="https://user-images.githubusercontent.com/57245606/210165096-1dab93a4-a18f-4fe5-9e4a-72f9ad654bda.png">
+
 - see all previously repoted problems and their statuses
+<img width="1437" alt="image" src="https://user-images.githubusercontent.com/57245606/210165106-f8b8484f-5c8b-436f-822c-2d625346d2dc.png">
+
 - follow up on an unresolved problem
+<img width="1310" alt="image" src="https://user-images.githubusercontent.com/57245606/210165111-f2a20630-f912-42e9-b62a-ee258db0c2f6.png">
+
