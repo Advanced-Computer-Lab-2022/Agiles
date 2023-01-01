@@ -231,9 +231,14 @@ We have four main users in our website:
 ### Guest & instructor & individual trainee 
 
 - view and accept the website/ company refund/ payment policy while signing up
+![16](https://user-images.githubusercontent.com/83594429/210186647-e3a72dd6-43b9-414d-91b4-28b51eee958e.PNG)
 - view the price of each course
+![17](https://user-images.githubusercontent.com/83594429/210186648-64dd1508-dd00-41b6-8fa4-9b7a6e31f89d.PNG)
 - filter the courses based on price (price can be FREE)
+![18](https://user-images.githubusercontent.com/83594429/210186649-b0b7232a-34cd-4485-9a09-998c44624886.PNG)
 - choose a course from the results and view (but not open) its details including course subtitles, excercises , total hours of each subtitle, total hours of the course and price (including % discount if applicable) according to the country selected
+![19](https://user-images.githubusercontent.com/83594429/210186646-fce947d8-caa8-4e07-8cbd-dae4857facaa.PNG)
+![019](https://user-images.githubusercontent.com/83594429/210186674-75921e39-4b17-4965-b676-d5f6da43a9b5.PNG)
 
 
 ### Guest  & instructor & individual trainee & corporate trainee
