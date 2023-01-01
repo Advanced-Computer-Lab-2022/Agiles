@@ -239,6 +239,9 @@ We have four main users in our website:
 ### instructor & individual trainee & corporate trainee
 
 - receive an email to change a forgotten password
+![mail](https://user-images.githubusercontent.com/73742471/210178997-6dfcec95-fd39-4b1e-9795-435b5e43e346.png)
+![verify](https://user-images.githubusercontent.com/73742471/210178942-78c5e415-ca65-47ee-9645-3018664a0d55.png)
+
 - change his/her password
 <img width="623" alt="image" src="https://user-images.githubusercontent.com/57245606/210165084-a834b749-e554-4586-b130-86d808673098.png">
 
@@ -246,10 +249,10 @@ We have four main users in our website:
 <img width="881" alt="image" src="https://user-images.githubusercontent.com/57245606/210165096-1dab93a4-a18f-4fe5-9e4a-72f9ad654bda.png">
 
 - see all previously repoted problems and their statuses
-<img width="1437" alt="image" src="https://user-images.githubusercontent.com/57245606/210165106-f8b8484f-5c8b-436f-822c-2d625346d2dc.png">
+![reportedProblems](https://user-images.githubusercontent.com/73742471/210179041-8dc5fab5-e45f-4434-ad20-d2fde193392f.png)
 
 - follow up on an unresolved problem
-<img width="1310" alt="image" src="https://user-images.githubusercontent.com/57245606/210165111-f2a20630-f912-42e9-b62a-ee258db0c2f6.png">
+![follow](https://user-images.githubusercontent.com/73742471/210179070-1553b661-9ff2-4c69-940b-450e8709100f.png)
 
 ## API References
 Our APIs is divided into four APIs :
