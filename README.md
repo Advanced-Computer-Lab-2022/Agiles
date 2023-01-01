@@ -1,3 +1,5 @@
+ ![GitHub](https://img.shields.io/github/license/BEPb/README)
+ ![example workflow](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
 # Canadian Chamber Of Commerce
 ![landing page](https://user-images.githubusercontent.com/73742471/210173152-6090466b-6efb-4a63-a6bb-782a0c8cab3a.png)
 ## Table of Contents
@@ -12,6 +14,8 @@
   * [Individual Trainee Functinalities](#individualtrainee)
   * [guest Functionalities](#guest)
 - [API References](#api-references)
+- [Contributing](#contributing)
+- [Credits](#credits)
 - [Licence](#Licence)
 
 ## Project Description
@@ -240,5 +244,17 @@ We have four main users in our website:
 - follow up on an unresolved problem
 <img width="1310" alt="image" src="https://user-images.githubusercontent.com/57245606/210165111-f2a20630-f912-42e9-b62a-ee258db0c2f6.png">
 
+## Contributing
+Anyone who would like to contribute in the project please send me an E-mail on [hossamelfarr@gmail.com](hossamelfarr@gmail.com)
+
+## Credits
+|Contributers|Github Account|
+|---|---|
+|Yehea Eldib | [yehea eldib](https://github.com/yehiaeldib)|
+|Hossam El Far| [hossam elfar](https://github.com/Terror-1)|
+|Ahmed Azooz|[ahmed azooz](https://github.com/A3zooz)|
+|Adham Haggag|[adham hagag](https://github.com/Haggag23)|
+|Abdullah Fouad|[abdullah fouad](https://github.com/Abdullah204)|
+
 ### Licence 
- This project is licenced under [MIT LICENCE](/LICENSE.md) ![GitHub](https://img.shields.io/github/license/BEPb/README)
+ This project is licenced under [MIT LICENCE](/LICENSE.md)
