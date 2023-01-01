@@ -39,7 +39,12 @@ const Subtitle = (props) => {
   const downloadPDFFile = () => {
     //console.log(link.linkDesc);
     var doc = new jsPDF("landscape", "px", "a4", "false");
-    doc.text(240, 20, link.linkDesc);
+
+    let xOffset =
+      doc.internal.pageSize.width / 2 -
+      (doc.getStringUnitWidth(link.linkDesc) * doc.internal.getFontSize()) / 2;
+    doc.text(link.linkDesc, xOffset, 20);
+
     doc.text(30, 40, "Notes:");
     doc.text(70, 40, notes);
     doc.save("myNotes.pdf");
