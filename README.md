@@ -162,54 +162,54 @@ We have four main users in our website:
 
 
 ### Individual Trainee
-view the amount available in their wallet from refunded courses
-enter their credit card details to pay for a course they want to register for
-pay for a course
-request a refund only if less than 50% of the course has been attended
+- view the amount available in their wallet from refunded courses
+- enter their credit card details to pay for a course they want to register for
+- pay for a course
+- request a refund only if less than 50% of the course has been attended
 
 
 
 ### Individual Trainee/Corporate Trainee
 
-open all the items inside a course he/she is registered for including videos and excercises
-rate an instructor 
-rate a course
-solve a multiple choice exercise by choosing the correct answer
-submit the answers to the exercise after completing it
-view his/her grade from the exercise
-view the questions with the correct solution to view the incorrect answers
-watch a video from a course he/she is registered for
-see his/her progress in the course as a percentage of how much of the course has been completed so far
-receive a certificate as a PDF after completing the course via email
-download the certificate as a PDF from the website
-write notes while watching the video
-download the notes as a PDF
-see a list of all the courses he/she is enrolled in on their profile
+- open all the items inside a course he/she is registered for including videos and excercises
+- rate an instructor 
+- rate a course
+- solve a multiple choice exercise by choosing the correct answer
+- submit the answers to the exercise after completing it
+- view his/her grade from the exercise
+- view the questions with the correct solution to view the incorrect answers
+- watch a video from a course he/she is registered for
+- see his/her progress in the course as a percentage of how much of the course has been completed so far
+- receive a certificate as a PDF after completing the course via email
+- download the certificate as a PDF from the website
+- write notes while watching the video
+- download the notes as a PDF
+- see a list of all the courses he/she is enrolled in on their profile
 
 
 
 ### guest/instructor/individual trainee 
 
-view and accept the website/ company refund/ payment policy while signing up
-view the price of each course
-filter the courses based on price (price can be FREE)
-choose a course from the results and view (but not open) its details including course subtitles, excercises , total hours of each subtitle, total hours of the course and price (including % discount if applicable) according to the country selected
+- view and accept the website/ company refund/ payment policy while signing up
+- view the price of each course
+- filter the courses based on price (price can be FREE)
+- choose a course from the results and view (but not open) its details including course subtitles, excercises , total hours of each subtitle, total hours of the course and price (including % discount if applicable) according to the country selected
 
 
 ### guest/instructor/individual trainee/corporate trainee
 
-select their country 
-filter the courses based on a subject and/or rating
-search for a course based on course title or subject or instructor
-view a preview video of the course and the course outline before registering for it
-view the most viewed/ most popular courses
-view all the titles of the courses available including the total hours of the course and course rating
+- select their country 
+- filter the courses based on a subject and/or rating
+- search for a course based on course title or subject or instructor
+- view a preview video of the course and the course outline before registering for it
+- view the most viewed/ most popular courses
+- view all the titles of the courses available including the total hours of the course and course rating
 
 
 ### /instructor/individual trainee/corporate trainee
 
-receive an email to change a forgotten password
-change his/her password
-report a problem with a course. The problem can be "technical", "financial" or "other"
-see all previously repoted problems and their statuses
-follow up on an unresolved problem
+- receive an email to change a forgotten password
+- change his/her password
+- report a problem with a course. The problem can be "technical", "financial" or "other"
+- see all previously repoted problems and their statuses
+- follow up on an unresolved problem
