@@ -10,8 +10,8 @@
 - [Features](#features)
   * [Admin Functionalities](#administrator)
   * [Instructor Functinalities](#instructor)
-  * [Corporate Trainee Functinalities](#corporate-trainee)
   * [Individual Trainee Functinalities](#individual-trainee)
+  * [Corporate Trainee Functinalities](#corporate-trainee)
   * [guest Functionalities](#guest)
 - [API References](#api-references)
   * [Guest (Course) router](#guest-router)
@@ -484,6 +484,18 @@ Our APIs is divided into four APIs :
  }
 `
 
+#### Add promotions
+- Route : `/addPromotionMulti`
+- Request type : `post`
+- Request Body : 
+ `
+  {
+     idArr: ['6361b2deef7816eb1d9eb915','6361b484c27988acb69dfb50'],
+     promo: "25",
+     enddate: "20/1/2023"
+ }
+`
+
 #### Add Corporate Trainee
 - Route : `/addCorporate`
 - Request type : `post`
@@ -525,17 +537,6 @@ Our APIs is divided into four APIs :
 - Route : `/refundRequests`
 - Request type : `get`
 
-#### Add promotions
-- Route : `/addPromotionMulti`
-- Request type : `post`
-- Request Body : 
- `
-  {
-     idArr: ['6361b2deef7816eb1d9eb915','6361b484c27988acb69dfb50'],
-     promo: "25",
-     enddate: "20/1/2023"
- }
-`
 
 ### Authentication Router
 #### Route : (`/login`)
