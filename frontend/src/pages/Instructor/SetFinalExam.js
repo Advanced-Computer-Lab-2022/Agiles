@@ -215,6 +215,7 @@ const SetFinalExam = () => {
                 <Button
                   variant="danger"
                   type="button"
+                  style={{  border: "1px solid black",borderRadius:'0' ,width:'180px'}}
                   className="button remove"
                   onClick={() => removeFormFields(index)}
                 >
@@ -230,7 +231,7 @@ const SetFinalExam = () => {
               variant="dark"
               className="button add"
               type="button"
-              style={{  border: "1px solid black",borderRadius:'0' }}
+              style={{  border: "1px solid black",borderRadius:'0' ,width:'180px' }}
               onClick={() => addFormFields()}
             >
               Add Question

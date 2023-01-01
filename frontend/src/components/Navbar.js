@@ -145,9 +145,12 @@ const Navbar = () => {
               account security
             </MenuItem>
             {isTrainee() && (
+              <>
               <MenuItem onClick={navigatePaymentMethods}>
                 payment methods
               </MenuItem>
+             <MenuItem onClick={navigatetoProfile}>money balance</MenuItem>
+             </>
             )}
             <Divider />
             {isTrainee() && (

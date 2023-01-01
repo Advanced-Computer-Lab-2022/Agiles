@@ -40,6 +40,7 @@ const {
   getTraineeExams,
   getQuestions,
   addReply,
+  checkSumbitted,
   askInstructor,
   payWithWallet,
 } = require("../controllers/IndividualTraineeController");
@@ -79,6 +80,8 @@ IndividualTraineeRouter.get("/getTraineeProgress",verifyItraineeJWT, getTraineeP
 IndividualTraineeRouter.post("/requestRefund",verifyItraineeJWT, requestRefund);
 IndividualTraineeRouter.patch("/addFollowUp", verifyItraineeJWT, addFollowUp);
 IndividualTraineeRouter.get("/checkAccess", verifyItraineeJWT, checkAccess);
+IndividualTraineeRouter.post("/checkSumbitted", verifyItraineeJWT, checkSumbitted);
+
 
 //no auth
 IndividualTraineeRouter.post("/forgotpassword", forgetPassword);
