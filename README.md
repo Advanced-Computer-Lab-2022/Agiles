@@ -10,6 +10,7 @@
   * [Individual Trainee Functinalities](#individualtrainee)
   * [guest Functionalities](#guest)
 - [API References](#api-references)
+- [Licence](#Licence)
 
 ## Project Description
 
@@ -233,4 +234,6 @@ We have four main users in our website:
 
 - follow up on an unresolved problem
 <img width="1310" alt="image" src="https://user-images.githubusercontent.com/57245606/210165111-f2a20630-f912-42e9-b62a-ee258db0c2f6.png">
+
+###Licence 
 
