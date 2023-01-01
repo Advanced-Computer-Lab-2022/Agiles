@@ -219,7 +219,7 @@ We have four main users in our website:
 - receive a certificate as a PDF after completing the course via email
 ![13](https://user-images.githubusercontent.com/83594429/210186374-a06f92e0-9413-48d8-ba47-ef99ee5e6612.PNG)
 - download the certificate as a PDF from the website
-![013](https://user-images.githubusercontent.com/83594429/210186372-1dce4db1-ef92-431b-96c3-1977119ca5fc.PNG)
+![certificate](https://user-images.githubusercontent.com/73742471/210187046-d43b66ac-e142-4d0e-9c6e-1e1a6fbd3482.png)
 - download the notes as a PDF
 - write notes while watching the video
 ![14](https://user-images.githubusercontent.com/83594429/210186376-f0067b14-5283-49f1-b86e-8f5af205ca98.PNG)
