@@ -72,7 +72,7 @@ That’s where MongoDB comes in: JSON documents created in your React.js front e
 ## Features
 We have four main users in our website: 
 
-### Features common for all users except guest:
+# Features common for all users except guest:
 
 - Log in using his email and password.
 
@@ -120,7 +120,7 @@ We have four main users in our website:
 
 
 ### Corporate Trainee
-- request access to a specific course they do not have access to
+- Sign Up for the webiste
 
 <img width="1214" alt="image" src="https://user-images.githubusercontent.com/57245606/210162072-fdb0d8dd-694c-494f-b30a-bd5d76aaf87a.png">
 
