@@ -263,7 +263,7 @@ Our APIs is divided into four APIs :
 #### GET most popular courses
  - Route : `/mostpopular` 
  - Request type : `get`
-### Search for a course 
+#### Search for a course 
  - Route : `/listCourses/search` 
  - Request type : `get`
  - Request query : {`search:'search fields`}
@@ -311,8 +311,7 @@ Our APIs is divided into four APIs :
  - Route : `/viewReportedProblems` 
  - Request type : `get`
  - Request Header : `is handled using the middleWare of authentication session which contains logged user token`
- 
- #### Own Courses
+#### Own Courses
  - Route : `/listCourseTitles` 
  - Request type : `get`
  - Request Header : `{courseId: 'mongoose.type.objectId()'}`
@@ -349,6 +348,11 @@ Our APIs is divided into four APIs :
 - Request Body : 
  `{
   courseId:'mongoose.type.objectId()', subId:'mongoose.type.objectId()', linkId:'mongoose.type.objectId()}`
+### Trainee Router
+### Admin Router
+### Authentication Router
+
+
 
 ## Contributing
 Anyone who would like to contribute in the project please send me an E-mail on [hossamelfarr@gmail.com](hossamelfarr@gmail.com)
