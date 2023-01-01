@@ -91,7 +91,7 @@ That’s where MongoDB comes in: JSON documents created in your React.js front e
 ## Features
 We have four main users in our website: 
 
-# Features common for all users except guest:
+### Features common for all users except guest:
 
 - Log in using his email and password.
 
@@ -188,7 +188,7 @@ We have four main users in our website:
 
 
 
-### Individual Trainee/Corporate Trainee
+### Individual Trainee & Corporate Trainee
 
 - open all the items inside a course he/she is registered for including videos and excercises
 - rate an instructor 
@@ -207,7 +207,7 @@ We have four main users in our website:
 
 
 
-### guest/instructor/individual trainee 
+### Guest & instructor & individual trainee 
 
 - view and accept the website/ company refund/ payment policy while signing up
 - view the price of each course
@@ -215,7 +215,7 @@ We have four main users in our website:
 - choose a course from the results and view (but not open) its details including course subtitles, excercises , total hours of each subtitle, total hours of the course and price (including % discount if applicable) according to the country selected
 
 
-### guest/instructor/individual trainee/corporate trainee
+### Guest  & instructor & individual trainee & corporate trainee
 
 - select their country 
 <img width="1041" alt="image" src="https://user-images.githubusercontent.com/57245606/210165011-d9c88eb2-de15-45fd-966b-b20563c8b7dd.png">
@@ -236,7 +236,7 @@ We have four main users in our website:
 <img width="1190" alt="image" src="https://user-images.githubusercontent.com/57245606/210165065-8ace7c5e-df1c-45b1-97e5-9bc65b734535.png">
 
 
-### /instructor/individual trainee/corporate trainee
+### instructor & individual trainee & corporate trainee
 
 - receive an email to change a forgotten password
 - change his/her password
