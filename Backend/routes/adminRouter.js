@@ -25,13 +25,13 @@ adminrouter.post("/grantAccess", grantAccess);
 adminrouter.post("/acceptRefund", acceptRefund);
 adminrouter.get("/getReports", getReports);
 adminrouter.get("/refundRequests", refundRequests);
+adminrouter.post("/viewReport",verifyAdminJWT, viewReport);
+adminrouter.post("/resolveReport",verifyAdminJWT, resolveReport);
 
 ///Authentication/autherization routes
 adminrouter.post("/login", logIn);
 adminrouter.post("/logout", logOut);
 adminrouter.post("/signUp", signUp);
 adminrouter.get("/isAuth", isAuthAdmin);
-adminrouter.post("/viewReport", viewReport);
-adminrouter.post("/resolveReport", resolveReport);
 
 module.exports = adminrouter;
