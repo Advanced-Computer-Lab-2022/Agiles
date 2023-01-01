@@ -293,7 +293,7 @@ const Course = () => {
                     fontSize: "0.8rem",
                   }}
                 >
-                  {course.subtitles?.length} sections . {course.numberOfItems}{" "}
+                  {course.subtitles?.length} sections . {course.numberOfItems-course.subtitles?.length-1}{" "}
                   lectures . {courseHour}h {courseMin}m total length
                 </p>
                 {course.subtitles && (
@@ -407,7 +407,7 @@ const Course = () => {
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <SchoolIcon style={{ marginRight: "0.5rem" }} />
-                  {course.numberOfItems} lectures
+                  {course.numberOfItems-course.subtitles?.length-1} lectures
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <AllInclusiveIcon style={{ marginRight: "0.5rem" }} />

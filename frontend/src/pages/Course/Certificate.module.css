@@ -1,7 +1,6 @@
 .main-section{
     display: flex;
     flex-direction: row;
-    min-height: 100vh;
 
 }
 .certificate-section {
@@ -10,9 +9,7 @@
 
 .certificate-img{
     width: 99%;
-    height: 80%;
     border-radius: 1rem;
-    margin-top: 1rem;
     margin-left: 0.4rem;
 
 }

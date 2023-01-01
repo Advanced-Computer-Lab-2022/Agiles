@@ -52,7 +52,7 @@ const Inprogress = () => {
                     <RegCourseCard
                       data={el.courseId}
                       progress={Math.floor(
-                        (el.progress / (el.courseId.numberOfItems+el.courseId.subtitles?.length)) * 100
+                        (el.progress / (el.courseId.numberOfItems)) * 100
                       )}
                       courseRating={
                         el.courseRating ? el.courseRating.userRating : 0
