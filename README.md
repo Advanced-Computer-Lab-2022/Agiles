@@ -114,3 +114,50 @@ We have four main users in our website:
 ![add promotions](https://user-images.githubusercontent.com/83594429/210082874-4a58a5da-df01-457c-9257-3a8f154651fc.PNG)
 
 
+### Guest
+- request access to a specific course they do not have access to!
+<img width="513" alt="image" src="https://user-images.githubusercontent.com/57245606/210162051-000427a9-7690-4ee3-b476-941e48ea9c73.png">
+
+
+### Corporate Trainee
+- request access to a specific course they do not have access to
+
+<img width="1214" alt="image" src="https://user-images.githubusercontent.com/57245606/210162072-fdb0d8dd-694c-494f-b30a-bd5d76aaf87a.png">
+
+
+### Instructor
+
+- view the ratings and reviews on all his/her courses
+
+- view and accept the contract which includes all the rights to the posted videos and materials as well as the % taken by the company on each video per --- registered trainee
+- view all the titles of the courses given by him/her
+<img width="1436" alt="image" src="https://user-images.githubusercontent.com/57245606/210162118-fbc1a0f0-4d3d-46f4-ad04-cff98d1f3779.png">
+
+- filter the courses given by him/her based on a subject or price
+<img width="683" alt="image" src="https://user-images.githubusercontent.com/57245606/210162151-c26e861d-2014-4452-96e6-663ceb149439.png">
+
+- search for a course given by him/her based on course title or subject or instructor
+<img width="645" alt="image" src="https://user-images.githubusercontent.com/57245606/210162158-6613ca16-c1f5-4760-8475-baf6d0d689cf.png">
+
+- view the amount of money owed per month
+<img width="682" alt="image" src="https://user-images.githubusercontent.com/57245606/210162140-f8e3c51b-44af-4005-9174-1df8ccc993e7.png">
+
+- create a new course and fill in all its details inclding title, subtitles, price and short summary about the entire course
+- upload a video link from YouTube under each subtitle and enter a short description of the video
+- upload a video link from YouTube as a preview to the course
+- create a multiple choice exam with 4 choices per question
+<img width="797" alt="image" src="https://user-images.githubusercontent.com/57245606/210162174-a9e4ab94-048d-4f8a-9f46-dc9c4afd6f0a.png">
+
+- set the answers (not visible for the trainee) for multiple choice exercises
+<img width="775" alt="image" src="https://user-images.githubusercontent.com/57245606/210162185-cce2f182-db8e-466c-9372-80f1f3317201.png">
+
+- view his/her rating and reviews as an instructor
+- edit his/her mini biography or email
+<img width="675" alt="image" src="https://user-images.githubusercontent.com/57245606/210162199-d28d588b-ddd4-4174-890d-15768371b9dc.png">
+<img width="657" alt="image" src="https://user-images.githubusercontent.com/57245606/210162207-b5cb3ab6-181c-4b25-a2af-b032317e3595.png">
+
+
+- define a promotion for the course (% discount) and for how long
+<img width="602" alt="image" src="https://user-images.githubusercontent.com/57245606/210162219-5e09281b-80f7-4154-abe4-6ddc84473a94.png">
+
+
