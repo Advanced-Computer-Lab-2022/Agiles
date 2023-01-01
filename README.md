@@ -79,6 +79,8 @@ We have four main users in our website:
 ![log in](https://user-images.githubusercontent.com/83594429/210078803-642f4a78-123c-4543-a33d-5b5c35b62417.PNG)  
 
 - Log out from the website
+<img width="290" alt="image" src="https://user-images.githubusercontent.com/57245606/210161314-5ac10024-c0b8-4577-817b-f9e033c32588.png">
+
 
 ### Administrator
 
