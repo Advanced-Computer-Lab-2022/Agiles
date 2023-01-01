@@ -134,21 +134,24 @@ We have four main users in our website:
 
 
 ### Guest
-- request access to a specific course they do not have access to!
+- Sign Up for the webiste
 <img width="513" alt="image" src="https://user-images.githubusercontent.com/57245606/210162051-000427a9-7690-4ee3-b476-941e48ea9c73.png">
 
 
 ### Corporate Trainee
-- Sign Up for the webiste
 
+- request access to a specific course they do not have access to
 <img width="1214" alt="image" src="https://user-images.githubusercontent.com/57245606/210162072-fdb0d8dd-694c-494f-b30a-bd5d76aaf87a.png">
 
 
 ### Instructor
 
 - view the ratings and reviews on all his/her courses
+![courseReviews](https://user-images.githubusercontent.com/73742471/210179275-b2f11343-7bbe-4754-be76-34269a443e44.png)
 
 - view and accept the contract which includes all the rights to the posted videos and materials as well as the % taken by the company on each video per --- registered trainee
+![terms](https://user-images.githubusercontent.com/73742471/210179160-053d4fac-a2e4-4a3b-bb12-13b6a2ed50cc.png)
+
 - view all the titles of the courses given by him/her
 <img width="1436" alt="image" src="https://user-images.githubusercontent.com/57245606/210162118-fbc1a0f0-4d3d-46f4-ad04-cff98d1f3779.png">
 
@@ -162,8 +165,12 @@ We have four main users in our website:
 <img width="682" alt="image" src="https://user-images.githubusercontent.com/57245606/210162140-f8e3c51b-44af-4005-9174-1df8ccc993e7.png">
 
 - create a new course and fill in all its details inclding title, subtitles, price and short summary about the entire course
+![createCourse](https://user-images.githubusercontent.com/73742471/210179199-c6a17f2e-762c-4042-bb86-df3e4cdc180d.png)
 - upload a video link from YouTube under each subtitle and enter a short description of the video
+![upload video](https://user-images.githubusercontent.com/73742471/210179239-250dcfba-fd3a-4486-8ae4-48de32916c74.png)
 - upload a video link from YouTube as a preview to the course
+![upload preview](https://user-images.githubusercontent.com/73742471/210179221-4c03f097-ca4a-4309-92e4-2a6533dccc89.png)
+
 - create a multiple choice exam with 4 choices per question
 <img width="797" alt="image" src="https://user-images.githubusercontent.com/57245606/210162174-a9e4ab94-048d-4f8a-9f46-dc9c4afd6f0a.png">
 
@@ -174,8 +181,6 @@ We have four main users in our website:
 - edit his/her mini biography or email
 <img width="675" alt="image" src="https://user-images.githubusercontent.com/57245606/210162199-d28d588b-ddd4-4174-890d-15768371b9dc.png">
 <img width="657" alt="image" src="https://user-images.githubusercontent.com/57245606/210162207-b5cb3ab6-181c-4b25-a2af-b032317e3595.png">
-
-
 - define a promotion for the course (% discount) and for how long
 <img width="602" alt="image" src="https://user-images.githubusercontent.com/57245606/210162219-5e09281b-80f7-4154-abe4-6ddc84473a94.png">
 
