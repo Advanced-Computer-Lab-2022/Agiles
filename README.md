@@ -22,7 +22,7 @@
 - [Contributing](#contributing)
 - [Credits](#credits)
 - [Installation](#installation)
-- [How to use?](#how-to-use?)
+- [How to use?](#how-to-use-?)
 - [Licence](#Licence)
 
 ## Project Description
