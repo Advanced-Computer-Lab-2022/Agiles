@@ -14,6 +14,7 @@
   * [Individual Trainee Functinalities](#individualtrainee)
   * [guest Functionalities](#guest)
 - [API References](#api-references)
+  * [Instructor router](#instructor-router)
 - [Contributing](#contributing)
 - [Credits](#credits)
 - [Licence](#Licence)
@@ -246,8 +247,86 @@ We have four main users in our website:
 
 ## API References
 Our APIs is divided into four APIs :
+### Instructor Router
+#### Route : (`/instructor`)
+#### Create Course
+- Route : `/addCourse`
+- Request type : `post`
+- Request Body : 
+ `{
+  title: 'Full Mern Stack ',
+  price: '180',
+  description: 'MERN is one of several variations of the MEAN stack (MongoDB Express Angular Node),with React.js',
+  subejct: 'programming',
+  language: 'English',
+  imgUrl: '[!imageLink]',
+  coursePreviewUrl :[!CoursePreviewLink],
+  subtitles :[Array(subtitle)]
+}
+`
+#### Create Exam
+- Route : `/setExam` `/setFinalExam`
+- Request type : `post`
+- Request Body : 
+ `{
+  subtitleId: 'mongoose.type.objectId()',
+  courseId: 'mongoose.type.objectId()',
+  questions: [Array(questions)]
+}
+`
+#### Report problem
+- Route : `/reportProblem` 
+- Request type : `post`
+- Request Body : 
+ `{
+  reportType: 'technical',
+  problemTitle 'Video Quality',
+  courseId: 'mongoose.type.objectId()',
+  description: 'The video quality is very low'
+}
+`
+#### viewReportedProblems
+ - Route : `/viewReportedProblems` 
+ - Request type : `get`
+ - Request Header : `is handled using the middleWare of authentication session which contains logged user token`
+ 
+ #### Own Courses
+ - Route : `/listCourseTitles` 
+ - Request type : `get`
+ - Request Header : `{courseId: 'mongoose.type.objectId()'}`
+  
+#### View profit 
+ - Route : `/profit` 
+ - Request type : `get`
+ - Request Header : `is handled using the middleWare of authentication session which contains logged user token`
 
+#### View questions on courses 
+ - Route : `/getQuestions` 
+ - Request type : `get`
+ - Request Header : `{courseId :'mongoose.type.objectId()'}`
 
+#### reply for a question 
+- Route : `/addReply` 
+- Request type : `patch`
+- Request Body : 
+ `{
+  questionId: 'mongoose.type.objectId()',
+  reply :'you can use typeScript'
+}
+`
+#### update Subtitles
+- Route : `/updateSubtitle` 
+- Request type : `patch`
+- Request Body : 
+ `{
+  courseId:'mongoose.type.objectId()', subId'mongoose.type.objectId()':, linkDesc:'What is MernStack', linkUrl:'[videoUrl]', allowed:true}`
+
+#### delete Subtitles
+- Route : `/deletSubtitle` 
+- Request type : `delete`
+- Request Body : 
+ `{
+  courseId:'mongoose.type.objectId()', subId:'mongoose.type.objectId()', linkId:'mongoose.type.objectId()}`
 
 ## Contributing
 Anyone who would like to contribute in the project please send me an E-mail on [hossamelfarr@gmail.com](hossamelfarr@gmail.com)
