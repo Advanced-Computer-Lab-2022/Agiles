@@ -27,7 +27,8 @@ LinkedIn Learning, Great Learning and Udacity.
 This project followed the Agile Methodology; meaning it was splited into Sprints, with
 each Sprint lasting a set amount of time and a fully functioning version of the project
 with the specified System Requirements should be submitted and evaluated.
-
+### Motivation
+### Code Styles
 ### Objectives
 - Learn how to properly use the Agile Methodology to plan out a project and develop
 the software.
@@ -35,6 +36,7 @@ the software.
 software.
 - Learn to research and master the use of the MERN Stack.
 - Learn how to work together as a team on GitHub.
+
 
 ## Tools and Frameworks
 ![MERN_STACK](https://miro.medium.com/max/1400/1*FVtCyRdJ6KOr4YswTtwMeA.jpeg)
