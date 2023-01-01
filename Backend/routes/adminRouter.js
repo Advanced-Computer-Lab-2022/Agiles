@@ -33,5 +33,4 @@ adminrouter.post("/logout", logOut);
 adminrouter.post("/signUp", signUp);
 adminrouter.get("/isAuth", isAuthAdmin);
 
-
 module.exports = adminrouter;

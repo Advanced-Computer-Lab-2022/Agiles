@@ -11,7 +11,7 @@ const CreateCourse = () => {
   const [preview, setPreview] = useState("");
   const [imgUrl, setImgUrl] = useState("");
   const [subject, setSubject] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
   const [subtitles, setSubtitles] = useState([{ subtitle: "", time: 0 }]);
   const [free, setFree] = useState(false);
