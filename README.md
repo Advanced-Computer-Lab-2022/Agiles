@@ -1,5 +1,4 @@
  ![GitHub](https://img.shields.io/github/license/BEPb/README)
- ![example workflow](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
 # Canadian Chamber Of Commerce
 ![landing page](https://user-images.githubusercontent.com/73742471/210173152-6090466b-6efb-4a63-a6bb-782a0c8cab3a.png)
 ## Table of Contents
