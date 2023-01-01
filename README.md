@@ -312,6 +312,8 @@ Our APIs is divided into four APIs :
  - Route : `/viewReportedProblems` 
  - Request type : `get`
  - Request Header : `is handled using the middleWare of authentication session which contains logged user token`
+
+
 #### Own Courses
  - Route : `/listCourseTitles` 
  - Request type : `get`
@@ -351,23 +353,202 @@ Our APIs is divided into four APIs :
   courseId:'mongoose.type.objectId()', subId:'mongoose.type.objectId()', linkId:'mongoose.type.objectId()}`
 ### Trainee Router
 #### Route : (`/individualtrainee`)
+#### Register for a course by using credit/debit card 
+- Route : `/create-checkout-session` 
+- Request type : `post`
+- Request Body : 
+ `{
+  courseId: 'mongoose.type.objectId()',
+}
+`
+#### Register for a course by using wallet
+- Route : `/payWithWallet` 
+- Request type : `post`
+- Request Body : 
+ `{
+  courseId: 'mongoose.type.objectId()',
+}
+`
+#### Request access for a course in case of corporate 
+- Route : `/requestAccess` 
+- Request type : `post`
+- Request Body : 
+ `{
+  courseId: 'mongoose.type.objectId()',
+}
+`
+#### rate course
+- Route : `/setRating` 
+- Request type : `post`
+- Request Body : 
+ `{
+  courseId: 'mongoose.type.objectId()',
+  rating : 5,
+  review : 'wonderfull course'}
+`
+ #### rate instructor
+- Route : `/setRating` 
+- Request type : `post`
+- Request Body : 
+ `{
+  instructor: 'mongoose.type.objectId()',
+  rating : 5,
+  review : 'wonderfull course'}
+`
+ #### delet  instructor rating
+- Route : `/setRating` 
+- Request type : `post`
+- Request Body : 
+ `{
+  instructorId: 'mongoose.type.objectId()'}`
+
+
+#### Report problem
+- Route : `/reportProblem` 
+- Request type : `post`
+- Request Body : 
+ `{
+  reportType: 'technical',
+  problemTitle 'Video Quality',
+  courseId: 'mongoose.type.objectId()',
+  description: 'The video quality is very low'
+}
+`
+#### Request refund 
+ - Route : `/requestRefund` 
+ - Request type : `post`
+ - Request body : `{courseId : 'mongoose.type.objectId()',reason : 'I did not find the course intersting'}`
+
+#### write notes 
+ - Route : `/addNotes` 
+ - Request type : `post`
+ - Request body : `{subId :'mongoose.type.objectId()' , note : "need to install express"}`
+
+#### solve exam 
+ - Route : `/submitExam` 
+ - Request type : `post`
+ - Request body : `{subId :'mongoose.type.objectId()' ,answers :'ArrayOfAnswers(mcq)'}`
+
+
+#### View inprogress courses
+ Route : `/inprogress` 
+- Request type : `get`
+- Request Header : `is handled using the middleWare of authentication session which contains logged user token`
+
+#### View specific inprogress course
+ Route : `/inprogress/:id` 
+- Request type : `get`
+- Request Header : `is handled using the middleWare of authentication session which contains logged user token`
+- Request params : {courseId: 'mongoose.type.objectId()'}
+
+
+#### delete course rating
+- Route : `/deleteCourseRating` 
+- Request type : `delete`
+- Request Body : 
+ `{
+  courseId: 'mongoose.type.objectId()'}`
+ 
+#### viewReportedProblems
+ - Route : `/viewReportedProblems` 
+ - Request type : `get`
+ - Request Header : `is handled using the middleWare of authentication session which contains logged user token`
+
+#### change password 
+ - Route : `/changePassword` 
+ - Request type : `patch`
+ - Request body : `{password :'ahmed$1484' , email : 'ahmed@gmail.com'}`
+
+
+#### forogot password 
+ - Route : `/forgotpassword` 
+ - Request type : `patch`
+ - Request body : `{email : 'ahmed@gmail.com'}`
+
+
+
 
 ### Admin Router
-
 #### Route : (`/admin`)
 
+#### Add Admin
+- Route : `/addAdmin`
+- Request type : `post`
+- Request Body : 
+ `
+  {
+  username: 'Omar',
+  password: '123'
+ }
+`
+
+#### Add Corporate Trainee
+- Route : `/addCorporate`
+- Request type : `post`
+- Request Body : 
+ `
+  {
+      firstname: "yehia",
+      lastname: "eldib",
+      username: "eldib",
+      password: "pass%#$@123#4",
+      email: "yehia@gmail.com",
+      gender: "male"
+ }
+`
+#### Add Instructor
+- Route : `/addInstructor`
+- Request type : `post`
+- Request Body : 
+ `
+  {
+      firstname: "yehia",
+      lastname: "eldib",
+      username: "eldib",
+      password: "pass%#$@123#4",
+      email: "yehia@gmail.com",
+      gender: "male"
+ }
+`
+#### View Report
+- Route : `/viewReports`
+- Request type : `get`
+
+#### View enroll requests
+- Route : `/accessRequests`
+- Request type : `get`
+
+
+#### View refund requests
+- Route : `/refundRequests`
+- Request type : `get`
+
+#### Add promotions
+- Route : `/addPromotionMulti`
+- Request type : `post`
+- Request Body : 
+ `
+  {
+     idArr: ['6361b2deef7816eb1d9eb915','6361b484c27988acb69dfb50'],
+     promo: "25",
+     enddate: "20/1/2023"
+ }
+`
+
 ### Authentication Router
-- Route : `/login` 
+#### Route : (`/login`)
+
 - Request type : `post`
 - Request Body : 
  `{username :'ahned' , password : 'Ahmed@123'}`
 
-- Route : `/signUp` 
+#### Route : (`/signUp`)
+
 - Request type : `post`
 - Request Body : 
  `{username :'ahned' , password : 'Ahmed@123' , email : 'ahmed@gmail.com' , firstname:'ahmed' , lastname:'mohmaed'}`
   
-- Route : `/logOut` 
+#### Route : (`/logOut`)
 - Request type : `post`
 -Request header : `is handled using the middleWare of authentication session which contains logged user token`
 
