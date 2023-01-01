@@ -22,6 +22,7 @@ function Report(props) {
         });
       }}
     >
+      <Accordion>
       <Accordion.Header>
         <div style={{ display:"inline-flex",   width: "80%" }}>
           <div style={{ width: "20%", display: "flex", justifyContent:"center" }}>{el.username} </div>
@@ -42,15 +43,27 @@ function Report(props) {
       </Accordion.Header>
       <Accordion.Body>
         <div>Description : {el.description}</div>
-        {el.followUp.length == 0 ? (
+        {el.followUp.length === 0 ? (
           ""
         ) : (
           <div>
-            Follow ups :{" "}
-            {el.followUp.map((followup, index) => (
-              <div>{index + 1 + ": " + followup}</div>
-            ))}
-          </div>
+              <Accordion>
+              <Accordion.Header > Follow Ups</Accordion.Header>
+              <br></br>
+              <Accordion.Body >
+                {el.followUp.map((follow, indexx) => {
+                  return (
+                    <>
+                      <span>
+                        {indexx + 1}. {follow}
+                      </span>
+                      <br></br>
+                    </>
+                  );
+                })}
+              </Accordion.Body>
+              </Accordion>
+            </div>
         )}
 
         {status == "pending" ? (
@@ -70,6 +83,7 @@ function Report(props) {
           ""
         )}
       </Accordion.Body>
+    </Accordion>
     </Accordion.Item>
   );
 }
