@@ -82,6 +82,7 @@ const setExam = async (req, res) => {
   });
 
   try {
+    const updateItems = await Course.updateOne({_id: courseId}, { $inc: { numberOfItems: 1 }});
     const exam = await Exam.create(newExam);
     res.status(200).json(exam);
   } catch (error) {
