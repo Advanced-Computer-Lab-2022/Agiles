@@ -250,6 +250,25 @@ We have four main users in our website:
 
 ## API References
 Our APIs is divided into four APIs :
+### Guest Router
+#### Route : (`/course`)
+
+#### GET Courses
+ - Route : `/listCourses` 
+ - Request type : `get`
+#### GET Specefic course
+ - Route : `/listCourses/:id` 
+ - Request type : `get`
+ - Request Header : {`id:'courseId`}
+#### GET most popular courses
+ - Route : `/mostpopular` 
+ - Request type : `get`
+### Search for a course 
+ - Route : `/listCourses/search` 
+ - Request type : `get`
+ - Request query : {`search:'search fields`}
+
+
 ### Instructor Router
 #### Route : (`/instructor`)
 #### Create Course
