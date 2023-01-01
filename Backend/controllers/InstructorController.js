@@ -151,12 +151,12 @@ const uploadSubLink = async (req, res) => {
       { _id: courseId, "subtitles._id": subId },
       {
         $push: { "subtitles.$.link": data._id },
-        $inc: { numberOfItems: 1 },
         $inc: { "subtitles.$.time": duration },
         $inc: { totalHoursOfCourse: duration },
       },
       { new: true }
     );
+    const updateItems = await Course.updateOne({_id: courseId}, { $inc: { numberOfItems: 1 }});
     res.status(200).json(dataFinal);
   } catch (err) {
     res.status(500).json({ msg: "can't update links" });

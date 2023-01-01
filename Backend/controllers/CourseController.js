@@ -83,11 +83,6 @@ const setExam = async (req, res) => {
 
   try {
     const exam = await Exam.create(newExam);
-    const dataFinal = await Course.updateOne(
-      { _id: courseId },
-      { $inc: { numberOfItems: 1 } },
-      { new: true }
-    );
     res.status(200).json(exam);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -97,12 +92,7 @@ const setExam = async (req, res) => {
 //create final exam for the course
 const setFinalExam = async (req, res) => {
   const { courseId, questions } = req.body;
-  const dataFinal = await Course.updateOne(
-    { _id: courseId },
-    { $inc: { numberOfItems: 1 } },
-    { new: true }
-  );
-  const newExam = new FinalExam({
+   const newExam = new FinalExam({
     courseId,
     questions: questions,
   });

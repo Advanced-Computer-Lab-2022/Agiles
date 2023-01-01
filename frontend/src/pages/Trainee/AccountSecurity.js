@@ -177,7 +177,7 @@ const AccountSecurity = () => {
                     onChange={(e) => setEmail(e.target.value)}
                   ></input>
                   <Button
-                    style={{ backgroundColor: "#a00407", border: "none" }}
+                    style={{ border: "none" }}
                     variant="dark"
                     type="submit"
                   >
@@ -209,7 +209,7 @@ const AccountSecurity = () => {
                     onChange={(e) => setNewPassConfirm(e.target.value)}
                   ></input>
                   <Button
-                    style={{ backgroundColor: "#a00407", border: "none" }}
+                    style={{ border: "none" }}
                     variant="dark"
                     type="submit"
                   >

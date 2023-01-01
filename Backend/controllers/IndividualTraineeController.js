@@ -112,7 +112,7 @@ const InprogressCoursebyId = async (req, res) => {
   return res.status(200).json(result);
 };
 
-const getAllItemsCourse = async (req, res) => {
+const  getAllItemsCourse = async (req, res) => {
   const courseId = req.body.courseId;
   let numberOfItems = 0;
   try {

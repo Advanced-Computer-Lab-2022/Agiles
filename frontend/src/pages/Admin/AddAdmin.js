@@ -36,6 +36,23 @@ const AddAdmin = (props) => {
   return (
     <div className="new">
       <div className="newContainer">
+      <div
+          className="alertContainer"
+          style={{
+            margin: "15px",
+            width: "50%",
+            minWidth: "500px",
+            borderRadius: "25px",
+          }}
+        >
+          {flag && (
+            <Alert severity={alert} style={{ fontSize: "20px" }}>
+              {alert == "success"
+                ? "admin added successfully"
+                : "username already taken"}
+            </Alert>
+          )}
+        </div>
         <div className="top">
           <h1 className="h1Class">Add New Admin</h1>
         </div>
@@ -89,23 +106,7 @@ const AddAdmin = (props) => {
             </form>
           </div>
         </div>
-        <div
-          className="alertContainer"
-          style={{
-            margin: "15px",
-            width: "50%",
-            minWidth: "500px",
-            borderRadius: "25px",
-          }}
-        >
-          {flag && (
-            <Alert severity={alert} style={{ fontSize: "20px" }}>
-              {alert == "success"
-                ? "admin added successfully"
-                : "username already taken"}
-            </Alert>
-          )}
-        </div>
+       
       </div>
     </div>
   );

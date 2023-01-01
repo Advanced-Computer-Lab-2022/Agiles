@@ -5,6 +5,10 @@ const Instructor = require("..//models/Instructor");
 const Course = require("../models/Course");
 const Report = require("../models/Report");
 const CourseRefundRequest = require("../models/CourseRefundRequest");
+const FinalExamResult = require("../models/FinalExamResult");
+const ExamResult = require("../models/ExamResult");
+const TraineeQuestion = require("../models/TraineeQuestion");
+const TraineeCourse = require("../models/TraineeCourse");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const {
@@ -309,6 +313,10 @@ const acceptRefund = async (req, res) => {
       { traineeId: traineeId, courseId: courseId },
       { status: "approved" }
     );
+    await TraineeCourse.deleteMany({ traineeId: traineeId, courseId: courseId });
+    await FinalExamResult.deleteMany({ traineeId: traineeId, courseId: courseId });
+    await ExamResult.deleteMany({ traineeId: traineeId, courseId: courseId });
+    await TraineeQuestion.deleteMany({ traineeId: traineeId, courseId: courseId });
     return res.status(200).json("refund done");
   } catch (error) {
     return res.status(406).json(error);
