@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 
 function Reply({ reply, instructor }) {
   let str = reply.isInstructor ? "Instructor:" : "You:";
@@ -8,12 +9,7 @@ function Reply({ reply, instructor }) {
   return (
     <div>
       <div>
-        <div>{str}</div>
-        <div>
-          {" "}
-          {"\t"}
-          <span style={{ paddingLeft: "10px" }}>{reply.reply}</span>
-        </div>
+        <span style={{ paddingLeft: "20px", fontWeight: "500" }} >{str} {reply.reply} </span>
       </div>
     </div>
   );

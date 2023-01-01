@@ -73,6 +73,16 @@ const MyCourseInst = ({
             Set Final Exam
           </li>
           <li
+            id="/AnswerQuestions"
+            className={
+              name == "answerquestions" ? regStyles["leftsection-liclicked"] : ""
+            }
+            onClick={name === "answerquestions" ? () => {} : handleClick}
+          >
+            {" "}
+            Questions{" "}
+          </li>
+          <li
             id="/reportProblem"
             className={
               name == "supportCenter" ? regStyles["leftsection-liclicked"] : ""
@@ -81,16 +91,7 @@ const MyCourseInst = ({
           >
             Support Center
           </li>
-          <li
-            id="/AnswerQuestions"
-            className={
-              name == "Questions" ? regStyles["leftsection-liclicked"] : ""
-            }
-            onClick={name === "AnswerQuestions" ? () => {} : handleClick}
-          >
-            {" "}
-            Questions{" "}
-          </li>
+          
         </ul>
       </div>
     </section>

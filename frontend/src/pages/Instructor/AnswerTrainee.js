@@ -52,11 +52,12 @@ function AnswerTrainee() {
           course_title={location.state.course_title}
           course_inst={location.state.course_inst}
           progress={location.state.progress}
-          name={"AnswerQuestions"}
+          name="answerquestions"
           idx={index}
         />
       </div>
       <div className={style["right"]}>
+        <label className={style["mainlabel"]}>Students' Questions</label>
         <div className={style["mainRight"]}>
           {questions.map((el, index) => {
             return (
@@ -73,6 +74,7 @@ function AnswerTrainee() {
               />
             );
           })}
+          {questions.length===0 && <div style={{fontWeight :'bold' }}>No questions to answer</div> }
         </div>
       </div>
     </div>

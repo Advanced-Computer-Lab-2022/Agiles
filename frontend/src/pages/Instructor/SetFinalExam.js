@@ -13,8 +13,8 @@ const SetFinalExam = () => {
       display: "flex",
       flexDirection: "column",
       width: "50%",
-      margin: "0 auto",
-      padding: "20px",
+      margin :"20px auto",
+      padding: "5px 15px 5px 15px",
       border: "1px solid #ccc",
       borderRadius: "5px",
     },
@@ -25,7 +25,7 @@ const SetFinalExam = () => {
     },
     input: {
       width: "100%",
-      padding: "12px",
+      padding: "10px",
       border: "1px solid #ccc",
       borderRadius: "4px",
       boxSizing: "border-box",
@@ -34,9 +34,9 @@ const SetFinalExam = () => {
     button: {
       backgroundColor: "#a00407",
       color: "white",
-      padding: "12px 20px",
       border: "none",
-      borderRadius: "4px",
+      borderRadius:'0',
+      width:'180px',
       cursor: "pointer",
       float: "right",
     },
@@ -116,18 +116,17 @@ const SetFinalExam = () => {
   };
 
   return (
-    <div>
       <Form onSubmit={handleSubmit} style={styles.form}>
-        <h1
+        <h4
           style={{
             color: "#a00407",
             display: "flex",
+            fontWeight:'bold',
             justifyContent: "center",
           }}
         >
-          Add Final Exam
-        </h1>
-
+         Final Exam
+        </h4>
         {questions.map((element, index) => (
           <div>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -228,10 +227,10 @@ const SetFinalExam = () => {
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <span className="button-section">
             <Button
-              variant="primary"
+              variant="dark"
               className="button add"
               type="button"
-              style={{ backgroundColor: "#a00407", border: "none" }}
+              style={{  border: "1px solid black",borderRadius:'0' }}
               onClick={() => addFormFields()}
             >
               Add Question
@@ -239,12 +238,11 @@ const SetFinalExam = () => {
           </span>
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Button variant="primary" type="submit" style={styles.button}>
+          <Button  type="submit" style={styles.button}>
             create Exam{" "}
           </Button>
         </Form.Group>
       </Form>
-    </div>
   );
 };
 export default SetFinalExam;

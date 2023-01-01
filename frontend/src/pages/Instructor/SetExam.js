@@ -15,8 +15,8 @@ const SetExam = () => {
       display: "flex",
       flexDirection: "column",
       width: "50%",
-      margin: "0 auto",
-      padding: "20px",
+      margin :"20px auto",
+      padding: "5px 15px 5px 15px",
       border: "1px solid #ccc",
       borderRadius: "5px",
     },
@@ -27,7 +27,7 @@ const SetExam = () => {
     },
     input: {
       width: "100%",
-      padding: "12px",
+      padding: "10px",
       border: "1px solid #ccc",
       borderRadius: "4px",
       boxSizing: "border-box",
@@ -36,13 +36,12 @@ const SetExam = () => {
     button: {
       backgroundColor: "#a00407",
       color: "white",
-      padding: "12px 20px",
       border: "none",
-      borderRadius: "4px",
+      width:'180px',
+      borderRadius:'0',
       cursor: "pointer",
       float: "right",
-    },
-  };
+    }}
 
   const [questions, setQuestions] = useState([
     {
@@ -119,41 +118,19 @@ const SetExam = () => {
     newFormValues[i][e.target.name] = e.target.value;
     setQuestions(newFormValues);
   };
-  /*
- <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Form.Label>Subtitle ID</Form.Label>
-          <Form.Control
-            required
-            placeholder="write the subtitle ID"
-            type="text"
-            name="subtitleId"
-            onChange={(e) => setSubtitleId(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Form.Label>Course ID</Form.Label>
-          <Form.Control
-            required
-            placeholder="write the course ID"
-            type="text"
-            name="courseId"
-            onChange={(e) => setCourseId(e.target.value)}
-          />
-        </Form.Group>
-*/
-
   return (
     <div>
       <Form onSubmit={handleSubmit} style={styles.form}>
-        <h1
+        <h4
           style={{
             color: "#a00407",
             display: "flex",
+            fontWeight:'bold',
             justifyContent: "center",
           }}
         >
-          Add Quiz
-        </h1>
+        quiz
+        </h4>
 
         {questions.map((element, index) => (
           <div>
@@ -242,6 +219,7 @@ const SetExam = () => {
               {index ? (
                 <Button
                   variant="danger"
+                  style={{  border: "1px solid black",borderRadius:'0' ,width:'180px'}}
                   type="button"
                   className="button remove"
                   onClick={() => removeFormFields(index)}
@@ -255,10 +233,10 @@ const SetExam = () => {
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <span className="button-section">
             <Button
-              variant="primary"
-              className="button add"
-              type="button"
-              style={{ backgroundColor: "#a00407", border: "none" }}
+               variant="dark"
+               className="button add"
+               type="button"
+               style={{  border: "1px solid black",borderRadius:'0' ,width:'180px' }}
               onClick={() => addFormFields()}
             >
               Add Question
