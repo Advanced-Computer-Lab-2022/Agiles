@@ -1,5 +1,5 @@
 # Canadian Chamber Of Commerce
-![]
+![landing page](https://user-images.githubusercontent.com/73742471/210173152-6090466b-6efb-4a63-a6bb-782a0c8cab3a.png)
 ## Table of Contents
 - [Project Description](#project-description)
 - [Motivation](#motivation)
