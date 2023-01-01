@@ -18,6 +18,7 @@
   * [Instructor router](#instructor-router)
   * [Trainee router](#trainee-router)
   * [Admin router](#admin-router)
+  * [Authentication router](#authentication-router)
 - [Contributing](#contributing)
 - [Credits](#credits)
 - [Licence](#Licence)
@@ -349,8 +350,26 @@ Our APIs is divided into four APIs :
  `{
   courseId:'mongoose.type.objectId()', subId:'mongoose.type.objectId()', linkId:'mongoose.type.objectId()}`
 ### Trainee Router
+#### Route : (`/individualtrainee`)
+
 ### Admin Router
+
+#### Route : (`/admin`)
+
 ### Authentication Router
+- Route : `/login` 
+- Request type : `post`
+- Request Body : 
+ `{username :'ahned' , password : 'Ahmed@123'}`
+
+- Route : `/signUp` 
+- Request type : `post`
+- Request Body : 
+ `{username :'ahned' , password : 'Ahmed@123' , email : 'ahmed@gmail.com' , firstname:'ahmed' , lastname:'mohmaed'}`
+  
+- Route : `/logOut` 
+- Request type : `post`
+-Request header : `is handled using the middleWare of authentication session which contains logged user token`
 
 
 
