@@ -2,6 +2,8 @@
 ![]
 ## Table of Contents
 - [Project Description](#project-description)
+- [Motivation](#motivation)
+- [Code Styles](#code-styles)
 - [Tools and Frameworks](#tools-and-frameworks)
 - [Features](#features)
   * [Admin Functionalities](#administrator)
@@ -28,8 +30,7 @@ LinkedIn Learning, Great Learning and Udacity.
 This project followed the Agile Methodology; meaning it was splited into Sprints, with
 each Sprint lasting a set amount of time and a fully functioning version of the project
 with the specified System Requirements should be submitted and evaluated.
-### Motivation
-### Code Styles
+
 ### Objectives
 - Learn how to properly use the Agile Methodology to plan out a project and develop
 the software.
@@ -38,6 +39,9 @@ software.
 - Learn to research and master the use of the MERN Stack.
 - Learn how to work together as a team on GitHub.
 
+## Motivation
+## Code Styles
+The project follows the  [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)design pattern ,MVC is a software architectural pattern commonly used for developing user interfaces that divide the related program logic into three interconnected elements. This is done to separate internal representations of information from the ways information is presented to and accepted from the user , So the Files in the backend was divided into the M (models) where the schema of the models exist which represent the core of the database , the C (controller) where the functions needed for the routes exists and the V (views) the view in MERN stack is represented by the react frontend server. Also the routes in our project was abstracted from the controller function as shown in [API References](#api-references)
 
 ## Tools and Frameworks
 ![MERN_STACK](https://miro.medium.com/max/1400/1*FVtCyRdJ6KOr4YswTtwMeA.jpeg)
