@@ -42,7 +42,7 @@ const Login = () => {
       const res = await axios.post(LOGIN_URL, user, config);
       localStorage.setItem("username", res.data.username);
       if (cookies.get("status") == 3) {
-        navigate("/admin");
+        navigate("/admin/dashboard");
       } else if (cookies.get("status") == 1) {
         if (res.data.firstLogIn) {
           setShow(true);

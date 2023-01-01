@@ -3,7 +3,6 @@ const courserouter = express.Router();
 const {
   addCoursePromotion,
   getCourses,
-  filterCourses,
   courseSearch,
   getCourseById,
   getLink,

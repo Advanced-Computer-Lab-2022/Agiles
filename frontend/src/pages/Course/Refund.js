@@ -91,6 +91,7 @@ const Refund = () => {
     }, []);
 
   const handleSubmit = async (e) => {
+    e.target.reset();
     e.preventDefault();
     try {
         console.log(location.state.course_id);
@@ -116,15 +117,24 @@ const Refund = () => {
           icon: "success",
           title: "your request has been sent",
         });
-    }
+    }     
     else if(res.data === "already requested"){
-        Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "You have already requested for refund",
-            showConfirmButton: false,
-            timer: 1500,
-          });
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
+      Toast.fire({
+        icon: "error",
+        title: "You have already requested for refund",
+      });
     }
     } catch (err) {
       console.log(err);

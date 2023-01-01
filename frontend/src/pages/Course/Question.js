@@ -30,10 +30,10 @@ function Question({
   return (
     <div style={{ margin: "15px 0" }}>
       <div>
-        <h3>
+        <h5>
           Q{length - index}: {el.question}
-        </h3>
-        <div style={{ color: "rgb(170,170,170)" }}>
+        </h5>
+        <div style={{ color: "rgb(170,170,170)" ,marginBottom:'10px' }}>
           {studentName
             ? "Asked by: " + studentName
             : "Answered by: " + instructorName}
@@ -47,24 +47,30 @@ function Question({
       <div>
         <form>
           <textarea
-            style={{ margin: "15px 0" }}
+            style={{ margin: "15px 0",width:"60%" }}
             class="form-control"
             id="exampleFormControlTextarea1"
             rows="3"
             type="txt"
-            placeholder="Reply"
+            placeholder="write your reply here..."
             value={newReply}
             onChange={(e) => setNewReply(e.target.value)}
             required
           ></textarea>
-          <div>
+          <div style={{display:"flex" ,width:"60%"}}>
             <Button
-              style={{ marginTop: "15px" }}
+              style={{
+                marginTop: "10px",
+                borderRadius: 0,
+                marginLeft: "auto",
+                backgroundColor: "#a00407",
+                border: "none",
+              }}
               className={style["button"]}
               type="reply"
               onClick={(e) => handleSubmitReply(e, el._id)}
             >
-              Submit
+              send reply
             </Button>
           </div>
         </form>

@@ -230,7 +230,7 @@ const PaymentMethods = () => {
                   onChange={validateDate}
                 ></input>
                 <Button
-                  style={{ backgroundColor: "#a00407", border: "none" }}
+                  style={{  border: "none" }}
                   variant="dark"
                   type="submit"
                 >

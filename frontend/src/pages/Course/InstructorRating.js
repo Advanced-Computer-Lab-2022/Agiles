@@ -8,9 +8,10 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 import Button from "react-bootstrap/Button";
 import Swal from "sweetalert2";
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
 
 const cookies = new Cookies();
-
 const labels = {
   0.5: "Useless",
   1: "Useless+",
@@ -34,7 +35,22 @@ function InstructorRating({ id, instRating, instReview, courseId }) {
   const [hover, setHover] = React.useState(-1);
   const [review, setReview] = useState(instReview);
   const [view, setView] = useState(instRating != 0);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
   const delRating = async () => {
+    setOpen(false);
     try {
       const res = await axios.delete("/individualtrainee/deleteRating", {
         params: { instId: id },
@@ -161,11 +177,33 @@ function InstructorRating({ id, instRating, instReview, courseId }) {
           save
         </Button>
       </form>
+      <Modal open={open} onClose={handleClose}  >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+          Delete Your Review?
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+          Are you sure you want to delete your review?
+          </Typography>
+          <Button onClick={handleClose} variant="light" style={{
+              borderRadius: 0,
+              border: "none",
+              marginTop: "0.5rem",
+              marginRight: "0.5rem",
+            }}>cancel</Button>
+          <Button variant="dark"  style={{
+              borderRadius: 0,
+              border: "none",
+              marginTop: "0.5rem",
+            }} onClick={delRating}>Yes,delete my review</Button>
+
+        </Box>
+      </Modal>
       <div>
         {view && (
           <Button
             variant="dark"
-            onClick={delRating}
+            onClick={handleOpen}
             type="submit"
             style={{
               backgroundColor: "darkRed",

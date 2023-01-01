@@ -63,7 +63,7 @@ const Wallet = () => {
             <TableCell component="th" scope="row">
              {monthNames[row.month]}
             </TableCell>
-            <TableCell align="right" style={{color:'green'}}>{`${window.sessionStorage.getItem("currency")?window.sessionStorage.getItem("currency").toUpperCase():'USD'} ${window.sessionStorage.getItem("factor")?(window.sessionStorage.getItem("factor")*row.amount).toFixed(2):row.amount}`}</TableCell>
+            <TableCell align="right" style={{color:'green'}}>{`${window.sessionStorage.getItem("currency")?window.sessionStorage.getItem("currency").toUpperCase():'USD'} ${window.sessionStorage.getItem("factor")?(window.sessionStorage.getItem("factor")*row.amount).toFixed(2):row.amount.toFixed(2)}`}</TableCell>
           </TableRow>
          ))}
         </TableBody>

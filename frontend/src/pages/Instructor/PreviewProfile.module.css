@@ -4,6 +4,18 @@
   grid-template-columns: 60% 40%;
   margin: auto;
 }
+.mainReview{
+  display: flex;
+  flex-direction: column;
+  margin-top: 3%;
+  margin-left: 10%;
+}
+
+.mainReview h1{
+  font-family: "Abril Fatface";
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
 .left {
   display: inline-block;
   margin-left: 30%;
@@ -30,9 +42,11 @@
 .left-top {
   margin-top: 1rem;
   margin-bottom: 1rem;
+  margin-left: 2rem;
   display: flex;
   gap: 2rem;
 }
+
 .right {
   display: inline-block;
   margin-left: 10%;

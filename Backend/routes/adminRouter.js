@@ -19,15 +19,14 @@ const { verifyAdminJWT } = require("../middleware/authMiddleware");
 const { isAuthAdmin } = require("../controllers/authContext");
 adminrouter.post("/addAdmin", verifyAdminJWT, createAdmin);
 adminrouter.post("/addInstructor", verifyAdminJWT, createInstructor);
-adminrouter.post("/addCorporate", createCorporate);
-adminrouter.get("/accessRequests", accessRequests);
-adminrouter.post("/grantAccess", grantAccess);
-adminrouter.post("/acceptRefund", acceptRefund);
-adminrouter.get("/getReports", getReports);
-adminrouter.get("/refundRequests", refundRequests);
+adminrouter.post("/addCorporate",verifyAdminJWT, createCorporate);
+adminrouter.get("/accessRequests",verifyAdminJWT, accessRequests);
+adminrouter.post("/grantAccess",verifyAdminJWT, grantAccess);
+adminrouter.post("/acceptRefund",verifyAdminJWT, acceptRefund);
+adminrouter.get("/getReports",verifyAdminJWT, getReports);
+adminrouter.get("/refundRequests",verifyAdminJWT, refundRequests);
 adminrouter.post("/viewReport",verifyAdminJWT, viewReport);
 adminrouter.post("/resolveReport",verifyAdminJWT, resolveReport);
-
 ///Authentication/autherization routes
 adminrouter.post("/login", logIn);
 adminrouter.post("/logout", logOut);

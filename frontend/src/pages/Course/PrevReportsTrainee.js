@@ -1,6 +1,5 @@
 import axios from "axios";
-import { useEffect, useState, useRef } from "react";
-import Card from "react-bootstrap/Card";
+import { useEffect, useState} from "react";
 import style from "./PrevReports.module.css";
 import React from "react";
 import Popup from "reactjs-popup";
@@ -10,10 +9,12 @@ import Swal from "sweetalert2";
 import Accordion from "react-bootstrap/Accordion";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import Badge from "react-bootstrap/Badge";
-
+import LoadingScreen from "react-loading-screen";
+import spinner from "../../static/download.gif";
 const PrevReportsTrainee = () => {
   const [reports, setReports] = useState([]);
   const [followUp, setFollowUp] = useState("");
+  const [isloading, setIsLoading] = useState(false);
   const [reportId, setReportId] = useState("");
   const [followUpArr, setFollowUpArr] = useState([]);
   const [flag, setFlag] = useState(false);
@@ -65,26 +66,22 @@ const PrevReportsTrainee = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       const res = await fetch("/individualtrainee/viewReportedProblems");
       let jsondata = await res.json();
       if (res.ok) {
         setReports(jsondata);
       }
+      setIsLoading(false);
     };
     fetchData();
   }, [flag]);
   return (
-    <>
-      <h1
-        style={{
-          color: "rgb(160, 4, 7)",
-          margin: "20px auto",
-          
-        }}
-      >
-        Reported problems
-      </h1>
-      <div style={{ width: "75%", marginLeft: "5%" }}>
+    <div className={style["reportedProblem"]}>
+      {isloading && <LoadingScreen loading={true} logoSrc={spinner} />}
+      <h1> Reported problems</h1>
+      <hr style={{ width: "75%"}} ></hr>
+      <div style={{ width: "75%", marginLeft: "2%" }}>
         <Accordion defaultActiveKey="0">
           {reports.map((report, index) => {
             return (
@@ -167,7 +164,7 @@ const PrevReportsTrainee = () => {
                                   backgroundColor: "#a00407",
                                   color: "white",
                                   border: "none",
-                                  padding: "5px",
+                                  padding: "8px",
                                   marginTop: "5px",
                                 }}
                               >
@@ -218,7 +215,7 @@ const PrevReportsTrainee = () => {
           })}
         </Accordion>
       </div>
-    </>
+    </div>
   );
 };
 export default PrevReportsTrainee;

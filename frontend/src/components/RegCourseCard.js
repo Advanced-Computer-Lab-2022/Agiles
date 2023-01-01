@@ -18,9 +18,15 @@ const RegCourseCard = (props) => {
   const [show, setShow] = useState(false);
   const [review, setReview] = useState(props.courseReview);
   const [editReview,setEditReviw]=useState(false);
+  const [modalConfirm,setModalConfirm]=useState(false);
   const [courseRating,setCourseRating] = useState(props.courseRating);
   const [oldReview, setOldReview] = useState(props.courseReview);
   const [value, setValue] = useState(courseRating);
+  const handleCloseConfrim = () => setModalConfirm(false);
+  const handleShowConfrim = () => {
+    setShow(false);
+    setModalConfirm(true);
+  }
   const handleClose = () => {
     setShow(false);
     setEditReviw(false)
@@ -48,6 +54,7 @@ const RegCourseCard = (props) => {
       const res =await axios.delete("/individualtrainee/deleteCourseRating",{params:{courseId:id}});
       setCourseRating(0);
       handleClose();
+      handleCloseConfrim();
       setOldReview("");
       setReview("");
       setValue(0);
@@ -65,7 +72,7 @@ const RegCourseCard = (props) => {
       
       Toast.fire({
         icon: 'success',
-        title: 'delete successfully'
+        title: 'deleted successfully'
       })
     }
     catch(err){
@@ -133,7 +140,7 @@ const RegCourseCard = (props) => {
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={setRating}>
+          <Button variant="dark" onClick={setRating}>
             save
           </Button>
         </Modal.Footer>
@@ -148,10 +155,10 @@ const RegCourseCard = (props) => {
           <p style={{fontWeight:'bold'}}>{oldReview==""?"There are no written comments for your review.":oldReview}</p>
         </Modal.Body>
         <Modal.Footer>
-        {value!=0&& <Button variant="danger" onClick={deleteRating}>
+        {value!=0&& <Button variant="light" onClick={handleShowConfrim}>
             delete
           </Button>}
-          <Button variant="primary" onClick={()=>{
+          <Button variant="dark" onClick={()=>{
             setEditReviw(true)
             setShow(false)
           }}>
@@ -160,6 +167,22 @@ const RegCourseCard = (props) => {
         </Modal.Footer>
       </Modal>
       {/* //----------- */}
+      <Modal show={modalConfirm} onHide={handleCloseConfrim}>
+        <Modal.Header closeButton>
+          <Modal.Title> Delete Your Review?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+         <p style={{fontWeight:'bold'}}>Are you sure you want to delete your review?</p>
+        </Modal.Body>
+        <Modal.Footer>
+        <Button variant="light" onClick={handleCloseConfrim}>
+            cancel
+          </Button>
+          <Button variant="dark" onClick={deleteRating}>
+           Yes,delete my review
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <button onClick={handelClick}>
         <div className={RegCourseCardStyles["regcard__image"]}>
           <img src={props.data.imgUrl} alt="course" onClick={handelClick} />

@@ -112,7 +112,7 @@ const InprogressCoursebyId = async (req, res) => {
   return res.status(200).json(result);
 };
 
-const getAllItemsCourse = async (req, res) => {
+const  getAllItemsCourse = async (req, res) => {
   const courseId = req.body.courseId;
   let numberOfItems = 0;
   try {
@@ -168,7 +168,6 @@ const updateLinkProgress = async (req, res) => {
     if (linkprogress) {
       if (linkprogress.progress === 1)
         res.status(200).json({ progress: -1, numberOfItems: numberOfItems });
-      console.log(linkprogress);
       return;
     }
 
@@ -877,8 +876,6 @@ const askInstructor = async (req, res) => {
 
 const addReply = async (req, res) => {
   const { questionId, reply } = req.body;
-  console.log(reply);
-  console.log(questionId);
   if (!questionId || !reply) {
     return res.status(500).json("bad request");
   }
@@ -913,14 +910,11 @@ const getQuestions = async (req, res) => {
 };
 const checkAccess = async (req, res) => {
   const { traineeId, courseId } = req["query"];
-  console.log(traineeId);
-  console.log(courseId);
   let approved = await CourseSubscriptionRequest.exists({
     traineeId: traineeId,
     courseId: courseId,
     status: "approved",
   });
-  console.log(approved + "approved");
   if (approved) {
     res.send("request approved").status(200);
   } else {
@@ -929,7 +923,6 @@ const checkAccess = async (req, res) => {
       courseId: courseId,
       status: "pending",
     });
-    console.log(pending + "pending");
     if (pending) {
       res.send("pending Access").status(200);
     } else {
@@ -937,7 +930,17 @@ const checkAccess = async (req, res) => {
     }
   }
 };
-
+const checkSumbitted = async(req,res)=>{
+  const studentId = req.user.id;
+  const {courseId,subtitleId} = req.body;
+  const course = await ExamResult.find({courseId:courseId,subtitleId:subtitleId,studentId:studentId});
+  if(course?.length>0){
+    return res.status(200).json({result:true});
+  }
+  else{
+    return res.status(200).json({result:false});
+  }
+}
 module.exports = {
   checkAccess,
   getQuestions,
@@ -974,4 +977,5 @@ module.exports = {
   getTraineeProgress,
   getTraineeExams,
   sendCertificate,
+  checkSumbitted
 };

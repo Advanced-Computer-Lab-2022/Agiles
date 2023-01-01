@@ -5,7 +5,6 @@ import Alert from "@mui/material/Alert";
 
 const AddAdmin = (props) => {
   const [username, setUsername] = useState("");
-  const [confirm, setConfirm] = useState("");
 
   const [password, setPassword] = useState("");
   const [alert, setAlert] = useState("");
@@ -37,6 +36,23 @@ const AddAdmin = (props) => {
   return (
     <div className="new">
       <div className="newContainer">
+      <div
+          className="alertContainer"
+          style={{
+            margin: "15px",
+            width: "50%",
+            minWidth: "500px",
+            borderRadius: "25px",
+          }}
+        >
+          {flag && (
+            <Alert severity={alert} style={{ fontSize: "20px" }}>
+              {alert == "success"
+                ? "admin added successfully"
+                : "username already taken"}
+            </Alert>
+          )}
+        </div>
         <div className="top">
           <h1 className="h1Class">Add New Admin</h1>
         </div>
@@ -70,7 +86,7 @@ const AddAdmin = (props) => {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-                <div className="formInputAdmin">
+                {/* <div className="formInputAdmin">
                   <label className="labelClass">
                     Confirm Password <span className="required">*</span>
                   </label>
@@ -82,31 +98,15 @@ const AddAdmin = (props) => {
                     className="inputClass"
                     onChange={(e) => setConfirm(e.target.value)}
                   />
-                </div>
+                </div> */}
               </div>
               <div className="buttonContAdmin">
-                <button className="buttonClass">Send</button>
+                <button className="buttonClass">Sumbit</button>
               </div>
             </form>
           </div>
         </div>
-        <div
-          className="alertContainer"
-          style={{
-            margin: "15px",
-            width: "50%",
-            minWidth: "500px",
-            borderRadius: "25px",
-          }}
-        >
-          {flag && (
-            <Alert severity={alert} style={{ fontSize: "20px" }}>
-              {alert == "success"
-                ? "admin added successfully"
-                : "username already taken"}
-            </Alert>
-          )}
-        </div>
+       
       </div>
     </div>
   );

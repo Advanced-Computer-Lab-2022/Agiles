@@ -77,8 +77,9 @@ function AskInstructor() {
           idx={index}
         />
       </div>
-      <div className={style["right"]}>
-        <h2> New Question</h2>
+      <div className={style["mainRight"]}>
+      <label className={style["mainlabel"]}>Ask Instructor</label>
+        <h5> what is your question ?</h5>
         <div style={{ marginBottom: "25px", maxWidth: "1200px", width: "75%" }}>
           <form>
             <textarea
@@ -86,14 +87,14 @@ function AskInstructor() {
               id="exampleFormControlTextarea1"
               rows="3"
               type="txt"
-              placeholder="ask a new question"
+              placeholder="write your question here..."
               onChange={(e) => setQuestion(e.target.value)}
               value={question}
               required
             ></textarea>
-            <div>
+            <div style={{display:'flex'}}>
               <Button
-                style={{ marginTop: "10px" }}
+                style={{ marginTop: "10px" ,borderRadius:0,marginLeft:'auto',backgroundColor:'#a00407',border:'none'}}
                 className={style["button"]}
                 type="send"
                 onClick={(e) => handleSubmitNewQuestion(e)}
@@ -105,7 +106,6 @@ function AskInstructor() {
         </div>
         <div className={style["mainRight"]}>
           {questions.map((el, index) => {
-            console.log(el.courseId.instructorname);
             return (
               <Question
                 key={el._id}

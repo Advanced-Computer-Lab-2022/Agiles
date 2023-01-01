@@ -1,6 +1,5 @@
 import axios from "axios";
-import { useEffect, useState, useRef } from "react";
-import Card from "react-bootstrap/Card";
+import { useEffect, useState } from "react";
 import style from "./PrevReports.module.css";
 import React from "react";
 import Popup from "reactjs-popup";
@@ -8,11 +7,14 @@ import "reactjs-popup/dist/index.css";
 import Button from "react-bootstrap/Button";
 import Swal from "sweetalert2";
 import Accordion from "react-bootstrap/Accordion";
-import { BsEyeFill ,BsEyeSlashFill  } from 'react-icons/bs';
-
+import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
+import Badge from "react-bootstrap/Badge";
+import LoadingScreen from "react-loading-screen";
+import spinner from "../../static/download.gif";
 const PrevReports = () => {
   const [reports, setReports] = useState([]);
   const [followUp, setFollowUp] = useState("");
+  const [isloading, setIsLoading] = useState(false);
   const [reportId, setReportId] = useState("");
   const [followUpArr, setFollowUpArr] = useState([]);
   const [flag, setFlag] = useState(false);
@@ -46,66 +48,72 @@ const PrevReports = () => {
         timer: 1500,
       });
     }
-        setFlag(!flag);
-
+    setFlag(!flag);
   };
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       const res = await fetch("/instructor/viewReportedProblems");
       let jsondata = await res.json();
       if (res.ok) {
         setReports(jsondata);
       }
+      setIsLoading(false);
     };
     fetchData();
   }, []);
 
   return (
-    <>
-      <h1
-        style={{
-          color: "rgb(160, 4, 7)",
-          margin: "20px auto",
-          textAlign: "center",
-        }}
-      >
-       Reported problems
-      </h1>
-      <div style={{ width: "75%", marginLeft: "10%" }}>
+    <div className={style["reportedProblem"]}>
+      {isloading && <LoadingScreen loading={true} logoSrc={spinner} />}
+      <h1> Reported problems</h1>
+      <hr style={{ width: "75%" }}></hr>
+      <div style={{ width: "75%", marginLeft: "2%" }}>
         <Accordion defaultActiveKey="0">
           {reports.map((report, index) => {
             return (
               <Accordion.Item eventKey={index}>
                 <Accordion.Header>
-                <div
-                    style={{  
-                      fontWeight:'bold'}}
+                  <div
+                    style={{
+                      fontWeight: "bold",
+                    }}
                   >
                     Problem {index + 1} : {report["title"]}
                   </div>
-                  <div style={{position: "absolute",right: "0",marginRight:"5%"}}>
-                  {report["isSeen"] ? (
-                    <span><BsEyeFill /></span>
+
+                  <div
+                    style={{
+                      position: "absolute",
+                      right: "0",
+                      marginRight: "5%",
+                    }}
+                  >
+                    <Badge
+                      bg={report["status"] === "pending" ? "danger" : "success"}
+                      style={{ marginRight: "10px" }}
+                    >
+                      {" "}
+                      <label> {report["status"]} </label>
+                    </Badge>
+                    {report["isSeen"] ? (
+                      <span>
+                        <BsEyeFill />
+                      </span>
                     ) : (
-                      <span><BsEyeSlashFill /></span>
-                  )}
+                      <span>
+                        <BsEyeSlashFill />
+                      </span>
+                    )}
                   </div>
                 </Accordion.Header>
 
                 <Accordion.Body>
-                  <label
-                    style={{
-                      color:
-                        report["status"] === "pending" ? "#A00407" : "#28D770",
-                    }}
-                  >
-                    Status : {report["status"]}
+                  <label>
+                    <span style={{ color: "#A00407" }}>Description : </span>
+                    {report["description"]}
                   </label>
-                  <br></br>
-                  <label style={{ color: "#A00407" }}>Description :</label>
-                  <br></br>
-                  {report["description"]}
 
                   {report["followUp"].length == 0 ? (
                     <span></span>
@@ -139,7 +147,19 @@ const PrevReports = () => {
                       <>
                         <div>
                           <Popup
-                            trigger={<Button>Add Follow Up</Button>}
+                            trigger={
+                              <button
+                                style={{
+                                  backgroundColor: "#a00407",
+                                  color: "white",
+                                  border: "none",
+                                  padding: "8px",
+                                  marginTop: "5px",
+                                }}
+                              >
+                                Add Follow Up
+                              </button>
+                            }
                             position="right center"
                           >
                             <div>
@@ -147,6 +167,7 @@ const PrevReports = () => {
                                 <input
                                   label="Add Follow Up"
                                   id={index}
+                                  style={{ width: "100%" }}
                                   onChange={(e) => {
                                     setReportId(report["_id"]);
                                     setFollowUpArr([
@@ -158,9 +179,15 @@ const PrevReports = () => {
                                 <Button
                                   variant="success"
                                   type="submit"
+                                  style={{
+                                    backgroundColor: "inherit",
+                                    color: "#a00407",
+                                    border: "none",
+                                    margin: "auto",
+                                  }}
                                   onClick={handleSubmit}
                                 >
-                                  Add Follow Up
+                                  Add
                                 </Button>
                               </form>
                             </div>
@@ -177,7 +204,7 @@ const PrevReports = () => {
           })}
         </Accordion>
       </div>
-    </>
+    </div>
   );
 };
 export default PrevReports;

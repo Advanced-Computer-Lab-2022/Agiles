@@ -11,7 +11,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import style from "./CourseExam.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
-
+const checkSumbittedUrl = "/individualtrainee/checkSumbitted";
 const CourseExam = () => {
   const location = useLocation();
   const query = new URLSearchParams(location.search);
@@ -24,45 +24,46 @@ const CourseExam = () => {
   const [answers, setAnswers] = useState([]);
   const [result, setResult] = useState([]);
   const [grade, setGrade] = useState(0);
+  const [submittedBefore , setSumbittedBefore] = useState(true);
   const final = location.state.final;
 
   let corporate = false;
   const navigate = useNavigate();
   const styles = {
     form: {
-      display: 'flex',
-      flexDirection: 'column',
-      width: '50%',
-      margin: '15px',
-      padding: '20px',
-      border: '1px solid #a00407',
-      borderRadius: '5px',
+      display: "flex",
+      flexDirection: "column",
+      width: "50%",
+      margin: "15px",
+      padding: "20px",
+      border: "1px solid #a00407",
+      borderRadius: "5px",
     },
     label: {
-      fontSize: '16px',
-      fontWeight: 'bold',
-      marginBottom: '8px',
+      fontSize: "16px",
+      fontWeight: "bold",
+      marginBottom: "8px",
     },
     radio: {
-      marginRight: '8px',
+      marginRight: "8px",
     },
     input: {
-      width: '100%',
-      padding: '12px',
-      border: '1px solid #ccc',
-      borderRadius: '4px',
-      boxSizing: 'border-box',
-      resize: 'vertical',
+      width: "100%",
+      padding: "12px",
+      border: "1px solid #ccc",
+      borderRadius: "4px",
+      boxSizing: "border-box",
+      resize: "vertical",
     },
     button: {
-      backgroundColor: '#a00407',
-      color: 'white',
-      padding: '12px 20px',
-      border: 'none',
-      borderRadius: '4px',
-      cursor: 'pointer',
-      float: 'right',
-      width:'20%',
+      backgroundColor: "#a00407",
+      color: "white",
+      padding: "12px 20px",
+      border: "none",
+      borderRadius: "4px",
+      cursor: "pointer",
+      float: "right",
+      width: "20%",
     },
   };
   useEffect(() => {
@@ -84,12 +85,17 @@ const CourseExam = () => {
         res = await fetch(`/corporate/courseExam?subtitleId=${subtitleId}`);
       }
       let jsondata = await res.json();
+      const checkSumbitted = await axios.post(checkSumbittedUrl, {courseId: courseId, subtitleId: subtitleId});
+      if (checkSumbitted.data?.result) {
+        setSumbittedBefore(true);
+      }
+      else{
+        setSumbittedBefore(false);
+      }
       if (res.ok) {
         setCourseExam(jsondata["questions"]);
-        //fill array answers with 1 using .fill
         setAnswers(Array(jsondata["questions"].length).fill("1"));
       }
-
 
       setIsLoading(false);
     };
@@ -127,7 +133,11 @@ const CourseExam = () => {
     const indexname = event.target.name;
     //get last char from name
     let index = indexname.charAt(indexname.length - 1);
-    if (answers[index] !== 1 && event.target.checked && answers[index] !== event.target.value) {
+    if (
+      answers[index] !== 1 &&
+      event.target.checked &&
+      answers[index] !== event.target.value
+    ) {
       answers[index] = event.target.value;
     } else if (event.target.checked) {
       setAnswers((oldArray) => [...oldArray, event.target.value]);
@@ -135,22 +145,39 @@ const CourseExam = () => {
   };
 
   return (
-    <div>
-      <h1 style={{textAlign: "center",color: "#A00407"}}>Quiz</h1>
+    <>
+    {isloading ? (
+      <LoadingScreen loading={true} logoSrc={spinner} />
+    ) : (
+    <div className={style['container']}>
+    {submittedBefore? (<div style={{textAlign: "center", color: "red",fontWeight:'bold'}}>You have already submitted this exam</div>):(<>
+      
+      <h1 style={{ textAlign: "center", color: "#A00407" }}>
+        {final == "false" ? "quiz" : "Final exam"}
+      </h1>
       <div class="d-grid gap-3">
-
         <Form>
           {CourseExam.map((exam, index) => {
             return (
               <div>
-                <Card border="primary" style={{ width: "50%" ,marginLeft:"25%" ,marginBottom: "2%"}}>
+                <Card
+                  style={{
+                    width: "50%",
+                    marginLeft: "25%",
+                    marginBottom: "2%",
+                  }}
+                >
                   <Card.Body>
                     <Card.Title>
                       {" "}
-                      <Form.Label style={{color: "#A00407"}}>Question {index + 1} </Form.Label>
+                      <Form.Label style={{ color: "#A00407" }}>
+                        Question {index + 1}{" "}
+                      </Form.Label>
                     </Card.Title>
                     <Card.Text>
-                      <Form.Label><b>{exam["content"]}</b></Form.Label>
+                      <Form.Label>
+                        <b>{exam["content"]}</b>
+                      </Form.Label>
                     </Card.Text>
                     <ListGroup className="list-group-flush">
                       <ListGroup.Item>
@@ -172,7 +199,7 @@ const CourseExam = () => {
                               <Form.Label>- {exam["firstChoice"]}</Form.Label>
                             </>
                           )
-                          ) : (
+                        ) : (
                           <InputGroup>
                             <Form.Check
                               value={1}
@@ -181,9 +208,13 @@ const CourseExam = () => {
                               onChange={handleRadioChange}
                               required
                               defaultChecked
-                              
                             />
-                            <Form.Label><div style={{marginLeft : "10px"}}> {exam["firstChoice"]}</div> </Form.Label>
+                            <Form.Label>
+                              <div style={{ marginLeft: "10px" }}>
+                                {" "}
+                                {exam["firstChoice"]}
+                              </div>{" "}
+                            </Form.Label>
                           </InputGroup>
                         )}
                       </ListGroup.Item>
@@ -215,7 +246,12 @@ const CourseExam = () => {
                               onChange={handleRadioChange}
                               required
                             />
-                            <Form.Label><div style={{marginLeft : "10px"}}> {exam["secondChoice"]} </div></Form.Label>
+                            <Form.Label>
+                              <div style={{ marginLeft: "10px" }}>
+                                {" "}
+                                {exam["secondChoice"]}{" "}
+                              </div>
+                            </Form.Label>
                           </InputGroup>
                         )}
                       </ListGroup.Item>
@@ -247,7 +283,12 @@ const CourseExam = () => {
                               onChange={handleRadioChange}
                               required
                             />
-                            <Form.Label><div style={{marginLeft : "10px"}}> {exam["thirdChoice"]} </div></Form.Label>
+                            <Form.Label>
+                              <div style={{ marginLeft: "10px" }}>
+                                {" "}
+                                {exam["thirdChoice"]}{" "}
+                              </div>
+                            </Form.Label>
                           </InputGroup>
                         )}
                       </ListGroup.Item>
@@ -270,7 +311,7 @@ const CourseExam = () => {
                               <Form.Label>- {exam["fourthChoice"]}</Form.Label>
                             </>
                           )
-                          ) : (
+                        ) : (
                           <InputGroup>
                             <Form.Check
                               value={4}
@@ -279,7 +320,12 @@ const CourseExam = () => {
                               onChange={handleRadioChange}
                               required
                             />
-                            <Form.Label><div style={{marginLeft : "10px"}}> {exam["fourthChoice"]} </div></Form.Label>
+                            <Form.Label>
+                              <div style={{ marginLeft: "10px" }}>
+                                {" "}
+                                {exam["fourthChoice"]}{" "}
+                              </div>
+                            </Form.Label>
                           </InputGroup>
                         )}
                       </ListGroup.Item>
@@ -289,22 +335,32 @@ const CourseExam = () => {
               </div>
             );
           })}
-          <div class="col-md-12 text-center">
+          <div className={style["bottom"]}>
             {!examState ? (
-              <Button variant="primary" style={{backgroundColor:'#a00407'}} onClick={handleSubmit} size="lg">
+              <Button
+                variant="primary"
+                style={{
+                  backgroundColor: "#a00407",
+                  margin: "auto",
+                  border: "none",
+                  borderRadius: 0,
+                }}
+                onClick={handleSubmit}
+                size="lg"
+              >
                 Submit
               </Button>
             ) : (
-              <>
-                <h1>
-                  Grade: {grade} / {CourseExam.length}
-                </h1>
-              </>
+              <h1 style={{ margin: "auto" }}>
+                Grade: {grade} / {CourseExam.length}
+              </h1>
             )}
           </div>
         </Form>
       </div>
-    </div>
+      </>)}
+    </div>)}
+    </>
   );
 };
 export default CourseExam;

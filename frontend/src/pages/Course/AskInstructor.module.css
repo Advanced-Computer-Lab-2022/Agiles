@@ -1,11 +1,12 @@
 .mainRight {
-  max-width: 1200px;
   width: 75%;
+  margin:  3% 0 0 2%;
 }
 
-.right {
-  width: 70%;
-  margin: 20px auto;
+.mainlabel {
+  color: rgb(97, 94, 94);
+  font-size: 1.5rem;
+  margin-bottom: 2%;
 }
 
 .container {
