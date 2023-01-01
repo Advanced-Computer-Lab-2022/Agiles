@@ -186,28 +186,45 @@ We have four main users in our website:
 
 ### Individual Trainee
 - view the amount available in their wallet from refunded courses
+![1](https://user-images.githubusercontent.com/83594429/210186283-b6989586-a131-409d-9830-0e3d27564b0d.PNG)
 - enter their credit card details to pay for a course they want to register for
 - pay for a course
+- ![2](https://user-images.githubusercontent.com/83594429/210186298-9acbe610-9e9b-4387-ad51-66c0512c1aba.PNG)
 - request a refund only if less than 50% of the course has been attended
+![4](https://user-images.githubusercontent.com/83594429/210186313-126834f0-fc69-4f4e-bd74-1f336ec67ec4.PNG)
 
 
 
 ### Individual Trainee & Corporate Trainee
 
 - open all the items inside a course he/she is registered for including videos and excercises
+![5](https://user-images.githubusercontent.com/83594429/210186338-7ccccfda-d019-4e29-881a-70151b7e66ae.PNG)
+![05](https://user-images.githubusercontent.com/83594429/210186323-07f5f60b-dc24-43b3-84ce-9f98967df638.PNG)
 - rate an instructor 
+![6](https://user-images.githubusercontent.com/83594429/210186351-b82f7012-57ca-42b8-8169-e2bc54056064.PNG)
 - rate a course
+![7](https://user-images.githubusercontent.com/83594429/210186362-0c639f49-ce20-4d2e-9c56-88a668009816.PNG)
 - solve a multiple choice exercise by choosing the correct answer
+![8](https://user-images.githubusercontent.com/83594429/210186378-0b0afeea-2638-4c77-8b32-45f3c90c25fc.PNG)
 - submit the answers to the exercise after completing it
+![sumbitExam](https://user-images.githubusercontent.com/73742471/210186407-2761ccae-a904-48a2-bced-10f57d8acda0.png)
 - view his/her grade from the exercise
 - view the questions with the correct solution to view the incorrect answers
+![10](https://user-images.githubusercontent.com/83594429/210186379-3df74e1e-790a-46eb-a942-40fb2f20fc7b.PNG)
 - watch a video from a course he/she is registered for
-- see his/her progress in the course as a percentage of how much of the course has been completed so far
+![11](https://user-images.githubusercontent.com/83594429/210186370-4f7f40c5-90cb-4824-8090-1b520d236038.PNG)
+- see his/her progress in the course of how much of the course has been completed so far
+![12](https://user-images.githubusercontent.com/83594429/210186371-eb809ca0-d23c-41ea-b8b1-f7d62464723f.PNG)
 - receive a certificate as a PDF after completing the course via email
+![13](https://user-images.githubusercontent.com/83594429/210186374-a06f92e0-9413-48d8-ba47-ef99ee5e6612.PNG)
 - download the certificate as a PDF from the website
-- write notes while watching the video
+![013](https://user-images.githubusercontent.com/83594429/210186372-1dce4db1-ef92-431b-96c3-1977119ca5fc.PNG)
 - download the notes as a PDF
+- write notes while watching the video
+![14](https://user-images.githubusercontent.com/83594429/210186376-f0067b14-5283-49f1-b86e-8f5af205ca98.PNG)
 - see a list of all the courses he/she is enrolled in on their profile
+![15](https://user-images.githubusercontent.com/83594429/210186377-10056baf-69d4-46f0-8607-779bfa07de81.PNG)
+
 
 
 
