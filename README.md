@@ -189,7 +189,7 @@ We have four main users in our website:
 ![1](https://user-images.githubusercontent.com/83594429/210186283-b6989586-a131-409d-9830-0e3d27564b0d.PNG)
 - enter their credit card details to pay for a course they want to register for
 - pay for a course
-- ![2](https://user-images.githubusercontent.com/83594429/210186298-9acbe610-9e9b-4387-ad51-66c0512c1aba.PNG)
+![2](https://user-images.githubusercontent.com/83594429/210186298-9acbe610-9e9b-4387-ad51-66c0512c1aba.PNG)
 - request a refund only if less than 50% of the course has been attended
 ![4](https://user-images.githubusercontent.com/83594429/210186313-126834f0-fc69-4f4e-bd74-1f336ec67ec4.PNG)
 
