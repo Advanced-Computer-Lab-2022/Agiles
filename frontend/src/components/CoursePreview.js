@@ -91,7 +91,7 @@ const CoursePreview = () => {
         )
       );
       setCompletedItems(res.data.firstField.registered_courses[index].progress);
-      setAllItems(items.data.numberOfItems);
+      setAllItems(items.data.numberOfItems+res.data.firstField.registered_courses[index].courseId.subtitles.length);
       if (
         res.data.firstField.registered_courses[index].progress ===
         items.data.numberOfItems
