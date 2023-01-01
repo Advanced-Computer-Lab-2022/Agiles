@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import LoadingScreen from "react-loading-screen";
 import spinner from "../../../static/download.gif";
+import Badge from "react-bootstrap/Badge";
 
 function Request(props) {
   const el = props.data;
@@ -28,16 +29,20 @@ function Request(props) {
       </TableCell>
       <TableCell>{el.courseId.title}</TableCell>{" "}
       <TableCell style={{ textAlign: "center" }}>
-        {status}
+      <Badge
+              bg={status === "pending" ? "danger" : "success"}
+              style={{ marginRight: "10px" }}
+            >
+              <label> {status} </label>
+            </Badge>
         {status == "pending" ? (
           <Button
-            style={{ marginLeft: "15px" }}
-            onClick={() =>
+          style={{ marginLeft: "15px",color:"white",border:"none" }}
+          onClick={() =>
               handleApprove(el.traineeId._id, el.courseId._id, index)
             }
           >
-            {" "}
-            Approve
+            approve
           </Button>
         ) : (
           ""

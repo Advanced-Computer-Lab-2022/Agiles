@@ -26,9 +26,17 @@ function RefundRequests() {
 
   return (
     <>
-      <h2 style={{ marginLeft: "25px", marginBottom: "25px" }}>
+      <h1  style={{
+          marginLeft: "30px",
+          marginTop: "20px",
+          marginBottom: "50px",
+          color: "rgb(50, 50, 50)",
+          fontSize: "36px",
+          fontFamily: "Changa, sans-serif",
+          fontWeight: "bold",
+        }}>
         Refund Requests
-      </h2>
+      </h1>
       <Table>
         <TableHead
           style={{

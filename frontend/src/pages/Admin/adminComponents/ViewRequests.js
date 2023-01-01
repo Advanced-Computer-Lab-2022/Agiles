@@ -22,9 +22,17 @@ function ViewRequests() {
   if (isLoading) return <LoadingScreen loading={true} logoSrc={spinner} />;
   return (
     <>
-      <h2 style={{ marginLeft: "25px", marginBottom: "25px" }}>
+      <h1  style={{
+          marginLeft: "30px",
+          marginTop: "20px",
+          marginBottom: "30px",
+          color: "rgb(50, 50, 50)",
+          fontSize: "36px",
+          fontFamily: "Changa, sans-serif",
+          fontWeight: "bold",
+        }}>
         Course Enroll Requests
-      </h2>
+      </h1>
 
       <Table>
         <TableHead

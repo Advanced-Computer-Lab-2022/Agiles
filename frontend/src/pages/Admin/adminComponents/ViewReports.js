@@ -26,7 +26,19 @@ function ViewReports() {
 
   return (
     <>
-      <h2 style={{ marginLeft: "25px", marginBottom: "25px" }}>Reports</h2>
+      <h1
+        style={{
+          marginLeft: "30px",
+          marginTop: "20px",
+          marginBottom: "50px",
+          color: "rgb(50, 50, 50)",
+          fontSize: "36px",
+          fontFamily: "Changa, sans-serif",
+          fontWeight: "bold",
+        }}
+      >
+        Reports
+      </h1>
       <Accordion style={{ margin: "0 5px" }}>
         <div
           style={{
@@ -41,11 +53,11 @@ function ViewReports() {
           }}
         >
           <div style={{ width: "20%" }}>username</div>
-          <div style={{ width: "20%" }}>Problem Title</div>{" "}
-          <div style={{ width: "20%" }}>Course Title</div>{" "}
+          <div style={{ width: "20%" }}>problem title</div>{" "}
+          <div style={{ width: "20%" }}>Course </div>{" "}
           <div style={{ width: "20%" }}>Status</div>
           <div style={{ width: "20%" }}>Seen</div>
-          <div style={{ width: "25%" }}></div>
+          <div style={{ width: "25%" }}>Category</div>
         </div>
 
         {reports.map((el, index) => {

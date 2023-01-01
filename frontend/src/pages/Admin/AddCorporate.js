@@ -14,7 +14,6 @@ const AddCorporate = () => {
   const [lastname, setLastname] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
   const handleSubmit = async (event) => {
@@ -49,6 +48,23 @@ const AddCorporate = () => {
   return (
     <div className="new">
       <div className="newContainer">
+      <div
+          className="alertContainer"
+          style={{
+            margin: "15px",
+            width: "50%",
+            minWidth: "500px",
+            borderRadius: "5px",
+          }}
+        >
+          {flag && (
+            <Alert severity={alert} style={{ fontSize: "20px" }}>
+              {alert == "success"
+                ? "Corporate Trainee added successfully"
+                : "username already taken"}
+            </Alert>
+          )}
+        </div>
         <div className="top">
           <h1 className="h1Class">Add New Corporate Trainee</h1>
         </div>
@@ -121,19 +137,6 @@ const AddCorporate = () => {
                 />
               </div>
               <div className="formInput">
-                <label className="labelClass">
-                  Confirm Password <span className="required">*</span>
-                </label>
-                <input
-                  type="password"
-                  name="confirm"
-                  required
-                  placeholder="password.."
-                  className="inputClass"
-                  onChange={(e) => setConfirm(e.target.value)}
-                />
-              </div>
-              <div className="formInput">
                 <label className="labelClass">Gender</label>
                 <Select
                   style={{ padding: "0", borderRadius: "5px" }}
@@ -154,23 +157,7 @@ const AddCorporate = () => {
             </form>
           </div>
         </div>
-        <div
-          className="alertContainer"
-          style={{
-            margin: "15px",
-            width: "50%",
-            minWidth: "500px",
-            borderRadius: "5px",
-          }}
-        >
-          {flag && (
-            <Alert severity={alert} style={{ fontSize: "20px" }}>
-              {alert == "success"
-                ? "Corporate Trainee added successfully"
-                : "username already taken"}
-            </Alert>
-          )}
-        </div>
+        
       </div>
     </div>
   );

@@ -51,6 +51,7 @@ import Refund from "./pages/Course/Refund";
 import AskInstructor from "./pages/Course/AskInstructor";
 import Checkout from "./pages/Course/Checkout";
 import AnswerTrainee from "./pages/Instructor/AnswerTrainee";
+import Dashboard from "./pages/Admin/Dashboard";
 function App() {
   const [showNav, setShowNav] = useState(true);
   const ROLES = {
@@ -87,7 +88,7 @@ function App() {
 
             <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}>
               <Route path="/admin" element={<Admin funcNav={setShowNav} />}>
-                <Route path="dashboard" />
+                <Route path="dashboard" element={<Dashboard/>}/>
                 <Route path="addInstructor" element={<AddInstructor />} />
                 <Route path="addAdmin" element={<AddAdmin />} />
                 <Route path="addCorporate" element={<AddCorporate />} />

@@ -135,19 +135,6 @@ const AddInstructor = () => {
                   <MenuItem value={"male"}>male</MenuItem>
                   <MenuItem value={"female"}>female</MenuItem>
                 </Select>
-                {/* <label className="labelClass">gender</label>
-                <select
-                  id="gender"
-                  name="gender "
-                  className="selectClass"
-                  onChange={(e) => {
-                    setGender(e.target.value);
-                    console.log(gender);
-                  }}
-                > */}
-                {/* <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select> */}
               </div>
               <div className="buttonContainer">
                 <button className="buttonClass">Submit</button>
