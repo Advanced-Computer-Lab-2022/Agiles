@@ -10,8 +10,8 @@
 - [Features](#features)
   * [Admin Functionalities](#administrator)
   * [Instructor Functinalities](#instructor)
-  * [Corporate Trainee Functinalities](#corporatetrainee)
-  * [Individual Trainee Functinalities](#individualtrainee)
+  * [Corporate Trainee Functinalities](#corporate-trainee)
+  * [Individual Trainee Functinalities](#individual-trainee)
   * [guest Functionalities](#guest)
 - [API References](#api-references)
   * [Guest (Course) router](#guest-router)
@@ -22,7 +22,7 @@
 - [Contributing](#contributing)
 - [Credits](#credits)
 - [Installation](#installation)
-- [How to use?](#how-to-use-?)
+- [How to use](#How-to-use)
 - [Licence](#Licence)
 
 ## Project Description
@@ -568,10 +568,11 @@ Anyone who would like to contribute in the project please send me an E-mail on [
 |Adham Haggag|[adham hagag](https://github.com/Haggag23)|
 |Abdullah Fouad|[abdullah fouad](https://github.com/Abdullah204)|
 
-### Installation
+## Installation
  you can install the project using `git clone 'https://github.com/Advanced-Computer-Lab-2022/Agiles.git'`
- then run npm install to download all the needed packages
-### How to use ?
+ then run npm install to download all the needed packages\
+
+## How to use
  After cloning the project or downloading the ZIP folder open the project using the integrated terminal or by using the CMD 
  then run the frontend / backend servers 
  `nodemon app` to run the backend server on port :8000
