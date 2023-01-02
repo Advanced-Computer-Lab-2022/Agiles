@@ -102,7 +102,7 @@ const Navbar = () => {
         ></input>
       </form>
       <div className={NavbarStyles["linkContainer"]}>
-        {<SelectCountry style={{marginTop:'1rem'}}></SelectCountry> }
+        {<SelectCountry style={{marginTop:'1rem',width:"10%"}}></SelectCountry> }
 
         <Link to="/" className={NavbarStyles["links"]}>
           Home
