@@ -44,7 +44,7 @@ function ViewReports() {
           style={{
             display: "flex",
             width: "100%",
-            paddingLeft: "15px",
+            paddingLeft: "60px",
             borderBottom: "1px solid gray",
             paddingBottom: "30px",
             fontSize: "20px",
@@ -56,8 +56,8 @@ function ViewReports() {
           <div style={{ width: "20%" }}>problem title</div>{" "}
           <div style={{ width: "20%" }}>Course </div>{" "}
           <div style={{ width: "20%" }}>Status</div>
-          <div style={{ width: "20%" }}>Seen</div>
-          <div style={{ width: "25%" }}>Category</div>
+          <div style={{ width: "23%" }}>Seen</div>
+          <div style={{ width: "23%" }}>Category</div>
         </div>
 
         {reports.map((el, index) => {
