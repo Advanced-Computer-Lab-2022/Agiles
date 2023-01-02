@@ -15,7 +15,7 @@ const AddInstructor = () => {
   const [confirm, setConfirm] = useState("");
 
   const [email, setEmail] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("male");
   const [alert, setAlert] = useState("");
   const [flag, setFlag] = useState(false);
   const handleSubmit = async (event) => {

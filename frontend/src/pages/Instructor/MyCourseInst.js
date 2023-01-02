@@ -44,7 +44,7 @@ const MyCourseInst = ({
         </label>
       </div>
       <div className={regStyles["leftsection-bottom"]}>
-        <ul>
+        <ul style={{ padding: "0",listStyle:'none' }}>
           <li
             id="/preInst"
             className={

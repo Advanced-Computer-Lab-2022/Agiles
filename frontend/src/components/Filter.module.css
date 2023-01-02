@@ -30,6 +30,15 @@
   width: 5rem;
   margin-right: 1rem;
 }
+.inptt{
+  width: 7rem;
+  margin-right: 1rem;
+}
+.inpttt{
+  width: 12rem;
+  border-radius: 0;
+  margin-right: 0.5rem;
+}
 .check {
   margin-top: 0.4rem;
 }

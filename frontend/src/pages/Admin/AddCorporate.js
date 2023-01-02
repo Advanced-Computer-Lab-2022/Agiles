@@ -15,7 +15,7 @@ const AddCorporate = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("male");
   const handleSubmit = async (event) => {
     const corporate = {
       firstname: firstname,

@@ -43,7 +43,7 @@ const RegCourse = ({
         </label>
       </div>
       <div className={regStyles["leftsection-bottom"]}>
-        <ul style={{ padding: "0" }}>
+        <ul style={{ padding: "0",listStyle:'none' }}>
           <li
             id="/preReg"
             className={
