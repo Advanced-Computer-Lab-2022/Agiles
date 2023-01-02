@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import MyCheckbox from "./MyCheckbox";
+import Pagination from '@mui/material/Pagination';
 import {
   Table,
   TableBody,
@@ -20,8 +21,10 @@ import spinner from "../../../static/download.gif";
 import LoadingScreen from "react-loading-screen";
 import AdminFilter from "./AdminFilter";
 import Alert from "react-bootstrap/Alert";
+import { textAlign, width } from "@mui/system";
 
 function SetPromotion(props) {
+  const [currentIndex,setCurrentIndex] = useState(0);
   const [courses, setCourses] = useState([]);
   const [change, setChange] = useState(true);
   const [action, setAction] = useState(0);
@@ -58,6 +61,9 @@ function SetPromotion(props) {
     setAction(1);
     setChange(!change);
   };
+  const handlePagination = (event,value)=>{
+    setCurrentIndex((value-1)*6);
+  }
   const handlePromo = (e) => {
     setPromotion(e.target.value);
   };
@@ -210,7 +216,8 @@ function SetPromotion(props) {
           </form>
         </div>
       </div>
-      <div className={NavbarStyles["divaya"]}>
+      <div style={{maxWidth:"95%",margin:"auto" }} >
+      <div className={NavbarStyles["divaya2"]}>
         <Table>
           <TableHead>
             <TableRow style={{ verticalAlign: "text-top" }}>
@@ -277,7 +284,8 @@ function SetPromotion(props) {
             </TableRow>
           </TableHead>
           <TableBody style={{ border: "none" }}>
-            {messages.map((el) => {
+            {messages.map((el,index) => {
+              if (index>=currentIndex&&index<currentIndex+6) {
               return (
                 <TableRow
                   style={{
@@ -285,6 +293,7 @@ function SetPromotion(props) {
                     verticalAlign: "text-top",
                     lineHeight: "100px",
                   }}
+                
                 >
                   <TableCell>{el.title}</TableCell>
                   <TableCell>{el.instructorname}</TableCell>
@@ -307,12 +316,20 @@ function SetPromotion(props) {
                     />
                   </TableCell>
                 </TableRow>
-              );
+              )};
             })}
-          </TableBody>
+          </TableBody>  
+         
+          
+
+
         </Table>
       </div>
-    </div>
+          <div style={{margin:"auto",display:"flex" ,justifyContent:"center"}}>
+          <Pagination count={Math.ceil(messages.length/6)}  color="primary"  onChange={handlePagination} />
+          </div>
+      </div>
+      </div>
   );
 }
 
