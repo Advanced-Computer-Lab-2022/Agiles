@@ -43,6 +43,14 @@
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
+.divaya2 {
+  border: 1px solid rgba(230, 230, 230);
+  width: 95%;
+  display: flex;
+  margin: auto;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
 @media only screen and (max-width: 1140px) {
   .promo-container {
     flex-direction: column;

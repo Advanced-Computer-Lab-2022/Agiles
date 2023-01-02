@@ -37,8 +37,16 @@ const Subtitle = (props) => {
   const [done, setDone] = useState([]);
   const [notes, setNotes] = useState(" ");
   const downloadPDFFile = () => {
+    //console.log(link.linkDesc);
     var doc = new jsPDF("landscape", "px", "a4", "false");
-    doc.text(20, 20, notes);
+
+    let xOffset =
+      doc.internal.pageSize.width / 2 -
+      (doc.getStringUnitWidth(link.linkDesc) * doc.internal.getFontSize()) / 2;
+    doc.text(link.linkDesc, xOffset, 20);
+
+    doc.text(30, 40, "Notes:");
+    doc.text(70, 40, notes);
     doc.save("myNotes.pdf");
   };
 

@@ -158,6 +158,7 @@ const PrevReportsTrainee = () => {
                       <>
                         <div>
                           <Popup
+                            contentStyle={{ width: "50%",padding:"15px" }}
                             trigger={
                               <button
                                 style={{
@@ -175,10 +176,10 @@ const PrevReportsTrainee = () => {
                           >
                             <div>
                               <form onSubmit={handleSubmit}>
-                                <input
+                                <textarea
                                   label="Add Follow Up"
                                   id={index}
-                                  style={{ width: "100%" }}
+                                  style={{ width: "100%" , height:"10vh" }}
                                   onChange={(e) => {
                                     setReportId(report["_id"]);
                                     setFollowUpArr([
@@ -186,13 +187,14 @@ const PrevReportsTrainee = () => {
                                       e.target.value,
                                     ]);
                                   }}
+                                  required
                                 />
                                 <Button
                                   variant="success"
                                   type="submit"
                                   style={{
-                                    backgroundColor: "inherit",
-                                    color: "#a00407",
+                                    backgroundColor: "#a00407",
+                                    fontColor: "#111111",
                                     border: "none",
                                     margin: "auto",
                                   }}
