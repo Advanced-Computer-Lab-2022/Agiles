@@ -13,7 +13,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import MyCourseInst from "./MyCourseInst";
 import regStyles from "../Course/RegCourse.module.css";
-import courseContent from "../../static/courseContent.svg"
+import courseContent from "../../static/courseContent.svg";
+import Badge from "react-bootstrap/Badge";
+
 let UPLOAD_URL = "/instructor/updateSubtitle";
 const CourseConInst = () => {
   const location = useLocation();
@@ -21,6 +23,8 @@ const CourseConInst = () => {
   const [course, setCourse] = useState([]);
   const [subtitles, setSubtitles] = useState([]);
   const [isloading, setIsLoading] = useState(false);
+  const [average, setAverage] = useState([]);
+  const [averageFinal, setAverageFinal] = useState(0);
   const [linkUrl, setLinkUrl] = useState("");
   const [linkDesc, setLinKDesc] = useState("");
   const [subId, setSubId] = useState("");
@@ -52,6 +56,33 @@ const CourseConInst = () => {
   };
   const route = (idd) => {
     navigate(`/setExam?courseId=${course_id}&subtitleId=${idd}`);
+  };
+
+  const getAverage = async () => {
+    try {
+      console.log(course_id);
+      const body = {
+        courseId: course_id,
+        final: false,
+      };
+      const res = await axios.post("/instructor/getAverageGrage", body);
+      setAverage(res.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const getFinalAvrage = async() => {
+    try {
+      const body = {
+        courseId: course_id,
+        final: true,
+      };
+      const res = await axios.post("/instructor/getAverageGrage", body);
+      setAverageFinal(res.data);
+    } catch (e) {
+      console.log(e);
+    }
+
   };
 
   const handleSave = async () => {
@@ -90,6 +121,8 @@ const CourseConInst = () => {
   };
   useEffect(() => {
     fetchdata();
+    getAverage();
+    getFinalAvrage();
   }, []);
   return (
     <>
@@ -105,114 +138,147 @@ const CourseConInst = () => {
             name={"content"}
           />
           <div className={style["mainRight"]}>
-          <div className={style["main-right-left"]}>
-            <label className={style["mainlabel"]}>Course Content</label>
-            <Modal show={show} onHide={handleClose}>
-              <Modal.Header closeButton>
-                <Modal.Title>Upload video </Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <InputGroup className="mb-2">
-                  <InputGroup.Text id="basic-addon3">
-                    youtube Url
-                  </InputGroup.Text>
-                  <Form.Control
-                    id="basic-url"
-                    aria-describedby="basic-addon3"
-                    onChange={(e) => setLinkUrl(e.target.value)}
+            <div className={style["main-right-left"]}>
+              <label className={style["mainlabel"]}>Course Content</label>
+              <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Upload video </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <InputGroup className="mb-2">
+                    <InputGroup.Text id="basic-addon3">
+                      youtube Url
+                    </InputGroup.Text>
+                    <Form.Control
+                      id="basic-url"
+                      aria-describedby="basic-addon3"
+                      onChange={(e) => setLinkUrl(e.target.value)}
+                    />
+                  </InputGroup>
+                  <InputGroup className="mb-2">
+                    <InputGroup.Text id="basic-addon3">
+                      Video Description
+                    </InputGroup.Text>
+                    <Form.Control
+                      id="basic-url"
+                      aria-describedby="basic-addon3"
+                      onChange={(e) => setLinKDesc(e.target.value)}
+                    />
+                  </InputGroup>
+                  <InputGroup className="mb-2">
+                    <InputGroup.Text id="basic-addon3">
+                      Duratuion
+                    </InputGroup.Text>
+                    <Form.Control
+                      id="basic-url"
+                      aria-describedby="basic-addon3"
+                      onChange={(e) => setDuration(e.target.value)}
+                    />
+                  </InputGroup>
+                  <Form.Check
+                    type="checkbox"
+                    label="Allow for Guests"
+                    onClick={handleCheckBox}
                   />
-                </InputGroup>
-                <InputGroup className="mb-2">
-                  <InputGroup.Text id="basic-addon3">
-                    Video Description
-                  </InputGroup.Text>
-                  <Form.Control
-                    id="basic-url"
-                    aria-describedby="basic-addon3"
-                    onChange={(e) => setLinKDesc(e.target.value)}
-                  />
-                </InputGroup>
-                <InputGroup className="mb-2">
-                  <InputGroup.Text id="basic-addon3">
-                    Duratuion 
-                  </InputGroup.Text>
-                  <Form.Control
-                    id="basic-url"
-                    aria-describedby="basic-addon3"
-                    onChange={(e) => setDuration(e.target.value)}
-                  />
-                </InputGroup>
-                <Form.Check
-                  type="checkbox"
-                  label="Allow for Guests"
-                  onClick={handleCheckBox}
-                />
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                  close
-                </Button>
-                <Button variant="primary" onClick={handleSave}>
-                  save changes
-                </Button>
-              </Modal.Footer>
-            </Modal>
-            <Accordion defaultActiveKey="0" className={style["subtitles"]} flush>
-              {subtitles.length > 0 &&
-                subtitles.map((subtitle, index0) => (
-                  <Accordion.Item eventKey={index0} key={index0}>
-                    <Accordion.Header>
-                    <h5 style={{fontWeight:'bold',fontSize:'1.1rem'}}>
-                        Section {index0 + 1}: {subtitle.subtitle}
-                      </h5>
-                    </Accordion.Header>
-                    <Accordion.Body>
-                      <div className={style["accordation-body"]}>
-                        <Button
-                          id={subtitle._id}
-                          size="sm"
-                          style={{backgroundColor:'#a00407',borderRadius: 0, width: '10rem' ,border: 'none' ,marginBottom:'1rem'}}
-                          onClick={handleUpload}
-                        >
-                          <UploadIcon /> Upload Video
-                        </Button>
-                        <ListGroup>
-                          {subtitle.link?.map((link, index1) => (
-                            <ListGroup.Item key={index1} className="list-group-item list-group-item-action">
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    close
+                  </Button>
+                  <Button variant="primary" onClick={handleSave}>
+                    save changes
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+              <Accordion
+                defaultActiveKey="0"
+                className={style["subtitles"]}
+                flush
+              >
+                {subtitles.length > 0 &&
+                  subtitles.map((subtitle, index0) => (
+                    <Accordion.Item eventKey={index0} key={index0}>
+                      <Accordion.Header>
+                        <h5 style={{ fontWeight: "bold", fontSize: "1.1rem" }}>
+                          Section {index0 + 1}: {subtitle.subtitle}
+                        </h5>
+                      </Accordion.Header>
+                      <Accordion.Body>
+                        <div className={style["accordation-body"]}>
+                          <Button
+                            id={subtitle._id}
+                            size="sm"
+                            style={{
+                              backgroundColor: "#a00407",
+                              borderRadius: 0,
+                              width: "10rem",
+                              border: "none",
+                              marginBottom: "1rem",
+                            }}
+                            onClick={handleUpload}
+                          >
+                            <UploadIcon /> Upload Video
+                          </Button>
+                          <ListGroup>
+                            {subtitle.link?.map((link, index1) => (
+                              <ListGroup.Item
+                                key={index1}
+                                className="list-group-item list-group-item-action"
+                              >
+                                <button
+                                  id={"linkId=" + link._id}
+                                  name={index0 + " " + index1}
+                                  onClick={handleClick}
+                                  className={style["subtitleView"]}
+                                >
+                                  {link.linkDesc}
+                                </button>
+                              </ListGroup.Item>
+                            ))}
+                            <ListGroup.Item className="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
                               <button
-                                id={"linkId=" + link._id}
-                                name={index0 + " " + index1}
-                                onClick={handleClick}
+                                onClick={() => {
+                                  route(subtitle._id);
+                                }}
                                 className={style["subtitleView"]}
                               >
-                                {link.linkDesc}
+                                Set Quiz
                               </button>
+                              <h5>
+                                <Badge
+                                  bg="primary"
+                                  className={style["gradeBadge"]}
+                                  pill
+                                >
+                                  {" "}
+                                  Average Grade :{" "}
+                                  {average?.find(
+                                    (item) => item._id === subtitle._id
+                                  )
+                                    ? average?.find(
+                                        (item) => item._id === subtitle._id
+                                      )?.average
+                                    : 0}
+                                </Badge>
+                              </h5>
                             </ListGroup.Item>
-                          ))}
-                          <ListGroup.Item className="list-group-item list-group-item-action">
-                          <button
-                            onClick={() => {
-                              route(subtitle._id);
-                            }}
-                            className={style["subtitleView"]}
-                          >
-                            Set Quiz
-                          </button>
-                        </ListGroup.Item>
-                        </ListGroup>
-                      </div>
-                 
-                        
-                   
-                    </Accordion.Body>
-                  </Accordion.Item>
-                ))}
-            </Accordion>
-          </div>
-          <div className={style["main-right-right"]}>
+                          </ListGroup>
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  ))}
+              </Accordion>
+              <div style={{display:'flex'}}>
+                <Badge style = {{margin:'20px auto'}}bg="primary" className={style["gradeBadge"]} pill>
+                  {" "}
+                  Average Final Exam Grade :{" "}{averageFinal}
+                </Badge>
+              </div>
+            </div>
+            <div className={style["main-right-right"]}>
               <img src={courseContent} alt="courseContent" width="400px"></img>
             </div>
-        </div>
+          </div>
         </div>
       )}
     </>

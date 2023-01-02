@@ -25,6 +25,7 @@ const {
   firstLoginReset,
   getQuestions,
   addReply,
+  getAverageGrade,
 } = require("../controllers/InstructorController");
 const { verifyInstructorJWT } = require("../middleware/authMiddleware");
 
@@ -47,6 +48,7 @@ instructorRouter.patch("/updatePreview", verifyInstructorJWT, uploadPreLink);
 instructorRouter.get("/viewReportedProblems",verifyInstructorJWT,viewReportedProblems);
 instructorRouter.patch("/addFollowUp", verifyInstructorJWT, addFollowUp);
 instructorRouter.post("/firstLoginReset", verifyInstructorJWT, firstLoginReset);
+instructorRouter.post("/getAverageGrage",verifyInstructorJWT, getAverageGrade);
 instructorRouter.get("/instructorbyid", getInstructorbyId);
 instructorRouter.get("/isAuth", isAuthInstructor);
 

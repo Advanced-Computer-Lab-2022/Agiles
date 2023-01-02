@@ -63,149 +63,146 @@ const PrevReports = () => {
     };
     fetchData();
   }, [flag]);
-
   return (
     <div className={style["reportedProblem"]}>
-      {isloading && <LoadingScreen loading={true} logoSrc={spinner} />}
-      <h1> Reported problems</h1>
-      <hr style={{ width: "75%" }}></hr>
-      <div style={{ width: "75%", marginLeft: "2%" }}>
-        <Accordion defaultActiveKey="0">
-          {reports.map((report, index) => {
-            return (
-              <Accordion.Item eventKey={index}>
-                <Accordion.Header>
-                  <div
-                    style={{
-                      fontWeight: "bold",
-                    }}
+    {isloading && <LoadingScreen loading={true} logoSrc={spinner} />}
+    <h1> Reported problems</h1>
+    <hr style={{ width: "75%" }}></hr>
+    <div style={{ width: "75%", marginLeft: "2%" }}>
+      <Accordion defaultActiveKey="0">
+        {reports.map((report, index) => {
+          return (
+            <Accordion.Item eventKey={index}>
+              <Accordion.Header>
+                <div
+                  style={{
+                    fontWeight: "bold",
+                  }}
+                >
+                  Problem {index + 1} : {report["title"]}
+                </div>
+
+                <div
+                  style={{
+                    position: "absolute",
+                    right: "0",
+                    marginRight: "5%",
+                  }}
+                >
+                  <Badge
+                    bg={report["status"] === "pending" ? "danger" : "success"}
+                    style={{ marginRight: "10px" }}
                   >
-                    Problem {index + 1} : {report["title"]}
-                  </div>
-
-                  <div
-                    style={{
-                      position: "absolute",
-                      right: "0",
-                      marginRight: "5%",
-                    }}
-                  >
-                    <Badge
-                      bg={report["status"] === "pending" ? "danger" : "success"}
-                      style={{ marginRight: "10px" }}
-                    >
-                      {" "}
-                      <label> {report["status"]} </label>
-                    </Badge>
-                    {report["isSeen"] ? (
-                      <span>
-                        <BsEyeFill />
-                      </span>
-                    ) : (
-                      <span>
-                        <BsEyeSlashFill />
-                      </span>
-                    )}
-                  </div>
-                </Accordion.Header>
-
-                <Accordion.Body>
-                  <label>
-                    <span style={{ color: "#A00407" }}>Description : </span>
-                    {report["description"]}
-                  </label>
-
-                  {report["followUp"].length == 0 ? (
-                    <span></span>
+                    {" "}
+                    <label> {report["status"]} </label>
+                  </Badge>
+                  {report["isSeen"] ? (
+                    <span>
+                      <BsEyeFill />
+                    </span>
                   ) : (
-                    <>
-                      <Accordion defaultActiveKey="0">
-                        <Accordion.Item eventKey={index + 1000}>
-                          <div>
-                            <Accordion.Header> Follow Ups</Accordion.Header>
-                            <br></br>
-                            <Accordion.Body>
-                              {report["followUp"].map((follow, indexx) => {
-                                return (
-                                  <>
-                                    <span>
-                                      {indexx + 1}. {follow}
-                                    </span>
-                                    <br></br>
-                                  </>
-                                );
-                              })}
-                            </Accordion.Body>
-                          </div>
-                        </Accordion.Item>
-                      </Accordion>
-                    </>
+                    <span>
+                      <BsEyeSlashFill />
+                    </span>
                   )}
+                </div>
+              </Accordion.Header>
 
-                  <div>
-                    {report["status"] === "pending" ? (
-                      <>
-                        <div>
-                          <Popup
-                          contentStyle={{ width: "50%" }}
-                            trigger={
-                              <button
+              <Accordion.Body>
+                <label style={{ marginBottom: "20px" }}>
+                  <span style={{ color: "#A00407" }}>Description : </span>
+                  {report["description"]}
+                </label>
+
+                {report["followUp"].length == 0 ? (
+                  <span></span>
+                ) : (
+                  <>
+                    <Accordion defaultActiveKey="0" flush>
+                      <Accordion.Item eventKey={index + 1000}>
+                          <Accordion.Header> Follow Ups</Accordion.Header>
+                          <Accordion.Body>
+                            {report["followUp"].map((follow, indexx) => {
+                              return (
+                                <>
+                                  <span>
+                                    {indexx + 1}. {follow}
+                                  </span>
+                                  <br></br>
+                                </>
+                              );
+                            })}
+                          </Accordion.Body>
+                      </Accordion.Item>
+                    </Accordion>
+                  </>
+                )}
+
+                <div>
+                  {report["status"] === "pending" ? (
+                    <>
+                      <div style={{ marginTop: "10px" }}>
+                        <Popup
+                          contentStyle={{ width: "50%", padding: "15px" }}
+                          trigger={
+                            <button
+                              style={{
+                                backgroundColor: "#a00407",
+                                color: "white",
+                                border: "none",
+                                padding: "8px",
+                                marginTop: "5px",
+                              }}
+                            >
+                              Add Follow Up
+                            </button>
+                          }
+                          position="right center"
+                        >
+                          <div>
+                            <form onSubmit={handleSubmit}>
+                              <textarea
+                                label="Add Follow Up"
+                                id={index}
+                                style={{ width: "100%", height: "10vh" }}
+                                onChange={(e) => {
+                                  setReportId(report["_id"]);
+                                  setFollowUpArr([
+                                    ...report["followUp"],
+                                    e.target.value,
+                                  ]);
+                                }}
+                                required
+                              />
+                              <Button
+                                variant="success"
+                                type="submit"
                                 style={{
                                   backgroundColor: "#a00407",
-                                  color: "white",
+                                  fontColor: "#111111",
                                   border: "none",
-                                  padding: "8px",
-                                  marginTop: "5px",
+                                  margin: "auto",
                                 }}
+                                onClick={handleSubmit}
                               >
-                                Add Follow Up
-                              </button>
-                            }
-                            position="right center"
-                          >
-                            <div>
-                              <form onSubmit={handleSubmit}>
-                                <textarea
-                                  label="Add Follow Up"
-                                  id={index}
-                                  style={{ width: "100%" , height:"10vh" }}
-                                  onChange={(e) => {
-                                    setReportId(report["_id"]);
-                                    setFollowUpArr([
-                                      ...report["followUp"],
-                                      e.target.value,
-                                    ]);
-                                  }}
-                                />
-                                <Button
-                                  variant="success"
-                                  type="submit"
-                                  style={{
-                                    backgroundColor: "#a00407",
-                                    fontColor: "#111111",
-                                    border: "none",
-                                    margin: "auto",
-                                  }}
-                                  onClick={handleSubmit}
-                                >
-                                  Add
-                                </Button>
-                              </form>
-                            </div>
-                          </Popup>
-                        </div>
-                      </>
-                    ) : (
-                      <span></span>
-                    )}
-                  </div>
-                </Accordion.Body>
-              </Accordion.Item>
-            );
-          })}
-        </Accordion>
-      </div>
+                                Add
+                              </Button>
+                            </form>
+                          </div>
+                        </Popup>
+                      </div>
+                    </>
+                  ) : (
+                    <span></span>
+                  )}
+                </div>
+              </Accordion.Body>
+            </Accordion.Item>
+          );
+        })}
+      </Accordion>
     </div>
+  </div>
   );
 };
 export default PrevReports;

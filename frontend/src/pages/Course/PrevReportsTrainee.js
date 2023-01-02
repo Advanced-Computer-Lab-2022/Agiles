@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import style from "./PrevReports.module.css";
 import React from "react";
 import Popup from "reactjs-popup";
@@ -80,7 +80,7 @@ const PrevReportsTrainee = () => {
     <div className={style["reportedProblem"]}>
       {isloading && <LoadingScreen loading={true} logoSrc={spinner} />}
       <h1> Reported problems</h1>
-      <hr style={{ width: "75%"}} ></hr>
+      <hr style={{ width: "75%" }}></hr>
       <div style={{ width: "75%", marginLeft: "2%" }}>
         <Accordion defaultActiveKey="0">
           {reports.map((report, index) => {
@@ -103,7 +103,8 @@ const PrevReportsTrainee = () => {
                     }}
                   >
                     <Badge
-                      bg={report["status"] === "pending" ? "danger" : "success"} style={{marginRight:"10px"}}
+                      bg={report["status"] === "pending" ? "danger" : "success"}
+                      style={{ marginRight: "10px" }}
                     >
                       {" "}
                       <label> {report["status"]} </label>
@@ -121,7 +122,7 @@ const PrevReportsTrainee = () => {
                 </Accordion.Header>
 
                 <Accordion.Body>
-                  <label>
+                  <label style={{ marginBottom: "20px" }}>
                     <span style={{ color: "#A00407" }}>Description : </span>
                     {report["description"]}
                   </label>
@@ -130,11 +131,9 @@ const PrevReportsTrainee = () => {
                     <span></span>
                   ) : (
                     <>
-                      <Accordion defaultActiveKey="0">
+                      <Accordion defaultActiveKey="0" flush>
                         <Accordion.Item eventKey={index + 1000}>
-                          <div>
                             <Accordion.Header> Follow Ups</Accordion.Header>
-                            <br></br>
                             <Accordion.Body>
                               {report["followUp"].map((follow, indexx) => {
                                 return (
@@ -147,7 +146,6 @@ const PrevReportsTrainee = () => {
                                 );
                               })}
                             </Accordion.Body>
-                          </div>
                         </Accordion.Item>
                       </Accordion>
                     </>
@@ -156,9 +154,9 @@ const PrevReportsTrainee = () => {
                   <div>
                     {report["status"] === "pending" ? (
                       <>
-                        <div>
+                        <div style={{ marginTop: "10px" }}>
                           <Popup
-                            contentStyle={{ width: "50%",padding:"15px" }}
+                            contentStyle={{ width: "50%", padding: "15px" }}
                             trigger={
                               <button
                                 style={{
@@ -179,7 +177,7 @@ const PrevReportsTrainee = () => {
                                 <textarea
                                   label="Add Follow Up"
                                   id={index}
-                                  style={{ width: "100%" , height:"10vh" }}
+                                  style={{ width: "100%", height: "10vh" }}
                                   onChange={(e) => {
                                     setReportId(report["_id"]);
                                     setFollowUpArr([

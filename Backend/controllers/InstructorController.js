@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 const Course = require("../models/Course");
 const Link = require("../models/Link");
 const Rating = require("../models/Rating");
+const FinalExamResult = require("../models/FinalExamResult");
+const ExamResult = require("../models/ExamResult");
 const TraineeQuestion = require("../models/TraineeQuestion");
 
 const courseByinst = async (req, res) => {
@@ -156,7 +158,10 @@ const uploadSubLink = async (req, res) => {
       },
       { new: true }
     );
-    const updateItems = await Course.updateOne({_id: courseId}, { $inc: { numberOfItems: 1 }});
+    const updateItems = await Course.updateOne(
+      { _id: courseId },
+      { $inc: { numberOfItems: 1 } }
+    );
     res.status(200).json(dataFinal);
   } catch (err) {
     res.status(500).json({ msg: "can't update links" });
@@ -263,7 +268,39 @@ const getQuestions = async (req, res) => {
   }
 };
 //---------------
-
+const getAverageGrade = async (req, res) => {
+  const { courseId, final } = req.body;
+  if (!courseId) {
+    return res.status(500).json("bad request");
+  }
+  const course = await Course.findById(courseId);
+  try {
+    if (final) {
+      const finalExams = await FinalExamResult.find({courseId:courseId});
+      let sum = 0;
+      for (let i = 0; i < finalExams.length; i++) {
+        sum += finalExams[i].result;
+      }
+      const average = sum / (finalExams.length==0?1:finalExams.length);
+      return res.status(200).json(average);
+    } else {
+      const exams = await ExamResult.aggregate([
+        {
+          $match: { courseId: course._id }
+        },
+        {
+          $group: {
+            _id: "$subtitleId",
+            average: { $avg: "$result" },
+          },
+        },
+      ]);
+      return res.status(200).json(exams);
+    }
+  } catch (err) {
+    return res.status(406).json(err);
+  }
+};
 module.exports = {
   getQuestions,
   addReply,
@@ -279,4 +316,5 @@ module.exports = {
   deletLink,
   profit,
   firstLoginReset,
+  getAverageGrade
 };
