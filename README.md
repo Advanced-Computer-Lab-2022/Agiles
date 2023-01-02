@@ -6,6 +6,8 @@
 - [Motivation](#motivation)
 - [Code Styles](#code-styles)
 - [Tools and Frameworks](#tools-and-frameworks)
+- [Build Status](#build-status)
+- [Code Examples](#code-examples)
 - [Features](#features)
   * [Admin Functionalities](#administrator)
   * [Instructor Functinalities](#instructor)
@@ -88,6 +90,87 @@ If your application stores any data (user profiles, content, comments, uploads, 
 
 That’s where MongoDB comes in: JSON documents created in your React.js front end can be sent to the Express.js server, where they can be processed and (assuming they’re valid) stored directly in MongoDB for later retrieval. Again, if you’re building in the cloud, you’ll want to look at Atlas. If you’re looking to set up your own MERN stack, read on!
 
+##Build Status 
+ - The project currently under development
+
+##Code Examples
+`
+const signUp = async (req, res) => {
+  const { username, email, password, firstname, lastname } = req.body;
+  if (!username || !password || !email || !password || !firstname || !lastname)
+    return res.status(400).json({ msg: "bad request" });
+  const userTrainee = await IndividualTrainee.findOne({ username: username });
+  const userInstructor = await Instructor.findOne({ username: username });
+  if (userTrainee || userInstructor) {
+    return res.status(409).json({ msg: "username already exists" });
+  } else {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const newUser = new IndividualTrainee({
+      username: username,
+      password: hashedPassword,
+      state: false,
+      email: email,
+      firstname: firstname,
+      lastname: lastname,
+    });
+    try {
+      const user = await IndividualTrainee.create(newUser);
+      res.status(200).json({ msg: "signup successeded" });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+};
+
+`
+`
+<section className={style["main"]}>
+          <section className={style["left"]}>
+            <h1>Checkout</h1>
+            <section className={style["payment-method"]}>
+              <h2>Payment method</h2>
+              <div className={style["payment-method-container"]}>
+                <ListGroup>
+                  <ListGroup.Item className={style["listGroup"]}>
+                    <input
+                      type="radio"
+                      id="creditCard"
+                      name="wallet"
+                      defaultChecked={true}
+                      onChange={() => setSelected("creditcard")}
+                      className={style["radio"]}
+                    ></input>
+                    <CreditCardIcon />
+                    <label className={style["header"]}>Credit/Debit Card</label>
+                  </ListGroup.Item>
+                  <ListGroup.Item className={style["listGroup"]}>
+                    <input
+                      type="radio"
+                      id="wallet"
+                      name="wallet"
+                      onChange={() => setSelected("wallet")}
+                      defaultChecked={false}
+                      className={style["radio"]}
+                    ></input>
+                    <DataSaverOffIcon />
+                    <label className={style["header"]}> Wallet</label>
+                    {wallet < price - (price * discount) / 100 && (
+                      <label className={style["error"]}>
+                        sorry you don't have enough amount
+                      </label>
+                    )}
+                    {wallet >= price - (price * discount) / 100 && (
+                      <label className={style["success"]}>
+                        current amount : {wallet.toFixed(2)} USD
+                      </label>
+                    )}
+                  </ListGroup.Item>
+                </ListGroup>
+              </div>
+            </section>
+          </section>
+`
 ## Features
 We have four main users in our website: 
 
