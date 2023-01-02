@@ -29,10 +29,16 @@ const CourseExam = () => {
   const [grade, setGrade] = useState(0);
   const [submittedBefore, setSumbittedBefore] = useState(true);
   const [open, setOpen] = useState(false);
+  const [openRetake, setOpenRetake] = useState(false);
   const final = location.state.final;
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  let corporate = false;
+  const handleOpenRetake = () => setOpenRetake(true);
+  const handleCloseRetake = () => setOpenRetake(false);
+   const  handleShowResult = () => {
+    setExam(true);
+    setOpenRetake(false);
+  }
   const navigate = useNavigate();
   const styles = {
     form: {
@@ -86,20 +92,16 @@ const CourseExam = () => {
     const fetchData = async () => {
       setIsLoading(true);
       let res = {};
-
-      if (!corporate) {
-        if (final == "false") {
-          res = await fetch(
-            `/individualtrainee/courseExam?subtitleId=${subtitleId}`
-          );
-        } else {
-          res = await fetch(
-            `/individualtrainee/courseFinalExam?courseId=${courseId}`
-          );
-        }
+      if (final == "false") {
+        res = await fetch(
+          `/individualtrainee/courseExam?subtitleId=${subtitleId}`
+        );
       } else {
-        res = await fetch(`/corporate/courseExam?subtitleId=${subtitleId}`);
+        res = await fetch(
+          `/individualtrainee/courseFinalExam?courseId=${courseId}`
+        );
       }
+
       let jsondata = await res.json();
       const checkSumbitted = await axios.post(checkSumbittedUrl, {
         courseId: courseId,
@@ -124,28 +126,22 @@ const CourseExam = () => {
     e.preventDefault();
     setOpen(false);
     let res = {};
-    if (!corporate) {
-      res = await axios.post(
-        `/individualtrainee/submitExam?subtitleId=${subtitleId}&studentId=${studentId}&courseId=${courseId}`,
-        {
-          answers: answers,
-          final: final,
-        }
-      );
-      setGrade(res.data.resultno);
-    } else {
-      res = await axios.post(
-        `/corporate/submitExam?subtitleId=${subtitleId}&studentId=${studentId}&courseId=${courseId}`,
-        {
-          answers: answers,
-          final: final,
-        }
-      );
-    }
+    res = await axios.post(
+      `/individualtrainee/submitExam?subtitleId=${subtitleId}&studentId=${studentId}&courseId=${courseId}`,
+      {
+        answers: answers,
+        final: final,
+      }
+    );
+    setGrade(res.data.resultno);
     let jsondata = await res.data;
-    setResult(jsondata["result"]);
-
-    setExam(true);
+    setResult(jsondata["result"]); 
+    if (res.data.resultno / answers.length < 0.5) {
+      setOpenRetake(true);
+    }
+    else{
+      setExam(true);
+    }
   };
 
   const handleRadioChange = (event) => {
@@ -386,12 +382,12 @@ const CourseExam = () => {
                               Are you sure you want to submit Exam?
                             </Typography>
                             <Button
-                              onClick={handleClose}
+                              onClick={handleShowResult}
                               variant="light"
                               style={{
                                 borderRadius: 0,
                                 border: "none",
-                                width:"80px",
+                                width: "80px",
                                 marginTop: "0.5rem",
                                 marginRight: "1rem",
                               }}
@@ -402,12 +398,56 @@ const CourseExam = () => {
                               variant="dark"
                               style={{
                                 backgroundColor: "#a00407",
-                                width:"80px",
+                                width: "80px",
                                 borderRadius: 0,
                                 border: "none",
                                 marginTop: "0.5rem",
                               }}
                               onClick={handleSubmit}
+                            >
+                              Yes
+                            </Button>
+                          </Box>
+                        </Modal>
+                        <Modal open={openRetake} onClose={handleCloseRetake}>
+                          <Box sx={style2}>
+                            <Typography
+                              id="modal-modal-title"
+                              variant="h6"
+                              component="h2"
+                            >
+                              Retake Exam?
+                            </Typography>
+                            <Typography
+                              id="modal-modal-description"
+                              sx={{ mt: 1 }}
+                            >
+                              your score is {(grade / CourseExam.length) * 100}
+                              %, Do you want to retake exam?
+                            </Typography>
+                            <Button
+                              onClick={handleShowResult}
+                              variant="light"
+                              style={{
+                                borderRadius: 0,
+                                border: "none",
+                                width: "80px",
+                                marginTop: "0.5rem",
+                                marginRight: "1rem",
+                              }}
+                            >
+                              No
+                            </Button>
+                            <Button
+                              variant="dark"
+                              style={{
+                                backgroundColor: "#a00407",
+                                width: "80px",
+                                borderRadius: 0,
+                                border: "none",
+                                marginTop: "0.5rem",
+                              }}
+                              onClick={handleCloseRetake}
                             >
                               Yes
                             </Button>
