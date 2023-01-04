@@ -1,4 +1,6 @@
- ![GitHub](https://img.shields.io/github/license/BEPb/README)
+ ![GitHub](https://img.shields.io/github/license/BEPb/README) [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+
 # Canadian Chamber Of Commerce
 ![landing page](https://user-images.githubusercontent.com/73742471/210173152-6090466b-6efb-4a63-a6bb-782a0c8cab3a.png)
 ## Table of Contents
