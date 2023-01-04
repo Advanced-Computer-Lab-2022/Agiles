@@ -95,7 +95,7 @@ If your application stores any data (user profiles, content, comments, uploads, 
 That’s where MongoDB comes in: JSON documents created in your React.js front end can be sent to the Express.js server, where they can be processed and (assuming they’re valid) stored directly in MongoDB for later retrieval. Again, if you’re building in the cloud, you’ll want to look at Atlas. If you’re looking to set up your own MERN stack, read on!
 
 ## Build Status 
- - The project currently under development
+ - The project currently under development and there are some styling problems to be fixed 
 
 ## Code Examples
 ```
