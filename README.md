@@ -725,4 +725,4 @@ Anyone who would like to contribute in the project please send me an E-mail on [
  
 
 ### Licence 
- This project is licenced under [Apache Licence 2.0](/LICENSE.md)
+ This project is licenced under [Apache Licence 2.0](/LICENSE)
