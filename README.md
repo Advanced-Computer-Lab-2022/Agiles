@@ -30,7 +30,8 @@
 - [Licence](#Licence)
 
 ## Project Description
-
+### Title 
+Canadian Chamber Of Commerce
 ### Course 
 Advanced Computer Lab (CSEN 704), Winter 2022
 
@@ -97,7 +98,7 @@ That’s where MongoDB comes in: JSON documents created in your React.js front e
  - The project currently under development
 
 ## Code Examples
-`
+```
 const signUp = async (req, res) => {
   const { username, email, password, firstname, lastname } = req.body;
   if (!username || !password || !email || !password || !firstname || !lastname)
@@ -124,9 +125,10 @@ const signUp = async (req, res) => {
       res.status(400).json({ error: error.message });
     }
   }
-};`
+};
+```
 
-`<section className={style["main"]}>
+``` <section className={style["main"]}>
           <section className={style["left"]}>
             <h1>Checkout</h1>
             <section className={style["payment-method"]}>
@@ -171,7 +173,22 @@ const signUp = async (req, res) => {
               </div>
             </section>
           </section>
-`
+```
+
+```
+const isAuthTrainee = async(req,res)=>{
+    const token = req.cookies['jwt'];
+    if (!token) return res.status(401).json({msg:"Unauthorized"});
+     jwt.verify(
+       token,
+       process.env.ACCESS_TOKEN_SECRET_ITRAINEE,
+       (err, decoded) => {
+         if (err) return res.status(401).json({msg:"Unauthorized"});
+         else{res.status(200).json({msg:"Authorized"});}
+       }
+     );
+ }
+```
 ## Features
 We have four main users in our website: 
 
@@ -718,11 +735,11 @@ Anyone who would like to contribute in the project please send me an E-mail on [
    
  After cloning the project or downloading the ZIP folder open the project using the integrated terminal or by using the CMD 
  then run the frontend / backend servers 
- - `nodemon app` to run the backend server on port :8000
- - `npm start` to run the frontend server on port :3000
+ - `cd backend` `nodemon app` to run the backend server on port :8000
+ - `cd frontend` `npm start` to run the frontend server on port :3000
  
 ## How to use
- 
+ You can use our website as one of four main users (Admin , instructor , Itrainee , corporate trainee), you can sign up for an account from the sign up page and login to the website as a trainnee or if you are an instructor the company will create an account for you in its own then you can login and change your password and use our features
 
 ### Licence 
  This project is licenced under [Apache Licence 2.0](/LICENSE)
