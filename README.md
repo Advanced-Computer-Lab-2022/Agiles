@@ -675,7 +675,7 @@ Postman offers many endpoint interaction methods. The following are some of the 
 - PUT: Replace information
 - PATCH: Update certain information
 - DELETE: Delete information
-And we tested the behaviour of our routes and if they produce the correct status code and response according to our project flow .
+####And we tested the behaviour of our routes and if they produce the correct status code and response according to our project flow .
 
 
 ## Contributing
