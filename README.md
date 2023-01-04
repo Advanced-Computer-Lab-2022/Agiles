@@ -52,7 +52,7 @@ software.
 - Learn how to work together as a team on GitHub.
 
 ## Motivation
-This project is done as a simulation to real company working flow where all team members contribuite together for a final project. which motivated us to put our efforts on a project where we can learn new technologies along side with implementing them on a real application .We make an online courses website to encourage people
+The project is done as a group for a german university course (Advanced Computer lab) and This project is done as a simulation to real company working flow where all team members contribuite together for a final project. which motivated us to put our efforts on a project where we can learn new technologies along side with implementing them on a real application .We make an online courses website to encourage people
 to develop their skills and make this process easy by learning from home. 
 ## Code Styles
 The project is formatted using `prettier` also The project follows the  [ MVC ](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)design pattern ,MVC is a software architectural pattern commonly used for developing user interfaces that divide the related program logic into three interconnected elements. This is done to separate internal representations of information from the ways information is presented to and accepted from the user , So the Files in the backend was divided into the M (models) where the schema of the models exist which represent the core of the database , the C (controller) where the functions needed for the routes exists and the V (views) the view in MERN stack is represented by the react frontend server. Also the routes in our project was abstracted from the controller function as shown in [ API References](#api-references)
@@ -666,6 +666,15 @@ Our APIs is divided into four APIs :
 - Request type : `post`
 -Request header : `is handled using the middleWare of authentication session which contains logged user token`
 
+## Testing
+The api reoutes were tested using postman , Postman is an application used for API testing. It is an HTTP client that tests HTTP requests, utilizing a graphical user interface, through which we obtain different types of responses that need to be subsequently validated. 
+Postman offers many endpoint interaction methods. The following are some of the most used, including their functions:
+-GET: Obtain information 
+-POST: Add information
+-PUT: Replace information
+-PATCH: Update certain information
+-DELETE: Delete information
+And we tested the behaviour of our routes and if they produce the correct status code and response according to our project flow .
 
 
 ## Contributing
@@ -679,16 +688,36 @@ Anyone who would like to contribute in the project please send me an E-mail on [
 |Ahmed Azooz|[ahmed azooz](https://github.com/A3zooz)|
 |Adham Haggag|[adham hagag](https://github.com/Haggag23)|
 |Abdullah Fouad|[abdullah fouad](https://github.com/Abdullah204)|
+Our references : 
+[mongoDb docs](https://www.mongodb.com/docs/manual/introduction/)
+[Net ninja](https://www.youtube.com/@NetNinja)
+[Dave grey](https://www.youtube.com/@DaveGrayTeachesCode)
 
 ## Installation
  you can install the project using `git clone 'https://github.com/Advanced-Computer-Lab-2022/Agiles.git'`
- then run npm install to download all the needed packages\
-
-## How to use
+ then run npm install to download all the needed packages using `npm install` :
+   packages :
+   - node js 
+   - express js 
+   - mongoose 
+   - react 
+   - bcrypt
+   - cookie-parser
+   - dotenv
+   - jsonwebtoken
+   - nodemon
+   - stripe
+   - nodemailer
+   - axios
+   - bootstrap
+   - @mui/icons-material
+   
  After cloning the project or downloading the ZIP folder open the project using the integrated terminal or by using the CMD 
  then run the frontend / backend servers 
  - `nodemon app` to run the backend server on port :8000
  - `npm start` to run the frontend server on port :3000
+ 
+## How to use
  
 
 ### Licence 
