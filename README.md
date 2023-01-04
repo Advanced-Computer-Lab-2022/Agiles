@@ -1,4 +1,4 @@
- ![GitHub](https://img.shields.io/github/license/BEPb/README) [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 
 # Canadian Chamber Of Commerce
@@ -725,4 +725,4 @@ Anyone who would like to contribute in the project please send me an E-mail on [
  
 
 ### Licence 
- This project is licenced under [MIT LICENCE](/LICENSE.md)
+ This project is licenced under [Apache Licence 2.0](/LICENSE.md)
