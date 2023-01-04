@@ -675,7 +675,7 @@ Postman offers many endpoint interaction methods. The following are some of the 
 - PUT: Replace information
 - PATCH: Update certain information
 - DELETE: Delete information
-####And we tested the behaviour of our routes and if they produce the correct status code and response according to our project flow .
+#### And we tested the behaviour of our routes and if they produce the correct status code and response according to our project flow .
 
 
 ## Contributing
@@ -691,9 +691,9 @@ Anyone who would like to contribute in the project please send me an E-mail on [
 |Abdullah Fouad|[abdullah fouad](https://github.com/Abdullah204)|
 
 ### Our references : 
--[mongoDb docs](https://www.mongodb.com/docs/manual/introduction/)
--[Net ninja](https://www.youtube.com/@NetNinja)
--[Dave grey](https://www.youtube.com/@DaveGrayTeachesCode)
+- [mongoDb docs](https://www.mongodb.com/docs/manual/introduction/)
+- [Net ninja](https://www.youtube.com/@NetNinja)
+- [Dave grey](https://www.youtube.com/@DaveGrayTeachesCode)
 
 ## Installation
  you can install the project using `git clone 'https://github.com/Advanced-Computer-Lab-2022/Agiles.git'`
