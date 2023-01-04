@@ -670,11 +670,11 @@ Our APIs is divided into four APIs :
 ## Testing
 The api reoutes were tested using postman , Postman is an application used for API testing. It is an HTTP client that tests HTTP requests, utilizing a graphical user interface, through which we obtain different types of responses that need to be subsequently validated. 
 Postman offers many endpoint interaction methods. The following are some of the most used, including their functions:
--GET: Obtain information 
--POST: Add information
--PUT: Replace information
--PATCH: Update certain information
--DELETE: Delete information
+- GET: Obtain information 
+- POST: Add information
+- PUT: Replace information
+- PATCH: Update certain information
+- DELETE: Delete information
 And we tested the behaviour of our routes and if they produce the correct status code and response according to our project flow .
 
 
