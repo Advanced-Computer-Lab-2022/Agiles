@@ -96,6 +96,7 @@ That’s where MongoDB comes in: JSON documents created in your React.js front e
 
 ## Build Status 
  - The project currently under development and there are some styling problems to be fixed 
+- jest tests to be added
 
 ## Code Examples
 ```
