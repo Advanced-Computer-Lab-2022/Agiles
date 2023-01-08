@@ -1,0 +1,12 @@
+
+.ratingStars form input{
+  padding: 1.5rem;
+  align-items: center;
+  border: 1px solid black;
+}
+.ratingStars form{
+  display: grid;
+  margin-top: 1rem;
+  width: 30%;
+  gap: 2rem;
+}

@@ -1,0 +1,41 @@
+.mainlabel {
+  color: rgb(97, 94, 94);
+  font-size: 1.5rem;
+  margin-top: 2rem;
+}
+.mainRight {
+  display: grid;
+  margin-left: 2rem;
+  grid-template-columns: 80% 20%;
+  gap: 10%;
+  margin-top: 0.5rem;
+} 
+
+.main-right-right{
+  margin-top: 70%;
+}
+.subtitles {
+  margin-top: 2rem;
+  min-width: 400px;
+}
+
+.icon {
+  font-size: small;
+}
+.subtitleView {
+  background-color: inherit;
+  color: #a00407;
+  border: none;
+}
+.videoDesc {
+  width: 80%;
+  margin-top: 1rem;
+}
+
+.check {
+  color: #a00407;
+  justify-content: right;
+}
+.gradeBadge {
+  background-color: #a00407 !important;
+}

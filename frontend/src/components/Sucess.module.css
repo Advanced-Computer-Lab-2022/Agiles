@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Nunito+Sans:ital,wght@0,600;1,600&display=swap');
+.card h1 {
+    font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+    font-weight: 900;
+    font-size: 40px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+.card p {
+    color: #404F5E;
+    font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+    font-size:20px;
+    margin: 0;
+  }
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    text-align: center;
+  }
+.card i {
+  font-size: 100px;
+  line-height: 200px;
+  margin-left:-15px;
+}
+.card {
+  background: white;
+  padding: 60px;
+  border-radius: 4px;
+  box-shadow: 0 2px 3px #C8D0D8;
+  display: inline-block;
+}
+.cardDiv{
+    border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;justify-content: center;
+}
+.card button {
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    margin-left: 14rem;
+}
+.fail{
+    font-size: 150px;
+    margin-top: 30px;
+    line-height: 200px;
+}

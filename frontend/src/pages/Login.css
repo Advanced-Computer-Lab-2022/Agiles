@@ -1,0 +1,100 @@
+.Auth-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 88vh;
+  }
+  
+  .Auth-form {
+    width: 420px;
+    box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+    padding-top: 20px;
+    border-radius: 8px;
+    background-color: white;
+  }
+  
+  .Auth-form-content {
+    padding-left: 12%;
+    padding-right: 12%;
+    display: grid;
+  }
+  
+  .Auth-form-title {
+    text-align: center;
+    font-size: 24px;
+    color: rgb(34, 34, 34);
+    font-weight: 800;
+  }
+  
+  .Auth-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(34, 34, 34);
+  }
+.footForm{
+    display: flex;
+}
+.footForm p{
+  color: rgb(34, 34, 34);
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 0.5rem;
+  margin-top: 1rem;
+}
+.NoAccount{
+  color: rgb(34, 34, 34);
+  font-size: 14px;
+  font-weight: 600;
+}
+.instructions {
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+  background: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+  padding: 0.25rem;
+  position: relative;
+  bottom: -10px;
+}
+
+.instructions > svg {
+  margin-right: 0.25rem;
+}
+
+.offscreen {
+  position: absolute;
+  left: -9999px;
+}
+.hide {
+  display: none;
+}
+
+.valid {
+  color: limegreen;
+  margin-left: 0.25rem;
+}
+
+.invalid {
+  color: red;
+  margin-left: 0.25rem;
+}
+.errmsg {
+  background-color: lightpink;
+  color: firebrick;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+
+}
+.footforget{
+  font-size: 13px;
+  font-weight: 600;
+  color: rgb(34, 34, 34);
+  padding-left: 5px;
+}
+.form-control:focus {
+  border-color: #a00407;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);
+}

@@ -1,0 +1,54 @@
+.filter {
+  flex: 2;
+  margin-left: 1.5rem;
+  margin-top: 10rem;
+}
+.top {
+  height: 50px;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.logo {
+  border-radius: 0.25rem;
+  font-weight: bold;
+  font-family: "Open Sans", sans-serif;
+  padding: 0.5rem;
+  background-color: white;
+  border: 0.5px solid rgb(111, 109, 109);
+}
+.logo:hover {
+  background-color: rgba(127, 177, 251, 0.379);
+}
+.filter-button {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 0.8rem;
+  margin: 0 -0.4rem;
+}
+.inpt {
+  width: 5rem;
+  margin-right: 1rem;
+}
+.inptt{
+  width: 7rem;
+  margin-right: 1rem;
+}
+.inpttt{
+  width: 12rem;
+  border-radius: 0;
+  margin-right: 0.5rem;
+}
+.check {
+  margin-top: 0.4rem;
+}
+.edit {
+  border-radius: 0.25rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: "Open Sans", sans-serif;
+  padding: 0.5rem;
+  background-color: white;
+  border: 0.5px solid rgb(111, 109, 109);
+}

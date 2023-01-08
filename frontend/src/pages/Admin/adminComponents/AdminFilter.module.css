@@ -1,0 +1,38 @@
+.filter {
+  flex: 2;
+}
+.top {
+  height: 0px;
+  display: grid;
+  align-items: center;
+}
+.logo {
+  display: block;
+  width: 50%;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 0.25rem;
+  font-weight: bold;
+  font-family: "Open Sans", sans-serif;
+  padding: 5px;
+  background-color: white;
+  border: 0.5px solid rgb(111, 109, 109);
+  align-self: center;
+}
+.logo:hover {
+  background-color: rgba(127, 177, 251, 0.379);
+}
+.filter-button {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 0.8rem;
+  margin: 0 -0.4rem;
+}
+.inpt {
+  width: 5rem;
+  margin-right: 1rem;
+}
+.check {
+  margin-top: 0.4rem;
+}

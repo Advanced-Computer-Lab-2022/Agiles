@@ -1,0 +1,1 @@
+export const subjectList = ["programming" , "Math" , "Chemistry" , "Physics" , "Managment" , "Biology" , "History" , "Geography" ];

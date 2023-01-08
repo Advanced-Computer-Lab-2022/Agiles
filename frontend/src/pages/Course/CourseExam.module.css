@@ -1,0 +1,23 @@
+.mt-0 {
+    margin-top: 5% !important;
+
+  }
+.correct{
+    color: rgb(66, 224, 66);
+}
+.wrong{
+  color:red;
+}
+.container{
+   margin-top: 1%;
+   margin-bottom: 2%;
+}
+.container h1{
+    font-size: 2vw;
+    color: #a00407;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+.bottom{
+  display: flex;
+}

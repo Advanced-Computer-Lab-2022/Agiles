@@ -1,0 +1,74 @@
+.regcard{
+    border-radius: 0.25rem;
+    padding: 0rem;
+    max-width: 250px;
+    border: none;
+    
+}
+.regcard button{
+    background-color:inherit;
+    padding: 0;
+    width: 100%;
+    margin: 0;
+    border: none;
+}
+.cardgrid {
+    display: grid;
+    grid-template-columns: repeat( auto-fit, minmax(250px, 250px));
+    grid-gap: 40px 40px;
+    align-items: flex-start;
+  }
+  
+  .regcard__image{
+    overflow: hidden;
+  }
+  .regcard__image img{
+    display: block;
+    margin-bottom: 0.25rem;
+    border-radius: 0.25rem;
+    width: 100%;
+    height: 10rem;
+    cursor: pointer;
+    object-fit: cover;
+  }
+  .regcard:hover > .regcard__image > img {
+    transform: scale(1.025);
+    opacity: .8;
+
+  }
+.cardheader{
+    font-size: 1.3rem;
+    font-weight: bolder;
+    font-family: 'Open Sans', sans-serif;
+    max-height: 30px;
+    overflow: clip;
+    
+}
+.cardfooter{
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+    align-items: center;
+    font-family: 'Open Sans', sans-serif;
+}
+.progressbar{
+    height: 0.1rem;
+    border-radius: none;
+}
+.progresslabel{
+    font-size: 0.6rem;
+    margin-top: 0.1rem;
+    font-weight: bold;
+}
+.rating{
+  width: 100%;
+  margin-left: 4rem;
+}
+.edit{
+    padding: 0;
+    margin: 0;
+    border: none;
+    background-color:inherit;
+    color: black;
+    font-size: 0.6rem;
+    font-weight: 600;
+}

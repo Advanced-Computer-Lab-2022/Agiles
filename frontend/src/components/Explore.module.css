@@ -1,0 +1,24 @@
+.course-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 250px));
+  grid-gap: 20px 20px;
+  margin-left: 25px;
+}
+.Explore {
+  margin-left: 1rem;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}
+.Explore h1 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-left: 5rem;
+  color: #a00407;
+}
+.item {
+  justify-content: center;
+}
+.carousel {
+  max-width: 1380px;
+  margin: auto;
+}

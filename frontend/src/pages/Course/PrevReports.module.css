@@ -1,0 +1,30 @@
+.cards ul {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 5%;
+}
+
+.cards ul li {
+    list-style: none;
+    flex: 0 0 25%;
+    padding-bottom: 8%;
+}
+
+.ff {
+    color: brown;
+    width: 80%;
+    padding-left: 40%;
+    padding-right: 20%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+.reportedProblem{
+    margin-top: 3%;
+    margin-left: 10%;
+}
+.reportedProblem h1{
+    font-size: 2vw;
+    color: #a00407;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}

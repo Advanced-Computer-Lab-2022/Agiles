@@ -1,0 +1,57 @@
+.card {
+  margin-top: 20px;
+  min-height: 10rem;
+  display: grid;
+  cursor: pointer;
+  overflow: hidden;
+}
+.card button{
+  background-color:inherit;
+  padding: 0;
+  width: 100%;
+  margin: 0;
+  cursor: pointer;
+  border: none;
+}
+.card img {
+  display: block;
+  margin-bottom: 0.25rem;
+  border-radius: 0.25rem;
+  width: 100%;
+  height: 10rem;
+  cursor: pointer;
+  object-fit: cover;
+}
+.cardheader {
+  font-size: 1.3rem;
+  font-weight: bolder;
+  font-family: "Open Sans", sans-serif;
+  max-height: 30px;
+  overflow: clip;
+}
+.cardfooter {
+  font-size: 0.8rem;
+  margin-bottom: 0.25rem;
+  align-items: center;
+  font-family: "Open Sans", sans-serif;
+}
+.time {
+  font-size: 0.8rem;
+  font-weight: bold;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.rating{
+  width: 100%;
+  margin-left: 2rem;
+  margin-top: 0.1rem;
+  display: flex;
+}
+.rating label{
+  margin-top: 0.2rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.price{
+  width: 100%;
+}

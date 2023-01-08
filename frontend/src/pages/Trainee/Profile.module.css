@@ -1,0 +1,249 @@
+.main {
+  display: grid;
+  grid-template-columns: 20% 80%;
+  margin-left: 15%;
+  width: 70%;
+  min-width: 400px;
+  margin-top: 2rem;
+  min-height: 80vh;
+  border: 1px solid #e0e0e0;
+}
+.side-bar {
+  border-right: 1px solid #e0e0e0;
+  display: grid;
+  min-width: 100px;
+}
+.side-bar-top {
+  display: grid;
+  height: 20%;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+
+.side-bar-top img {
+  width: 140px;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+.side-bar-top label {
+  font-weight: bold;
+  text-align: center;
+}
+.side-bar-bottom {
+  display: grid;
+}
+.side-bar-bottom li {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  padding: 10px;
+}
+.side-bar-bottomClicked {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  color: white;
+  background-color: rgb(78, 77, 77);
+  padding: 10px;
+}
+.side-bar-bottom ul {
+  list-style: none;
+  padding: 0;
+}
+.side-bar-bottom li:hover {
+  color: white;
+  background-color: rgb(162, 160, 160);
+}
+.side-bar-bottom li span {
+  display: inline-block;
+  margin-left: 1rem;
+}
+.profile {
+  display: grid;
+}
+.profile-top {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+.profile-top h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-left: 2rem;
+}
+.profile-bottom {
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+}
+.profile-bottom form {
+  margin: auto;
+  display: grid;
+  width: 70%;
+  gap: 2rem;
+}
+.profile-bottom form label {
+  font-size: 1rem;
+  font-weight: bold;
+}
+.profile-bottom form input {
+  height: 2.5rem;
+  padding: 1.5rem;
+  align-items: center;
+  border: 1px solid black;
+}
+.profile-bottom form button {
+  width: 20%;
+  border-radius: 0;
+}
+.security {
+  display: grid;
+  min-height: 110vh;
+}
+.security-top {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.security-top h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-left: 8rem;
+}
+.security-bottom {
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+.security-bottom form {
+  margin-left: 8rem;
+  display: grid;
+  width: 70%;
+  gap: 2rem;
+}
+.security-bottom form label {
+  font-size: 1rem;
+  font-weight: bold;
+}
+.security-bottom form input {
+  height: 2.5rem;
+  padding: 1.5rem;
+  align-items: center;
+  border: 1px solid black;
+}
+.security-bottom form button {
+  width: 20%;
+  border-radius: 0;
+}
+
+.security-bottom-bottom {
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+}
+.security-bottom-bottom form {
+  margin-left: 8rem;
+  display: grid;
+  width: 70%;
+  gap: 2rem;
+}
+.security-bottom-bottom form input {
+  height: 2.5rem;
+  padding: 1.5rem;
+  align-items: center;
+  border: 1px solid black;
+}
+.security-bottom-bottom form button {
+  width: 30%;
+  border-radius: 0;
+}
+.security-bottom-bottom form label {
+  font-size: 1rem;
+  font-weight: bold;
+}
+.payment-top {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+.payment {
+  display: inline-block;
+  width: 100%;
+  min-height: 100vh;
+}
+.payment-top h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-left: 8rem;
+}
+.payment-bottom {
+  display: inline-block;
+  padding: 1rem;
+  width: 100%;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+.payment-bottom label {
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+.payment-bottom form {
+  margin-left: 8rem;
+  display: grid;
+  width: 70%;
+  gap: 0.5rem;
+}
+.payment-bottom form label {
+  margin-bottom: 0.1rem;
+  font-size: 1rem;
+}
+.payment-bottom form input {
+  height: 2.5rem;
+  padding: 1.5rem;
+  align-items: center;
+  border: 1px solid black;
+}
+.payment-bottom form button {
+  width: 30%;
+  border-radius: 0;
+}
+.mainWallet {
+  padding-left: 8rem;
+  padding-top: 2rem;
+}
+.mainWallet h1 {
+  font-size: 2rem;
+  color: #a00407;
+}
+.currentBalance {
+  padding-left: 1rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border: 1px solid black;
+  width: 40%;
+  border-radius: 0.5rem;
+}
+.currentBalance h2 {
+  font-size: 1rem;
+}
+.currentBalance h3 {
+  font-size: 2rem;
+  margin-left: 0.5rem;
+  color: green;
+}
+.profit {
+  margin-top: 3rem;
+  width: 30%;
+}
+.profit h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}

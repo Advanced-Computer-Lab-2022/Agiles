@@ -1,0 +1,102 @@
+.main-section {
+  display: flex;
+}
+.back{
+  margin-left: 10px;
+  background-color: inherit;
+  color: #a00407;
+  font-weight: bold;
+  border: none;
+}
+.main-section-left {
+  width: 70%;
+}
+
+.main-section-left-top {
+  background-color: #1c1d1f;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 90%;
+  margin: 10px 40px 10px 40px;
+}
+.main-section-left-bottom {
+  margin-left: 4rem;
+  width: 80%;
+  margin-bottom: 50px;
+}
+.main-section-left-bottom p{
+  font-weight: bold;
+
+}
+.main-section-left-bottom h3 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  font-family: Tahoma, sans-serif;
+  color: rgb(33, 32, 32);
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+.main-section-left-bottom hr {
+  height: 3px;
+  width: 80%;
+  background-color: #000;
+}
+.main-section-right {
+  min-width: 250px;
+  height: fit-content;
+  margin: 20px;
+  margin-top: 35px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.subtitleView {
+  background-color: white;
+  color: #a00407;
+  border: none;
+}
+.button-check {
+  display: flex;
+  flex-direction: row;
+}
+
+.check {
+  color: #a00407;
+  justify-content: right;
+}
+.gradeBadge {
+  background-color: #a00407 !important;
+}
+
+.iframe-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
+}
+
+
+.notes{
+  display: flex;
+  flex-direction: column;
+  padding-left: 40px;
+  width: 90%;
+}
+/* Then style the iframe to fit in the container div with full height and width */
+.responsive-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@media screen and (max-width: 900px) {
+  .main-section {
+    flex-direction: column;
+  }
+  .main-section-left {
+    width: 100%;
+  }
+}

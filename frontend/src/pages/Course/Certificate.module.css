@@ -1,0 +1,92 @@
+.main-section{
+    display: flex;
+    flex-direction: row;
+
+}
+.certificate-section {
+    width: 70%;
+}
+
+.certificate-img{
+    width: 99%;
+    border-radius: 1rem;
+    margin-left: 0.4rem;
+
+}
+
+
+.course-section {
+    width : 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f5f5f5;
+}
+
+.course-img{
+    width: 10rem;
+    height: 7rem;
+    border-radius: 1rem;
+    margin-bottom: 1.5rem;
+    margin-top: 1rem;
+}
+
+.course-details{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.course-title{
+    font-size: 1.3rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-bottom: 0.25rem;
+    color: black;
+    margin-top: 1rem;
+}
+
+.course-inst{
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+    color: gray;
+    align-items: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.course-btn{
+    width: 12rem;
+    height: 3rem;
+    border-radius: 1rem;
+    margin-bottom: 1.5rem;
+    margin-top: 1rem;
+    background-color: #a00407;
+    color: white;
+    font-size: 1rem;
+    font-weight: bolder;
+    border: none;
+    cursor: pointer;
+}
+
+.course-btn:hover{
+    background-color: #700101;
+    color: white;
+}
+
+.course-recepient{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+    
+}
+
+.recepient-name{
+
+    font-size: 2rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-bottom: 0.25rem;
+    color: black;
+    margin-top: 1rem;
+    font-weight: bolder;
+}
+
